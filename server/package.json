@@ -3,18 +3,23 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "migration-dev": "sequelize db:migrate  --config etc/db.js",
-    "migration-create" : "sequelize-cli migration:generate --name"
+    "migration-dev": "env $(cat .env | xargs) sequelize db:migrate  --config etc/db.js",
+    "migration-create": "sequelize-cli migration:generate --name -r dotenv/config",
+    "seeds": "env $(cat .env | xargs) sequelize db:seed:all --config etc/db.js",
+    "seeds-undo": "env $(cat .env | xargs) sequelize db:seed:undo --config etc/db.js",
+    "seeds-undo-all": "env $(cat .env | xargs) sequelize db:seed:undo:all --config etc/db.js"
   },
   "author": "Illia Hreben",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.3",
-    "sequelize": "^6.6.5"
+    "pg": "^8.7.1",
+    "sequelize": "^6.6.5",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "sequelize-cli": "^6.2.0"

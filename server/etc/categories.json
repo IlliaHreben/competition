@@ -1,102 +1,1820 @@
-{
-  "men": {
-    "light": [
-      {
-        "age": { "from": 6, "to": 7 },
-        "weight": [22, 25, 28, 31, 34]
-      },
-      {
-        "age": { "from": 8, "to": 9 },
-        "weight": [22, 25, 28, 31, 34, 37]
-      },
-      {
-        "age": { "from": 10, "to": 11 },
-        "weight": [28, 31, 34, 37, 40, 43, 46, 50]
-      },
-      {
-        "age": { "from": 12, "to": 14 },
-        "weight": [35, 40, 45, 50, 55, 60, 65, 70]
-      },
-      {
-        "age": { "from": 15, "to": 17 },
-        "weight": [50, 55, 60, 65, 70, 75, 80, 85]
-      },
-      {
-        "age": { "from": 18, "to": 39 },
-        "weight": [60, 65, 70, 75, 80, 85, 90, 95]
-      }
-    ],
-    "full": [
-      {
-        "age": { "from": 10, "to": 11 },
-        "weight": [31, 34, 37, 40, 43, 46, 49, 52]
-      },
-      {
-        "age": { "from": 12, "to": 13 },
-        "weight": [37, 40, 43, 46, 49, 52, 55, 58, 61, 64, 67]
-      },
-      {
-        "age": { "from": 14, "to": 15 },
-        "weight": [43, 46, 49, 52, 55, 58, 61, 64, 67, 70, 72.5, 76]
-      },
-      {
-        "age": { "from": 16, "to": 17 },
-        "weight": [54, 57, 60, 63.5, 67, 70, 72.5, 76, 79, 83, 86, 90, 95]
-      },
-      {
-        "age": { "from": 18, "to": 39 },
-        "weight": [54, 57, 60, 63.5, 67, 70, 72.5, 76, 79, 83, 86, 90, 95]
-      }
-    ]
+[
+  {
+    "id": "043a855f-4290-4061-afae-9b7daf7e91c5",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 6,
+    "ageTo": 7,
+    "weightFrom": 0,
+    "weightTo": 22
   },
-  "women": {
-    "light": [
-      {
-        "age": { "from": 6, "to": 7 },
-        "weight": [22, 25, 28, 31, 34]
-      },
-      {
-        "age": { "from": 8, "to": 9 },
-        "weight": [22, 25, 28, 31, 34]
-      },
-      {
-        "age": { "from": 10, "to": 11 },
-        "weight": [28, 31, 34, 37, 40, 43, 46]
-      },
-      {
-        "age": { "from": 12, "to": 14 },
-        "weight": [35, 40, 45, 50, 55]
-      },
-      {
-        "age": { "from": 15, "to": 17 },
-        "weight": [45, 50, 55, 60, 65]
-      },
-      {
-        "age": { "from": 18, "to": 39 },
-        "weight": [55, 60, 65, 70]
-      }
-    ],
-    "full": [
-      {
-        "age": { "from": 10, "to": 11 },
-        "weight": [31, 34, 37, 40, 43, 46, 49, 52]
-      },
-      {
-        "age": { "from": 12, "to": 13 },
-        "weight": [34, 37, 40, 43, 46, 49, 52, 55]
-      },
-      {
-        "age": { "from": 14, "to": 15 },
-        "weight": [40, 43, 46, 49, 52, 55, 58, 61, 64, 67]
-      },
-      {
-        "age": { "from": 16, "to": 17 },
-        "weight": [46, 48, 50, 54, 57, 60, 63,5, 67, 70, 72.5, 76]
-      },
-      {
-        "age": { "from": 18, "to": 39 },
-        "weight": [46, 48, 50, 54, 57, 60, 63.5, 67, 70, 72.5, 76]
-      }
-    ]
+  {
+    "id": "d48403cd-2ad7-461a-94b7-dd0da13932c9",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 6,
+    "ageTo": 7,
+    "weightFrom": 22.1,
+    "weightTo": 25
+  },
+  {
+    "id": "84e64582-5de5-45d3-8717-45cdcbfca26a",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 6,
+    "ageTo": 7,
+    "weightFrom": 25.1,
+    "weightTo": 28
+  },
+  {
+    "id": "f0af7d15-2e7a-41c7-a357-14e13f4bf447",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 6,
+    "ageTo": 7,
+    "weightFrom": 28.1,
+    "weightTo": 31
+  },
+  {
+    "id": "8546d0a3-240a-4d1e-82b1-a10e2ba0c0d7",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 6,
+    "ageTo": 7,
+    "weightFrom": 31.1,
+    "weightTo": 34
+  },
+  {
+    "id": "8546d0a3-240a-4d1e-82b1-a10e2ba0c0d7",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 6,
+    "ageTo": 7,
+    "weightFrom": 34,
+    "weightTo": 999
+  },
+  {
+    "id": "ed557894-46c1-4112-9664-ffbb79e51775",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 8,
+    "ageTo": 9,
+    "weightFrom": 0,
+    "weightTo": 22
+  },
+  {
+    "id": "c3fbbace-a607-4015-a185-959239ed5c9b",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 8,
+    "ageTo": 9,
+    "weightFrom": 22.1,
+    "weightTo": 25
+  },
+  {
+    "id": "a4d5b969-edf7-4531-871f-f85ecdb45878",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 8,
+    "ageTo": 9,
+    "weightFrom": 25.1,
+    "weightTo": 28
+  },
+  {
+    "id": "6a0851c3-9c18-405a-b2b9-9fda0ac8fd0a",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 8,
+    "ageTo": 9,
+    "weightFrom": 28.1,
+    "weightTo": 31
+  },
+  {
+    "id": "72180c10-0863-4433-a996-18a765336d6e",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 8,
+    "ageTo": 9,
+    "weightFrom": 31.1,
+    "weightTo": 34
+  },
+  {
+    "id": "da8f5dbc-0ff1-4043-ba1a-80d12f1d569a",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 8,
+    "ageTo": 9,
+    "weightFrom": 34.1,
+    "weightTo": 37
+  },
+  {
+    "id": "da8f5dbc-0ff1-4043-ba1a-80d12f1d569a",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 8,
+    "ageTo": 9,
+    "weightFrom": 37,
+    "weightTo": 999
+  },
+  {
+    "id": "071f57e3-b53c-45a8-9fa2-35964ee69027",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 0,
+    "weightTo": 28
+  },
+  {
+    "id": "60826575-9f25-4a5b-83ac-8ba2c519d294",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 28.1,
+    "weightTo": 31
+  },
+  {
+    "id": "9211180f-ae39-4fab-982d-a6ef4a747656",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 31.1,
+    "weightTo": 34
+  },
+  {
+    "id": "1071400c-c01f-44c4-8379-d2dd955b7415",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 34.1,
+    "weightTo": 37
+  },
+  {
+    "id": "93d7c243-4ca7-4aa9-9e4c-6c9af2517ca4",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 37.1,
+    "weightTo": 40
+  },
+  {
+    "id": "958c571d-19d1-4836-b008-e1f48f6e6e89",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 40.1,
+    "weightTo": 43
+  },
+  {
+    "id": "a34cc4b1-4133-4e2c-9a04-107f60b442b4",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 43.1,
+    "weightTo": 46
+  },
+  {
+    "id": "f0026dd9-e9fe-47e7-a342-95e93d2ac565",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 46.1,
+    "weightTo": 50
+  },
+  {
+    "id": "f0026dd9-e9fe-47e7-a342-95e93d2ac565",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 50,
+    "weightTo": 999
+  },
+  {
+    "id": "147eb7be-4610-483a-b67e-347f1e0fe677",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 12,
+    "ageTo": 14,
+    "weightFrom": 0,
+    "weightTo": 35
+  },
+  {
+    "id": "3c763422-1be3-4ac2-9835-712272b16875",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 12,
+    "ageTo": 14,
+    "weightFrom": 35.1,
+    "weightTo": 40
+  },
+  {
+    "id": "f387a3e7-8774-4c15-b5b3-6fd7d8a5e758",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 12,
+    "ageTo": 14,
+    "weightFrom": 40.1,
+    "weightTo": 45
+  },
+  {
+    "id": "d8100912-6095-4e5b-8afa-38b143fd5268",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 12,
+    "ageTo": 14,
+    "weightFrom": 45.1,
+    "weightTo": 50
+  },
+  {
+    "id": "0334108d-8d11-44cb-a390-17b6c495393c",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 12,
+    "ageTo": 14,
+    "weightFrom": 50.1,
+    "weightTo": 55
+  },
+  {
+    "id": "57de4e1f-1eab-4ab7-9bf4-85fa502cffda",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 12,
+    "ageTo": 14,
+    "weightFrom": 55.1,
+    "weightTo": 60
+  },
+  {
+    "id": "59915dd6-bc6c-4b8e-8bbb-88ed2a903cbe",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 12,
+    "ageTo": 14,
+    "weightFrom": 60.1,
+    "weightTo": 65
+  },
+  {
+    "id": "68dd141f-2bec-4ec4-9628-574872812cd2",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 12,
+    "ageTo": 14,
+    "weightFrom": 65.1,
+    "weightTo": 70
+  },
+  {
+    "id": "68dd141f-2bec-4ec4-9628-574872812cd2",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 12,
+    "ageTo": 14,
+    "weightFrom": 70,
+    "weightTo": 999
+  },
+  {
+    "id": "8c9f54fb-157c-4edc-a90f-1452b0b24334",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 15,
+    "ageTo": 17,
+    "weightFrom": 0,
+    "weightTo": 50
+  },
+  {
+    "id": "9fab519e-2648-47be-bbd1-7473e1d2ba39",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 15,
+    "ageTo": 17,
+    "weightFrom": 50.1,
+    "weightTo": 55
+  },
+  {
+    "id": "deefba64-691f-4844-9f75-d72a8d302af4",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 15,
+    "ageTo": 17,
+    "weightFrom": 55.1,
+    "weightTo": 60
+  },
+  {
+    "id": "1f7a6753-1751-4aa5-b848-20aef652bff7",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 15,
+    "ageTo": 17,
+    "weightFrom": 60.1,
+    "weightTo": 65
+  },
+  {
+    "id": "0b5e34e2-4c49-4bc4-bd9a-4bea060027fa",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 15,
+    "ageTo": 17,
+    "weightFrom": 65.1,
+    "weightTo": 70
+  },
+  {
+    "id": "76787132-8c2e-4ffd-8b9d-f0b8bbb1c8cb",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 15,
+    "ageTo": 17,
+    "weightFrom": 70.1,
+    "weightTo": 75
+  },
+  {
+    "id": "3f4b5fe4-3f3c-4a69-9aaf-e03a9c8afb57",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 15,
+    "ageTo": 17,
+    "weightFrom": 75.1,
+    "weightTo": 80
+  },
+  {
+    "id": "e3c8a629-5039-4de4-a1dc-d43fcdf8e7b2",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 15,
+    "ageTo": 17,
+    "weightFrom": 80.1,
+    "weightTo": 85
+  },
+  {
+    "id": "e3c8a629-5039-4de4-a1dc-d43fcdf8e7b2",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 15,
+    "ageTo": 17,
+    "weightFrom": 85,
+    "weightTo": 999
+  },
+  {
+    "id": "67b0a3ba-5da0-44ec-b74e-ef504541de08",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 0,
+    "weightTo": 60
+  },
+  {
+    "id": "b6c33a66-b090-4f09-a97f-f3e7b4cffd9f",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 60.1,
+    "weightTo": 65
+  },
+  {
+    "id": "c4768a21-7de5-442f-ba9f-2ddd6995106a",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 65.1,
+    "weightTo": 70
+  },
+  {
+    "id": "3fb96c7c-19a2-49dc-b5ae-d9c6ffa0290f",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 70.1,
+    "weightTo": 75
+  },
+  {
+    "id": "2829d708-53ef-4d3c-946d-8520ae380486",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 75.1,
+    "weightTo": 80
+  },
+  {
+    "id": "20928e5a-0e09-44cf-b59b-df6c681984a5",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 80.1,
+    "weightTo": 85
+  },
+  {
+    "id": "9990ec1f-c9a7-47e4-8a87-a3993311158c",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 85.1,
+    "weightTo": 90
+  },
+  {
+    "id": "3bee3fe8-7b7a-40ca-ad6b-0c8e48294c48",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 90.1,
+    "weightTo": 95
+  },
+  {
+    "id": "3bee3fe8-7b7a-40ca-ad6b-0c8e48294c48",
+    "sex": "men",
+    "type": "light",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 95,
+    "weightTo": 999
+  },
+  {
+    "id": "79c4965f-7783-46fc-b51a-fbcc9bdccd8f",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 0,
+    "weightTo": 31
+  },
+  {
+    "id": "914adc57-b92c-4ada-b781-6d2ca794cf9b",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 31.1,
+    "weightTo": 34
+  },
+  {
+    "id": "9033757d-ae47-4552-8943-33f7d8747e91",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 34.1,
+    "weightTo": 37
+  },
+  {
+    "id": "1b5f11c7-8977-4d36-9d23-71fbb6e3d00c",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 37.1,
+    "weightTo": 40
+  },
+  {
+    "id": "a5e4f010-4804-4888-853b-e25b2642d523",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 40.1,
+    "weightTo": 43
+  },
+  {
+    "id": "e81ab6f2-b9c1-4b37-9946-15e31d9808dd",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 43.1,
+    "weightTo": 46
+  },
+  {
+    "id": "0b0d7c1f-5b24-4887-aee8-f5cd5b5cd74b",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 46.1,
+    "weightTo": 49
+  },
+  {
+    "id": "9f422729-adcf-4b08-877c-7adf4dea808d",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 49.1,
+    "weightTo": 52
+  },
+  {
+    "id": "9f422729-adcf-4b08-877c-7adf4dea808d",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 52,
+    "weightTo": 999
+  },
+  {
+    "id": "85f28e17-ae53-434c-a37c-3891702db097",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 12,
+    "ageTo": 13,
+    "weightFrom": 0,
+    "weightTo": 37
+  },
+  {
+    "id": "8ceb7927-568d-4a51-97dd-43a335838b9a",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 12,
+    "ageTo": 13,
+    "weightFrom": 37.1,
+    "weightTo": 40
+  },
+  {
+    "id": "3ee36c92-f701-43a4-864e-2c282cf3e397",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 12,
+    "ageTo": 13,
+    "weightFrom": 40.1,
+    "weightTo": 43
+  },
+  {
+    "id": "ce6073a9-a68e-4626-beee-5773c57bf95a",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 12,
+    "ageTo": 13,
+    "weightFrom": 43.1,
+    "weightTo": 46
+  },
+  {
+    "id": "02963f0d-20ad-47da-badf-6bf67bd68b10",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 12,
+    "ageTo": 13,
+    "weightFrom": 46.1,
+    "weightTo": 49
+  },
+  {
+    "id": "9e7a231b-eb2f-4ab1-ba5a-e805bc7089ab",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 12,
+    "ageTo": 13,
+    "weightFrom": 49.1,
+    "weightTo": 52
+  },
+  {
+    "id": "e699e92c-6bb9-4af7-92e7-a9aa2e424627",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 12,
+    "ageTo": 13,
+    "weightFrom": 52.1,
+    "weightTo": 55
+  },
+  {
+    "id": "d6bc9e1f-ed52-47f2-8319-72b7a0e9dd6b",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 12,
+    "ageTo": 13,
+    "weightFrom": 55.1,
+    "weightTo": 58
+  },
+  {
+    "id": "8fda6071-1773-4713-a842-728ee1c28cc8",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 12,
+    "ageTo": 13,
+    "weightFrom": 58.1,
+    "weightTo": 61
+  },
+  {
+    "id": "e38f8f15-31ec-42af-b2c3-17f700d1ae2c",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 12,
+    "ageTo": 13,
+    "weightFrom": 61.1,
+    "weightTo": 64
+  },
+  {
+    "id": "ea8c3fd6-968e-431f-a7ac-3d8a031750fa",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 12,
+    "ageTo": 13,
+    "weightFrom": 64.1,
+    "weightTo": 67
+  },
+  {
+    "id": "ea8c3fd6-968e-431f-a7ac-3d8a031750fa",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 12,
+    "ageTo": 13,
+    "weightFrom": 67,
+    "weightTo": 999
+  },
+  {
+    "id": "f1573f7e-0c6d-4e70-bd13-b7cb5e460161",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 0,
+    "weightTo": 43
+  },
+  {
+    "id": "620f2c4f-ffba-406b-bed2-69c3f0e01125",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 43.1,
+    "weightTo": 46
+  },
+  {
+    "id": "4a54cf20-5aaa-4ab6-ae95-79adb33100b0",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 46.1,
+    "weightTo": 49
+  },
+  {
+    "id": "bd5d130c-4b36-4077-91f0-8777752ff496",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 49.1,
+    "weightTo": 52
+  },
+  {
+    "id": "b17d9817-0c92-4d65-a8c9-0ebcf8bdd9cd",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 52.1,
+    "weightTo": 55
+  },
+  {
+    "id": "1b7d2b0d-7ed3-4aba-8867-d4d522039ca8",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 55.1,
+    "weightTo": 58
+  },
+  {
+    "id": "17338d5f-9216-4f9f-b900-f927296814b6",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 58.1,
+    "weightTo": 61
+  },
+  {
+    "id": "392fe9c4-c191-46f6-b650-ef11a0e14909",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 61.1,
+    "weightTo": 64
+  },
+  {
+    "id": "fa6b6738-261a-40f9-8a61-a78daa7401fe",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 64.1,
+    "weightTo": 67
+  },
+  {
+    "id": "67a7795b-6550-4902-b00e-58efb4062d83",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 67.1,
+    "weightTo": 70
+  },
+  {
+    "id": "4e9768e9-be47-4663-88fa-123fe0ded11a",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 70.1,
+    "weightTo": 72.5
+  },
+  {
+    "id": "bed8c709-9f9e-4ed4-b4c3-3315b57dfefd",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 72.6,
+    "weightTo": 76
+  },
+  {
+    "id": "bed8c709-9f9e-4ed4-b4c3-3315b57dfefd",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 76,
+    "weightTo": 999
+  },
+  {
+    "id": "904fdbcf-a2f0-4472-b457-d3df1c9ca872",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 0,
+    "weightTo": 54
+  },
+  {
+    "id": "782a45c9-2cbd-4010-9bd9-76f763b21940",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 54.1,
+    "weightTo": 57
+  },
+  {
+    "id": "4720c62f-e162-43bb-ab51-1960f03c604e",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 57.1,
+    "weightTo": 60
+  },
+  {
+    "id": "67df5e40-bd91-4868-a652-ddbb5f9a45c7",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 60.1,
+    "weightTo": 63.5
+  },
+  {
+    "id": "4effd01c-a60c-4647-8554-0193958bbc88",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 63.6,
+    "weightTo": 67
+  },
+  {
+    "id": "71391b05-68f1-4a7d-b339-c82c0ca61865",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 67.1,
+    "weightTo": 70
+  },
+  {
+    "id": "2f0e133d-9523-47eb-b9e1-c439a84c1cb7",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 70.1,
+    "weightTo": 72.5
+  },
+  {
+    "id": "353be0b8-af85-460d-88e0-8022d446c720",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 72.6,
+    "weightTo": 76
+  },
+  {
+    "id": "d823786b-a830-4c3a-95eb-30d2eb18295e",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 76.1,
+    "weightTo": 79
+  },
+  {
+    "id": "e1f4f51e-63b2-4c71-8c7f-f87cae0e337e",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 79.1,
+    "weightTo": 83
+  },
+  {
+    "id": "a8f919fd-6395-4d3f-8973-50efa5a72814",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 83.1,
+    "weightTo": 86
+  },
+  {
+    "id": "fbf57d3c-f9c2-40c0-ae2f-ee62ea2d12ec",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 86.1,
+    "weightTo": 90
+  },
+  {
+    "id": "d6ff3c5f-2a84-49b3-ae5d-8a5b081ce00a",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 90.1,
+    "weightTo": 95
+  },
+  {
+    "id": "d6ff3c5f-2a84-49b3-ae5d-8a5b081ce00a",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 95,
+    "weightTo": 999
+  },
+  {
+    "id": "48c7ca98-6689-440c-b5c2-5ddefdafc681",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 0,
+    "weightTo": 54
+  },
+  {
+    "id": "f3255c83-0347-40e8-8dca-edd798d9866f",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 54.1,
+    "weightTo": 57
+  },
+  {
+    "id": "0b447ba8-303e-4cee-bf7a-38c65f4d7d16",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 57.1,
+    "weightTo": 60
+  },
+  {
+    "id": "7b14056f-ea86-47c9-b2c5-4e24c786476e",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 60.1,
+    "weightTo": 63.5
+  },
+  {
+    "id": "a5c43ff3-01d5-46d1-8a22-6cd625e9ee34",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 63.6,
+    "weightTo": 67
+  },
+  {
+    "id": "e0bb63d2-fa22-4685-a49d-d085f29baf2b",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 67.1,
+    "weightTo": 70
+  },
+  {
+    "id": "c37a9890-aaf3-4e4e-8a83-fb30fddbd8bd",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 70.1,
+    "weightTo": 72.5
+  },
+  {
+    "id": "5aaf0b3d-f4ae-472d-9703-959452d35ed5",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 72.6,
+    "weightTo": 76
+  },
+  {
+    "id": "b5c744e3-ba92-4710-a08c-be4425e43618",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 76.1,
+    "weightTo": 79
+  },
+  {
+    "id": "93d8403e-2c1c-450f-b346-fd2ab4f5f6cd",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 79.1,
+    "weightTo": 83
+  },
+  {
+    "id": "340d23d2-804e-4f54-90ef-5d9f05487b20",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 83.1,
+    "weightTo": 86
+  },
+  {
+    "id": "0eed9b64-fc0e-4fbb-9a7f-1d600770a8b8",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 86.1,
+    "weightTo": 90
+  },
+  {
+    "id": "9c244296-b21f-4e0e-8f39-75fd596a6bae",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 90.1,
+    "weightTo": 95
+  },
+  {
+    "id": "9c244296-b21f-4e0e-8f39-75fd596a6bae",
+    "sex": "men",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 95,
+    "weightTo": 999
+  },
+  {
+    "id": "f839ae00-bc3d-47e6-9804-1269cabbb26c",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 6,
+    "ageTo": 7,
+    "weightFrom": 0,
+    "weightTo": 22
+  },
+  {
+    "id": "6038327a-245f-4bc1-961f-3dbf4cac2e9c",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 6,
+    "ageTo": 7,
+    "weightFrom": 22.1,
+    "weightTo": 25
+  },
+  {
+    "id": "5b219009-8c8b-451c-af3c-41f261165f36",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 6,
+    "ageTo": 7,
+    "weightFrom": 25.1,
+    "weightTo": 28
+  },
+  {
+    "id": "73cdc9d7-5e89-42e2-98f3-6fb13f02c012",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 6,
+    "ageTo": 7,
+    "weightFrom": 28.1,
+    "weightTo": 31
+  },
+  {
+    "id": "0f913c29-e2d8-4f71-89d6-90fb5c7b7d07",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 6,
+    "ageTo": 7,
+    "weightFrom": 31.1,
+    "weightTo": 34
+  },
+  {
+    "id": "0f913c29-e2d8-4f71-89d6-90fb5c7b7d07",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 6,
+    "ageTo": 7,
+    "weightFrom": 34,
+    "weightTo": 999
+  },
+  {
+    "id": "d63291bd-4098-4f80-8e9f-156dad8b4696",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 8,
+    "ageTo": 9,
+    "weightFrom": 0,
+    "weightTo": 22
+  },
+  {
+    "id": "a45e228f-aa54-4b6d-8d37-1d43c5d7e0b1",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 8,
+    "ageTo": 9,
+    "weightFrom": 22.1,
+    "weightTo": 25
+  },
+  {
+    "id": "3c7a0763-5edc-4162-a681-c29b9a66a2a3",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 8,
+    "ageTo": 9,
+    "weightFrom": 25.1,
+    "weightTo": 28
+  },
+  {
+    "id": "a57b232c-da1a-4d41-91fd-b826ed42073d",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 8,
+    "ageTo": 9,
+    "weightFrom": 28.1,
+    "weightTo": 31
+  },
+  {
+    "id": "a73bdc61-fb1a-4e7e-beff-e84bca2f96e8",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 8,
+    "ageTo": 9,
+    "weightFrom": 31.1,
+    "weightTo": 34
+  },
+  {
+    "id": "a73bdc61-fb1a-4e7e-beff-e84bca2f96e8",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 8,
+    "ageTo": 9,
+    "weightFrom": 34,
+    "weightTo": 999
+  },
+  {
+    "id": "cc03b606-04bb-4c0d-a280-354740e6c293",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 0,
+    "weightTo": 28
+  },
+  {
+    "id": "118c2a4d-2b55-4803-9adb-2d4790bf2569",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 28.1,
+    "weightTo": 31
+  },
+  {
+    "id": "b8b71209-da21-4074-8c2f-d43628bffeae",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 31.1,
+    "weightTo": 34
+  },
+  {
+    "id": "31efab24-81e6-44e8-957e-697a44fec782",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 34.1,
+    "weightTo": 37
+  },
+  {
+    "id": "87b8cc48-7326-47fc-88f4-794d1c6ff41d",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 37.1,
+    "weightTo": 40
+  },
+  {
+    "id": "412aa046-9a70-46c7-a20d-72c66931ad84",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 40.1,
+    "weightTo": 43
+  },
+  {
+    "id": "ac2e571c-37a5-40b4-b8b9-54081ff14ebb",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 43.1,
+    "weightTo": 46
+  },
+  {
+    "id": "ac2e571c-37a5-40b4-b8b9-54081ff14ebb",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 46,
+    "weightTo": 999
+  },
+  {
+    "id": "a321eb8a-a736-4182-ae46-8462c731eef3",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 12,
+    "ageTo": 14,
+    "weightFrom": 0,
+    "weightTo": 35
+  },
+  {
+    "id": "de792e40-9d46-417a-b0fe-14c185d01cae",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 12,
+    "ageTo": 14,
+    "weightFrom": 35.1,
+    "weightTo": 40
+  },
+  {
+    "id": "bc512b29-af9b-430c-a9c9-20c73dea7d9d",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 12,
+    "ageTo": 14,
+    "weightFrom": 40.1,
+    "weightTo": 45
+  },
+  {
+    "id": "0f93ae31-6ea6-4248-ab2f-a852b9b48648",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 12,
+    "ageTo": 14,
+    "weightFrom": 45.1,
+    "weightTo": 50
+  },
+  {
+    "id": "0a0d48d8-2aa2-4c52-b518-dd321b4efc6c",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 12,
+    "ageTo": 14,
+    "weightFrom": 50.1,
+    "weightTo": 55
+  },
+  {
+    "id": "0a0d48d8-2aa2-4c52-b518-dd321b4efc6c",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 12,
+    "ageTo": 14,
+    "weightFrom": 55,
+    "weightTo": 999
+  },
+  {
+    "id": "67e56f93-cf46-46ad-93ed-7f90f3980aad",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 15,
+    "ageTo": 17,
+    "weightFrom": 0,
+    "weightTo": 45
+  },
+  {
+    "id": "cf4a1ac8-ab09-4d58-811e-2ac6a7daf020",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 15,
+    "ageTo": 17,
+    "weightFrom": 45.1,
+    "weightTo": 50
+  },
+  {
+    "id": "a6f61c59-1ab2-43b5-b18c-70110df9bc07",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 15,
+    "ageTo": 17,
+    "weightFrom": 50.1,
+    "weightTo": 55
+  },
+  {
+    "id": "2f65d7e8-ff97-424c-b33f-836d19e33161",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 15,
+    "ageTo": 17,
+    "weightFrom": 55.1,
+    "weightTo": 60
+  },
+  {
+    "id": "98faac33-cc55-404d-8e4d-6af3e3dfa30d",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 15,
+    "ageTo": 17,
+    "weightFrom": 60.1,
+    "weightTo": 65
+  },
+  {
+    "id": "98faac33-cc55-404d-8e4d-6af3e3dfa30d",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 15,
+    "ageTo": 17,
+    "weightFrom": 65,
+    "weightTo": 999
+  },
+  {
+    "id": "5fd6415f-2c1d-4413-b420-02ecbff414df",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 0,
+    "weightTo": 55
+  },
+  {
+    "id": "f4032d2d-e9aa-49dd-a722-906781ee2128",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 55.1,
+    "weightTo": 60
+  },
+  {
+    "id": "73c9b80b-a8dc-4376-9ac7-84a2a66096b3",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 60.1,
+    "weightTo": 65
+  },
+  {
+    "id": "86ecf3d6-7cd4-45d3-9e22-345ce430e0cd",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 65.1,
+    "weightTo": 70
+  },
+  {
+    "id": "86ecf3d6-7cd4-45d3-9e22-345ce430e0cd",
+    "sex": "women",
+    "type": "light",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 70,
+    "weightTo": 999
+  },
+  {
+    "id": "276b7bda-78a9-4640-a399-07ab0ec15427",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 0,
+    "weightTo": 31
+  },
+  {
+    "id": "fa6a8708-198d-47e9-840d-7656a0b0aeab",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 31.1,
+    "weightTo": 34
+  },
+  {
+    "id": "791b8d72-cd7d-41c3-abd2-6d4d155fd2f0",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 34.1,
+    "weightTo": 37
+  },
+  {
+    "id": "964c0e87-1d0d-4f56-9aef-6e813ef47341",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 37.1,
+    "weightTo": 40
+  },
+  {
+    "id": "2beb3d1b-7261-4d48-8122-7c06f9521544",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 40.1,
+    "weightTo": 43
+  },
+  {
+    "id": "a21c6362-3a19-4e70-80ce-54e1d5b5189d",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 43.1,
+    "weightTo": 46
+  },
+  {
+    "id": "73f2a4f4-efa3-4062-85be-d36dde28aa20",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 46.1,
+    "weightTo": 49
+  },
+  {
+    "id": "edf54bc0-b583-4fcf-afab-0e8163e547f2",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 49.1,
+    "weightTo": 52
+  },
+  {
+    "id": "edf54bc0-b583-4fcf-afab-0e8163e547f2",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 10,
+    "ageTo": 11,
+    "weightFrom": 52,
+    "weightTo": 999
+  },
+  {
+    "id": "ca497e88-745e-412c-a304-5fa7d8da9785",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 12,
+    "ageTo": 13,
+    "weightFrom": 0,
+    "weightTo": 34
+  },
+  {
+    "id": "e968c58a-663a-4cfd-9f26-76dd51a71044",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 12,
+    "ageTo": 13,
+    "weightFrom": 34.1,
+    "weightTo": 37
+  },
+  {
+    "id": "47de6a3b-04af-42bb-b64b-ebeaca329b6a",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 12,
+    "ageTo": 13,
+    "weightFrom": 37.1,
+    "weightTo": 40
+  },
+  {
+    "id": "7e17200d-2858-4e04-8bdb-909bb81d31f6",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 12,
+    "ageTo": 13,
+    "weightFrom": 40.1,
+    "weightTo": 43
+  },
+  {
+    "id": "e37cc6b1-fcd2-424a-b5db-8070a2bfa8c2",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 12,
+    "ageTo": 13,
+    "weightFrom": 43.1,
+    "weightTo": 46
+  },
+  {
+    "id": "89558054-3ee2-4771-b8ad-5aa753ef3a51",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 12,
+    "ageTo": 13,
+    "weightFrom": 46.1,
+    "weightTo": 49
+  },
+  {
+    "id": "a8db7b53-105f-4291-82f3-a1bdb49075be",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 12,
+    "ageTo": 13,
+    "weightFrom": 49.1,
+    "weightTo": 52
+  },
+  {
+    "id": "3a7aff6c-794a-4485-b4a3-0c9fac45f9ea",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 12,
+    "ageTo": 13,
+    "weightFrom": 52.1,
+    "weightTo": 55
+  },
+  {
+    "id": "3a7aff6c-794a-4485-b4a3-0c9fac45f9ea",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 12,
+    "ageTo": 13,
+    "weightFrom": 55,
+    "weightTo": 999
+  },
+  {
+    "id": "ea89c55d-f922-4c8e-bbca-4b3de2e60e2b",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 0,
+    "weightTo": 40
+  },
+  {
+    "id": "0fd97768-9dc0-44b7-a378-e2bd0565580c",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 40.1,
+    "weightTo": 43
+  },
+  {
+    "id": "a50d4270-cf3a-406c-b659-a2d7e20adc2f",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 43.1,
+    "weightTo": 46
+  },
+  {
+    "id": "d9132644-2395-4d55-9497-131c5a1b5134",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 46.1,
+    "weightTo": 49
+  },
+  {
+    "id": "22de58b0-c7ee-4336-bbac-59450cd3695b",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 49.1,
+    "weightTo": 52
+  },
+  {
+    "id": "9dc2c894-aecc-4b8f-b235-c238dc1a2074",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 52.1,
+    "weightTo": 55
+  },
+  {
+    "id": "492bc756-72c0-4714-a362-99ca9eef4216",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 55.1,
+    "weightTo": 58
+  },
+  {
+    "id": "6cf05b4c-79f3-470d-b400-14415b70663f",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 58.1,
+    "weightTo": 61
+  },
+  {
+    "id": "b4656db0-ee55-4db8-a954-3f9c0df96024",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 61.1,
+    "weightTo": 64
+  },
+  {
+    "id": "bd5a863b-5a3f-45d7-b7f1-493ff2a094b6",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 64.1,
+    "weightTo": 67
+  },
+  {
+    "id": "bd5a863b-5a3f-45d7-b7f1-493ff2a094b6",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 14,
+    "ageTo": 15,
+    "weightFrom": 67,
+    "weightTo": 999
+  },
+  {
+    "id": "3c15a10f-339c-4806-bcff-ddd77f0ff7ad",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 0,
+    "weightTo": 46
+  },
+  {
+    "id": "5a10a774-ec7e-4cde-aaef-df6b853d976e",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 46.1,
+    "weightTo": 48
+  },
+  {
+    "id": "e1799a3e-812b-4473-903e-f928b7b61932",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 48.1,
+    "weightTo": 50
+  },
+  {
+    "id": "a23d2303-c421-400d-b6ae-34d306be7acb",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 50.1,
+    "weightTo": 54
+  },
+  {
+    "id": "c23890fb-2981-4d15-aa2b-c42ac5ffd364",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 54.1,
+    "weightTo": 57
+  },
+  {
+    "id": "96c696ce-6082-4032-8e1b-664e0c67110a",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 57.1,
+    "weightTo": 60
+  },
+  {
+    "id": "fa13933f-31f1-4700-89e4-da86b89f85b5",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 60.1,
+    "weightTo": 63
+  },
+  {
+    "id": "c1badd03-f3ae-4272-8bec-360c3a8c0718",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 63.1,
+    "weightTo": 5
+  },
+  {
+    "id": "529fb1fb-3e8d-4f27-9fef-04e7b5a2f532",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 5.1,
+    "weightTo": 67
+  },
+  {
+    "id": "fd0011d8-d755-42ae-85cc-1ffc412f93db",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 67.1,
+    "weightTo": 70
+  },
+  {
+    "id": "3aa09742-dde5-4cb2-b726-cbc097e113ee",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 70.1,
+    "weightTo": 72.5
+  },
+  {
+    "id": "7a6239e6-b580-456f-a7b4-a8de7711cad6",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 72.6,
+    "weightTo": 76
+  },
+  {
+    "id": "7a6239e6-b580-456f-a7b4-a8de7711cad6",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 16,
+    "ageTo": 17,
+    "weightFrom": 76,
+    "weightTo": 999
+  },
+  {
+    "id": "4b488e88-8ad9-4237-8b97-3261e9a44163",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 0,
+    "weightTo": 46
+  },
+  {
+    "id": "568968ec-508e-4a75-9c8d-352095de6ed0",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 46.1,
+    "weightTo": 48
+  },
+  {
+    "id": "158abf85-672d-4924-ad74-fb1aa9c82c91",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 48.1,
+    "weightTo": 50
+  },
+  {
+    "id": "c6c93ecc-4446-442e-966e-16c969c345b2",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 50.1,
+    "weightTo": 54
+  },
+  {
+    "id": "87bc5f1c-be5e-460a-b675-d3361808f052",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 54.1,
+    "weightTo": 57
+  },
+  {
+    "id": "27247da7-1eaf-410b-9a34-e688870d66e5",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 57.1,
+    "weightTo": 60
+  },
+  {
+    "id": "cf05cd8d-a16e-44ad-9030-452c2ea99c8a",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 60.1,
+    "weightTo": 63.5
+  },
+  {
+    "id": "7a460910-4c8a-411f-8104-b8d2082739aa",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 63.6,
+    "weightTo": 67
+  },
+  {
+    "id": "e1ef89ba-fb1a-450d-b8da-2826313243b6",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 67.1,
+    "weightTo": 70
+  },
+  {
+    "id": "ce6eaf83-3146-4531-8c34-42fa92f25722",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 70.1,
+    "weightTo": 72.5
+  },
+  {
+    "id": "99c562e0-e941-44e0-82dc-d2eff23e8365",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 72.6,
+    "weightTo": 76
+  },
+  {
+    "id": "99c562e0-e941-44e0-82dc-d2eff23e8365",
+    "sex": "women",
+    "type": "full",
+    "ageFrom": 18,
+    "ageTo": 39,
+    "weightFrom": 76,
+    "weightTo": 999
   }
-}
+]

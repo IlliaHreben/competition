@@ -24,7 +24,6 @@ Category.init({
   age        : { type: Sequelize.INTEGER, allowNull: false },
   weightFrom : { type: Sequelize.FLOAT, allowNull: false },
   weightTo   : { type: Sequelize.FLOAT, allowNull: false },
-  group      : { type: Sequelize.ENUM([ 'A', 'B' ]) },
 
   createdAt : { type: Sequelize.DATE, allowNull: false },
   deletedAt : { type: Sequelize.DATE, allowNull: true },
