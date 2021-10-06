@@ -52,7 +52,7 @@
   "women": {
     "light": [
       {
-        "age": { "from": 8, "to": 9 },
+        "age": { "from": 6, "to": 7 },
         "weight": [22, 25, 28, 31, 34]
       },
       {
