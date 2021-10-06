@@ -1,9 +1,13 @@
 import sequelize from './sequelizeSingleton.js';
 
-import './models/User';
-import './models/Action';
+import './models/Category';
+import './models/Club';
+import './models/Coach';
+import './models/Fighter';
+import './models/Card';
+import './models/Cross';
 
-for (const modelName in sequelize.models) { // eslint-disable-line
+for (const modelName in sequelize.models) {
   const model = sequelize.models[modelName];
 
   if (model.initRelation) {
