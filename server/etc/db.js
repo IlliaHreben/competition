@@ -16,9 +16,9 @@ const config = {
   ...credentials,
   dialect        : 'postgres',
   pool,
-  logging        : process.env.DEBUG && console.log,
+  logging        : process.env.DEBUG === 'true' && console.log,
   dialectOptions : {
     multipleStatements: isTest
   }
 };
-export default config;
+module.exports = config;
