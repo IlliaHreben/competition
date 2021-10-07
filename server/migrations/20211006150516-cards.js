@@ -11,10 +11,10 @@ const up = async (queryInterface, Sequelize) => {
       clubId          : { type: Sequelize.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Clubs', key: 'id' }, allowNull: false },
       secondaryClubId : { type: Sequelize.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Clubs', key: 'id' }, allowNull: true },
       weight          : { type: Sequelize.FLOAT, allowNull: false },
-      group           : { type: Sequelize.ENUM([ 'A', 'B' ]), allowNull: false, defaultValue: 'B' },
+      realWeight      : { type: Sequelize.FLOAT, allowNull: false },
+      group           : { type: Sequelize.ENUM([ 'A', 'B' ]), allowNull: true },
       city            : { type: Sequelize.STRING, allowNull: false },
       birthDate       : { type: Sequelize.DATE, allowNull: false },
-      categoryName    : { type: Sequelize.STRING, allowNull: false },
       categoryId      : { type: Sequelize.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Fighters', key: 'id' }, allowNull: false },
 
       createdAt : { type: Sequelize.DATE, allowNull: false },

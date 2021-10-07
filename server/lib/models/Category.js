@@ -19,6 +19,7 @@ export default class Category extends Base {
 Category.init({
   id: { type: Sequelize.UUID, defaultValue: Sequelize.UUIDV4, primaryKey: true },
 
+  name       : { type: Sequelize.STRING, allowNull: false },
   sex        : { type: Sequelize.ENUM([ 'men', 'women' ]), allowNull: false },
   type       : { type: Sequelize.ENUM([ 'full', 'light' ]), allowNull: false },
   age        : { type: Sequelize.INTEGER, allowNull: false },

@@ -1,6 +1,6 @@
 /* eslint-disable import/no-commonjs */
 // const categories = require('../etc/categories.json');
-const categories = require('../etc/categories.json');
+const categories = require('../fixtures/categories.json');
 
 module.exports = {
   up: async (queryInterface) => {

@@ -3,17 +3,15 @@ const up = async (queryInterface, Sequelize) => {
   const transaction = await queryInterface.sequelize.transaction();
 
   try {
-    await queryInterface.createTable('Categories', {
+    await queryInterface.createTable('Competitions', {
       id: { type: Sequelize.UUID, defaultValue: Sequelize.UUIDV4, primaryKey: true },
 
-      name       : { type: Sequelize.STRING, allowNull: false },
-      sex        : { type: Sequelize.ENUM([ 'men', 'women' ]), allowNull: false },
-      type       : { type: Sequelize.ENUM([ 'full', 'light' ]), allowNull: false },
-      ageFrom    : { type: Sequelize.INTEGER, allowNull: false },
-      ageTo      : { type: Sequelize.INTEGER, allowNull: false },
-      weightFrom : { type: Sequelize.FLOAT, allowNull: false },
-      weightTo   : { type: Sequelize.FLOAT, allowNull: false },
-      weightName : { type: Sequelize.STRING, allowNull: false },
+      name         : { type: Sequelize.STRING, allowNull: false },
+      description  : { type: Sequelize.STRING, allowNull: false },
+      startDate    : { type: Sequelize.DATE, allowNull: false },
+      endDate      : { type: Sequelize.DATE, allowNull: false },
+      ringsCount   : { type: Sequelize.INTEGER, allowNull: false },
+      tatamisCount : { type: Sequelize.INTEGER, allowNull: false },
 
       createdAt : { type: Sequelize.DATE, allowNull: false },
       deletedAt : { type: Sequelize.DATE, allowNull: true },
@@ -32,7 +30,7 @@ const down = async (queryInterface) => {
   const transaction = await queryInterface.sequelize.transaction();
 
   try {
-    await queryInterface.dropTable('Categories');
+    await queryInterface.dropTable('Competitions');
 
     await transaction.commit();
   } catch (error) {

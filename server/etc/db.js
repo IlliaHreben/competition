@@ -21,4 +21,4 @@ const config = {
     multipleStatements: isTest
   }
 };
-module.exports = config;
+export default config;

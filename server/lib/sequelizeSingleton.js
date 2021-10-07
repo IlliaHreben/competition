@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize';
-import config    from '../etc/db.js';
+import config    from '../config/db.js';
 
 export const Op = Sequelize.Op;
 
