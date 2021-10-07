@@ -1,1820 +1,2426 @@
 [
   {
-    "id": "043a855f-4290-4061-afae-9b7daf7e91c5",
+    "id": "41f4c496-c90d-460d-a6bd-4882dfa60831",
     "sex": "men",
     "type": "light",
     "ageFrom": 6,
     "ageTo": 7,
     "weightFrom": 0,
-    "weightTo": 22
+    "weightTo": 22,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "d48403cd-2ad7-461a-94b7-dd0da13932c9",
+    "id": "8eaf6dfc-9571-404d-bb38-450889c9c9d7",
     "sex": "men",
     "type": "light",
     "ageFrom": 6,
     "ageTo": 7,
     "weightFrom": 22.1,
-    "weightTo": 25
+    "weightTo": 25,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "84e64582-5de5-45d3-8717-45cdcbfca26a",
+    "id": "a61cd3f8-cbf6-41de-b3f7-df8db8e03a5c",
     "sex": "men",
     "type": "light",
     "ageFrom": 6,
     "ageTo": 7,
     "weightFrom": 25.1,
-    "weightTo": 28
+    "weightTo": 28,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "f0af7d15-2e7a-41c7-a357-14e13f4bf447",
+    "id": "d2e921dd-1249-4cd3-86d5-e9487a2f2138",
     "sex": "men",
     "type": "light",
     "ageFrom": 6,
     "ageTo": 7,
     "weightFrom": 28.1,
-    "weightTo": 31
+    "weightTo": 31,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "8546d0a3-240a-4d1e-82b1-a10e2ba0c0d7",
+    "id": "aa75c6c3-c459-422e-a631-4182ce0ee62e",
     "sex": "men",
     "type": "light",
     "ageFrom": 6,
     "ageTo": 7,
     "weightFrom": 31.1,
-    "weightTo": 34
+    "weightTo": 34,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "8546d0a3-240a-4d1e-82b1-a10e2ba0c0d7",
+    "id": "3dee3aa9-8d23-4899-af1f-c326d86314c6",
     "sex": "men",
     "type": "light",
     "ageFrom": 6,
     "ageTo": 7,
     "weightFrom": 34,
-    "weightTo": 999
+    "weightTo": 999,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "ed557894-46c1-4112-9664-ffbb79e51775",
+    "id": "39ced6e1-fefb-4701-a32a-2dba90633e6d",
     "sex": "men",
     "type": "light",
     "ageFrom": 8,
     "ageTo": 9,
     "weightFrom": 0,
-    "weightTo": 22
+    "weightTo": 22,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "c3fbbace-a607-4015-a185-959239ed5c9b",
+    "id": "94586f02-f430-44a1-adf7-30872b7bebd6",
     "sex": "men",
     "type": "light",
     "ageFrom": 8,
     "ageTo": 9,
     "weightFrom": 22.1,
-    "weightTo": 25
+    "weightTo": 25,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "a4d5b969-edf7-4531-871f-f85ecdb45878",
+    "id": "d57f499f-0d71-4edf-be0e-60ba37fdfc31",
     "sex": "men",
     "type": "light",
     "ageFrom": 8,
     "ageTo": 9,
     "weightFrom": 25.1,
-    "weightTo": 28
+    "weightTo": 28,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "6a0851c3-9c18-405a-b2b9-9fda0ac8fd0a",
+    "id": "d6ea930f-8781-4450-94a9-c6885304122d",
     "sex": "men",
     "type": "light",
     "ageFrom": 8,
     "ageTo": 9,
     "weightFrom": 28.1,
-    "weightTo": 31
+    "weightTo": 31,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "72180c10-0863-4433-a996-18a765336d6e",
+    "id": "ebf60771-33df-4de8-8585-4d357569e52d",
     "sex": "men",
     "type": "light",
     "ageFrom": 8,
     "ageTo": 9,
     "weightFrom": 31.1,
-    "weightTo": 34
+    "weightTo": 34,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "da8f5dbc-0ff1-4043-ba1a-80d12f1d569a",
+    "id": "9dbce007-a70b-43b5-b5fb-1e073ba49b21",
     "sex": "men",
     "type": "light",
     "ageFrom": 8,
     "ageTo": 9,
     "weightFrom": 34.1,
-    "weightTo": 37
+    "weightTo": 37,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "da8f5dbc-0ff1-4043-ba1a-80d12f1d569a",
+    "id": "c688feca-b053-4524-a5ab-9b861153c574",
     "sex": "men",
     "type": "light",
     "ageFrom": 8,
     "ageTo": 9,
     "weightFrom": 37,
-    "weightTo": 999
+    "weightTo": 999,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "071f57e3-b53c-45a8-9fa2-35964ee69027",
+    "id": "920883e5-5214-4597-a2a6-0df141c6d3da",
     "sex": "men",
     "type": "light",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 0,
-    "weightTo": 28
+    "weightTo": 28,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "60826575-9f25-4a5b-83ac-8ba2c519d294",
+    "id": "1b105caf-7d63-44a9-ae7c-f15b541d9adf",
     "sex": "men",
     "type": "light",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 28.1,
-    "weightTo": 31
+    "weightTo": 31,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "9211180f-ae39-4fab-982d-a6ef4a747656",
+    "id": "792e2912-cb8a-42f5-965e-18be847946a2",
     "sex": "men",
     "type": "light",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 31.1,
-    "weightTo": 34
+    "weightTo": 34,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "1071400c-c01f-44c4-8379-d2dd955b7415",
+    "id": "26cc4282-566d-4d20-9d2e-f0f01aa0cade",
     "sex": "men",
     "type": "light",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 34.1,
-    "weightTo": 37
+    "weightTo": 37,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "93d7c243-4ca7-4aa9-9e4c-6c9af2517ca4",
+    "id": "601ee214-b8a0-40b5-b29c-ec86ef948851",
     "sex": "men",
     "type": "light",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 37.1,
-    "weightTo": 40
+    "weightTo": 40,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "958c571d-19d1-4836-b008-e1f48f6e6e89",
+    "id": "46ec5642-9e97-4b46-a45f-c4067266ef66",
     "sex": "men",
     "type": "light",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 40.1,
-    "weightTo": 43
+    "weightTo": 43,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "a34cc4b1-4133-4e2c-9a04-107f60b442b4",
+    "id": "7fb3dd20-c8cf-4f47-8aad-23f80bfec228",
     "sex": "men",
     "type": "light",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 43.1,
-    "weightTo": 46
+    "weightTo": 46,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "f0026dd9-e9fe-47e7-a342-95e93d2ac565",
+    "id": "b4aa42fb-1a97-445e-a9c9-6fc8e912b677",
     "sex": "men",
     "type": "light",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 46.1,
-    "weightTo": 50
+    "weightTo": 50,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "f0026dd9-e9fe-47e7-a342-95e93d2ac565",
+    "id": "d93e23b7-cb98-4c2f-8d77-8a3030d38cb2",
     "sex": "men",
     "type": "light",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 50,
-    "weightTo": 999
+    "weightTo": 999,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "147eb7be-4610-483a-b67e-347f1e0fe677",
+    "id": "b9af761e-b429-4087-bae5-deccd7afcefb",
     "sex": "men",
     "type": "light",
     "ageFrom": 12,
     "ageTo": 14,
     "weightFrom": 0,
-    "weightTo": 35
+    "weightTo": 35,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "3c763422-1be3-4ac2-9835-712272b16875",
+    "id": "7a681a9c-2f72-45ae-8c8f-c0c2518e47f2",
     "sex": "men",
     "type": "light",
     "ageFrom": 12,
     "ageTo": 14,
     "weightFrom": 35.1,
-    "weightTo": 40
+    "weightTo": 40,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "f387a3e7-8774-4c15-b5b3-6fd7d8a5e758",
+    "id": "6abcd287-0bfd-4c1c-bdb1-8f44f00d566e",
     "sex": "men",
     "type": "light",
     "ageFrom": 12,
     "ageTo": 14,
     "weightFrom": 40.1,
-    "weightTo": 45
+    "weightTo": 45,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "d8100912-6095-4e5b-8afa-38b143fd5268",
+    "id": "2ad10808-1047-479c-bd0d-6753c050dd0b",
     "sex": "men",
     "type": "light",
     "ageFrom": 12,
     "ageTo": 14,
     "weightFrom": 45.1,
-    "weightTo": 50
+    "weightTo": 50,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "0334108d-8d11-44cb-a390-17b6c495393c",
+    "id": "b2742aec-de48-4e02-88f8-b2d373c7c9f7",
     "sex": "men",
     "type": "light",
     "ageFrom": 12,
     "ageTo": 14,
     "weightFrom": 50.1,
-    "weightTo": 55
+    "weightTo": 55,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "57de4e1f-1eab-4ab7-9bf4-85fa502cffda",
+    "id": "813f667d-ada6-4e6a-b189-1c3aab2a3c01",
     "sex": "men",
     "type": "light",
     "ageFrom": 12,
     "ageTo": 14,
     "weightFrom": 55.1,
-    "weightTo": 60
+    "weightTo": 60,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "59915dd6-bc6c-4b8e-8bbb-88ed2a903cbe",
+    "id": "86a0eaf6-bdf6-4622-932c-2c7da12a4571",
     "sex": "men",
     "type": "light",
     "ageFrom": 12,
     "ageTo": 14,
     "weightFrom": 60.1,
-    "weightTo": 65
+    "weightTo": 65,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "68dd141f-2bec-4ec4-9628-574872812cd2",
+    "id": "0e64e92f-c144-4269-adf3-7befdea8947c",
     "sex": "men",
     "type": "light",
     "ageFrom": 12,
     "ageTo": 14,
     "weightFrom": 65.1,
-    "weightTo": 70
+    "weightTo": 70,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "68dd141f-2bec-4ec4-9628-574872812cd2",
+    "id": "98a1fcb3-046e-4b14-99fa-ba83a739d6cb",
     "sex": "men",
     "type": "light",
     "ageFrom": 12,
     "ageTo": 14,
     "weightFrom": 70,
-    "weightTo": 999
+    "weightTo": 999,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "8c9f54fb-157c-4edc-a90f-1452b0b24334",
+    "id": "8a2f2f38-4097-4b13-a1d8-9f1adc41aaac",
     "sex": "men",
     "type": "light",
     "ageFrom": 15,
     "ageTo": 17,
     "weightFrom": 0,
-    "weightTo": 50
+    "weightTo": 50,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "9fab519e-2648-47be-bbd1-7473e1d2ba39",
+    "id": "9501f7b8-209f-44d1-824f-1d1a8ecea37c",
     "sex": "men",
     "type": "light",
     "ageFrom": 15,
     "ageTo": 17,
     "weightFrom": 50.1,
-    "weightTo": 55
+    "weightTo": 55,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "deefba64-691f-4844-9f75-d72a8d302af4",
+    "id": "26a92455-434d-4702-9df1-11e1c05cfed7",
     "sex": "men",
     "type": "light",
     "ageFrom": 15,
     "ageTo": 17,
     "weightFrom": 55.1,
-    "weightTo": 60
+    "weightTo": 60,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "1f7a6753-1751-4aa5-b848-20aef652bff7",
+    "id": "ccbfe596-3a68-4674-9592-d2d348a63d9f",
     "sex": "men",
     "type": "light",
     "ageFrom": 15,
     "ageTo": 17,
     "weightFrom": 60.1,
-    "weightTo": 65
+    "weightTo": 65,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "0b5e34e2-4c49-4bc4-bd9a-4bea060027fa",
+    "id": "134798e1-7049-4901-95f0-aea210fc059d",
     "sex": "men",
     "type": "light",
     "ageFrom": 15,
     "ageTo": 17,
     "weightFrom": 65.1,
-    "weightTo": 70
+    "weightTo": 70,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "76787132-8c2e-4ffd-8b9d-f0b8bbb1c8cb",
+    "id": "71064c1c-1703-43ea-9829-bf5a6d1a7d53",
     "sex": "men",
     "type": "light",
     "ageFrom": 15,
     "ageTo": 17,
     "weightFrom": 70.1,
-    "weightTo": 75
+    "weightTo": 75,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "3f4b5fe4-3f3c-4a69-9aaf-e03a9c8afb57",
+    "id": "5017bf2b-f8d6-47e8-86f4-f84aa49f0109",
     "sex": "men",
     "type": "light",
     "ageFrom": 15,
     "ageTo": 17,
     "weightFrom": 75.1,
-    "weightTo": 80
+    "weightTo": 80,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "e3c8a629-5039-4de4-a1dc-d43fcdf8e7b2",
+    "id": "94933eaf-920a-4c7a-a460-91a16d85d36e",
     "sex": "men",
     "type": "light",
     "ageFrom": 15,
     "ageTo": 17,
     "weightFrom": 80.1,
-    "weightTo": 85
+    "weightTo": 85,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "e3c8a629-5039-4de4-a1dc-d43fcdf8e7b2",
+    "id": "7aeea26c-8102-4902-ba6e-76ef4ad4918c",
     "sex": "men",
     "type": "light",
     "ageFrom": 15,
     "ageTo": 17,
     "weightFrom": 85,
-    "weightTo": 999
+    "weightTo": 999,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "67b0a3ba-5da0-44ec-b74e-ef504541de08",
+    "id": "5f446927-b3df-4475-b773-d75500bec0c8",
     "sex": "men",
     "type": "light",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 0,
-    "weightTo": 60
+    "weightTo": 60,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "b6c33a66-b090-4f09-a97f-f3e7b4cffd9f",
+    "id": "596574fe-3b13-4280-a42b-ab2edfa27f0b",
     "sex": "men",
     "type": "light",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 60.1,
-    "weightTo": 65
+    "weightTo": 65,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "c4768a21-7de5-442f-ba9f-2ddd6995106a",
+    "id": "0df7ac53-ab50-4cc2-babc-7ae2007a86d7",
     "sex": "men",
     "type": "light",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 65.1,
-    "weightTo": 70
+    "weightTo": 70,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "3fb96c7c-19a2-49dc-b5ae-d9c6ffa0290f",
+    "id": "b5357d41-c817-483e-ab41-3f25f0ea13cc",
     "sex": "men",
     "type": "light",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 70.1,
-    "weightTo": 75
+    "weightTo": 75,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "2829d708-53ef-4d3c-946d-8520ae380486",
+    "id": "51856f8d-baeb-4f73-a6e7-8fd0cb5db9ed",
     "sex": "men",
     "type": "light",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 75.1,
-    "weightTo": 80
+    "weightTo": 80,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "20928e5a-0e09-44cf-b59b-df6c681984a5",
+    "id": "301f542e-72c4-4f37-99e1-b41b15e8647c",
     "sex": "men",
     "type": "light",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 80.1,
-    "weightTo": 85
+    "weightTo": 85,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "9990ec1f-c9a7-47e4-8a87-a3993311158c",
+    "id": "d9380665-e9b5-4540-940e-38d04cad04b7",
     "sex": "men",
     "type": "light",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 85.1,
-    "weightTo": 90
+    "weightTo": 90,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "3bee3fe8-7b7a-40ca-ad6b-0c8e48294c48",
+    "id": "e840654f-209f-4691-ae70-64ef2c816f91",
     "sex": "men",
     "type": "light",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 90.1,
-    "weightTo": 95
+    "weightTo": 95,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "3bee3fe8-7b7a-40ca-ad6b-0c8e48294c48",
+    "id": "2eff6075-b080-48dc-8d4c-d01ba0c6436b",
     "sex": "men",
     "type": "light",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 95,
-    "weightTo": 999
+    "weightTo": 999,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "79c4965f-7783-46fc-b51a-fbcc9bdccd8f",
+    "id": "3ea570e3-5f40-40de-9603-6bee782e95ae",
     "sex": "men",
     "type": "full",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 0,
-    "weightTo": 31
+    "weightTo": 31,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "914adc57-b92c-4ada-b781-6d2ca794cf9b",
+    "id": "6ee04e6a-ea96-4ea9-a851-c31a09f8c803",
     "sex": "men",
     "type": "full",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 31.1,
-    "weightTo": 34
+    "weightTo": 34,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "9033757d-ae47-4552-8943-33f7d8747e91",
+    "id": "caeedf71-045f-45bc-ab54-0b3717f42798",
     "sex": "men",
     "type": "full",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 34.1,
-    "weightTo": 37
+    "weightTo": 37,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "1b5f11c7-8977-4d36-9d23-71fbb6e3d00c",
+    "id": "6dda576c-556c-41c9-8bd8-f491b575810e",
     "sex": "men",
     "type": "full",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 37.1,
-    "weightTo": 40
+    "weightTo": 40,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "a5e4f010-4804-4888-853b-e25b2642d523",
+    "id": "6045e485-bf49-459c-a580-e6f85c6a45cc",
     "sex": "men",
     "type": "full",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 40.1,
-    "weightTo": 43
+    "weightTo": 43,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "e81ab6f2-b9c1-4b37-9946-15e31d9808dd",
+    "id": "14144e2b-e4a1-4dd2-bade-30ebfddde888",
     "sex": "men",
     "type": "full",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 43.1,
-    "weightTo": 46
+    "weightTo": 46,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "0b0d7c1f-5b24-4887-aee8-f5cd5b5cd74b",
+    "id": "34d5234e-d470-4704-8617-93629286cbd9",
     "sex": "men",
     "type": "full",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 46.1,
-    "weightTo": 49
+    "weightTo": 49,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "9f422729-adcf-4b08-877c-7adf4dea808d",
+    "id": "8bea9cc5-8bf5-48a8-9c9c-5fbad39714ec",
     "sex": "men",
     "type": "full",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 49.1,
-    "weightTo": 52
+    "weightTo": 52,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "9f422729-adcf-4b08-877c-7adf4dea808d",
+    "id": "392dc42b-ff8c-473d-9ec3-b358fbbf980a",
     "sex": "men",
     "type": "full",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 52,
-    "weightTo": 999
+    "weightTo": 999,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "85f28e17-ae53-434c-a37c-3891702db097",
+    "id": "10053dee-5f09-4b9b-83f1-541b3a8b2d95",
     "sex": "men",
     "type": "full",
     "ageFrom": 12,
     "ageTo": 13,
     "weightFrom": 0,
-    "weightTo": 37
+    "weightTo": 37,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "8ceb7927-568d-4a51-97dd-43a335838b9a",
+    "id": "786e64e5-e6e8-4219-8d73-2da40d26d637",
     "sex": "men",
     "type": "full",
     "ageFrom": 12,
     "ageTo": 13,
     "weightFrom": 37.1,
-    "weightTo": 40
+    "weightTo": 40,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "3ee36c92-f701-43a4-864e-2c282cf3e397",
+    "id": "1c72708e-d769-4d14-90db-a7f83fe9e27e",
     "sex": "men",
     "type": "full",
     "ageFrom": 12,
     "ageTo": 13,
     "weightFrom": 40.1,
-    "weightTo": 43
+    "weightTo": 43,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "ce6073a9-a68e-4626-beee-5773c57bf95a",
+    "id": "9eb228e8-de3b-4714-89dd-485b0651d2cd",
     "sex": "men",
     "type": "full",
     "ageFrom": 12,
     "ageTo": 13,
     "weightFrom": 43.1,
-    "weightTo": 46
+    "weightTo": 46,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "02963f0d-20ad-47da-badf-6bf67bd68b10",
+    "id": "bbe7b7d9-56c0-472d-8fab-bd34518b0fc2",
     "sex": "men",
     "type": "full",
     "ageFrom": 12,
     "ageTo": 13,
     "weightFrom": 46.1,
-    "weightTo": 49
+    "weightTo": 49,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "9e7a231b-eb2f-4ab1-ba5a-e805bc7089ab",
+    "id": "42c4d40a-feb6-4095-a6fd-c4f1f561ffad",
     "sex": "men",
     "type": "full",
     "ageFrom": 12,
     "ageTo": 13,
     "weightFrom": 49.1,
-    "weightTo": 52
+    "weightTo": 52,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "e699e92c-6bb9-4af7-92e7-a9aa2e424627",
+    "id": "110f4f69-fabb-4569-ac22-3372ca76300b",
     "sex": "men",
     "type": "full",
     "ageFrom": 12,
     "ageTo": 13,
     "weightFrom": 52.1,
-    "weightTo": 55
+    "weightTo": 55,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "d6bc9e1f-ed52-47f2-8319-72b7a0e9dd6b",
+    "id": "282275f9-ceff-4c64-bcf5-0140938ab698",
     "sex": "men",
     "type": "full",
     "ageFrom": 12,
     "ageTo": 13,
     "weightFrom": 55.1,
-    "weightTo": 58
+    "weightTo": 58,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "8fda6071-1773-4713-a842-728ee1c28cc8",
+    "id": "b496413d-9a53-4431-bf1e-349bd12b85c4",
     "sex": "men",
     "type": "full",
     "ageFrom": 12,
     "ageTo": 13,
     "weightFrom": 58.1,
-    "weightTo": 61
+    "weightTo": 61,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "e38f8f15-31ec-42af-b2c3-17f700d1ae2c",
+    "id": "c2afd3c2-b09a-4774-b9e6-9dcbf15ee5fd",
     "sex": "men",
     "type": "full",
     "ageFrom": 12,
     "ageTo": 13,
     "weightFrom": 61.1,
-    "weightTo": 64
+    "weightTo": 64,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "ea8c3fd6-968e-431f-a7ac-3d8a031750fa",
+    "id": "52894d74-56d9-4bdd-9593-1c70a397137f",
     "sex": "men",
     "type": "full",
     "ageFrom": 12,
     "ageTo": 13,
     "weightFrom": 64.1,
-    "weightTo": 67
+    "weightTo": 67,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "ea8c3fd6-968e-431f-a7ac-3d8a031750fa",
+    "id": "43963344-e84a-4d7c-8eb3-13595c700c79",
     "sex": "men",
     "type": "full",
     "ageFrom": 12,
     "ageTo": 13,
     "weightFrom": 67,
-    "weightTo": 999
+    "weightTo": 999,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "f1573f7e-0c6d-4e70-bd13-b7cb5e460161",
+    "id": "c3adeea9-2b0c-4547-a00b-39e9210d062a",
     "sex": "men",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 0,
-    "weightTo": 43
+    "weightTo": 43,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "620f2c4f-ffba-406b-bed2-69c3f0e01125",
+    "id": "21113b00-b339-488c-90d8-6938ef28a3b8",
     "sex": "men",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 43.1,
-    "weightTo": 46
+    "weightTo": 46,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "4a54cf20-5aaa-4ab6-ae95-79adb33100b0",
+    "id": "95079db3-9a8a-4f4b-8d44-9233ab125fd6",
     "sex": "men",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 46.1,
-    "weightTo": 49
+    "weightTo": 49,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "bd5d130c-4b36-4077-91f0-8777752ff496",
+    "id": "1fe01573-02a5-4653-be13-a30261cc37b4",
     "sex": "men",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 49.1,
-    "weightTo": 52
+    "weightTo": 52,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "b17d9817-0c92-4d65-a8c9-0ebcf8bdd9cd",
+    "id": "9061a6f6-c098-476e-9ea6-a2de54faa0bb",
     "sex": "men",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 52.1,
-    "weightTo": 55
+    "weightTo": 55,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "1b7d2b0d-7ed3-4aba-8867-d4d522039ca8",
+    "id": "37681ab9-ae43-41c6-b3b1-dfa8b2d912fa",
     "sex": "men",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 55.1,
-    "weightTo": 58
+    "weightTo": 58,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "17338d5f-9216-4f9f-b900-f927296814b6",
+    "id": "5befc835-a051-452b-bc52-3056dac8cb80",
     "sex": "men",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 58.1,
-    "weightTo": 61
+    "weightTo": 61,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "392fe9c4-c191-46f6-b650-ef11a0e14909",
+    "id": "96ea8016-28b2-4fef-80bd-2e8a0de12de5",
     "sex": "men",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 61.1,
-    "weightTo": 64
+    "weightTo": 64,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "fa6b6738-261a-40f9-8a61-a78daa7401fe",
+    "id": "32c22e54-06c1-4e92-84d8-b00d2f559b75",
     "sex": "men",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 64.1,
-    "weightTo": 67
+    "weightTo": 67,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "67a7795b-6550-4902-b00e-58efb4062d83",
+    "id": "2054825b-112c-4bb9-854d-e2e66f2b52ca",
     "sex": "men",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 67.1,
-    "weightTo": 70
+    "weightTo": 70,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "4e9768e9-be47-4663-88fa-123fe0ded11a",
+    "id": "45c7d222-407e-4417-b898-8ed5555f70a8",
     "sex": "men",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 70.1,
-    "weightTo": 72.5
+    "weightTo": 72.5,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "bed8c709-9f9e-4ed4-b4c3-3315b57dfefd",
+    "id": "ba4c5483-6dd5-4b2a-a5cd-36f4f8339868",
     "sex": "men",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 72.6,
-    "weightTo": 76
+    "weightTo": 76,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "bed8c709-9f9e-4ed4-b4c3-3315b57dfefd",
+    "id": "924fe886-6892-4a44-847d-120742b2405b",
     "sex": "men",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 76,
-    "weightTo": 999
+    "weightTo": 999,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "904fdbcf-a2f0-4472-b457-d3df1c9ca872",
+    "id": "a1cff38c-3779-4efa-93af-70fb691daddc",
     "sex": "men",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 0,
-    "weightTo": 54
+    "weightTo": 54,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "782a45c9-2cbd-4010-9bd9-76f763b21940",
+    "id": "4bc02ffc-7374-446f-844e-c3af278e612d",
     "sex": "men",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 54.1,
-    "weightTo": 57
+    "weightTo": 57,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "4720c62f-e162-43bb-ab51-1960f03c604e",
+    "id": "3839f340-5006-4c45-a7de-8bad9ec9ea5f",
     "sex": "men",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 57.1,
-    "weightTo": 60
+    "weightTo": 60,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "67df5e40-bd91-4868-a652-ddbb5f9a45c7",
+    "id": "38a3ff25-3e53-40f3-a889-cb878ecf2ab9",
     "sex": "men",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 60.1,
-    "weightTo": 63.5
+    "weightTo": 63.5,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "4effd01c-a60c-4647-8554-0193958bbc88",
+    "id": "87598689-a32f-4fda-8cc7-b5302eca5a64",
     "sex": "men",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 63.6,
-    "weightTo": 67
+    "weightTo": 67,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "71391b05-68f1-4a7d-b339-c82c0ca61865",
+    "id": "37a4df1a-5f97-4730-9e90-31799197767a",
     "sex": "men",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 67.1,
-    "weightTo": 70
+    "weightTo": 70,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "2f0e133d-9523-47eb-b9e1-c439a84c1cb7",
+    "id": "23e14d82-55e8-4a95-8b60-3f03d9faa2fe",
     "sex": "men",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 70.1,
-    "weightTo": 72.5
+    "weightTo": 72.5,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "353be0b8-af85-460d-88e0-8022d446c720",
+    "id": "184968ad-e811-4712-b459-a79d14d8fa87",
     "sex": "men",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 72.6,
-    "weightTo": 76
+    "weightTo": 76,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "d823786b-a830-4c3a-95eb-30d2eb18295e",
+    "id": "5f16e30c-e055-4a4d-9daf-0629aa2ed310",
     "sex": "men",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 76.1,
-    "weightTo": 79
+    "weightTo": 79,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "e1f4f51e-63b2-4c71-8c7f-f87cae0e337e",
+    "id": "8a8dc335-8cf6-4ab3-90c0-7de5aef70979",
     "sex": "men",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 79.1,
-    "weightTo": 83
+    "weightTo": 83,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "a8f919fd-6395-4d3f-8973-50efa5a72814",
+    "id": "5d53c4c2-4888-40a2-82dd-05f35202fade",
     "sex": "men",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 83.1,
-    "weightTo": 86
+    "weightTo": 86,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "fbf57d3c-f9c2-40c0-ae2f-ee62ea2d12ec",
+    "id": "3af4e341-8a21-4681-8e59-b384d3f4ba23",
     "sex": "men",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 86.1,
-    "weightTo": 90
+    "weightTo": 90,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "d6ff3c5f-2a84-49b3-ae5d-8a5b081ce00a",
+    "id": "e94bad62-1fa8-4f29-b5ba-0fb800d65676",
     "sex": "men",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 90.1,
-    "weightTo": 95
+    "weightTo": 95,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "d6ff3c5f-2a84-49b3-ae5d-8a5b081ce00a",
+    "id": "0c88718f-80f1-483e-9195-3a2d12ebe5ef",
     "sex": "men",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 95,
-    "weightTo": 999
+    "weightTo": 999,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "48c7ca98-6689-440c-b5c2-5ddefdafc681",
+    "id": "1d806ef5-8c71-4c51-890d-7e8ec5eb48fc",
     "sex": "men",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 0,
-    "weightTo": 54
+    "weightTo": 54,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "f3255c83-0347-40e8-8dca-edd798d9866f",
+    "id": "f2f29bd7-b63c-42f6-96bb-6c81166533ab",
     "sex": "men",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 54.1,
-    "weightTo": 57
+    "weightTo": 57,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "0b447ba8-303e-4cee-bf7a-38c65f4d7d16",
+    "id": "7b99a7c0-f555-49cd-a76e-c581fbaef7a4",
     "sex": "men",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 57.1,
-    "weightTo": 60
+    "weightTo": 60,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "7b14056f-ea86-47c9-b2c5-4e24c786476e",
+    "id": "4696aaed-b09f-4c22-a5c3-3b48be027627",
     "sex": "men",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 60.1,
-    "weightTo": 63.5
+    "weightTo": 63.5,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "a5c43ff3-01d5-46d1-8a22-6cd625e9ee34",
+    "id": "29d91f82-e6bd-44b0-931c-5fe087f1a747",
     "sex": "men",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 63.6,
-    "weightTo": 67
+    "weightTo": 67,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "e0bb63d2-fa22-4685-a49d-d085f29baf2b",
+    "id": "d891265c-5bbc-403a-8b25-8e70179eef43",
     "sex": "men",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 67.1,
-    "weightTo": 70
+    "weightTo": 70,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "c37a9890-aaf3-4e4e-8a83-fb30fddbd8bd",
+    "id": "35fb3dea-a379-4bb4-9bda-1282c5e4f7d5",
     "sex": "men",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 70.1,
-    "weightTo": 72.5
+    "weightTo": 72.5,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "5aaf0b3d-f4ae-472d-9703-959452d35ed5",
+    "id": "1718430e-24b1-4a37-8a87-e0b56becfd58",
     "sex": "men",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 72.6,
-    "weightTo": 76
+    "weightTo": 76,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "b5c744e3-ba92-4710-a08c-be4425e43618",
+    "id": "7b608fbd-fa17-40e4-bd66-2ce52805d982",
     "sex": "men",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 76.1,
-    "weightTo": 79
+    "weightTo": 79,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "93d8403e-2c1c-450f-b346-fd2ab4f5f6cd",
+    "id": "ae61cc54-7b59-41c8-91ea-5c8a00877e35",
     "sex": "men",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 79.1,
-    "weightTo": 83
+    "weightTo": 83,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "340d23d2-804e-4f54-90ef-5d9f05487b20",
+    "id": "ea508f5b-2440-480a-afe2-bf2d987e4166",
     "sex": "men",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 83.1,
-    "weightTo": 86
+    "weightTo": 86,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "0eed9b64-fc0e-4fbb-9a7f-1d600770a8b8",
+    "id": "eb1a95e0-5eea-4a5d-a3a0-67a911aae48e",
     "sex": "men",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 86.1,
-    "weightTo": 90
+    "weightTo": 90,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "9c244296-b21f-4e0e-8f39-75fd596a6bae",
+    "id": "443c1ada-5248-4dad-911f-14c17fedc67f",
     "sex": "men",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 90.1,
-    "weightTo": 95
+    "weightTo": 95,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "9c244296-b21f-4e0e-8f39-75fd596a6bae",
+    "id": "66974f53-8894-4612-a76a-1f8a1dddd54c",
     "sex": "men",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 95,
-    "weightTo": 999
+    "weightTo": 999,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "f839ae00-bc3d-47e6-9804-1269cabbb26c",
+    "id": "387c2a94-adf5-41a5-ae28-db469fade707",
     "sex": "women",
     "type": "light",
     "ageFrom": 6,
     "ageTo": 7,
     "weightFrom": 0,
-    "weightTo": 22
+    "weightTo": 22,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "6038327a-245f-4bc1-961f-3dbf4cac2e9c",
+    "id": "d242c5b2-f04b-4e28-b3c3-4adeff535de8",
     "sex": "women",
     "type": "light",
     "ageFrom": 6,
     "ageTo": 7,
     "weightFrom": 22.1,
-    "weightTo": 25
+    "weightTo": 25,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "5b219009-8c8b-451c-af3c-41f261165f36",
+    "id": "a9856db0-7016-4322-af0f-804932ed7608",
     "sex": "women",
     "type": "light",
     "ageFrom": 6,
     "ageTo": 7,
     "weightFrom": 25.1,
-    "weightTo": 28
+    "weightTo": 28,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "73cdc9d7-5e89-42e2-98f3-6fb13f02c012",
+    "id": "de683cab-d2c9-44bb-b93d-8cbf01d595cd",
     "sex": "women",
     "type": "light",
     "ageFrom": 6,
     "ageTo": 7,
     "weightFrom": 28.1,
-    "weightTo": 31
+    "weightTo": 31,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "0f913c29-e2d8-4f71-89d6-90fb5c7b7d07",
+    "id": "9a0a549c-33a9-4cc4-b6c4-afa3dbea2b28",
     "sex": "women",
     "type": "light",
     "ageFrom": 6,
     "ageTo": 7,
     "weightFrom": 31.1,
-    "weightTo": 34
+    "weightTo": 34,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "0f913c29-e2d8-4f71-89d6-90fb5c7b7d07",
+    "id": "1b850bad-bab5-42ad-894b-faacb22c69ee",
     "sex": "women",
     "type": "light",
     "ageFrom": 6,
     "ageTo": 7,
     "weightFrom": 34,
-    "weightTo": 999
+    "weightTo": 999,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "d63291bd-4098-4f80-8e9f-156dad8b4696",
+    "id": "8efef88a-d738-4312-9635-076480b53e34",
     "sex": "women",
     "type": "light",
     "ageFrom": 8,
     "ageTo": 9,
     "weightFrom": 0,
-    "weightTo": 22
+    "weightTo": 22,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "a45e228f-aa54-4b6d-8d37-1d43c5d7e0b1",
+    "id": "dea0dd71-23ae-4757-9edd-37b6e9adcb48",
     "sex": "women",
     "type": "light",
     "ageFrom": 8,
     "ageTo": 9,
     "weightFrom": 22.1,
-    "weightTo": 25
+    "weightTo": 25,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "3c7a0763-5edc-4162-a681-c29b9a66a2a3",
+    "id": "9713aafb-a371-48d1-8eec-ef4be871d437",
     "sex": "women",
     "type": "light",
     "ageFrom": 8,
     "ageTo": 9,
     "weightFrom": 25.1,
-    "weightTo": 28
+    "weightTo": 28,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "a57b232c-da1a-4d41-91fd-b826ed42073d",
+    "id": "cd7293d2-232a-4d87-a315-169d21d1477f",
     "sex": "women",
     "type": "light",
     "ageFrom": 8,
     "ageTo": 9,
     "weightFrom": 28.1,
-    "weightTo": 31
+    "weightTo": 31,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "a73bdc61-fb1a-4e7e-beff-e84bca2f96e8",
+    "id": "acb88e65-9ff8-4127-aa4c-8a2849a39228",
     "sex": "women",
     "type": "light",
     "ageFrom": 8,
     "ageTo": 9,
     "weightFrom": 31.1,
-    "weightTo": 34
+    "weightTo": 34,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "a73bdc61-fb1a-4e7e-beff-e84bca2f96e8",
+    "id": "c58e991b-8637-44ae-985c-66be04a8553e",
     "sex": "women",
     "type": "light",
     "ageFrom": 8,
     "ageTo": 9,
     "weightFrom": 34,
-    "weightTo": 999
+    "weightTo": 999,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "cc03b606-04bb-4c0d-a280-354740e6c293",
+    "id": "c16d0653-ce24-4a1e-a147-6a5ac38d3874",
     "sex": "women",
     "type": "light",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 0,
-    "weightTo": 28
+    "weightTo": 28,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "118c2a4d-2b55-4803-9adb-2d4790bf2569",
+    "id": "3e330baf-f869-4a8b-907d-fe8f0d5a1164",
     "sex": "women",
     "type": "light",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 28.1,
-    "weightTo": 31
+    "weightTo": 31,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "b8b71209-da21-4074-8c2f-d43628bffeae",
+    "id": "12314602-6595-4c85-8def-d141db0b0fba",
     "sex": "women",
     "type": "light",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 31.1,
-    "weightTo": 34
+    "weightTo": 34,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "31efab24-81e6-44e8-957e-697a44fec782",
+    "id": "581c6572-0d9c-4410-a9df-f6de102807e6",
     "sex": "women",
     "type": "light",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 34.1,
-    "weightTo": 37
+    "weightTo": 37,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "87b8cc48-7326-47fc-88f4-794d1c6ff41d",
+    "id": "12f2ef3c-ab70-448a-8029-1737c87039ca",
     "sex": "women",
     "type": "light",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 37.1,
-    "weightTo": 40
+    "weightTo": 40,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "412aa046-9a70-46c7-a20d-72c66931ad84",
+    "id": "85ae4bea-d50a-4328-9b45-e27da1d1591a",
     "sex": "women",
     "type": "light",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 40.1,
-    "weightTo": 43
+    "weightTo": 43,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "ac2e571c-37a5-40b4-b8b9-54081ff14ebb",
+    "id": "061e25df-96ba-4792-a6c7-4b09f6e43cad",
     "sex": "women",
     "type": "light",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 43.1,
-    "weightTo": 46
+    "weightTo": 46,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "ac2e571c-37a5-40b4-b8b9-54081ff14ebb",
+    "id": "f7851f43-2970-4e1a-8f44-3517811bc9c4",
     "sex": "women",
     "type": "light",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 46,
-    "weightTo": 999
+    "weightTo": 999,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "a321eb8a-a736-4182-ae46-8462c731eef3",
+    "id": "26aa7652-82c6-4156-bb6f-5e47a6fd905b",
     "sex": "women",
     "type": "light",
     "ageFrom": 12,
     "ageTo": 14,
     "weightFrom": 0,
-    "weightTo": 35
+    "weightTo": 35,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "de792e40-9d46-417a-b0fe-14c185d01cae",
+    "id": "3269ba8f-f2fd-4dd9-af3c-2959783d46c4",
     "sex": "women",
     "type": "light",
     "ageFrom": 12,
     "ageTo": 14,
     "weightFrom": 35.1,
-    "weightTo": 40
+    "weightTo": 40,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "bc512b29-af9b-430c-a9c9-20c73dea7d9d",
+    "id": "9a8ce833-0b19-4fa7-a44e-6fccfb12a573",
     "sex": "women",
     "type": "light",
     "ageFrom": 12,
     "ageTo": 14,
     "weightFrom": 40.1,
-    "weightTo": 45
+    "weightTo": 45,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "0f93ae31-6ea6-4248-ab2f-a852b9b48648",
+    "id": "6c911783-f839-4638-a66a-3293dcb77f3c",
     "sex": "women",
     "type": "light",
     "ageFrom": 12,
     "ageTo": 14,
     "weightFrom": 45.1,
-    "weightTo": 50
+    "weightTo": 50,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "0a0d48d8-2aa2-4c52-b518-dd321b4efc6c",
+    "id": "b18855fb-fd03-4f9a-9215-89e84738f20e",
     "sex": "women",
     "type": "light",
     "ageFrom": 12,
     "ageTo": 14,
     "weightFrom": 50.1,
-    "weightTo": 55
+    "weightTo": 55,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "0a0d48d8-2aa2-4c52-b518-dd321b4efc6c",
+    "id": "f6d66ac8-52f4-4303-ad7d-fa1bff9fb5b6",
     "sex": "women",
     "type": "light",
     "ageFrom": 12,
     "ageTo": 14,
     "weightFrom": 55,
-    "weightTo": 999
+    "weightTo": 999,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "67e56f93-cf46-46ad-93ed-7f90f3980aad",
+    "id": "ccfef1e1-c503-4b77-95be-1aa44f049b62",
     "sex": "women",
     "type": "light",
     "ageFrom": 15,
     "ageTo": 17,
     "weightFrom": 0,
-    "weightTo": 45
+    "weightTo": 45,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "cf4a1ac8-ab09-4d58-811e-2ac6a7daf020",
+    "id": "013144f1-6170-4363-a724-3fbbec2f2258",
     "sex": "women",
     "type": "light",
     "ageFrom": 15,
     "ageTo": 17,
     "weightFrom": 45.1,
-    "weightTo": 50
+    "weightTo": 50,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "a6f61c59-1ab2-43b5-b18c-70110df9bc07",
+    "id": "6c08e201-3bda-4acb-8741-a26f9c89936a",
     "sex": "women",
     "type": "light",
     "ageFrom": 15,
     "ageTo": 17,
     "weightFrom": 50.1,
-    "weightTo": 55
+    "weightTo": 55,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "2f65d7e8-ff97-424c-b33f-836d19e33161",
+    "id": "8a7d3caf-a5a8-49bf-a6c7-4d7d40d169d9",
     "sex": "women",
     "type": "light",
     "ageFrom": 15,
     "ageTo": 17,
     "weightFrom": 55.1,
-    "weightTo": 60
+    "weightTo": 60,
+    "createdAt": "2021-10-07T06:17:30.993Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.993Z"
   },
   {
-    "id": "98faac33-cc55-404d-8e4d-6af3e3dfa30d",
+    "id": "8867f29c-5753-40ac-a423-a31694c85fdf",
     "sex": "women",
     "type": "light",
     "ageFrom": 15,
     "ageTo": 17,
     "weightFrom": 60.1,
-    "weightTo": 65
+    "weightTo": 65,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "98faac33-cc55-404d-8e4d-6af3e3dfa30d",
+    "id": "e64e6f87-b768-4151-b642-ad1596fb367a",
     "sex": "women",
     "type": "light",
     "ageFrom": 15,
     "ageTo": 17,
     "weightFrom": 65,
-    "weightTo": 999
+    "weightTo": 999,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "5fd6415f-2c1d-4413-b420-02ecbff414df",
+    "id": "0d537041-e285-429f-9ae0-abc2b411ce34",
     "sex": "women",
     "type": "light",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 0,
-    "weightTo": 55
+    "weightTo": 55,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "f4032d2d-e9aa-49dd-a722-906781ee2128",
+    "id": "cbb1b608-a1c9-4ee0-b174-7c3d230ce0d1",
     "sex": "women",
     "type": "light",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 55.1,
-    "weightTo": 60
+    "weightTo": 60,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "73c9b80b-a8dc-4376-9ac7-84a2a66096b3",
+    "id": "52fd0929-b3da-40f4-b3fa-54a1e8d36fb1",
     "sex": "women",
     "type": "light",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 60.1,
-    "weightTo": 65
+    "weightTo": 65,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "86ecf3d6-7cd4-45d3-9e22-345ce430e0cd",
+    "id": "043fca1f-c111-4eb5-a586-5063a4149820",
     "sex": "women",
     "type": "light",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 65.1,
-    "weightTo": 70
+    "weightTo": 70,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "86ecf3d6-7cd4-45d3-9e22-345ce430e0cd",
+    "id": "a1521e95-b638-4035-bba2-ce831cf94db4",
     "sex": "women",
     "type": "light",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 70,
-    "weightTo": 999
+    "weightTo": 999,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "276b7bda-78a9-4640-a399-07ab0ec15427",
+    "id": "8cf66296-9386-4811-b07a-e1016a6f4362",
     "sex": "women",
     "type": "full",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 0,
-    "weightTo": 31
+    "weightTo": 31,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "fa6a8708-198d-47e9-840d-7656a0b0aeab",
+    "id": "992f4dd7-b610-40fa-a2ca-a381781b787c",
     "sex": "women",
     "type": "full",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 31.1,
-    "weightTo": 34
+    "weightTo": 34,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "791b8d72-cd7d-41c3-abd2-6d4d155fd2f0",
+    "id": "b014c2b6-c022-437d-94dd-f8fd53949364",
     "sex": "women",
     "type": "full",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 34.1,
-    "weightTo": 37
+    "weightTo": 37,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "964c0e87-1d0d-4f56-9aef-6e813ef47341",
+    "id": "c2e58996-88a7-47be-9c04-9ed2b2a38eeb",
     "sex": "women",
     "type": "full",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 37.1,
-    "weightTo": 40
+    "weightTo": 40,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "2beb3d1b-7261-4d48-8122-7c06f9521544",
+    "id": "e842c921-2f18-44e6-b7e4-4e2958b05f03",
     "sex": "women",
     "type": "full",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 40.1,
-    "weightTo": 43
+    "weightTo": 43,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "a21c6362-3a19-4e70-80ce-54e1d5b5189d",
+    "id": "4ffd98ba-9810-4457-b64c-03e089c39c99",
     "sex": "women",
     "type": "full",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 43.1,
-    "weightTo": 46
+    "weightTo": 46,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "73f2a4f4-efa3-4062-85be-d36dde28aa20",
+    "id": "e4c790f0-c8a4-4f74-837e-9f204b48f751",
     "sex": "women",
     "type": "full",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 46.1,
-    "weightTo": 49
+    "weightTo": 49,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "edf54bc0-b583-4fcf-afab-0e8163e547f2",
+    "id": "95a9c56a-5275-46da-9850-307bacd93a94",
     "sex": "women",
     "type": "full",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 49.1,
-    "weightTo": 52
+    "weightTo": 52,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "edf54bc0-b583-4fcf-afab-0e8163e547f2",
+    "id": "72589d96-cb97-4e00-8628-9d0b525fe99d",
     "sex": "women",
     "type": "full",
     "ageFrom": 10,
     "ageTo": 11,
     "weightFrom": 52,
-    "weightTo": 999
+    "weightTo": 999,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "ca497e88-745e-412c-a304-5fa7d8da9785",
+    "id": "79777121-099b-4d78-8728-fc449f0e6e53",
     "sex": "women",
     "type": "full",
     "ageFrom": 12,
     "ageTo": 13,
     "weightFrom": 0,
-    "weightTo": 34
+    "weightTo": 34,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "e968c58a-663a-4cfd-9f26-76dd51a71044",
+    "id": "cdefd7ee-6445-427b-9499-ab3c1773b107",
     "sex": "women",
     "type": "full",
     "ageFrom": 12,
     "ageTo": 13,
     "weightFrom": 34.1,
-    "weightTo": 37
+    "weightTo": 37,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "47de6a3b-04af-42bb-b64b-ebeaca329b6a",
+    "id": "591cddf4-16a3-4b9c-85c5-05feceb89f19",
     "sex": "women",
     "type": "full",
     "ageFrom": 12,
     "ageTo": 13,
     "weightFrom": 37.1,
-    "weightTo": 40
+    "weightTo": 40,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "7e17200d-2858-4e04-8bdb-909bb81d31f6",
+    "id": "0093a72e-d01f-49c4-86d3-749d39e84364",
     "sex": "women",
     "type": "full",
     "ageFrom": 12,
     "ageTo": 13,
     "weightFrom": 40.1,
-    "weightTo": 43
+    "weightTo": 43,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "e37cc6b1-fcd2-424a-b5db-8070a2bfa8c2",
+    "id": "c1b8f8de-9a87-409e-a3f0-5e155a07ea36",
     "sex": "women",
     "type": "full",
     "ageFrom": 12,
     "ageTo": 13,
     "weightFrom": 43.1,
-    "weightTo": 46
+    "weightTo": 46,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "89558054-3ee2-4771-b8ad-5aa753ef3a51",
+    "id": "740b0160-af31-4413-9f23-9876bd4393fc",
     "sex": "women",
     "type": "full",
     "ageFrom": 12,
     "ageTo": 13,
     "weightFrom": 46.1,
-    "weightTo": 49
+    "weightTo": 49,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "a8db7b53-105f-4291-82f3-a1bdb49075be",
+    "id": "e57323f0-7a77-4ee6-a065-f16567136cbb",
     "sex": "women",
     "type": "full",
     "ageFrom": 12,
     "ageTo": 13,
     "weightFrom": 49.1,
-    "weightTo": 52
+    "weightTo": 52,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "3a7aff6c-794a-4485-b4a3-0c9fac45f9ea",
+    "id": "2db428db-878d-43bf-8b5c-d0a21c498da9",
     "sex": "women",
     "type": "full",
     "ageFrom": 12,
     "ageTo": 13,
     "weightFrom": 52.1,
-    "weightTo": 55
+    "weightTo": 55,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "3a7aff6c-794a-4485-b4a3-0c9fac45f9ea",
+    "id": "1a5de084-e0f0-49c9-b467-a6221a4f97bc",
     "sex": "women",
     "type": "full",
     "ageFrom": 12,
     "ageTo": 13,
     "weightFrom": 55,
-    "weightTo": 999
+    "weightTo": 999,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "ea89c55d-f922-4c8e-bbca-4b3de2e60e2b",
+    "id": "7a9a0002-cad4-4b52-9bf1-d6bcc5afa35b",
     "sex": "women",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 0,
-    "weightTo": 40
+    "weightTo": 40,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "0fd97768-9dc0-44b7-a378-e2bd0565580c",
+    "id": "145fc5aa-9aea-4b05-ad85-2456d8e00360",
     "sex": "women",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 40.1,
-    "weightTo": 43
+    "weightTo": 43,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "a50d4270-cf3a-406c-b659-a2d7e20adc2f",
+    "id": "04cd73df-7a00-4bfb-bbd9-9a2224645897",
     "sex": "women",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 43.1,
-    "weightTo": 46
+    "weightTo": 46,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "d9132644-2395-4d55-9497-131c5a1b5134",
+    "id": "10ebe9f0-ca22-430c-8984-ef61a6acac3f",
     "sex": "women",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 46.1,
-    "weightTo": 49
+    "weightTo": 49,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "22de58b0-c7ee-4336-bbac-59450cd3695b",
+    "id": "1e9145b9-d85b-4a48-a16e-99e71641522e",
     "sex": "women",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 49.1,
-    "weightTo": 52
+    "weightTo": 52,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "9dc2c894-aecc-4b8f-b235-c238dc1a2074",
+    "id": "15cd20a5-abac-4647-b2ed-804cfe828546",
     "sex": "women",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 52.1,
-    "weightTo": 55
+    "weightTo": 55,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "492bc756-72c0-4714-a362-99ca9eef4216",
+    "id": "dcc419fa-cf34-41de-b1d9-2c5241cbeaa7",
     "sex": "women",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 55.1,
-    "weightTo": 58
+    "weightTo": 58,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "6cf05b4c-79f3-470d-b400-14415b70663f",
+    "id": "611f6543-a9c7-4954-816c-3fc83deffdfe",
     "sex": "women",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 58.1,
-    "weightTo": 61
+    "weightTo": 61,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "b4656db0-ee55-4db8-a954-3f9c0df96024",
+    "id": "08c1b39b-76d3-4f7a-a6c5-826134fb7d1f",
     "sex": "women",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 61.1,
-    "weightTo": 64
+    "weightTo": 64,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "bd5a863b-5a3f-45d7-b7f1-493ff2a094b6",
+    "id": "a8aa7778-886c-4f76-9ba4-ec80d03fb153",
     "sex": "women",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 64.1,
-    "weightTo": 67
+    "weightTo": 67,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "bd5a863b-5a3f-45d7-b7f1-493ff2a094b6",
+    "id": "645f704e-8c72-4e30-82eb-80719d9b2317",
     "sex": "women",
     "type": "full",
     "ageFrom": 14,
     "ageTo": 15,
     "weightFrom": 67,
-    "weightTo": 999
+    "weightTo": 999,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "3c15a10f-339c-4806-bcff-ddd77f0ff7ad",
+    "id": "686ac8a2-bde2-49a6-8295-1c6f33853f71",
     "sex": "women",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 0,
-    "weightTo": 46
+    "weightTo": 46,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "5a10a774-ec7e-4cde-aaef-df6b853d976e",
+    "id": "80111200-6824-4214-8f0c-dea7a1dde515",
     "sex": "women",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 46.1,
-    "weightTo": 48
+    "weightTo": 48,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "e1799a3e-812b-4473-903e-f928b7b61932",
+    "id": "308abb03-1658-4671-9798-1408f26900ed",
     "sex": "women",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 48.1,
-    "weightTo": 50
+    "weightTo": 50,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "a23d2303-c421-400d-b6ae-34d306be7acb",
+    "id": "5c2ddd20-04ab-4aaa-9a34-c92b27385601",
     "sex": "women",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 50.1,
-    "weightTo": 54
+    "weightTo": 54,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "c23890fb-2981-4d15-aa2b-c42ac5ffd364",
+    "id": "9e037c33-da11-4cdd-a99e-e6ea21e82296",
     "sex": "women",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 54.1,
-    "weightTo": 57
+    "weightTo": 57,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "96c696ce-6082-4032-8e1b-664e0c67110a",
+    "id": "8f395673-8a21-4de6-af91-101c8017d3fc",
     "sex": "women",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 57.1,
-    "weightTo": 60
+    "weightTo": 60,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "fa13933f-31f1-4700-89e4-da86b89f85b5",
+    "id": "3015fcd8-32b3-419a-acf3-36b878c58562",
     "sex": "women",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 60.1,
-    "weightTo": 63
+    "weightTo": 63,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "c1badd03-f3ae-4272-8bec-360c3a8c0718",
+    "id": "a4c9699d-a853-43df-894c-bc55cada1dc4",
     "sex": "women",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 63.1,
-    "weightTo": 5
+    "weightTo": 5,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "529fb1fb-3e8d-4f27-9fef-04e7b5a2f532",
+    "id": "b598dd8b-0cbe-4c72-814d-2cc44d8f6edc",
     "sex": "women",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 5.1,
-    "weightTo": 67
+    "weightTo": 67,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "fd0011d8-d755-42ae-85cc-1ffc412f93db",
+    "id": "d4f7bc7f-1e55-440c-8ac3-cc9f45a1b12d",
     "sex": "women",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 67.1,
-    "weightTo": 70
+    "weightTo": 70,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "3aa09742-dde5-4cb2-b726-cbc097e113ee",
+    "id": "25ffe3b8-c193-49a5-b19e-96821378abcd",
     "sex": "women",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 70.1,
-    "weightTo": 72.5
+    "weightTo": 72.5,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "7a6239e6-b580-456f-a7b4-a8de7711cad6",
+    "id": "722b8930-3020-4eed-860b-ee34d34a2859",
     "sex": "women",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 72.6,
-    "weightTo": 76
+    "weightTo": 76,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "7a6239e6-b580-456f-a7b4-a8de7711cad6",
+    "id": "2743df32-2021-4c5e-a77a-df24a06ec447",
     "sex": "women",
     "type": "full",
     "ageFrom": 16,
     "ageTo": 17,
     "weightFrom": 76,
-    "weightTo": 999
+    "weightTo": 999,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "4b488e88-8ad9-4237-8b97-3261e9a44163",
+    "id": "abb8a858-10e8-4f86-8377-fe965e79ad22",
     "sex": "women",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 0,
-    "weightTo": 46
+    "weightTo": 46,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "568968ec-508e-4a75-9c8d-352095de6ed0",
+    "id": "f5dddfc7-8189-4391-bb16-743bdf60021c",
     "sex": "women",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 46.1,
-    "weightTo": 48
+    "weightTo": 48,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "158abf85-672d-4924-ad74-fb1aa9c82c91",
+    "id": "906616cb-c0e9-44a4-8037-a96484ac8503",
     "sex": "women",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 48.1,
-    "weightTo": 50
+    "weightTo": 50,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "c6c93ecc-4446-442e-966e-16c969c345b2",
+    "id": "4a95a93e-0bad-46e3-a93a-3d7e21a952a2",
     "sex": "women",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 50.1,
-    "weightTo": 54
+    "weightTo": 54,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "87bc5f1c-be5e-460a-b675-d3361808f052",
+    "id": "6822c551-714a-4e47-98e3-dec17facffd9",
     "sex": "women",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 54.1,
-    "weightTo": 57
+    "weightTo": 57,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "27247da7-1eaf-410b-9a34-e688870d66e5",
+    "id": "6d6fb444-5a67-4864-b5db-949b10a5bb78",
     "sex": "women",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 57.1,
-    "weightTo": 60
+    "weightTo": 60,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "cf05cd8d-a16e-44ad-9030-452c2ea99c8a",
+    "id": "48873eba-5a78-4949-a915-c35720f4d281",
     "sex": "women",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 60.1,
-    "weightTo": 63.5
+    "weightTo": 63.5,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "7a460910-4c8a-411f-8104-b8d2082739aa",
+    "id": "2247417a-831d-41be-aba4-dbf1a3a1ae43",
     "sex": "women",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 63.6,
-    "weightTo": 67
+    "weightTo": 67,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "e1ef89ba-fb1a-450d-b8da-2826313243b6",
+    "id": "5eebc6fe-5de7-4733-9b5a-42af33fe4d4c",
     "sex": "women",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 67.1,
-    "weightTo": 70
+    "weightTo": 70,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "ce6eaf83-3146-4531-8c34-42fa92f25722",
+    "id": "efde13e3-652f-473e-9ba8-4be2414839cb",
     "sex": "women",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 70.1,
-    "weightTo": 72.5
+    "weightTo": 72.5,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "99c562e0-e941-44e0-82dc-d2eff23e8365",
+    "id": "3746ce72-9b0c-428a-bd21-1c02b6b0d3da",
     "sex": "women",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 72.6,
-    "weightTo": 76
+    "weightTo": 76,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   },
   {
-    "id": "99c562e0-e941-44e0-82dc-d2eff23e8365",
+    "id": "44659be2-511a-4ea3-9d5f-ece06b912a2a",
     "sex": "women",
     "type": "full",
     "ageFrom": 18,
     "ageTo": 39,
     "weightFrom": 76,
-    "weightTo": 999
+    "weightTo": 999,
+    "createdAt": "2021-10-07T06:17:30.994Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T06:17:30.994Z"
   }
 ]
