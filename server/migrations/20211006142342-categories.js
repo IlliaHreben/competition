@@ -12,6 +12,7 @@ const up = async (queryInterface, Sequelize) => {
       ageTo      : { type: Sequelize.INTEGER, allowNull: false },
       weightFrom : { type: Sequelize.FLOAT, allowNull: false },
       weightTo   : { type: Sequelize.FLOAT, allowNull: false },
+      weightName : { type: Sequelize.STRING, allowNull: false },
 
       createdAt : { type: Sequelize.DATE, allowNull: false },
       deletedAt : { type: Sequelize.DATE, allowNull: true },

@@ -1,11 +1,11 @@
 import Sequelize         from 'sequelize';
-import sequelize         from '../sequelizeSingleton';
-import Base from './Base';
+import sequelize         from '../sequelizeSingleton.js';
+import Base from './Base.js';
 
-import Club from './Club';
-import Coach from './Coach';
-import Fighter from './Fighter';
-import Category from './Category';
+import Club from './Club.js';
+import Coach from './Coach.js';
+import Fighter from './Fighter.js';
+import Category from './Category.js';
 
 export default class Card extends Base {
   static initRelation () {

@@ -1,11 +1,11 @@
 import sequelize from './sequelizeSingleton.js';
 
-import './models/Category';
-import './models/Club';
-import './models/Coach';
-import './models/Fighter';
-import './models/Card';
-import './models/Cross';
+import './models/Category.js';
+import './models/Club.js';
+import './models/Coach.js';
+import './models/Fighter.js';
+import './models/Card.js';
+import './models/Cross.js';
 
 for (const modelName in sequelize.models) {
   const model = sequelize.models[modelName];

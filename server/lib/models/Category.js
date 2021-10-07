@@ -1,6 +1,6 @@
 import Sequelize         from 'sequelize';
-import sequelize         from '../sequelizeSingleton';
-import Base              from './Base';
+import sequelize         from '../sequelizeSingleton.js';
+import Base              from './Base.js';
 
 export default class Category extends Base {
   static initRelation () {
@@ -24,6 +24,7 @@ Category.init({
   age        : { type: Sequelize.INTEGER, allowNull: false },
   weightFrom : { type: Sequelize.FLOAT, allowNull: false },
   weightTo   : { type: Sequelize.FLOAT, allowNull: false },
+  weightName : { type: Sequelize.STRING, allowNull: false },
 
   createdAt : { type: Sequelize.DATE, allowNull: false },
   deletedAt : { type: Sequelize.DATE, allowNull: true },

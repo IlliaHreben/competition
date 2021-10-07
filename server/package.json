@@ -3,17 +3,21 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "migration-dev": "env $(cat .env | xargs) sequelize db:migrate  --config etc/db.js",
-    "migration-create": "sequelize-cli migration:generate --name -r dotenv/config",
-    "seeds": "env $(cat .env | xargs) sequelize db:seed:all --config etc/db.js",
-    "seeds-undo": "env $(cat .env | xargs) sequelize db:seed:undo --config etc/db.js",
-    "seeds-undo-all": "env $(cat .env | xargs) sequelize db:seed:undo:all --config etc/db.js"
+    "migration-dev": "NODE_OPTIONS='-r dotenv/config' sequelize db:migrate --config etc/db.js",
+    "migration-create": "NODE_OPTIONS='-r dotenv/config' sequelize-cli migration:generate --name",
+    "migration-undo": "NODE_OPTIONS='-r dotenv/config' sequelize db:migrate:undo --config etc/db.js",
+    "migration-undo-all": "NODE_OPTIONS='-r dotenv/config' sequelize db:migrate:undo:all --config etc/db.js",
+    "seeds": "NODE_OPTIONS='-r dotenv/config' sequelize db:seed:all --config etc/db.js",
+    "seeds-undo": "NODE_OPTIONS='-r dotenv/config' sequelize db:seed:undo --config etc/db.js",
+    "seeds-undo-all": "NODE_OPTIONS='-r dotenv/config' sequelize db:seed:undo:all --config etc/db.js"
   },
   "author": "Illia Hreben",
   "license": "ISC",
   "dependencies": {
+    "babel-register": "^6.26.0",
     "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.3",
