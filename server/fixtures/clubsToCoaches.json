@@ -1,0 +1,282 @@
+[
+  {
+    "id": "0abc3dd8-6ea5-40de-b610-29606b51c44a",
+    "coachId": "25639d54-5bf5-4380-85b4-1d8b2fbf7608",
+    "clubId": "17460e95-8713-4138-befa-8442f9dedc0d",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "ae809d54-385c-4f26-bc2b-64420dd56896",
+    "coachId": "6d7b68dd-dced-4b8e-b73f-38f4f2382d4c",
+    "clubId": "ff078d71-54dc-4432-a63a-c1350b0791f4",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "999f65c2-17a0-49cf-9d95-d82bf7427176",
+    "coachId": "be78334a-1374-4761-89b1-9f16c00d70ae",
+    "clubId": "ff078d71-54dc-4432-a63a-c1350b0791f4",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "1b7856d2-684f-4dfc-ab04-e5f26ce69092",
+    "coachId": "3f03ef20-331e-43bd-b97a-97c7a20f548e",
+    "clubId": "89b141a2-fc6a-4863-8222-77abbe774098",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "185c669e-30e0-476c-9366-d901b22184cd",
+    "coachId": "4a3a725b-ef39-4828-bb26-472cf0baae5a",
+    "clubId": "bb896edd-a39e-4565-801f-35b2509e8361",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "7cae22f9-567b-4a9f-b16c-e5ce9327e2f3",
+    "coachId": "a23f9175-97a3-4e74-bfc3-4b8620bd28d5",
+    "clubId": "bb896edd-a39e-4565-801f-35b2509e8361",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "8290e811-ea39-4624-83b3-2275c30b3d03",
+    "coachId": "dc4a10be-ac84-44e7-b86c-7595211ccec2",
+    "clubId": "bb896edd-a39e-4565-801f-35b2509e8361",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "fda43bd6-5e88-49f6-ae05-c73b62715845",
+    "coachId": "3876b38b-7348-4593-9356-ed1903b845c7",
+    "clubId": "2034ead5-9907-4171-a730-ec66997fe992",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "ed5ef07e-af96-4f49-beac-372542085fce",
+    "coachId": "dee026a1-ac34-4725-ab4c-8e79ee38f486",
+    "clubId": "ca95d1ed-71cd-47ea-aeb2-8be741d1fcf9",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "6c381d01-0155-4045-a408-6fbf50f070b6",
+    "coachId": "b279aef5-0fea-458e-8aee-92f771b3ff9e",
+    "clubId": "2034ead5-9907-4171-a730-ec66997fe992",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "5f27b5d3-aadb-4918-a0ab-47531644e918",
+    "coachId": "b2b19a87-14bb-4d6d-82b7-468bb098250c",
+    "clubId": "2034ead5-9907-4171-a730-ec66997fe992",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "4469c56f-a0f7-4137-bdd9-c6336508d7b4",
+    "coachId": "d3f6bd08-ef89-4d8e-a0d7-376b0276cc70",
+    "clubId": "5b3c9d13-6b8c-41cc-a09d-7df1193af554",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "64705cc6-45e2-4fbd-9092-f046ae09843e",
+    "coachId": "143b39d6-385c-4224-94ea-47fc0f4ede63",
+    "clubId": "5d10a010-dee9-41c6-8840-7f54c724f6a6",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "419d79e2-8d0d-4745-8164-b53e9372c232",
+    "coachId": "59aa2897-8544-4f4f-9de1-653a7571aad7",
+    "clubId": "2856db48-00d5-4450-8278-065b1232827a",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "fb108188-9edc-4799-952f-e28fc78021ac",
+    "coachId": "3e8f2575-e6ff-4c64-84b2-61e0fd700baf",
+    "clubId": "e857dd92-57d5-4d1b-b8d6-485f19713406",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "c76f73c9-a18c-4d72-835d-03bc6b24d49b",
+    "coachId": "8ed0a9b5-8cc8-46e3-b595-f768ba25ce35",
+    "clubId": "cedb6470-64cb-4caa-9ef8-d9400f1de4a8",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "c33cc0ad-c920-474c-aa0e-25e578da7bfe",
+    "coachId": "1cab72bd-5311-4c8b-9279-736bd8646c1b",
+    "clubId": "cedb6470-64cb-4caa-9ef8-d9400f1de4a8",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "6da9e303-019e-414d-b6f5-e6ae8bccbc18",
+    "coachId": "85d0310b-7b88-4cb2-b7a7-0beed805cf83",
+    "clubId": "ff078d71-54dc-4432-a63a-c1350b0791f4",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "0deb9d75-3cee-4417-886f-891e2541c9a1",
+    "coachId": "60eb9803-0296-46e4-863c-8261addc2d12",
+    "clubId": "ce81ae93-5ace-4612-a959-e06b15912be5",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "ca99631b-b5ae-48f5-b4fb-e4a50a0d5876",
+    "coachId": "3a1045bc-a937-4d59-86e8-0915791b374e",
+    "clubId": "e28864e6-0ce7-4643-8a92-1c1e1fb3c930",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "e03c5dcb-751a-4e24-8001-528df80851a2",
+    "coachId": "77944ffd-91c1-4ebe-8b48-aef9311bca06",
+    "clubId": "c0918c64-42c8-4e54-adf7-7d42101a4a15",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "43ffb0f4-3bd1-4fe1-91e9-a124f7c34b75",
+    "coachId": "534647dd-f1f8-4456-8513-bb2276f4bf68",
+    "clubId": "28996c8e-c21b-44f5-8fbb-e145c530198e",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "584e918a-2c73-454c-a4de-b98af10fcac0",
+    "coachId": "009e2366-9bf5-45e3-a117-4bc12fa62780",
+    "clubId": "25bfb8c2-7d4f-4b66-a173-6900577e18f0",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "f3d4ec5b-8910-4f66-9f54-87fad88ca106",
+    "coachId": "da0cf7e3-6829-4029-9bcf-82c3907ca81a",
+    "clubId": "25bfb8c2-7d4f-4b66-a173-6900577e18f0",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "95e60391-99af-4031-9298-abe7cfaab2ae",
+    "coachId": "22b5e252-91f8-4aa7-8c35-a5618886644f",
+    "clubId": "25bfb8c2-7d4f-4b66-a173-6900577e18f0",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "23b0a2e3-db88-43bc-8771-cb79ac6a42be",
+    "coachId": "741d21b7-faca-4306-a2f4-7d5abeba03ee",
+    "clubId": "25bfb8c2-7d4f-4b66-a173-6900577e18f0",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "5ec55b3c-6c9b-4ec1-8677-8786483eb4f1",
+    "coachId": "d852b004-5a7e-4541-9615-62b08ad82294",
+    "clubId": "25bfb8c2-7d4f-4b66-a173-6900577e18f0",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "21e29874-cf6c-4813-a93c-4c9d181c4c7c",
+    "coachId": "62456086-7a96-4456-903d-43ba2546d4bd",
+    "clubId": "84278a4c-8c1b-4ce7-8698-41bd05a660ca",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "fda74c2c-1c4a-41d7-aec2-c7aacf727ec0",
+    "coachId": "2a431a5a-ca7c-437e-82ab-58fc00f3ca41",
+    "clubId": "e31e55c2-37f0-461a-b252-1d0e27713483",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "2db88530-4a8f-45fb-8b52-a8256adcb4f8",
+    "coachId": "5c52eb33-6a21-4752-a457-82c43ea3cddc",
+    "clubId": "c9ababf5-38cc-4afc-a773-bf877c0a9b70",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "bc45c1b0-7592-4169-afe8-5eaffcb4cffe",
+    "coachId": "1aa1a05f-90a8-4750-bac9-4f76f19709d6",
+    "clubId": "b0e2b797-12d8-4fd5-8eeb-8efb37b4878b",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "0b9c500a-5a0e-4287-8355-f799527e0f31",
+    "coachId": "c82ea92f-97d3-473e-8b81-b615345b29a9",
+    "clubId": "b53e7641-dad8-4ecc-bf46-9b2bd1bbc53f",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "653ec74d-91a7-4ee4-9e32-f21b15e7bd48",
+    "coachId": "3b637444-4f05-4f98-97d8-43413737b97c",
+    "clubId": "85f2b338-fe3c-4bc6-9b8b-1164dc28a6b4",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "eac53684-53da-41c1-9472-483f4ddaca4f",
+    "coachId": "6b2d8510-04d8-48be-844d-1bf765fd19a6",
+    "clubId": "e3d7b193-f59b-45df-8f59-cb6fbdfcbb75",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  },
+  {
+    "id": "a885e17a-c00f-4173-a2cb-16c675dbe6fd",
+    "coachId": "d03cb490-8fd9-4cc1-afa0-da0ac4211475",
+    "clubId": "b404ca42-26f5-4a4a-a3f5-ed8b9c45b02b",
+    "deletedAt": null,
+    "createdAt": "2021-10-07T19:39:10.282Z",
+    "updatedAt": "2021-10-07T19:39:10.282Z"
+  }
+]
