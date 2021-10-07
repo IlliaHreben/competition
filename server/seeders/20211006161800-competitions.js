@@ -1,12 +1,11 @@
 /* eslint-disable import/no-commonjs */
-// const categories = require('../etc/categories.json');
-const categories = require('../fixtures/categories.json');
+const competitions = require('../fixtures/competitions.json');
 
 module.exports = {
   up: async (queryInterface) => {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.bulkInsert('Categories', categories, { transaction });
+      await queryInterface.bulkInsert('Competitions', competitions, { transaction });
 
       await transaction.commit();
     } catch (error) {
@@ -19,7 +18,7 @@ module.exports = {
     const transaction = await queryInterface.sequelize.transaction();
 
     try {
-      await queryInterface.bulkDelete('Categories', {}, { transaction });
+      await queryInterface.bulkDelete('Competitions', {}, { transaction });
 
       await transaction.commit();
     } catch (error) {

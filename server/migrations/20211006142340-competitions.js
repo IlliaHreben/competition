@@ -10,6 +10,7 @@ const up = async (queryInterface, Sequelize) => {
       description  : { type: Sequelize.STRING, allowNull: false },
       startDate    : { type: Sequelize.DATE, allowNull: false },
       endDate      : { type: Sequelize.DATE, allowNull: false },
+      days         : { type: Sequelize.INTEGER, allowNull: false },
       ringsCount   : { type: Sequelize.INTEGER, allowNull: false },
       tatamisCount : { type: Sequelize.INTEGER, allowNull: false },
 

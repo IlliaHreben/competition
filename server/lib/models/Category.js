@@ -4,10 +4,10 @@ import Base              from './Base.js';
 
 export default class Category extends Base {
   static initRelation () {
-    const Fighter = sequelize.model('Fighter');
+    const Card = sequelize.model('Card');
 
-    this.hasMany(Fighter, {
-      as         : 'Fighters',
+    this.hasMany(Card, {
+      as         : 'Cards',
       foreignKey : {
         name      : 'categoryId',
         allowNull : true

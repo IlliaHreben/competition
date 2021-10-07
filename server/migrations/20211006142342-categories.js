@@ -15,6 +15,8 @@ const up = async (queryInterface, Sequelize) => {
       weightTo   : { type: Sequelize.FLOAT, allowNull: false },
       weightName : { type: Sequelize.STRING, allowNull: false },
 
+      competitionId: { type: Sequelize.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Competitions', key: 'id' }, allowNull: false },
+
       createdAt : { type: Sequelize.DATE, allowNull: false },
       deletedAt : { type: Sequelize.DATE, allowNull: true },
       updatedAt : { type: Sequelize.DATE, allowNull: false }

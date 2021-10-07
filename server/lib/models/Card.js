@@ -6,6 +6,7 @@ import Club from './Club.js';
 import Coach from './Coach.js';
 import Fighter from './Fighter.js';
 import Category from './Category.js';
+import Competition from './Competition.js';
 
 export default class Card extends Base {
   static initRelation () {
@@ -17,7 +18,7 @@ export default class Card extends Base {
       }
     });
     this.belongsTo(Club, {
-      as         : 'Club',
+      as         : 'SecondaryClub',
       foreignKey : {
         name      : 'secondaryClubId',
         allowNull : true
@@ -31,16 +32,23 @@ export default class Card extends Base {
       }
     });
     this.belongsTo(Fighter, {
-      as         : 'Coach',
+      as         : 'Fighter',
       foreignKey : {
         name      : 'fighterId',
         allowNull : false
       }
     });
     this.belongsTo(Category, {
-      as         : 'Coach',
+      as         : 'Category',
       foreignKey : {
-        name      : 'fighterId',
+        name      : 'categoryId',
+        allowNull : false
+      }
+    });
+    this.belongsTo(Competition, {
+      as         : 'Competition',
+      foreignKey : {
+        name      : 'competitionId',
         allowNull : false
       }
     });
@@ -55,6 +63,7 @@ Card.init({
   secondaryClubId : { type: Sequelize.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Clubs', key: 'id' }, allowNull: true },
   coachId         : { type: Sequelize.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Coaches', key: 'id' }, allowNull: false },
   categoryId      : { type: Sequelize.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Fighters', key: 'id' }, allowNull: false },
+  competitionId   : { type: Sequelize.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Competition', key: 'id' }, allowNull: false },
 
   weight     : { type: Sequelize.FLOAT, allowNull: false },
   realWeight : { type: Sequelize.FLOAT, allowNull: false },
