@@ -1,4 +1,4 @@
-import sequelize from './sequelizeSingleton.js';
+import sequelize from './sequelize-singleton.js';
 
 import './models/Category.js';
 import './models/Club.js';
@@ -17,7 +17,7 @@ for (const modelName in sequelize.models) {
 
 const { database, host, port, dialect } = sequelize.config;
 
-export * from './sequelizeSingleton.js';
+export * from './sequelize-singleton.js';
 
 export const dbUrl = `${dialect}://${host}:${port}/${(database)}`;
 

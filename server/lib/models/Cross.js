@@ -1,6 +1,6 @@
-import Sequelize      from 'sequelize';
-import sequelize      from '../sequelizeSingleton';
-import Base           from './Base';
+import Sequelize from 'sequelize';
+import sequelize from '../sequelize-singleton';
+import Base      from './Base';
 
 export class ClubsToCoaches extends Base {}
 

@@ -1,5 +1,5 @@
 import Sequelize         from 'sequelize';
-import sequelize         from '../sequelizeSingleton.js';
+import sequelize         from '../sequelize-singleton.js';
 import Base              from './Base.js';
 
 export default class Category extends Base {

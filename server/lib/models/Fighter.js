@@ -1,9 +1,9 @@
-import Sequelize         from 'sequelize';
-import sequelize         from '../sequelizeSingleton';
-import Base from './Base';
+import Sequelize from 'sequelize';
+import sequelize from '../sequelize-singleton';
+import Base      from './Base';
 
-import Club from './Club';
-import Coach from './Coach';
+import Club      from './Club';
+import Coach     from './Coach';
 
 export default class Fighter extends Base {
   static initRelation () {
