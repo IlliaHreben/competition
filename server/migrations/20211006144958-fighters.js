@@ -14,7 +14,7 @@ const up = async (queryInterface, Sequelize) => {
       clubId    : { type: Sequelize.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Clubs', key: 'id' }, allowNull: false },
       coachId   : { type: Sequelize.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Coaches', key: 'id' }, allowNull: false },
       birthDate : { type: Sequelize.DATE, allowNull: false },
-      group     : { type: Sequelize.ENUM([ 'A', 'B' ]), allowNull: false },
+      group     : { type: Sequelize.ENUM([ 'A', 'B' ]), allowNull: true },
 
       createdAt : { type: Sequelize.DATE, allowNull: false },
       deletedAt : { type: Sequelize.DATE, allowNull: true },
