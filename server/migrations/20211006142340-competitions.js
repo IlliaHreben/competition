@@ -31,7 +31,7 @@ const down = async (queryInterface) => {
   const transaction = await queryInterface.sequelize.transaction();
 
   try {
-    await queryInterface.dropTable('Competitions');
+    await queryInterface.dropTable('Competitions', { transaction });
 
     await transaction.commit();
   } catch (error) {

@@ -54,8 +54,8 @@ const down = async (queryInterface) => {
   const transaction = await queryInterface.sequelize.transaction();
 
   try {
-    await queryInterface.dropTable('ClubsToCoaches');
-    await queryInterface.dropTable('Coaches');
+    await queryInterface.dropTable('ClubsToCoaches', { transaction });
+    await queryInterface.dropTable('Coaches', { transaction });
 
     await transaction.commit();
   } catch (error) {

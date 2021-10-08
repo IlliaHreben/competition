@@ -1,4 +1,9 @@
 /* eslint-disable import/no-commonjs */
+const sections = [
+  'full-contact', 'low-kick', 'low-kick-light', 'K-1-light',
+  'K-1', 'light-contact', 'semi-contact', 'point-fighting'
+];
+
 const up = async (queryInterface, Sequelize) => {
   const transaction = await queryInterface.sequelize.transaction();
 
@@ -6,7 +11,7 @@ const up = async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Categories', {
       id: { type: Sequelize.UUID, defaultValue: Sequelize.UUIDV4, primaryKey: true },
 
-      name       : { type: Sequelize.STRING, allowNull: false },
+      section    : { type: Sequelize.ENUM(sections), allowNull: false },
       sex        : { type: Sequelize.ENUM([ 'men', 'women' ]), allowNull: false },
       type       : { type: Sequelize.ENUM([ 'full', 'light' ]), allowNull: false },
       ageFrom    : { type: Sequelize.INTEGER, allowNull: false },
@@ -14,6 +19,7 @@ const up = async (queryInterface, Sequelize) => {
       weightFrom : { type: Sequelize.FLOAT, allowNull: false },
       weightTo   : { type: Sequelize.FLOAT, allowNull: false },
       weightName : { type: Sequelize.STRING, allowNull: false },
+      group      : { type: Sequelize.ENUM([ 'A', 'B' ]), allowNull: true },
 
       competitionId: { type: Sequelize.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Competitions', key: 'id' }, allowNull: false },
 
@@ -34,7 +40,11 @@ const down = async (queryInterface) => {
   const transaction = await queryInterface.sequelize.transaction();
 
   try {
-    await queryInterface.dropTable('Categories');
+    await queryInterface.dropTable('Categories', { transaction });
+    await queryInterface.sequelize.query('DROP TYPE "enum_Categories_section"', { transaction });
+    await queryInterface.sequelize.query('DROP TYPE "enum_Categories_sex"', { transaction });
+    await queryInterface.sequelize.query('DROP TYPE "enum_Categories_type"', { transaction });
+    await queryInterface.sequelize.query('DROP TYPE "enum_Categories_group"', { transaction });
 
     await transaction.commit();
   } catch (error) {

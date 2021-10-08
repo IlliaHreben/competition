@@ -1,3 +1,4 @@
+/* eslint-disable import/no-commonjs */
 const isTest = process.env.NODE_ENV === 'test';
 
 const pool = {
@@ -19,6 +20,8 @@ const config = {
   logging        : process.env.DEBUG === 'true' && console.log,
   dialectOptions : {
     multipleStatements: isTest
-  }
+  },
+  seederStorage          : 'sequelize',
+  seederStorageTableName : 'sequelize_data'
 };
-export default config;
+module.exports = config;

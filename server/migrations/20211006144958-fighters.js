@@ -11,10 +11,11 @@ const up = async (queryInterface, Sequelize) => {
       lastName  : { type: Sequelize.STRING, allowNull: false },
       sex       : { type: Sequelize.ENUM([ 'man', 'woman' ]), allowNull: false },
       city      : { type: Sequelize.STRING, allowNull: false },
-      clubId    : { type: Sequelize.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Clubs', key: 'id' }, allowNull: false },
-      coachId   : { type: Sequelize.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Coaches', key: 'id' }, allowNull: false },
-      birthDate : { type: Sequelize.DATE, allowNull: false },
       group     : { type: Sequelize.ENUM([ 'A', 'B' ]), allowNull: true },
+      birthDate : { type: Sequelize.DATE, allowNull: false },
+
+      clubId  : { type: Sequelize.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Clubs', key: 'id' }, allowNull: false },
+      coachId : { type: Sequelize.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Coaches', key: 'id' }, allowNull: false },
 
       createdAt : { type: Sequelize.DATE, allowNull: false },
       deletedAt : { type: Sequelize.DATE, allowNull: true },
@@ -33,7 +34,9 @@ const down = async (queryInterface) => {
   const transaction = await queryInterface.sequelize.transaction();
 
   try {
-    await queryInterface.dropTable('Fighters');
+    await queryInterface.dropTable('Fighters', { transaction });
+    await queryInterface.sequelize.query('DROP TYPE "enum_Fighters_sex"', { transaction });
+    await queryInterface.sequelize.query('DROP TYPE "enum_Fighters_group"', { transaction });
 
     await transaction.commit();
   } catch (error) {

@@ -5,7 +5,7 @@ module.exports = {
   up: async (queryInterface) => {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.bulkInsert('Categories', categories, { transaction });
+      await queryInterface.bulkInsert('Categories', categories, { returning: true, transaction });
 
       await transaction.commit();
     } catch (error) {
