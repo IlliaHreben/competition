@@ -19,13 +19,17 @@ export default class Category extends Base {
 Category.init({
   id: { type: Sequelize.UUID, defaultValue: Sequelize.UUIDV4, primaryKey: true },
 
-  name       : { type: Sequelize.STRING, allowNull: false },
-  sex        : { type: Sequelize.ENUM([ 'men', 'women' ]), allowNull: false },
+  section    : { type: Sequelize.STRING, allowNull: false },
+  sex        : { type: Sequelize.ENUM([ 'man', 'woman' ]), allowNull: false },
   type       : { type: Sequelize.ENUM([ 'full', 'light' ]), allowNull: false },
-  age        : { type: Sequelize.INTEGER, allowNull: false },
+  ageFrom    : { type: Sequelize.INTEGER, allowNull: false },
+  ageTo      : { type: Sequelize.INTEGER, allowNull: false },
   weightFrom : { type: Sequelize.FLOAT, allowNull: false },
   weightTo   : { type: Sequelize.FLOAT, allowNull: false },
   weightName : { type: Sequelize.STRING, allowNull: false },
+  group      : { type: Sequelize.ENUM([ 'A', 'B' ]), allowNull: true },
+
+  competitionId: { type: Sequelize.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Competitions', key: 'id' }, allowNull: false },
 
   createdAt : { type: Sequelize.DATE, allowNull: false },
   deletedAt : { type: Sequelize.DATE, allowNull: true },

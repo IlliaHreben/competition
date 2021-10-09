@@ -3,6 +3,7 @@ import config    from '../etc/db.js';
 console.log(config);
 
 export const Op = Sequelize.Op;
+export const DT = Sequelize.DataTypes;
 
 const { database, username, password, ...options } = config;
 const sequelize = new Sequelize(database, username, password, options);

@@ -12,7 +12,7 @@ const up = async (queryInterface, Sequelize) => {
       id: { type: Sequelize.UUID, defaultValue: Sequelize.UUIDV4, primaryKey: true },
 
       section    : { type: Sequelize.ENUM(sections), allowNull: false },
-      sex        : { type: Sequelize.ENUM([ 'men', 'women' ]), allowNull: false },
+      sex        : { type: Sequelize.ENUM([ 'man', 'woman' ]), allowNull: false },
       type       : { type: Sequelize.ENUM([ 'full', 'light' ]), allowNull: false },
       ageFrom    : { type: Sequelize.INTEGER, allowNull: false },
       ageTo      : { type: Sequelize.INTEGER, allowNull: false },

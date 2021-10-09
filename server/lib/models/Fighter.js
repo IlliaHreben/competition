@@ -1,9 +1,8 @@
-import Sequelize from 'sequelize';
-import sequelize from '../sequelize-singleton';
-import Base      from './Base';
+import sequelize, { DT } from '../sequelize-singleton.js';
+import Base              from './Base.js';
 
-import Club      from './Club';
-import Coach     from './Coach';
+import Club              from './Club.js';
+import Coach             from './Coach.js';
 
 export default class Fighter extends Base {
   static initRelation () {
@@ -26,20 +25,37 @@ export default class Fighter extends Base {
 }
 
 Fighter.init({
-  id: { type: Sequelize.UUID, defaultValue: Sequelize.UUIDV4, primaryKey: true },
+  id: { type: DT.UUID, defaultValue: DT.UUIDV4, primaryKey: true },
 
-  name      : { type: Sequelize.STRING, allowNull: false },
-  lastName  : { type: Sequelize.STRING, allowNull: false },
-  sex       : { type: Sequelize.ENUM([ 'man', 'woman' ]), allowNull: false },
-  city      : { type: Sequelize.STRING, allowNull: false },
-  clubId    : { type: Sequelize.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Clubs', key: 'id' }, allowNull: false },
-  coachId   : { type: Sequelize.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Coaches', key: 'id' }, allowNull: false },
-  birthDate : { type: Sequelize.DATE, allowNull: false },
-  group     : { type: Sequelize.ENUM([ 'A', 'B' ]), allowNull: true },
+  section   : { type: DT.STRING, allowNull: false },
+  name      : { type: DT.STRING, allowNull: false },
+  lastName  : { type: DT.STRING, allowNull: false },
+  sex       : { type: DT.ENUM([ 'man', 'woman' ]), allowNull: false },
+  city      : { type: DT.STRING, allowNull: false },
+  clubId    : { type: DT.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Clubs', key: 'id' }, allowNull: false },
+  coachId   : { type: DT.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Coaches', key: 'id' }, allowNull: false },
+  birthDate : { type: DT.DATE, allowNull: false },
+  group     : { type: DT.ENUM([ 'A', 'B' ]), allowNull: true },
+  age       : {
+    type: DT.VIRTUAL,
+    get () {
+      const today = new Date();
+      const birthDate = new Date(this.birthDate);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
+    },
+    set () {
+      throw new Error('Do not try to set the `age` value!');
+    }
+  },
 
-  createdAt : { type: Sequelize.DATE, allowNull: false },
-  deletedAt : { type: Sequelize.DATE, allowNull: true },
-  updatedAt : { type: Sequelize.DATE, allowNull: false }
+  createdAt : { type: DT.DATE, allowNull: false },
+  deletedAt : { type: DT.DATE, allowNull: true },
+  updatedAt : { type: DT.DATE, allowNull: false }
 }, {
   sequelize,
   paranoid: true

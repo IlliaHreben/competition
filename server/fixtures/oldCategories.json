@@ -1,5 +1,5 @@
 {
-  "men": {
+  "man": {
     "light": [
       {
         "age": { "from": 6, "to": 7 },
@@ -49,7 +49,7 @@
       }
     ]
   },
-  "women": {
+  "woman": {
     "light": [
       {
         "age": { "from": 6, "to": 7 },

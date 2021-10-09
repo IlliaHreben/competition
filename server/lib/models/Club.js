@@ -1,8 +1,8 @@
 import Sequelize         from 'sequelize';
-import sequelize         from '../sequelize-singleton';
-import Base              from './Base';
+import sequelize         from '../sequelize-singleton.js';
+import Base              from './Base.js';
 
-import Coach             from './Coach';
+import Coach             from './Coach.js';
 
 export default class Club extends Base {
   static initRelation () {
