@@ -13,7 +13,8 @@
     "seeds-create": "sequelize-cli seed:generate --name",
     "seeds": "NODE_OPTIONS='-r dotenv/config' sequelize db:seed:all --config etc/db.js",
     "seeds-undo": "NODE_OPTIONS='-r dotenv/config' sequelize db:seed:undo --config etc/db.js",
-    "seeds-undo-all": "NODE_OPTIONS='-r dotenv/config' sequelize db:seed:undo:all --config etc/db.js"
+    "seeds-undo-all": "NODE_OPTIONS='-r dotenv/config' sequelize db:seed:undo:all --config etc/db.js",
+    "clear-db": "npm run migration-undo-all && npm run migration-dev && npm run seeds"
   },
   "author": "Illia Hreben",
   "license": "ISC",

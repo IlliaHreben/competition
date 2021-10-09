@@ -1,6 +1,5 @@
 import Sequelize from 'sequelize';
 import config    from '../etc/db.js';
-console.log(config);
 
 export const Op = Sequelize.Op;
 export const DT = Sequelize.DataTypes;

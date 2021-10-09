@@ -20,8 +20,7 @@ const config = {
   logging        : process.env.DEBUG === 'true' && console.log,
   dialectOptions : {
     multipleStatements: isTest
-  },
-  seederStorage          : 'sequelize',
-  seederStorageTableName : 'sequelize_data'
+  }
+  // seederStorage: 'sequelize'
 };
 module.exports = config;

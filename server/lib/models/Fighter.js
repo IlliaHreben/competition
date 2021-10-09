@@ -27,7 +27,6 @@ export default class Fighter extends Base {
 Fighter.init({
   id: { type: DT.UUID, defaultValue: DT.UUIDV4, primaryKey: true },
 
-  section   : { type: DT.STRING, allowNull: false },
   name      : { type: DT.STRING, allowNull: false },
   lastName  : { type: DT.STRING, allowNull: false },
   sex       : { type: DT.ENUM([ 'man', 'woman' ]), allowNull: false },

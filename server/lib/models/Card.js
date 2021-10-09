@@ -1,12 +1,11 @@
-import Sequelize         from 'sequelize';
-import sequelize         from '../sequelize-singleton.js';
-import Base              from './Base.js';
+import sequelize, { Op, DT } from '../sequelize-singleton.js';
 
-import Club              from './Club.js';
-import Coach             from './Coach.js';
-import Fighter           from './Fighter.js';
-import Category          from './Category.js';
-import Competition       from './Competition.js';
+import Base                  from './Base.js';
+import Club                  from './Club.js';
+import Coach                 from './Coach.js';
+import Fighter               from './Fighter.js';
+import Category              from './Category.js';
+import Competition           from './Competition.js';
 
 export default class Card extends Base {
   static initRelation () {
@@ -56,25 +55,67 @@ export default class Card extends Base {
 }
 
 Card.init({
-  id: { type: Sequelize.UUID, defaultValue: Sequelize.UUIDV4, primaryKey: true },
+  id: { type: DT.UUID, defaultValue: DT.UUIDV4, primaryKey: true },
 
-  fighterId       : { type: Sequelize.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Fighters', key: 'id' }, allowNull: false },
-  clubId          : { type: Sequelize.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Clubs', key: 'id' }, allowNull: false },
-  secondaryClubId : { type: Sequelize.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Clubs', key: 'id' }, allowNull: true },
-  coachId         : { type: Sequelize.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Coaches', key: 'id' }, allowNull: false },
-  categoryId      : { type: Sequelize.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Fighters', key: 'id' }, allowNull: false },
-  competitionId   : { type: Sequelize.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Competition', key: 'id' }, allowNull: false },
+  fighterId       : { type: DT.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Fighters', key: 'id' }, allowNull: false },
+  clubId          : { type: DT.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Clubs', key: 'id' }, allowNull: false },
+  secondaryClubId : { type: DT.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Clubs', key: 'id' }, allowNull: true },
+  coachId         : { type: DT.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Coaches', key: 'id' }, allowNull: false },
+  categoryId      : { type: DT.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Categories', key: 'id' }, allowNull: false },
+  competitionId   : { type: DT.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Competition', key: 'id' }, allowNull: false },
 
-  weight     : { type: Sequelize.FLOAT, allowNull: false },
-  realWeight : { type: Sequelize.FLOAT, allowNull: false },
-  group      : { type: Sequelize.ENUM([ 'A', 'B' ]), allowNull: true },
-  city       : { type: Sequelize.STRING, allowNull: false },
-  birthDate  : { type: Sequelize.DATE, allowNull: false },
+  section    : { type: DT.STRING, allowNull: false },
+  weight     : { type: DT.FLOAT, allowNull: false },
+  realWeight : { type: DT.FLOAT, allowNull: false },
+  group      : { type: DT.ENUM([ 'A', 'B' ]), allowNull: true },
+  city       : { type: DT.STRING, allowNull: false },
+  birthDate  : { type: DT.DATE, allowNull: false },
+  age        : {
+    type: DT.VIRTUAL,
+    get () {
+      const today = new Date();
+      const birthDate = new Date(this.birthDate);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
+    },
+    set () {
+      throw new Error('Do not try to set the `age` value!');
+    }
+  },
 
-  createdAt : { type: Sequelize.DATE, allowNull: false },
-  deletedAt : { type: Sequelize.DATE, allowNull: true },
-  updatedAt : { type: Sequelize.DATE, allowNull: false }
+  createdAt : { type: DT.DATE, allowNull: false },
+  deletedAt : { type: DT.DATE, allowNull: true },
+  updatedAt : { type: DT.DATE, allowNull: false }
 }, {
+  hooks: {
+    beforeValidate : assignCategoryHook,
+    beforeCreate   : (card) => {
+      console.log('='.repeat(50)); // !nocommit
+      console.log(card);
+      console.log('='.repeat(50));
+    }
+  },
   sequelize,
   paranoid: true
 });
+
+async function assignCategoryHook (card, options) {
+  const fighter = await Fighter.findById(card.fighterId);
+  const category = await Category.findOne({
+    where: {
+      weightFrom    : { [Op.lte]: card.weight },
+      weightTo      : { [Op.gte]: card.weight },
+      ageFrom       : { [Op.lte]: card.age },
+      ageTo         : { [Op.gte]: card.age },
+      group         : card.group,
+      section       : card.section,
+      sex           : fighter.sex,
+      competitionId : card.competitionId
+    }
+  });
+  card.categoryId = category.id;
+}
