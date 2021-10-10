@@ -1,0 +1,49 @@
+{
+    "schedule": {
+        "oneDay": {
+            "oneRing" : [
+                {
+                    "section": "low-kick",
+                    "groups": [
+                        "A",
+                        "B"
+                    ],
+                    "ageFrom": 10,
+                    "ageTo": 100
+                },
+                {
+                    "section": "full-contact",
+                    "groups": [
+                        "A",
+                        "B"
+                    ],
+                    "ageFrom": 10,
+                    "ageTo": 100
+                },
+                {
+                    "section": "K-1",
+                    "groups": [
+                        "A",
+                        "B"
+                    ],
+                    "ageFrom": 10,
+                    "ageTo": 100
+                }
+            ],
+            "tatamies": [
+                {
+                    "low-kick": [
+                        {
+                            "groups": [
+                                "A",
+                                "B"
+                            ],
+                            "ageFrom": 10,
+                            "ageTo": 17
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

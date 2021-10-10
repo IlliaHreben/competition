@@ -1,0 +1,52 @@
+[
+    {
+        "id": "9ffcad6c-c756-4f1e-a0ef-8f40853944cf",
+        "type": "tatami",
+        "orderNumber": 1,
+        "competitionDay": 1,
+        "competitionId": "ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb",
+        "createdAt": "2021-10-10T09:22:27.943Z",
+        "deletedAt": null,
+        "updatedAt": "2021-10-10T09:22:27.943Z"
+    },
+    {
+        "id": "77d08af5-cb07-4a42-b1d6-c9c72fb62d21",
+        "type": "tatami",
+        "orderNumber": 2,
+        "competitionDay": 1,
+        "competitionId": "ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb",
+        "createdAt": "2021-10-10T09:22:27.943Z",
+        "deletedAt": null,
+        "updatedAt": "2021-10-10T09:22:27.943Z"
+    },
+    {
+        "id": "98972d62-373d-4229-a1a7-df7cde04b78f",
+        "type": "ring",
+        "orderNumber": 3,
+        "competitionDay": 1,
+        "competitionId": "ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb",
+        "createdAt": "2021-10-10T09:22:27.943Z",
+        "deletedAt": null,
+        "updatedAt": "2021-10-10T09:22:27.943Z"
+    },
+    {
+        "id": "9c2f5512-3ff2-44a9-a046-3695372c49cf",
+        "type": "tatami",
+        "orderNumber": 1,
+        "competitionDay": 2,
+        "competitionId": "ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb",
+        "createdAt": "2021-10-10T09:22:27.943Z",
+        "deletedAt": null,
+        "updatedAt": "2021-10-10T09:22:27.943Z"
+    },
+    {
+        "id": "ca6c4b63-d9a0-475b-b520-37a37fe17039",
+        "type": "ring",
+        "orderNumber": 2,
+        "competitionDay": 2,
+        "competitionId": "ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb",
+        "createdAt": "2021-10-10T09:22:27.943Z",
+        "deletedAt": null,
+        "updatedAt": "2021-10-10T09:22:27.943Z"
+    }
+]

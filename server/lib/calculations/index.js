@@ -1,7 +1,7 @@
-import sequelize, { Op }         from '../sequelize.js';
+// import sequelize, { Op }         from '../sequelize.js';
 
-import Category                  from '../models/Category.js';
-import Fighter                   from '../models/Fighter.js';
+// import Category                  from '../models/Category.js';
+// import Fighter                   from '../models/Fighter.js';
 import Card                      from '../models/Card.js';
 
 import { createRequire }         from 'module';
@@ -31,13 +31,13 @@ const cards = require('../../fixtures/cards.json'); // eslint-disable-line impor
   // }));
 })();
 
-function getAge (dateString) {
-  const today = new Date();
-  const birthDate = new Date(dateString);
-  let age = today.getFullYear() - birthDate.getFullYear();
-  const m = today.getMonth() - birthDate.getMonth();
-  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-    age--;
-  }
-  return age;
-}
+// function getAge (dateString) {
+//   const today = new Date();
+//   const birthDate = new Date(dateString);
+//   let age = today.getFullYear() - birthDate.getFullYear();
+//   const m = today.getMonth() - birthDate.getMonth();
+//   if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+//     age--;
+//   }
+//   return age;
+// }

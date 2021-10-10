@@ -1,6 +1,5 @@
-import Sequelize from 'sequelize';
-import sequelize from '../sequelize-singleton.js';
-import Base      from './Base.js';
+import sequelize, { DT } from '../sequelize-singleton.js';
+import Base              from './Base.js';
 
 export default class Category extends Base {
   static initRelation () {
@@ -25,19 +24,27 @@ export default class Category extends Base {
 }
 
 Category.init({
-  id: { type: Sequelize.UUID, defaultValue: Sequelize.UUIDV4, primaryKey: true },
+  id: { type: DT.UUID, defaultValue: DT.UUIDV4, primaryKey: true },
 
-  name         : { type: Sequelize.STRING, allowNull: false },
-  description  : { type: Sequelize.STRING, allowNull: false },
-  startDate    : { type: Sequelize.DATE, allowNull: false },
-  endDate      : { type: Sequelize.DATE, allowNull: false },
-  days         : { type: Sequelize.INTEGER, allowNull: false },
-  ringsCount   : { type: Sequelize.INTEGER, allowNull: false },
-  tatamisCount : { type: Sequelize.INTEGER, allowNull: false },
+  name        : { type: DT.STRING, allowNull: false },
+  description : { type: DT.STRING, allowNull: false },
+  startDate   : { type: DT.DATE, allowNull: false },
+  endDate     : { type: DT.DATE, allowNull: false },
+  days        : {
+    type: DT.VIRTUAL,
+    get () {
+      const first = new Date(this.startDate);
+      const second = new Date(this.endDate);
+      return Math.round((second - first) / (1000 * 60 * 60 * 24)) + 1;
+    },
+    set () {
+      throw new Error('Do not try to set the `days` value!');
+    }
+  },
 
-  createdAt : { type: Sequelize.DATE, allowNull: false },
-  deletedAt : { type: Sequelize.DATE, allowNull: true },
-  updatedAt : { type: Sequelize.DATE, allowNull: false }
+  createdAt : { type: DT.DATE, allowNull: false },
+  deletedAt : { type: DT.DATE, allowNull: true },
+  updatedAt : { type: DT.DATE, allowNull: false }
 }, {
   sequelize,
   paranoid: true
