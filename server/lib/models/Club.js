@@ -2,10 +2,11 @@ import Sequelize         from 'sequelize';
 import sequelize         from '../sequelize-singleton.js';
 import Base              from './Base.js';
 
-import Coach             from './Coach.js';
+// import Coach             from './Coach.js';
 
 export default class Club extends Base {
   static initRelation () {
+    const Coach = sequelize.model('Coach');
     this.belongsToMany(Coach, {
       as         : 'Coaches',
       through    : 'ClubsToCoaches',

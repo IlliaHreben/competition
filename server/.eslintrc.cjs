@@ -1,6 +1,8 @@
 /* eslint-disable import/no-commonjs */
 module.exports = {
-  env: {
+  parser : '@babel/eslint-parser',
+  env    : {
+    // es6      : true,
     commonjs : true,
     es2021   : true
   },
@@ -12,7 +14,10 @@ module.exports = {
     'import'
   ],
   parserOptions: {
-    ecmaVersion: 12
+    ecmaVersion       : 'latest',
+    sourceType        : 'module',
+    es6               : true,
+    requireConfigFile : false
   },
   rules: {
     semi                                    : [ 'error', 'always' ],
@@ -20,7 +25,7 @@ module.exports = {
     'object-shorthand'                      : 1,
     'prefer-template'                       : 2,
     camelcase                               : 0,
-    'import/no-commonjs'                    : 1,
+    'import/no-commonjs'                    : 2,
     'func-names'                            : 0,
     'func-style'                            : 0,
     'prefer-arrow-callback'                 : 0,

@@ -1,5 +1,6 @@
 import sequelize from './sequelize-singleton.js';
 
+import './models/Competition.js';
 import './models/Category.js';
 import './models/Club.js';
 import './models/Coach.js';
@@ -7,12 +8,8 @@ import './models/Fighter.js';
 import './models/Card.js';
 import './models/Cross.js';
 
-for (const modelName in sequelize.models) {
-  const model = sequelize.models[modelName];
-
-  if (model.initRelation) {
-    model.initRelation(sequelize);
-  }
+for (const Model of Object.values(sequelize.models)) {
+  Model.initRelation?.(sequelize);
 }
 
 const { database, host, port, dialect } = sequelize.config;

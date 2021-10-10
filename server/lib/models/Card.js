@@ -1,14 +1,15 @@
 import sequelize, { Op, DT } from '../sequelize-singleton.js';
 
 import Base                  from './Base.js';
-import Club                  from './Club.js';
-import Coach                 from './Coach.js';
-import Fighter               from './Fighter.js';
-import Category              from './Category.js';
-import Competition           from './Competition.js';
 
 export default class Card extends Base {
   static initRelation () {
+    const Club = sequelize.model('Club');
+    const Coach = sequelize.model('Coach');
+    const Fighter = sequelize.model('Fighter');
+    const Category = sequelize.model('Category');
+    const Competition = sequelize.model('Competition');
+
     this.belongsTo(Club, {
       as         : 'Club',
       foreignKey : {
@@ -92,18 +93,17 @@ Card.init({
   updatedAt : { type: DT.DATE, allowNull: false }
 }, {
   hooks: {
-    beforeValidate : assignCategoryHook,
-    beforeCreate   : (card) => {
-      console.log('='.repeat(50)); // !nocommit
-      console.log(card);
-      console.log('='.repeat(50));
-    }
+    beforeValidate   : assignCategoryHook,
+    beforeBulkCreate : assignBulkCategoryHook
   },
   sequelize,
   paranoid: true
 });
 
 async function assignCategoryHook (card, options) {
+  const Fighter = sequelize.model('Fighter');
+  const Category = sequelize.model('Category');
+
   const fighter = await Fighter.findById(card.fighterId);
   const category = await Category.findOne({
     where: {
@@ -118,4 +118,27 @@ async function assignCategoryHook (card, options) {
     }
   });
   card.categoryId = category.id;
+}
+
+async function assignBulkCategoryHook (cards, options) {
+  console.log(cards);
+  const Fighter = sequelize.model('Fighter');
+  const Category = sequelize.model('Category');
+
+  await Promise.all(cards.map(async card => {
+    const fighter = await Fighter.findById(card.fighterId);
+    const category = await Category.findOne({
+      where: {
+        weightFrom    : { [Op.lte]: card.weight },
+        weightTo      : { [Op.gte]: card.weight },
+        ageFrom       : { [Op.lte]: card.age },
+        ageTo         : { [Op.gte]: card.age },
+        group         : card.group,
+        section       : card.section,
+        sex           : fighter.sex,
+        competitionId : card.competitionId
+      }
+    });
+    card.categoryId = category.id;
+  }));
 }

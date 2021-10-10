@@ -1,9 +1,13 @@
 import Sequelize from 'sequelize';
 import config    from '../etc/db.js';
+import cls       from 'cls-hooked';
+
+const namespace = cls.createNamespace('sequelize-transactions');
 
 export const Op = Sequelize.Op;
 export const DT = Sequelize.DataTypes;
 
+Sequelize.useCLS(namespace);
 const { database, username, password, ...options } = config;
 const sequelize = new Sequelize(database, username, password, options);
 

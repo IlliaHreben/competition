@@ -1,7 +1,7 @@
 import sequelize, { DT } from '../sequelize-singleton.js';
 import Base              from './Base.js';
 
-export default class Category extends Base {
+export default class Competition extends Base {
   static initRelation () {
     const Category = sequelize.model('Category');
     const Card = sequelize.model('Card');
@@ -23,7 +23,7 @@ export default class Category extends Base {
   }
 }
 
-Category.init({
+Competition.init({
   id: { type: DT.UUID, defaultValue: DT.UUIDV4, primaryKey: true },
 
   name        : { type: DT.STRING, allowNull: false },
