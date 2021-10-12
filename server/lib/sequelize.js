@@ -7,6 +7,7 @@ import './models/Coach.js';
 import './models/Fighter.js';
 import './models/Card.js';
 import './models/Cross.js';
+import './models/Fight';
 
 for (const Model of Object.values(sequelize.models)) {
   Model.initRelation?.(sequelize);

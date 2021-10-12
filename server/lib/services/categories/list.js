@@ -4,7 +4,7 @@ import { dumpCategory } from '../../utils';
 
 import Category         from '../../models/Category.js';
 
-export default class CountriesList extends ServiceBase {
+export default class CategoriesList extends ServiceBase {
     static validationRules = {
       competitionId : [ 'required', 'uuid' ],
       limit         : [ 'positive_integer', { default: 10 } ],

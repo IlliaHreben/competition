@@ -93,8 +93,8 @@ Card.init({
   updatedAt : { type: DT.DATE, allowNull: false }
 }, {
   hooks: {
-    beforeValidate   : assignCategoryHook,
-    beforeBulkCreate : assignBulkCategoryHook
+    beforeCreate: assignCategoryHook
+    // beforeBulkCreate : assignBulkCategoryHook
   },
   sequelize,
   paranoid: true
@@ -120,25 +120,25 @@ async function assignCategoryHook (card, options) {
   card.categoryId = category.id;
 }
 
-async function assignBulkCategoryHook (cards, options) {
-  console.log(cards);
-  const Fighter = sequelize.model('Fighter');
-  const Category = sequelize.model('Category');
+// async function assignBulkCategoryHook (cards, options) {
+//   console.log(cards);
+//   const Fighter = sequelize.model('Fighter');
+//   const Category = sequelize.model('Category');
 
-  await Promise.all(cards.map(async card => {
-    const fighter = await Fighter.findById(card.fighterId);
-    const category = await Category.findOne({
-      where: {
-        weightFrom    : { [Op.lte]: card.weight },
-        weightTo      : { [Op.gte]: card.weight },
-        ageFrom       : { [Op.lte]: card.age },
-        ageTo         : { [Op.gte]: card.age },
-        group         : card.group,
-        section       : card.section,
-        sex           : fighter.sex,
-        competitionId : card.competitionId
-      }
-    });
-    card.categoryId = category.id;
-  }));
-}
+//   await Promise.all(cards.map(async card => {
+//     const fighter = await Fighter.findById(card.fighterId);
+//     const category = await Category.findOne({
+//       where: {
+//         weightFrom    : { [Op.lte]: card.weight },
+//         weightTo      : { [Op.gte]: card.weight },
+//         ageFrom       : { [Op.lte]: card.age },
+//         ageTo         : { [Op.gte]: card.age },
+//         group         : card.group,
+//         section       : card.section,
+//         sex           : fighter.sex,
+//         competitionId : card.competitionId
+//       }
+//     });
+//     card.categoryId = category.id;
+//   }));
+// }
