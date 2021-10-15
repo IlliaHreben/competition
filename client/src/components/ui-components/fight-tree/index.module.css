@@ -4,16 +4,26 @@
     width: 150px;
     height: 50px;
 }
-.redCorner {
-    border: 2px solid;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+.svgButtonGroup {
+    /* border: 2px solid; */
+    min-width: 250px;
+    /* min-height: 60px; */
+    /* z-index: 999; */
 }
 
-.blueCorner {
-    border: 2px solid;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+.svgButton:hover {
+    /* border: 2px solid; */
+    min-width: 250px;
+    border: 2px solid !important
+}
+
+.svgButton {
+    min-height: 36px;
+    margin: 0
+}
+.svgButton button {
+    min-height: 36px;
+    margin: 0
 }
 
 .treeContainer {
@@ -26,7 +36,7 @@
     direction:rtl;
 }
 
-.treeContainer text {
+.treeContainer div {
     -moz-transform: scale(-1, 1);
     -webkit-transform: scale(-1, 1);
     -o-transform: scale(-1, 1);

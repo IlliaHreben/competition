@@ -1,9 +1,10 @@
-import { Op }           from '../../sequelize.js';
-import ServiceBase      from '../Base.js';
-import { dumpCategory } from '../../utils';
+import { Op }            from '../../sequelize.js';
+import ServiceBase       from '../Base.js';
+import { dumpCategory }  from '../../utils';
 
-import Category         from '../../models/Category.js';
-import Card             from '../../models/Card.js';
+import Category          from '../../models/Category.js';
+import Card              from '../../models/Card.js';
+import Fight             from '../../models/Fight.js';
 
 export default class CategoriesList extends ServiceBase {
     static validationRules = {
@@ -16,9 +17,16 @@ export default class CategoriesList extends ServiceBase {
       const categories = await Category.findAll({
         where: {
           competitionId,
-          '$Cards.id$': { [Op.not]: null }
+          '$Fights.id$': { [Op.not]: null }
         },
-        include: [ { model: Card, as: 'Cards', include: [ 'Fighter', 'Club', 'Coach' ] } ]
+        include: [ {
+          model   : Fight,
+          as      : 'Fights',
+          include : [
+            { model: Card, as: 'FirstCard', include: [ 'Fighter', 'Club', 'Coach' ] },
+            { model: Card, as: 'SecondCard', include: [ 'Fighter', 'Club', 'Coach' ] }
+          ]
+        } ]
         // limit,
         // offset,
         // order: [ [ sort, order ] ]

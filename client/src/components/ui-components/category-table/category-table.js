@@ -1,13 +1,14 @@
-import Table          from '@mui/material/Table';
-import TableBody      from '@mui/material/TableBody';
-import TableCell      from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead      from '@mui/material/TableHead';
-import TableRow       from '@mui/material/TableRow';
-import Paper          from '@mui/material/Paper';
-import PropTypes      from 'prop-types';
+import Table                               from '@mui/material/Table';
+import TableBody                           from '@mui/material/TableBody';
+import TableCell                           from '@mui/material/TableCell';
+import TableContainer                      from '@mui/material/TableContainer';
+import TableHead                           from '@mui/material/TableHead';
+import TableRow                            from '@mui/material/TableRow';
+import Paper                               from '@mui/material/Paper';
+import PropTypes                           from 'prop-types';
 
-import styles         from './fight-table.module.css';
+import styles                              from './category-table.module.css';
+import { formatISODate, getFormattedDate } from '../../../utils/datetime';
 
 function dumpCategoryData (category) {
     const cards = category.linked.fights.map(f => ([ {
@@ -30,7 +31,7 @@ function dumpCardData (card) {
     const coach = card.linked?.coach;
 
     return {
-        date      : new Date().getFullYear(), // TODO
+        date      : getFormattedDate(), // TODO
         degree    : `1/${card.fight.degree}`,
         color     : isFirst ? 'red' : 'blue',
         number    : card.fight.orderNumber * 2 - +isFirst,
@@ -40,7 +41,7 @@ function dumpCardData (card) {
         club      : card.linked?.club?.name || '',
         coach     : getFullName(coach),
         age       : card.age || '',
-        birthDate : card.birthDate || '',
+        birthDate : card.birthDate ? formatISODate(card.birthDate) : '',
         weight    : card.weight || ''
     };
 }
@@ -171,7 +172,7 @@ CategoryTable.propTypes = {
                 }).isRequired
             })).isRequired
         }).isRequired
-    }.isRequired
+    }
 };
 
 export default CategoryTable;
