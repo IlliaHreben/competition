@@ -93,8 +93,10 @@ Card.init({
   updatedAt : { type: DT.DATE, allowNull: false }
 }, {
   hooks: {
-    beforeCreate: assignCategoryHook
-    // beforeBulkCreate : assignBulkCategoryHook
+    beforeCreate     : assignCategoryHook,
+    afterCreate      : calculateFightsHook,
+    beforeBulkCreate : assignBulkCategoryHook,
+    afterBulkCreate  : calculateBulkFightsHook
   },
   sequelize,
   paranoid: true
@@ -120,25 +122,37 @@ async function assignCategoryHook (card, options) {
   card.categoryId = category.id;
 }
 
-// async function assignBulkCategoryHook (cards, options) {
-//   console.log(cards);
-//   const Fighter = sequelize.model('Fighter');
-//   const Category = sequelize.model('Category');
+async function calculateFightsHook (card) {
+  const Category = sequelize.model('Category');
+  const category = await Category.findById(card.categoryId);
+  await category.calculateFights();
+}
 
-//   await Promise.all(cards.map(async card => {
-//     const fighter = await Fighter.findById(card.fighterId);
-//     const category = await Category.findOne({
-//       where: {
-//         weightFrom    : { [Op.lte]: card.weight },
-//         weightTo      : { [Op.gte]: card.weight },
-//         ageFrom       : { [Op.lte]: card.age },
-//         ageTo         : { [Op.gte]: card.age },
-//         group         : card.group,
-//         section       : card.section,
-//         sex           : fighter.sex,
-//         competitionId : card.competitionId
-//       }
-//     });
-//     card.categoryId = category.id;
-//   }));
-// }
+async function calculateBulkFightsHook (cards) {
+  const categoryIds = [ ...new Set(cards.map(c => c.categoryId)) ];
+  const Category = sequelize.model('Category');
+  const categories = await Category.findAll({ where: { id: categoryIds } });
+  await Promise.all(categories.map(category => category.calculateFights()));
+}
+
+async function assignBulkCategoryHook (cards, options) {
+  const Fighter = sequelize.model('Fighter');
+  const Category = sequelize.model('Category');
+
+  await Promise.all(cards.map(async card => {
+    const fighter = await Fighter.findById(card.fighterId);
+    const category = await Category.findOne({
+      where: {
+        weightFrom    : { [Op.lte]: card.weight },
+        weightTo      : { [Op.gte]: card.weight },
+        ageFrom       : { [Op.lte]: card.age },
+        ageTo         : { [Op.gte]: card.age },
+        group         : card.group,
+        section       : card.section,
+        sex           : fighter.sex,
+        competitionId : card.competitionId
+      }
+    });
+    card.categoryId = category.id;
+  }));
+}

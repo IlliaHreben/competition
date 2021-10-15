@@ -24,6 +24,13 @@ export default class Category extends Base {
   }
 
   async calculateFights () {
+    const cards = await this.getCards({
+      include: 'Fighter'
+      // order   : [ [ 'weight', 'DESC' ], [ 'age', 'DESC' ] ]
+    });
+
+    if (cards.length < 2) return [];
+
     const Fight = sequelize.model('Fight');
 
     const previousFights = await this.getFights();
@@ -32,11 +39,6 @@ export default class Category extends Base {
     }
     await Fight.destroy({
       where: { id: previousFights.map(f => f.id) }
-    });
-
-    const cards = await this.getCards({
-      include: 'Fighter'
-      // order   : [ [ 'weight', 'DESC' ], [ 'age', 'DESC' ] ]
     });
 
     const fightsObject = [];
@@ -181,7 +183,7 @@ export default class Category extends Base {
     lastFights.forEach((fightFrom, i) => {
       // const cattedFights = lastFights.slice(i + 1);
       lastFights.forEach(fightTo => {
-        if (fightFrom.id === fightTo.id) return;
+        // if (fightFrom.id === fightTo.id) return;
         const coefficient = {
           firstFight  : fightFrom.id,
           secondFight : fightTo.id,

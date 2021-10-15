@@ -18,7 +18,6 @@ const up = async (queryInterface, Sequelize) => {
 
       executedAt : { type: Sequelize.DATE, allowNull: true },
       createdAt  : { type: Sequelize.DATE, allowNull: false },
-      deletedAt  : { type: Sequelize.DATE, allowNull: true },
       updatedAt  : { type: Sequelize.DATE, allowNull: false }
     }, { transaction });
 

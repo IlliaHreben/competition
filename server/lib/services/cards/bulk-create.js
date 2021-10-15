@@ -31,7 +31,7 @@ export default class CountriesList extends ServiceBase {
 
     async execute ({ competitionId, data }) {
       const cardsWithCompetition = data.map(c => ({ competitionId, ...c }));
-      const cards = await Card.bulkCreate(cardsWithCompetition, { individualHooks: true });
+      const cards = await Card.bulkCreate(cardsWithCompetition);
 
       return {
         data: cards.map(dumpCard)

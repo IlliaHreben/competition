@@ -53,7 +53,7 @@ function getFullName (fighter) {
 function CategoryTable ({ category }) {
     const rows = dumpCategoryData(category);
     console.log('='.repeat(50)); // !nocommit
-    console.log(rows);
+    console.log(category);
     console.log('='.repeat(50));
     return (
         <TableContainer component={Paper} >

@@ -12,7 +12,7 @@ export default class CategoriesList extends ServiceBase {
 
     async execute ({ id }) {
       const category = await Category.findById(id, {
-        include: [ {
+        include: [ 'Cards', {
           model   : Fight,
           as      : 'Fights',
           include : [

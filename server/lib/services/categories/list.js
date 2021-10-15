@@ -17,9 +17,9 @@ export default class CategoriesList extends ServiceBase {
       const categories = await Category.findAll({
         where: {
           competitionId,
-          '$Fights.id$': { [Op.not]: null }
+          '$Cards.id$': { [Op.not]: null }
         },
-        include: [ {
+        include: [ 'Cards', {
           model   : Fight,
           as      : 'Fights',
           include : [
