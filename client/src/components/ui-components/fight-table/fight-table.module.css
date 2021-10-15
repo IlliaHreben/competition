@@ -1,0 +1,17 @@
+.tableRow:nth-of-type(4n) {
+    background-color: rgba(0, 0, 0, 0.04)
+  }
+.tableRow:nth-of-type(4n-1) {
+background-color: rgba(0, 0, 0, 0.04)
+}
+.tableCategoryDesc {
+    background-color: #2c2c2c;
+    color: rgb(240, 239, 239) !important;
+    text-transform: uppercase
+}
+.tableHeadDesc {
+    border-bottom: 2px solid;
+}
+.tableHeadDesc th {
+    font-weight: bold;
+}

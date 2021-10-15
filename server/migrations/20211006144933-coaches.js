@@ -10,6 +10,9 @@ const up = async (queryInterface, Sequelize) => {
       name     : { type: Sequelize.STRING, allowNull: false },
       lastName : { type: Sequelize.STRING, allowNull: false },
 
+      assistantName     : { type: Sequelize.STRING, allowNull: true },
+      assistantLastName : { type: Sequelize.STRING, allowNull: true },
+
       createdAt : { type: Sequelize.DATE, allowNull: false },
       deletedAt : { type: Sequelize.DATE, allowNull: true },
       updatedAt : { type: Sequelize.DATE, allowNull: false }

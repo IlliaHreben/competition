@@ -1,13 +1,14 @@
-import { useState, useEffect } from 'react';
-import Graphic                 from '../../ui-components/graphic';
+import { useState, useEffect }    from 'react';
+import FightTree                  from '../../ui-components/fight-tree';
+import FightTable                 from '../../ui-components/fight-table';
+import api                        from '../../../api-singleton';
 
-export default function Graphics () {
+export default function FightTrees () {
     const [ graphics, setGraphics ] = useState([]);
 
     async function fetchGraphic () {
         const categoryId = 'e160dd5f-0904-43ab-aba7-623da2a578cd';
-        const res = await fetch(`/categories/calculate-fights?categoryId=${categoryId}`);
-        const { data } = await res.json();
+        const { data } = await api.categories.show(categoryId);
 
         setGraphics([ data ]);
     }
@@ -16,7 +17,12 @@ export default function Graphics () {
     }, []);
     return (
         <>
-            {graphics.map((g, i) => (<Graphic key={i} fights={g} />))}
+            {graphics.map((category) => (
+                <>
+                    <FightTable key={category.id} category={category}/>
+                    <FightTree key={category.id} category={category} />
+                </>
+            ))}
         </>
     );
 }

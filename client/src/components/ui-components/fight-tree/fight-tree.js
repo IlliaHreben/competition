@@ -11,8 +11,17 @@ import Fight                  from './fight';
 function findChildren (root, fights) {
     const children = fights.filter(f => f.nextFightId === root.id);
     return {
-        name: { redCornerName: root.firstCardId || 'red fighter', blueCornerName: root.secondCardId || 'blue fighter' },
+        name: getCellValues(root),
         ...children.length && { children: children.map(ch => findChildren(ch, fights)) }
+    };
+}
+
+function getCellValues (root) {
+    const firstFighter = root.linked?.firstCard?.linked?.fighter;
+    const secondFighter = root.linked?.secondCard?.linked?.fighter;
+    return {
+        redCornerName  : firstFighter ? `${firstFighter?.name} ${firstFighter?.lastName}` : '',
+        blueCornerName : secondFighter ? `${secondFighter?.name} ${secondFighter?.lastName}` : ''
     };
 }
 
@@ -20,20 +29,18 @@ function createFightersTree (fights) {
     const root = fights.find(f => f.nextFightId === null);
     return findChildren(root, fights);
 }
+
 const defaultMargin = { top: 30, left: 30, right: 30, bottom: 70 };
 
 export default function FightTree ({
     width: totalWidth = 1200,
     height: totalHeight = 500,
     margin = defaultMargin,
-    fights = []
+    category
 }) {
     // const forceUpdate = useForceUpdate();
 
-    const fightersTree = createFightersTree(fights);
-    console.log('='.repeat(50)); // !nocommit
-    console.log(fightersTree);
-    console.log('='.repeat(50));
+    const fightersTree = createFightersTree(category.linked.fights);
 
     const innerWidth = totalWidth - margin.left - margin.right;
     const innerHeight = totalHeight - margin.top - margin.bottom;
@@ -51,9 +58,6 @@ export default function FightTree ({
                         root={hierarchy(fightersTree, (d) => (d.isExpanded ? null : d.children))}
                         size={[ sizeHeight, sizeWidth - 600 ]}
                         separation={(a, b) => {
-                            console.log('='.repeat(50)); // !nocommit
-                            console.log(a, b);
-                            console.log('='.repeat(50));
                             return (a.parent === b.parent ? 1 : 0.5) / a.depth;
                         }}
                     >

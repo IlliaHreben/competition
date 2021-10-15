@@ -1,95 +1,114 @@
-export function dumpCategory (c) {
+export function dumpCategory (data) {
   const linked = {};
 
-  if (c.Cards) linked.cards = c.Cards.map(dumpCard);
+  if (data.Cards) linked.cards = data.Cards.map(dumpCard);
+  if (data.Fights) linked.fights = data.Fights.map(dumpFight);
 
   return {
-    id            : c.id,
-    section       : c.section,
-    sex           : c.sex,
-    type          : c.type,
-    ageFrom       : c.ageFrom,
-    ageTo         : c.ageTo,
-    weightFrom    : c.weightFrom,
-    weightTo      : c.weightTo,
-    weightName    : c.weightName,
-    group         : c.group,
-    competitionId : c.competitionId,
-    createdAt     : c.createdAt,
-    updatedAt     : c.updatedAt,
+    id            : data.id,
+    section       : data.section,
+    sex           : data.sex,
+    type          : data.type,
+    ageFrom       : data.ageFrom,
+    ageTo         : data.ageTo,
+    weightFrom    : data.weightFrom,
+    weightTo      : data.weightTo,
+    weightName    : data.weightName,
+    group         : data.group,
+    competitionId : data.competitionId,
+    createdAt     : data.createdAt,
+    updatedAt     : data.updatedAt,
     linked
   };
 }
 
-export function dumpCard (c) {
-  const linked = {};
-
-  if (c.Coach) linked.coach = dumpCoach(c.coach);
-  if (c.Club) linked.club = dumpClub(c.Club);
+export function dumpCard (data) {
+  const linked = {
+    ...data.Coach && { coach: dumpCoach(data.Coach) },
+    ...data.Club && { club: dumpCoach(data.Club) },
+    ...data.Fighter && { fighter: dumpFighter(data.Fighter) }
+  };
 
   return {
-    id              : c.id,
-    fighterId       : c.fighterId,
-    clubId          : c.clubId,
-    secondaryClubId : c.secondaryClubId,
-    coachId         : c.coachId,
-    categoryId      : c.categoryId,
-    competitionId   : c.competitionId,
-    section         : c.section,
-    weight          : c.weight,
-    realWeight      : c.realWeight,
-    group           : c.group,
-    city            : c.city,
-    birthDate       : c.birthDate,
-    age             : c.age,
-    createdAt       : c.createdAt,
-    updatedAt       : c.updatedAt,
+    id              : data.id,
+    fighterId       : data.fighterId,
+    clubId          : data.clubId,
+    secondaryClubId : data.secondaryClubId,
+    coachId         : data.coachId,
+    categoryId      : data.categoryId,
+    competitionId   : data.competitionId,
+    section         : data.section,
+    weight          : data.weight,
+    realWeight      : data.realWeight,
+    group           : data.group,
+    city            : data.city,
+    birthDate       : data.birthDate,
+    age             : data.age,
+    createdAt       : data.createdAt,
+    updatedAt       : data.updatedAt,
     linked
   };
 }
 
-export function dumpFight (f) {
+export function dumpFight (data) {
   const linked = {};
 
-  if (f.FirstCard) linked.firstCard = dumpCard(f.FirstCard);
-  if (f.SecondCard) linked.secondCard = dumpCard(f.SecondCard);
+  if (data.FirstCard) linked.firstCard = dumpCard(data.FirstCard);
+  if (data.SecondCard) linked.secondCard = dumpCard(data.SecondCard);
 
   return {
-    id           : f.id,
-    degree       : f.degree,
-    orderNumber  : f.orderNumber,
-    firstCardId  : f.firstCardId,
-    secondCardId : f.secondCardId,
-    winnerId     : f.winnerId,
-    nextFightId  : f.nextFightId,
-    categoryId   : f.categoryId,
-    fightSpaceId : f.fightSpaceId,
-    executedAt   : f.executedAt,
-    createdAt    : f.createdAt,
-    deletedAt    : f.deletedAt,
-    updatedAt    : f.updatedAt,
+    id           : data.id,
+    degree       : data.degree,
+    orderNumber  : data.orderNumber,
+    firstCardId  : data.firstCardId,
+    secondCardId : data.secondCardId,
+    winnerId     : data.winnerId,
+    nextFightId  : data.nextFightId,
+    categoryId   : data.categoryId,
+    fightSpaceId : data.fightSpaceId,
+    executedAt   : data.executedAt,
+    createdAt    : data.createdAt,
+    deletedAt    : data.deletedAt,
+    updatedAt    : data.updatedAt,
     linked
   };
 }
 
-export function dumpCoach (c) {
+export function dumpCoach (data) {
   return {
-    id                : c.id,
-    name              : c.name,
-    lastName          : c.lastName,
-    assistantName     : c.assistantName,
-    assistantLastName : c.assistantLastName,
-    createdAt         : c.createdAt,
-    updatedAt         : c.updatedAt
+    id                : data.id,
+    name              : data.name,
+    lastName          : data.lastName,
+    assistantName     : data.assistantName,
+    assistantLastName : data.assistantLastName,
+    createdAt         : data.createdAt,
+    updatedAt         : data.updatedAt
   };
 }
 
-export function dumpClub (c) {
+export function dumpClub (data) {
   return {
-    id        : c.id,
-    name      : c.name,
-    createdAt : c.createdAt,
-    deletedAt : c.deletedAt,
-    updatedAt : c.updatedAt
+    id        : data.id,
+    name      : data.name,
+    createdAt : data.createdAt,
+    deletedAt : data.deletedAt,
+    updatedAt : data.updatedAt
+  };
+}
+
+export function dumpFighter (data) {
+  return {
+    id        : data.id,
+    name      : data.name,
+    lastName  : data.lastName,
+    sex       : data.sex,
+    city      : data.city,
+    clubId    : data.clubId,
+    coachId   : data.coachId,
+    birthDate : data.birthDate,
+    group     : data.group,
+    age       : data.age,
+    createdAt : data.createdAt,
+    updatedAt : data.updatedAt
   };
 }

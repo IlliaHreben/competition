@@ -3,6 +3,7 @@ import ServiceBase      from '../Base.js';
 import { dumpCategory } from '../../utils';
 
 import Category         from '../../models/Category.js';
+import Card             from '../../models/Card.js';
 
 export default class CategoriesList extends ServiceBase {
     static validationRules = {
@@ -17,7 +18,7 @@ export default class CategoriesList extends ServiceBase {
           competitionId,
           '$Cards.id$': { [Op.not]: null }
         },
-        include: [ 'Cards' ]
+        include: [ { model: Card, as: 'Cards', include: [ 'Fighter', 'Club', 'Coach' ] } ]
         // limit,
         // offset,
         // order: [ [ sort, order ] ]
