@@ -18,8 +18,9 @@ module.exports = {
     },
     rules: {
     // 'react/react-in-jsx-scope'              : 0,
-        indent                                  : [ 'error', 4 ],
-        semi                                    : [ 'error', 'always' ],
+        'no-unused-vars'                        : 1,
+        indent                                  : [ 'warn', 4 ],
+        semi                                    : [ 'warn', 'always' ],
         'keyword-spacing'                       : 2,
         'object-shorthand'                      : 1,
         'prefer-template'                       : 2,
