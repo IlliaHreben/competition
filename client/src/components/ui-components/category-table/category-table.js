@@ -52,9 +52,6 @@ function getFullName (fighter) {
 
 function CategoryTable ({ category }) {
     const rows = dumpCategoryData(category);
-    console.log('='.repeat(50)); // !nocommit
-    console.log(category);
-    console.log('='.repeat(50));
     return (
         <TableContainer component={Paper} >
             <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">

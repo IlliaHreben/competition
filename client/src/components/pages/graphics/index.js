@@ -7,12 +7,12 @@ export default function FightTrees () {
     const [ graphics, setGraphics ] = useState([]);
 
     async function fetchGraphic () {
-        // const categoryId = 'e160dd5f-0904-43ab-aba7-623da2a578cd';
-        // const { data } = await api.categories.show(categoryId);
-        // setGraphics([ data ]);
-        const competitionId = 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb';
-        const { data } = await api.categories.getList({ competitionId });
-        setGraphics(data);
+        const categoryId = '9b459bd1-6c84-4e72-8631-7ee7d654c892';
+        const { data } = await api.categories.show(categoryId);
+        setGraphics([ data ]);
+        // const competitionId = 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb';
+        // const { data } = await api.categories.getList({ competitionId });
+        // setGraphics(data);
     }
     useEffect(() => {
         fetchGraphic();

@@ -211,7 +211,7 @@ export default class Category extends Base {
       // rank  : 100
     };
 
-    return cards.map((cardFrom, i) => {
+    return cards.flatMap((cardFrom, i) => {
       const cattedCards = cards.slice(i + 1);
 
       return cattedCards.map(cardTo => {
@@ -227,7 +227,6 @@ export default class Category extends Base {
         return coefficient;
       });
     })
-      .flat()
       .sort((a, b) => b.coefficient - a.coefficient);
   }
 }

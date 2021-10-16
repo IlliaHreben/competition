@@ -10,10 +10,14 @@ import Fight                  from './fight';
 
 function findChildren (root, fights) {
     const children = fights.filter(f => f.nextFightId === root.id);
-    return {
-        name: getCellValues(root),
-        ...children.length && { children: children.map(ch => findChildren(ch, fights)) }
+    const node = {
+        ...getCellValues(root),
+        visible: true
     };
+    if (children.length) node.children = children.map(ch => findChildren(ch, fights));
+    if (node.children?.length === 1) node.children.unshift({ visible: false });
+
+    return node;
 }
 
 function getCellValues (root) {
@@ -38,8 +42,6 @@ export default function FightTree ({
     margin = defaultMargin,
     category
 }) {
-    // const forceUpdate = useForceUpdate();
-
     const fightersTree = createFightersTree(category.linked.fights);
 
     const innerWidth = totalWidth - margin.left - margin.right;
@@ -61,68 +63,39 @@ export default function FightTree ({
                             return (a.parent === b.parent ? 1 : 0.5) / a.depth;
                         }}
                     >
-                        {(tree) => (
-                            <Group top={origin.y} left={origin.x}>
-                                {tree.links().map((link, i) => (
-                                    <LinkHorizontalStep
-                                        key={i}
-                                        data={link}
-                                        percent={0.5}
-                                        stroke="rgb(0,0,0)"
-                                        strokeWidth="2"
-                                        fill="none"
-                                    />
-                                ))}
-                                {tree.descendants().map((node, key) => {
-                                    const top = node.x;
-                                    const left = node.y;
+                        {(tree) => {
+                            const descendants = tree.descendants();
+                            return (
+                                <Group top={origin.y} left={origin.x}>
+                                    {tree.links().map((link, i) => (
+                                        descendants[i + 1].data.visible &&
+                                        <LinkHorizontalStep
+                                            key={i}
+                                            data={link}
+                                            percent={0.45}
+                                            stroke="rgb(0,0,0)"
+                                            strokeWidth="2"
+                                            fill="none"
+                                        />
+                                    ))}
+                                    {descendants.map((node, key) => {
+                                        const top = node.x;
+                                        const left = node.y;
 
-                                    return (
-                                        <Group top={top} left={left} key={key}>
-                                            {/* {node.depth !== 0 && (
-                                                <rect
-                                                    height={height}
-                                                    width={width}
-                                                    y={-height / 2}
-                                                    x={-width / 2}
-                                                    fill="#272b4d"
-                                                    stroke={node.data.children ? '#03c0dc' : '#26deb0'}
-                                                    strokeWidth={1}
-                                                    strokeDasharray={node.data.children ? '0' : '2,2'}
-                                                    strokeOpacity={node.data.children ? 1 : 0.6}
-                                                    rx={node.data.children ? 0 : 10}
-                                                    onClick={() => {
-                                                        node.data.isExpanded = !node.data.isExpanded;
-                                                        console.log(node);
-                                                        // forceUpdate();
-                                                    }}
+                                        return (
+                                            <Group top={top} left={left} key={key}>
+                                                {node.data.visible &&
+                                                <Fight
+                                                    redCornerName={node.data.redCornerName}
+                                                    blueCornerName={node.data.blueCornerName}
                                                 />
-                                            )}
-                                            <text
-                                                dy=".33em"
-                                                fontSize={9}
-                                                fontFamily="Arial"
-                                                textAnchor="middle"
-                                                style={{ pointerEvents: 'none' }}
-                                                fill={
-                                                    node.depth === 0
-                                                        ? '#71248e'
-                                                        : node.children
-                                                            ? 'white'
-                                                            : '#26deb0'
                                                 }
-                                            >
-                                                {JSON.stringify(node.data.name)}
-                                            </text> */}
-                                            <Fight
-                                                redCornerName={node.data.name.redCornerName}
-                                                blueCornerName={node.data.name.blueCornerName}
-                                            />
-                                        </Group>
-                                    );
-                                })}
-                            </Group>
-                        )}
+                                            </Group>
+                                        );
+                                    })}
+                                </Group>
+                            );
+                        }}
                     </Tree>
                 </Group>
             </svg>

@@ -19,11 +19,13 @@
 
 .svgButton {
     min-height: 36px;
-    margin: 0
+    margin: 0;
+    white-space: nowrap;
 }
 .svgButton button {
     min-height: 36px;
-    margin: 0
+    margin: 0;
+    white-space: nowrap;
 }
 
 .treeContainer {
