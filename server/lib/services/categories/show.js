@@ -18,7 +18,8 @@ export default class CategoriesList extends ServiceBase {
           include : [
             { model: Card, as: 'FirstCard', include: [ 'Fighter', 'Club', 'Coach' ] },
             { model: Card, as: 'SecondCard', include: [ 'Fighter', 'Club', 'Coach' ] }
-          ]
+          ],
+          order: [ [ 'orderNumber', 'DESC' ] ]
         } ]
       });
 

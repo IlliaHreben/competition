@@ -10,6 +10,7 @@ import Fight                  from './fight';
 
 function findChildren (root, fights) {
     const children = fights.filter(f => f.nextFightId === root.id);
+    children.sort((a, b) => a.orderNumber - b.orderNumber);
     const node = {
         ...getCellValues(root),
         visible: true
@@ -43,7 +44,9 @@ export default function FightTree ({
     category
 }) {
     const fightersTree = createFightersTree(category.linked.fights);
-
+    console.log('='.repeat(50)); // !nocommit
+    console.log(fightersTree);
+    console.log('='.repeat(50));
     const innerWidth = totalWidth - margin.left - margin.right;
     const innerHeight = totalHeight - margin.top - margin.bottom;
 

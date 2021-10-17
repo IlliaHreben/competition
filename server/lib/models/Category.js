@@ -91,7 +91,11 @@ export default class Category extends Base {
 
     const fightsCoefficients = this.calculateFightsProximityCoefficient(fights);
     const fightersCoefficients = this.calculateFightersProximityCoefficient(cards);
-    const fightersToFights = this.calculateFightersToFights({ fightsCoefficients, fightersCoefficients });
+    const fightersToFights = this.calculateFightersToFights({
+      fightsCoefficients,
+      fightersCoefficients,
+      cards
+    });
     this.sortByCoach(fightersToFights);
 
     await Promise.all(
@@ -102,7 +106,7 @@ export default class Category extends Base {
 
         return fight.update({
           firstCardId  : cards[0].id,
-          secondCardId : cards[1].id
+          secondCardId : cards[1]?.id
         });
       })
     );
@@ -111,60 +115,39 @@ export default class Category extends Base {
 
   sortByCoach (fightersToFights) {
     const coaches = {};
-    Object
-      .values(fightersToFights)
-      .map(cards => cards.forEach(c => {
-        coaches[c.coachId] ? coaches[c.coachId]++ : coaches[c.coachId] = 1;
-      }));
-    Object.entries(coaches).sort((a, b) => a[1] - b[1]).forEach(([ coachId ], i) => {
-      const key = i % 2;
-      Object.entries(fightersToFights).forEach(([ fightId, cards ]) => {
-        if (cards.some(c => c.coachId === coachId) && cards[key].coachId !== coachId) {
-          fightersToFights[fightId] = [ fightersToFights[fightId][1], fightersToFights[fightId][0] ];
-        }
+    Object.values(fightersToFights)
+      .flat()
+      .forEach(c => coaches[c.coachId] ? coaches[c.coachId]++ : coaches[c.coachId] = 1);
+
+    Object.entries(coaches)
+      .sort((a, b) => a[1] - b[1])
+      .forEach(([ coachId ], i) => {
+        const key = i % 2;
+        Object.entries(fightersToFights)
+          .filter(([ , cards ]) => cards.length === 2)
+          .forEach(([ fightId, cards ]) => {
+            if (cards.some(c => c.coachId === coachId) && cards[key].coachId !== coachId) {
+              fightersToFights[fightId] = [ fightersToFights[fightId][1], fightersToFights[fightId][0] ];
+            }
+          });
       });
-    });
   }
 
-  calculateFightersToFights ({ fightsCoefficients, fightersCoefficients }) {
+  calculateFightersToFights ({ fightsCoefficients, fightersCoefficients, cards }) {
     const fightersToFights = {};
 
-    const getMaxProximityFirstFight = () => {
+    const getMaxProximityFight = (key) => {
       for (const fightCoefficient of fightsCoefficients) {
-        if (
-          !fightersToFights[fightCoefficient.firstFight] ||
-          fightersToFights[fightCoefficient.firstFight].length < 2
-        ) return fightCoefficient.firstFight;
+        const fight = fightCoefficient[key];
+        const arrayOfCards = fightersToFights[fight.id];
+        const availablePlaces = 2 - fight.filledPlacesCount;
+        if (!arrayOfCards || arrayOfCards.length < availablePlaces) return fight.id;
       }
     };
-    const getMaxProximitySecondFight = () => {
-      for (const fightCoefficient of fightsCoefficients) {
-        if (
-          !fightersToFights[fightCoefficient.secondFight] ||
-          fightersToFights[fightCoefficient.secondFight].length < 2
-        ) return fightCoefficient.secondFight;
-      }
-    };
-    fightersCoefficients.forEach(({ firstFighter, secondFighter }, i) => {
-      // IMPORTANT!!! Array mutating
-      //
-      // delete all entries with this ids in array
-      const indexesToDelete = [];
-      fightersCoefficients.forEach((c, k) => {
-        if (
-          i !== k &&
-          (c.firstFighter.id === firstFighter.id ||
-          c.firstFighter.id === secondFighter.id ||
-          c.secondFighter.id === firstFighter.id ||
-          c.secondFighter.id === secondFighter.id)
-        ) {
-          indexesToDelete.push(k);
-        }
-      });
-      indexesToDelete.reverse().forEach(i => fightersCoefficients.splice(i, 1));
 
-      const firstFightId = getMaxProximityFirstFight();
-      const secondFightId = getMaxProximitySecondFight();
+    fightersCoefficients.forEach(({ firstFighter, secondFighter }, i) => {
+      const firstFightId = getMaxProximityFight('firstFight');
+      const secondFightId = getMaxProximityFight('secondFight');
       fightersToFights[firstFightId]
         ? fightersToFights[firstFightId].push(firstFighter)
         : fightersToFights[firstFightId] = [ firstFighter ];
@@ -172,12 +155,47 @@ export default class Category extends Base {
       fightersToFights[secondFightId]
         ? fightersToFights[secondFightId].push(secondFighter)
         : fightersToFights[secondFightId] = [ secondFighter ];
+
+      // IMPORTANT!!! Array mutating
+      //
+      // delete all entries with this ids in array
+      const indexesToDelete = [];
+      fightersCoefficients.forEach((c, k) => {
+        if (
+          i !== k &&
+            (c.firstFighter.id === firstFighter.id ||
+            c.firstFighter.id === secondFighter.id ||
+            c.secondFighter.id === firstFighter.id ||
+            c.secondFighter.id === secondFighter.id)
+        ) {
+          indexesToDelete.push(k);
+        }
+      });
+      indexesToDelete.reverse().forEach(i => fightersCoefficients.splice(i, 1));
     });
+    const calculatedCards = Object.values(fightersToFights).flat();
+    // console.log('='.repeat(50)); // !nocommit
+    // console.log(calculatedCards.map());
+    // console.log('='.repeat(50));
+    const cardWithoutPair = cards.find(card => !calculatedCards.includes(card));
+    if (cardWithoutPair) {
+      const firstFightId = getMaxProximityFight('firstFight');
+      fightersToFights[firstFightId]
+        ? fightersToFights[firstFightId].push(cardWithoutPair)
+        : fightersToFights[firstFightId] = [ cardWithoutPair ];
+    }
+
     return fightersToFights;
   }
 
   calculateFightsProximityCoefficient (fights) {
-    const lastFights = fights.filter(fight => fights.filter(f => f.nextFightId === fight.id) < 2);
+    const lastFights = fights.reduce((acc, fight) => {
+      const filledPlacesCount = fights.filter(f => f.nextFightId === fight.id).length;
+      return [
+        ...acc,
+        ...(filledPlacesCount < 2) ? [ { ...fight.dataValues, filledPlacesCount } ] : []
+      ];
+    }, []);
 
     const coefficients = [];
     lastFights.forEach((fightFrom, i) => {
@@ -185,15 +203,25 @@ export default class Category extends Base {
       lastFights.forEach(fightTo => {
         // if (fightFrom.id === fightTo.id) return;
         const coefficient = {
-          firstFight  : fightFrom.id,
-          secondFight : fightTo.id,
+          firstFight  : fightFrom,
+          secondFight : fightTo,
           coefficient : 0
         };
         const countStepsToCommonParent = (first, second) => { // TODO: mb need to increment by 0.5 when parent not found
-          const firstParent = fights.find(f => f.id === first.nextFightId) || first;
-          const secondParent = fights.find(f => f.id === second.nextFightId) || second;
-          coefficient.coefficient++;
-          if (firstParent.id !== secondParent.id) countStepsToCommonParent(firstParent, secondParent);
+          if (
+            first.id === second.nextFightId ||
+            second.id === first.nextFightId
+          ) return coefficient.coefficient++;
+
+          const firstParent = fights.find(f => f.id === first.nextFightId);
+          const secondParent = fights.find(f => f.id === second.nextFightId);
+          if (firstParent) coefficient.coefficient++;
+          if (secondParent) {
+            coefficient.coefficient++;
+            if (firstParent.id !== secondParent.id) {
+              countStepsToCommonParent(firstParent || first, secondParent || second);
+            };
+          }
         };
         countStepsToCommonParent(fightFrom, fightTo);
         coefficients.push(coefficient);

@@ -2,6 +2,8 @@ import ServiceBase       from '../Base.js';
 import { dumpCard }      from '../../utils';
 
 import Card              from '../../models/Card.js';
+import Category          from '../../models/Category.js';
+import sequelize         from '../../sequelize-singleton.js';
 
 const sections = [
   'full-contact', 'low-kick', 'K-1', 'low-kick-light',
@@ -32,6 +34,10 @@ export default class CountriesList extends ServiceBase {
     async execute ({ competitionId, data }) {
       const cardsWithCompetition = data.map(c => ({ competitionId, ...c }));
       const cards = await Card.bulkCreate(cardsWithCompetition);
+
+      const categoryIds = [ ...new Set(cards.map(c => c.categoryId)) ];
+      const categories = await Category.findAll({ where: { id: categoryIds } });
+      await Promise.all(categories.map(category => category.calculateFights()));
 
       return {
         data: cards.map(dumpCard)

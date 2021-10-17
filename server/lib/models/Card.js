@@ -95,8 +95,7 @@ Card.init({
   hooks: {
     beforeCreate     : assignCategoryHook,
     afterCreate      : calculateFightsHook,
-    beforeBulkCreate : assignBulkCategoryHook,
-    afterBulkCreate  : calculateBulkFightsHook
+    beforeBulkCreate : assignBulkCategoryHook
   },
   sequelize,
   paranoid: true
@@ -126,13 +125,6 @@ async function calculateFightsHook (card) {
   const Category = sequelize.model('Category');
   const category = await Category.findById(card.categoryId);
   await category.calculateFights();
-}
-
-async function calculateBulkFightsHook (cards) {
-  const categoryIds = [ ...new Set(cards.map(c => c.categoryId)) ];
-  const Category = sequelize.model('Category');
-  const categories = await Category.findAll({ where: { id: categoryIds } });
-  await Promise.all(categories.map(category => category.calculateFights()));
 }
 
 async function assignBulkCategoryHook (cards, options) {
