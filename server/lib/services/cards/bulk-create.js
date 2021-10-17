@@ -3,7 +3,6 @@ import { dumpCard }      from '../../utils';
 
 import Card              from '../../models/Card.js';
 import Category          from '../../models/Category.js';
-import sequelize         from '../../sequelize-singleton.js';
 
 const sections = [
   'full-contact', 'low-kick', 'K-1', 'low-kick-light',

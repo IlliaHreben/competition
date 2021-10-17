@@ -1,5 +1,6 @@
 import sequelize, { DT }     from '../sequelize-singleton.js';
 import Base                  from './Base.js';
+import { v4 as uuid }        from 'uuid';
 
 export default class Category extends Base {
   static initRelation () {
@@ -26,7 +27,6 @@ export default class Category extends Base {
   async calculateFights () {
     const cards = await this.getCards({
       include: 'Fighter'
-      // order   : [ [ 'weight', 'DESC' ], [ 'age', 'DESC' ] ]
     });
 
     if (cards.length < 2) return [];
@@ -41,53 +41,9 @@ export default class Category extends Base {
       where: { id: previousFights.map(f => f.id) }
     });
 
-    const fightsObject = [];
+    const fightsObjects = this.generateFights(cards.length);
 
-    const totalFightsCount = cards.length - 1;
-    let stageFightsCount = 1;
-    let fightsLeft = totalFightsCount;
-
-    while (stageFightsCount * 2 <= totalFightsCount) { // TODO merge with
-      for (let i = 1; i <= stageFightsCount; i++) {
-        fightsObject.push({
-          orderNumber   : fightsLeft--,
-          degree        : stageFightsCount,
-          competitionId : this.competitionId,
-          categoryId    : this.id
-        });
-      }
-      stageFightsCount *= 2;
-    }
-
-    for (let i = 1; i <= fightsLeft; fightsLeft--) { // this
-      fightsObject.push({
-        orderNumber   : fightsLeft,
-        degree        : stageFightsCount,
-        competitionId : this.competitionId,
-        categoryId    : this.id
-      });
-    }
-
-    const fights = await Fight.bulkCreate(fightsObject);
-
-    const degrees = [ ...new Set(fights.map(f => f.degree)) ];
-    const degreesWithoutFinal = degrees.filter(t => t !== 1);
-
-    await Promise.all(degreesWithoutFinal.map(async degree => {
-      const fightsInThisSector = fights
-        .filter(f => degree === f.degree)
-        .sort((a, b) => b.orderNumber - a.orderNumber);
-
-      const fightsInNextSector = fights
-        .filter(f => degree / 2 === f.degree)
-        .sort((a, b) => b.orderNumber - a.orderNumber);
-
-      for (const fight of fightsInThisSector) {
-        const greaterNextFightWithoutChildren = fightsInNextSector
-          .find(({ id }) => fights.filter(f => f.nextFightId === id).length < 2);
-        await fight.update({ nextFightId: greaterNextFightWithoutChildren.id });
-      };
-    }));
+    const fights = await Fight.bulkCreate(fightsObjects);
 
     const fightsCoefficients = this.calculateFightsProximityCoefficient(fights);
     const fightersCoefficients = this.calculateFightersProximityCoefficient(cards);
@@ -110,6 +66,49 @@ export default class Category extends Base {
         });
       })
     );
+    return fights;
+  }
+
+  generateFights (cardsCount) {
+    const fights = [];
+
+    const totalFightsCount = cardsCount - 1;
+    let stageFightsCount = 1;
+    let fightsCountOnPreviousStages = stageFightsCount;
+    let fightsLeft = totalFightsCount;
+
+    while (fightsLeft) {
+      fights.push({
+        id            : uuid(),
+        orderNumber   : fightsLeft--,
+        degree        : stageFightsCount,
+        competitionId : this.competitionId,
+        categoryId    : this.id
+      });
+      if (fightsCountOnPreviousStages === fights.length) {
+        fightsCountOnPreviousStages += stageFightsCount *= 2;
+      }
+    }
+
+    const degrees = [ ...new Set(fights.map(f => f.degree)) ];
+    const degreesWithoutFinal = degrees.filter(t => t !== 1);
+
+    degreesWithoutFinal.forEach(degree => {
+      const fightsInThisSector = fights
+        .filter(f => degree === f.degree)
+        .sort((a, b) => b.orderNumber - a.orderNumber);
+
+      const fightsInNextSector = fights
+        .filter(f => degree / 2 === f.degree)
+        .sort((a, b) => b.orderNumber - a.orderNumber);
+
+      for (const fight of fightsInThisSector) {
+        const greaterNextFightWithoutChildren = fightsInNextSector
+          .find(({ id }) => fights.filter(f => f.nextFightId === id).length < 2);
+        fight.nextFightId = greaterNextFightWithoutChildren.id;
+      };
+    });
+
     return fights;
   }
 
@@ -174,9 +173,6 @@ export default class Category extends Base {
       indexesToDelete.reverse().forEach(i => fightersCoefficients.splice(i, 1));
     });
     const calculatedCards = Object.values(fightersToFights).flat();
-    // console.log('='.repeat(50)); // !nocommit
-    // console.log(calculatedCards.map());
-    // console.log('='.repeat(50));
     const cardWithoutPair = cards.find(card => !calculatedCards.includes(card));
     if (cardWithoutPair) {
       const firstFightId = getMaxProximityFight('firstFight');
