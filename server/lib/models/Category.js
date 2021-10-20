@@ -228,6 +228,9 @@ export default class Category extends Base {
   }
 
   calculateFightersProximityCoefficient (cards) {
+    console.log('='.repeat(50)); // !nocommit
+    console.log(cards.map(c => c.dataValues));
+    console.log('='.repeat(50));
     const proximityCoefficients = { // TODO rank
       coach : 1000,
       club  : 500,
