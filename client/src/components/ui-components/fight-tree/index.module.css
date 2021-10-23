@@ -18,17 +18,17 @@
 }
 
 .svgButton {
-    min-height: 36px;
+    min-height: 38px;
     margin: 0;
     white-space: nowrap;
 }
 .svgButton button {
-    min-height: 36px;
+    min-height: 38px;
     margin: 0;
     white-space: nowrap;
 }
 
-.treeContainer {
+.svg {
     transform:rotateY(180deg);
     -webkit-transform:rotateY(180deg);
     -moz-transform:rotateY(180deg);
@@ -38,11 +38,27 @@
     direction:rtl;
 }
 
-.treeContainer div {
+.svg button {
     -moz-transform: scale(-1, 1);
     -webkit-transform: scale(-1, 1);
     -o-transform: scale(-1, 1);
     -ms-transform: scale(-1, 1);
     transform: scale(-1, 1);
+}
+
+.svg div {
+    -moz-transform: scale(-1, 1);
+    -webkit-transform: scale(-1, 1);
+    -o-transform: scale(-1, 1);
+    -ms-transform: scale(-1, 1);
+    transform: scale(-1, 1);
+}
+
+.fightContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: flex-end;
 }
 

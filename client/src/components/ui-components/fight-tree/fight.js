@@ -1,13 +1,15 @@
-import Button                           from '@mui/material/Button';
-import ButtonGroup                      from '@mui/material/ButtonGroup';
-import { styled }                       from '@mui/material/styles';
-import SportsMmaIcon                    from '@mui/icons-material/SportsMma';
+import Button                                     from '@mui/material/Button';
+import ButtonGroup                                from '@mui/material/ButtonGroup';
+import { styled }                                 from '@mui/material/styles';
+import Chip                                       from '@mui/material/Chip';
+import Stack                                      from '@mui/material/Stack';
+import SportsMmaIcon                              from '@mui/icons-material/SportsMma';
 
-import PropTypes                        from 'prop-types';
-import { useRef, useState, useEffect }  from 'react';
+import PropTypes                                  from 'prop-types';
+import { useRef, useState, useEffect }            from 'react';
 // import toPath    from 'element-to-path';
 
-import styles                           from './index.module.css';
+import styles                                     from './index.module.css';
 
 // const circle = {
 //     type       : 'element',
@@ -37,10 +39,10 @@ const ColorButton = styled(Button)(({ theme }) => ({
     }
 }));
 
-function Fight ({ blueCornerName, redCornerName }) {
-    const redCornerButton = redCornerName &&
+function Fight ({ blueCorner, redCorner }) {
+    const redCornerButton = redCorner &&
         <SportsMmaIcon sx={{ color: 'red', marginRight: '100%', marginLeft: 0 }} />;
-    const blueCornerButton = blueCornerName &&
+    const blueCornerButton = blueCorner &&
         <SportsMmaIcon sx={{ color: 'blue', marginRight: '100%', marginLeft: 0 }} />;
 
     const buttons = [
@@ -48,31 +50,66 @@ function Fight ({ blueCornerName, redCornerName }) {
             endIcon={redCornerButton}
             className={styles.svgButton}
             key="one"
-        >{redCornerName}
+        >{redCorner?.fullName || ''}
         </ColorButton>,
         <ColorButton
             endIcon={blueCornerButton}
             className={styles.svgButton}
             key="two"
-        >{blueCornerName}
+        >{blueCorner?.fullName || ''}
         </ColorButton>
     ];
-    const ref = useRef(null);
-    const [ width, setWidth ] = useState(0);
+    const groupRef = useRef(null);
+    const [ width, setDivWidth ] = useState(0);
+    const [ height, setDivHeight ] = useState(0);
     // const forceUpdate = useForceUpdate();
     useEffect(() => {
-        setWidth(ref.current?.offsetWidth || 0);
-        // forceUpdate();
+        setDivWidth(groupRef.current?.offsetWidth || 0);
+        setDivHeight(groupRef.current?.offsetHeight || 0);
     }, []);
+
     return (
-        <foreignObject y="-37" width={width} height="100%">
-            <ButtonGroup ref={ref}
-                orientation="vertical"
-                className={styles.svgButtonGroup}
-                // variant="contained"
+        <foreignObject y="-61" width={width} height={height + 48}>
+            <div
+                style={{ width: `${width}px`, height: `${height + 48}px`, justifyContent: !blueCorner && redCorner ? 'flex-start' : 'center' }}
+                className={styles.fightContainer}
             >
-                {buttons}
-            </ButtonGroup>
+                {redCorner &&
+                    <Stack direction="row" spacing={3}>
+                        <Chip
+                            label={redCorner.coach || ''}
+                            style={{ backgroundColor: redCorner.coachColor }}
+                            size="small"
+                        />
+                        <Chip
+                            label={redCorner.club || ''}
+                            style={{ backgroundColor: redCorner.clubColor }}
+                            size="small"
+                        />
+                    </Stack>
+                }
+                <ButtonGroup ref={groupRef}
+                    orientation="vertical"
+                    className={styles.svgButtonGroup}
+                // variant="contained"
+                >
+                    {buttons}
+                </ButtonGroup>
+                {blueCorner &&
+                    <Stack direction="row" spacing={3}>
+                        <Chip
+                            label={blueCorner.coach || ''}
+                            style={{ backgroundColor: blueCorner.coachColor }}
+                            size="small"
+                        />
+                        <Chip
+                            label={blueCorner.club || ''}
+                            style={{ backgroundColor: blueCorner.clubColor }}
+                            size="small"
+                        />
+                    </Stack>
+                }
+            </div>
         </foreignObject>
     );
     // return (
@@ -130,9 +167,9 @@ function Fight ({ blueCornerName, redCornerName }) {
 }
 
 Fight.propTypes = {
-    blueCornerName : PropTypes.string.isRequired,
-    redCornerName  : PropTypes.string.isRequired,
-    width          : PropTypes.number.isRequired
+    blueCorner : PropTypes.object,
+    redCorner  : PropTypes.object,
+    width      : PropTypes.number.isRequired
 };
 
 export default Fight;

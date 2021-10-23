@@ -11,7 +11,7 @@ const sections = [
 
 const fullSections = sections.slice(0, 3);
 
-export default class CountriesList extends ServiceBase {
+export default class CardsBulkCreate extends ServiceBase {
     static validationRules = {
       competitionId : [ 'required', 'uuid' ],
       data          : [ 'required', {

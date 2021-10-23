@@ -2,6 +2,8 @@ import sequelize, { DT }     from '../sequelize-singleton.js';
 import Base                  from './Base.js';
 import { v4 as uuid }        from 'uuid';
 
+import calculateFights       from './calculateFightersProximity';
+
 export default class Category extends Base {
   static initRelation () {
     const Card = sequelize.model('Card');
@@ -26,7 +28,7 @@ export default class Category extends Base {
 
   async calculateFights () {
     const cards = await this.getCards({
-      include: 'Fighter'
+      include: [ 'Fighter' ]
     });
 
     if (cards.length < 2) return [];
@@ -43,29 +45,26 @@ export default class Category extends Base {
 
     const fightsObjects = this.generateFights(cards.length);
 
-    const fights = await Fight.bulkCreate(fightsObjects);
+    // const fights = await Fight.bulkCreate(fightsObjects);
 
-    const fightsCoefficients = this.calculateFightsProximityCoefficient(fights);
-    const fightersCoefficients = this.calculateFightersProximityCoefficient(cards);
-    const fightersToFights = this.calculateFightersToFights({
-      fightsCoefficients,
-      fightersCoefficients,
-      cards
+    // const fightsCoefficients = this.calculateFightsProximityCoefficient(fights);
+    // const fightersCoefficients = this.calculateFightersProximityCoefficient(cards);
+    // const fightersToFights = this.calculateFightersToFights({
+    //   fightsCoefficients,
+    //   fightersCoefficients,
+    //   cards
+    // });
+    const fightsWithCards = calculateFights(cards, fightsObjects);
+    // console.log('='.repeat(50)); // !nocommit
+    // console.log(fightsWithCards);
+    // console.log('='.repeat(50));
+    this.sortByCoach(fightsWithCards);
+    const fights = await Fight.bulkCreate(fightsWithCards, { returning: true });
+
+    fights.forEach(fight => {
+      fight.FirstCard = cards.find(c => c.id === fight.firstCardId);
+      fight.SecondCard = cards.find(c => c.id === fight.secondCardId);
     });
-    this.sortByCoach(fightersToFights);
-
-    await Promise.all(
-      Object.entries(fightersToFights).map(([ fightId, cards ]) => {
-        const fight = fights.find(f => f.id === fightId);
-        fight.FirstCard = cards[0];
-        fight.SecondCard = cards[1];
-
-        return fight.update({
-          firstCardId  : cards[0].id,
-          secondCardId : cards[1]?.id
-        });
-      })
-    );
     return fights;
   }
 
