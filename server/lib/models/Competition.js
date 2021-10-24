@@ -1,10 +1,13 @@
 import sequelize, { DT } from '../sequelize-singleton.js';
 import Base              from './Base.js';
 
+import defaultCategories from '../constants/categories.json';
+
 export default class Competition extends Base {
   static initRelation () {
     const Category = sequelize.model('Category');
     const Card = sequelize.model('Card');
+    const FightSpace = sequelize.model('FightSpace');
 
     this.hasMany(Category, {
       as         : 'Categories',
@@ -20,6 +23,51 @@ export default class Competition extends Base {
         allowNull : false
       }
     });
+    this.hasMany(FightSpace, {
+      as         : 'FightSpaces',
+      foreignKey : {
+        name      : 'competitionId',
+        allowNull : false
+      }
+    });
+  }
+
+  static async createCompetition ({ ringsCount, tatamisCount, ...data }) {
+    const FightSpace = sequelize.model('FightSpace');
+    const Category = sequelize.model('Category');
+
+    const competition = await this.create(data);
+
+    const fightSpacesPromise = await FightSpace.bulkCreate(
+      [
+        ...Array.from({ length: ringsCount }).flatMap(
+          () => Array.from({ length: competition.days }).map(i => ({ type: 'ring', competitionDay: i }))
+        ),
+        ...Array.from({ length: tatamisCount }).flatMap(
+          () => Array.from({ length: competition.days }).map(i => ({ type: 'tatami', competitionDay: i }))
+        )
+      ].map(({ type, competitionDay }, i) => ({
+        type,
+        orderNumber   : i + 1,
+        competitionDay,
+        competitionId : competition.id
+      })),
+      { returning: true }
+    );
+
+    const categoriesPromise =  Category.bulkCreate(
+      defaultCategories.map(category => ({
+        ...category,
+        competitionId: competition.id
+      }))
+    );
+
+    const [ fightSpaces, categories ] = await Promise.all([ fightSpacesPromise, categoriesPromise ]);
+
+    competition.FightSpaces = fightSpaces;
+    competition.Categories = categories;
+
+    return competition;
   }
 }
 

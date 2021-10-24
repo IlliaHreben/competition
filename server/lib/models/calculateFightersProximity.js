@@ -1,175 +1,175 @@
 import { v4 as uuid } from 'uuid';
-export const data = [
-  // {
-  //   id            : '00176301-4858-4f72-887c-b45c527834f1',
-  //   fighterId     : '055ce55a-1743-4ed7-9ff6-bf53ad666865',
-  //   clubId        : '17460e9a-8713-4138-befa-8442f9dedc0d',
-  //   coachId       : '25639d5c-5bf5-4380-85b4-1d8b2fbf7610',
-  //   categoryId    : 'f45ca04f-d647-4c80-a12c-fb222495efaa',
-  //   competitionId : 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb',
-  //   section       : 'low-kick',
-  //   weight        : 34.2,
-  //   realWeight    : 34.2,
-  //   group         : 'B',
-  //   city          : 'Хоролss',
-  //   birthDate     : '2008-02-03T00:00:00.000Z'
-  // },
-  // {
-  //   id            : '0017630b-4858-4f72-887c-b45c527834f1',
-  //   fighterId     : '055ce55a-1743-4ed7-9ff6-bf53ad666865',
-  //   clubId        : '17460e95-8713-4138-befa-8442f9dedc0d',
-  //   coachId       : '25639d54-5bf5-4380-85b4-1d8b2fbf7610',
-  //   categoryId    : 'f45ca04f-d647-4c80-a12c-fb222495efaa',
-  //   competitionId : 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb',
-  //   section       : 'low-kick',
-  //   weight        : 34.2,
-  //   realWeight    : 34.2,
-  //   group         : 'B',
-  //   city          : 'Хоролss',
-  //   birthDate     : '2008-02-03T00:00:00.000Z'
-  // },
-  // {
-  //   id            : '0017630c-4858-4f72-887c-b45c527834f1',
-  //   fighterId     : '055ce55a-1743-4ed7-9ff6-bf53ad666865',
-  //   clubId        : '17460e95-8713-4138-befa-8442f9dedc0c',
-  //   coachId       : '25639d54-5bf5-4380-85b4-1d8b2fbf7609',
-  //   categoryId    : 'f45ca04f-d647-4c80-a12c-fb222495efaa',
-  //   competitionId : 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb',
-  //   section       : 'low-kick',
-  //   weight        : 34.2,
-  //   realWeight    : 34.2,
-  //   group         : 'B',
-  //   city          : 'Хоролss',
-  //   birthDate     : '2008-02-03T00:00:00.000Z'
-  // },
-  {
-    id            : '0017630f-4858-4f72-887c-b45c527834f1',
-    fighterId     : '055ce55a-1743-4ed7-9ff6-bf53ad666865',
-    clubId        : '17460e95-8713-4138-befa-8442f9dedc0d',
-    coachId       : '25639d54-5bf5-4380-85b4-1d8b2fbf7608',
-    categoryId    : 'f45ca04f-d647-4c80-a12c-fb222495efaa',
-    competitionId : 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb',
-    section       : 'low-kick',
-    weight        : 34.2,
-    realWeight    : 34.2,
-    group         : 'B',
-    city          : 'Хорол',
-    birthDate     : '2008-02-03T00:00:00.000Z'
-  },
-  {
-    id            : '4c79aeff-3726-4249-82aa-fdb319385407',
-    fighterId     : '87664a5d-6589-4b92-998c-50ff0cd9cc3d',
-    clubId        : 'ff078d71-54dc-4432-a63a-c1350b0791f5',
-    coachId       : '85d0310b-7b88-4cb2-b7a7-0beed805cf84',
-    categoryId    : 'f45ca04f-d647-4c80-a12c-fb222495efaa',
-    competitionId : 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb',
-    section       : 'low-kick',
-    weight        : 34.2,
-    realWeight    : 34.2,
-    group         : 'B',
-    city          : 'Київ',
-    birthDate     : '2009-02-03T00:00:00.000Z'
-  },
-  {
-    id            : '852664df-6c88-49b8-951b-3db58d9c2d05',
-    fighterId     : 'dfe141d5-bbad-4ea0-a578-dcbedbb8a277',
-    clubId        : 'bb896edd-a39e-4565-801f-35b2509e8361',
-    coachId       : '4a3a725b-ef39-4828-bb26-472cf0baae5a',
-    categoryId    : 'f45ca04f-d647-4c80-a12c-fb222495efaa',
-    competitionId : 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb',
-    section       : 'low-kick',
-    weight        : 35,
-    realWeight    : 35,
-    group         : 'B',
-    city          : 'Київ',
-    birthDate     : '2009-02-02T00:00:00.000Z'
-  },
-  {
-    id            : 'bbcac1ac-8c44-41b0-bbfa-d8b12b9ffa49',
-    fighterId     : '14efe4d5-dbda-4f92-b3de-a9129ff53e77',
-    clubId        : 'ff078d71-54dc-4432-a63a-c1350b0791f4',
-    coachId       : '85d0310b-7b88-4cb2-b7a7-0beed805cf83',
-    categoryId    : 'f45ca04f-d647-4c80-a12c-fb222495efaa',
-    competitionId : 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb',
-    section       : 'low-kick',
-    weight        : 34.2,
-    realWeight    : 34.2,
-    group         : 'B',
-    city          : 'Київ',
-    birthDate     : '2009-02-03T00:00:00.000Z'
-  },
-  {
-    id            : '0ec2ab74-3250-4145-bd11-38a546c26671',
-    fighterId     : 'ee818bdd-fdda-4854-b6a9-9de5bd82ba03',
-    clubId        : 'ff078d71-54dc-4432-a63a-c1350b0791f4',
-    coachId       : '85d0310b-7b88-4cb2-b7a7-0beed805cf83',
-    categoryId    : 'f45ca04f-d647-4c80-a12c-fb222495efaa',
-    competitionId : 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb',
-    section       : 'low-kick',
-    weight        : 36,
-    realWeight    : 36,
-    group         : 'B',
-    city          : 'Київ',
-    birthDate     : '2009-05-12T00:00:00.000Z'
-  },
-  {
-    id            : '10a889cc-640d-4cbe-9848-446c53f4f00a',
-    fighterId     : '0e0af9f3-9cbd-4be9-bcef-fafc48f2c6d5',
-    clubId        : 'ff078d71-54dc-4432-a63a-c1350b0791f4',
-    coachId       : '85d0310b-7b88-4cb2-b7a7-0beed805cf83',
-    categoryId    : 'f45ca04f-d647-4c80-a12c-fb222495efaa',
-    competitionId : 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb',
-    section       : 'low-kick',
-    weight        : 34.2,
-    realWeight    : 34.2,
-    group         : 'B',
-    city          : 'Київ',
-    birthDate     : '2009-02-03T00:00:00.000Z'
-  }
-];
+// export const data = [
+//   // {
+//   //   id            : '00176301-4858-4f72-887c-b45c527834f1',
+//   //   fighterId     : '055ce55a-1743-4ed7-9ff6-bf53ad666865',
+//   //   clubId        : '17460e9a-8713-4138-befa-8442f9dedc0d',
+//   //   coachId       : '25639d5c-5bf5-4380-85b4-1d8b2fbf7610',
+//   //   categoryId    : 'f45ca04f-d647-4c80-a12c-fb222495efaa',
+//   //   competitionId : 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb',
+//   //   section       : 'low-kick',
+//   //   weight        : 34.2,
+//   //   realWeight    : 34.2,
+//   //   group         : 'B',
+//   //   city          : 'Хоролss',
+//   //   birthDate     : '2008-02-03T00:00:00.000Z'
+//   // },
+//   // {
+//   //   id            : '0017630b-4858-4f72-887c-b45c527834f1',
+//   //   fighterId     : '055ce55a-1743-4ed7-9ff6-bf53ad666865',
+//   //   clubId        : '17460e95-8713-4138-befa-8442f9dedc0d',
+//   //   coachId       : '25639d54-5bf5-4380-85b4-1d8b2fbf7610',
+//   //   categoryId    : 'f45ca04f-d647-4c80-a12c-fb222495efaa',
+//   //   competitionId : 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb',
+//   //   section       : 'low-kick',
+//   //   weight        : 34.2,
+//   //   realWeight    : 34.2,
+//   //   group         : 'B',
+//   //   city          : 'Хоролss',
+//   //   birthDate     : '2008-02-03T00:00:00.000Z'
+//   // },
+//   // {
+//   //   id            : '0017630c-4858-4f72-887c-b45c527834f1',
+//   //   fighterId     : '055ce55a-1743-4ed7-9ff6-bf53ad666865',
+//   //   clubId        : '17460e95-8713-4138-befa-8442f9dedc0c',
+//   //   coachId       : '25639d54-5bf5-4380-85b4-1d8b2fbf7609',
+//   //   categoryId    : 'f45ca04f-d647-4c80-a12c-fb222495efaa',
+//   //   competitionId : 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb',
+//   //   section       : 'low-kick',
+//   //   weight        : 34.2,
+//   //   realWeight    : 34.2,
+//   //   group         : 'B',
+//   //   city          : 'Хоролss',
+//   //   birthDate     : '2008-02-03T00:00:00.000Z'
+//   // },
+//   {
+//     id            : '0017630f-4858-4f72-887c-b45c527834f1',
+//     fighterId     : '055ce55a-1743-4ed7-9ff6-bf53ad666865',
+//     clubId        : '17460e95-8713-4138-befa-8442f9dedc0d',
+//     coachId       : '25639d54-5bf5-4380-85b4-1d8b2fbf7608',
+//     categoryId    : 'f45ca04f-d647-4c80-a12c-fb222495efaa',
+//     competitionId : 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb',
+//     section       : 'low-kick',
+//     weight        : 34.2,
+//     realWeight    : 34.2,
+//     group         : 'B',
+//     city          : 'Хорол',
+//     birthDate     : '2008-02-03T00:00:00.000Z'
+//   },
+//   {
+//     id            : '4c79aeff-3726-4249-82aa-fdb319385407',
+//     fighterId     : '87664a5d-6589-4b92-998c-50ff0cd9cc3d',
+//     clubId        : 'ff078d71-54dc-4432-a63a-c1350b0791f5',
+//     coachId       : '85d0310b-7b88-4cb2-b7a7-0beed805cf84',
+//     categoryId    : 'f45ca04f-d647-4c80-a12c-fb222495efaa',
+//     competitionId : 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb',
+//     section       : 'low-kick',
+//     weight        : 34.2,
+//     realWeight    : 34.2,
+//     group         : 'B',
+//     city          : 'Київ',
+//     birthDate     : '2009-02-03T00:00:00.000Z'
+//   },
+//   {
+//     id            : '852664df-6c88-49b8-951b-3db58d9c2d05',
+//     fighterId     : 'dfe141d5-bbad-4ea0-a578-dcbedbb8a277',
+//     clubId        : 'bb896edd-a39e-4565-801f-35b2509e8361',
+//     coachId       : '4a3a725b-ef39-4828-bb26-472cf0baae5a',
+//     categoryId    : 'f45ca04f-d647-4c80-a12c-fb222495efaa',
+//     competitionId : 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb',
+//     section       : 'low-kick',
+//     weight        : 35,
+//     realWeight    : 35,
+//     group         : 'B',
+//     city          : 'Київ',
+//     birthDate     : '2009-02-02T00:00:00.000Z'
+//   },
+//   {
+//     id            : 'bbcac1ac-8c44-41b0-bbfa-d8b12b9ffa49',
+//     fighterId     : '14efe4d5-dbda-4f92-b3de-a9129ff53e77',
+//     clubId        : 'ff078d71-54dc-4432-a63a-c1350b0791f4',
+//     coachId       : '85d0310b-7b88-4cb2-b7a7-0beed805cf83',
+//     categoryId    : 'f45ca04f-d647-4c80-a12c-fb222495efaa',
+//     competitionId : 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb',
+//     section       : 'low-kick',
+//     weight        : 34.2,
+//     realWeight    : 34.2,
+//     group         : 'B',
+//     city          : 'Київ',
+//     birthDate     : '2009-02-03T00:00:00.000Z'
+//   },
+//   {
+//     id            : '0ec2ab74-3250-4145-bd11-38a546c26671',
+//     fighterId     : 'ee818bdd-fdda-4854-b6a9-9de5bd82ba03',
+//     clubId        : 'ff078d71-54dc-4432-a63a-c1350b0791f4',
+//     coachId       : '85d0310b-7b88-4cb2-b7a7-0beed805cf83',
+//     categoryId    : 'f45ca04f-d647-4c80-a12c-fb222495efaa',
+//     competitionId : 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb',
+//     section       : 'low-kick',
+//     weight        : 36,
+//     realWeight    : 36,
+//     group         : 'B',
+//     city          : 'Київ',
+//     birthDate     : '2009-05-12T00:00:00.000Z'
+//   },
+//   {
+//     id            : '10a889cc-640d-4cbe-9848-446c53f4f00a',
+//     fighterId     : '0e0af9f3-9cbd-4be9-bcef-fafc48f2c6d5',
+//     clubId        : 'ff078d71-54dc-4432-a63a-c1350b0791f4',
+//     coachId       : '85d0310b-7b88-4cb2-b7a7-0beed805cf83',
+//     categoryId    : 'f45ca04f-d647-4c80-a12c-fb222495efaa',
+//     competitionId : 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb',
+//     section       : 'low-kick',
+//     weight        : 34.2,
+//     realWeight    : 34.2,
+//     group         : 'B',
+//     city          : 'Київ',
+//     birthDate     : '2009-02-03T00:00:00.000Z'
+//   }
+// ];
 
-function generateFights (cardsCount, competitionId, categoryId) {
-  const fights = [];
+// function generateFights (cardsCount, competitionId, categoryId) {
+//   const fights = [];
 
-  const totalFightsCount = cardsCount - 1;
-  let stageFightsCount = 1;
-  let fightsCountOnPreviousStages = stageFightsCount;
-  let fightsLeft = totalFightsCount;
+//   const totalFightsCount = cardsCount - 1;
+//   let stageFightsCount = 1;
+//   let fightsCountOnPreviousStages = stageFightsCount;
+//   let fightsLeft = totalFightsCount;
 
-  while (fightsLeft) {
-    fights.push({
-      id          : uuid(),
-      orderNumber : fightsLeft--,
-      degree      : stageFightsCount,
-      competitionId,
-      categoryId
-    });
-    if (fightsCountOnPreviousStages === fights.length) {
-      fightsCountOnPreviousStages += stageFightsCount *= 2;
-    }
-  }
+//   while (fightsLeft) {
+//     fights.push({
+//       id          : uuid(),
+//       orderNumber : fightsLeft--,
+//       degree      : stageFightsCount,
+//       competitionId,
+//       categoryId
+//     });
+//     if (fightsCountOnPreviousStages === fights.length) {
+//       fightsCountOnPreviousStages += stageFightsCount *= 2;
+//     }
+//   }
 
-  const degrees = [ ...new Set(fights.map(f => f.degree)) ];
-  const degreesWithoutFinal = degrees.filter(t => t !== 1);
+//   const degrees = [ ...new Set(fights.map(f => f.degree)) ];
+//   const degreesWithoutFinal = degrees.filter(t => t !== 1);
 
-  degreesWithoutFinal.forEach(degree => {
-    const fightsInThisSector = fights
-      .filter(f => degree === f.degree)
-      .sort((a, b) => b.orderNumber - a.orderNumber);
+//   degreesWithoutFinal.forEach(degree => {
+//     const fightsInThisSector = fights
+//       .filter(f => degree === f.degree)
+//       .sort((a, b) => b.orderNumber - a.orderNumber);
 
-    const fightsInNextSector = fights
-      .filter(f => degree / 2 === f.degree)
-      .sort((a, b) => b.orderNumber - a.orderNumber);
+//     const fightsInNextSector = fights
+//       .filter(f => degree / 2 === f.degree)
+//       .sort((a, b) => b.orderNumber - a.orderNumber);
 
-    for (const fight of fightsInThisSector) {
-      const greaterNextFightWithoutChildren = fightsInNextSector
-        .find(({ id }) => fights.filter(f => f.nextFightId === id).length < 2);
-      fight.nextFightId = greaterNextFightWithoutChildren.id;
-    };
-  });
+//     for (const fight of fightsInThisSector) {
+//       const greaterNextFightWithoutChildren = fightsInNextSector
+//         .find(({ id }) => fights.filter(f => f.nextFightId === id).length < 2);
+//       fight.nextFightId = greaterNextFightWithoutChildren.id;
+//     };
+//   });
 
-  return fights;
-}
+//   return fights;
+// }
 
 function calculateProximityCoefficient (units, coefficientMap) {
   const cardsCoefficients = units.map((from, i) => {
@@ -381,13 +381,13 @@ function calculate (cards, fights, isFirstLap = true) {
 // const pairsProximityCoefficient = calculateFightersProximityCoefficient(pairs, proximityCoefficients);
 // const pp = calculatePairsToPairsCombinations(pairs, proximityCoefficients);
 // const pairsPairsPairs = aggregateByMinimalCoefficient(pp, pairsProximityCoefficient);
-const fights = generateFights(data.length);
-const result = calculate(data, fights);
+// const fights = generateFights(data.length);
+// const result = calculate(data, fights);
 // .sort((a, b) => a.length - b.length);
 export default calculate;
-console.log('='.repeat(50)); // !nocommit
-console.log(result);
-console.log('='.repeat(50));
+// console.log('='.repeat(50)); // !nocommit
+// console.log(result);
+// console.log('='.repeat(50));
 
 // const res = calculate(data);
 

@@ -112,3 +112,25 @@ export function dumpFighter (data) {
     updatedAt : data.updatedAt
   };
 }
+
+export function dumpFightSpace (data) {
+  return {
+    ...data.dataValues
+  };
+}
+
+export function dumpCompetition (data) {
+  const linked = {};
+
+  if (data.FightSpaces) linked.fightSpace = dumpFightSpace(data.FightSpaces);
+  if (data.Categories) linked.categories = dumpCard(data.Categories);
+
+  return {
+    id          : data.id,
+    name        : data.name,
+    description : data.description,
+    startDate   : data.startDate,
+    endDate     : data.endDate,
+    clubId      : data.clubId
+  };
+}
