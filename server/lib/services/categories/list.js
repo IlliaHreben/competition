@@ -1,4 +1,4 @@
-import { Op }            from '../../sequelize.js';
+// import { Op }            from '../../sequelize.js';
 import ServiceBase       from '../Base.js';
 import { dumpCategory }  from '../../utils';
 
@@ -13,22 +13,23 @@ export default class CategoriesList extends ServiceBase {
       offset        : [ 'integer', { min_number: 0 }, { default: 0 } ]
     };
 
-    async execute ({ competitionId }) {
+    async execute ({ competitionId, limit, offset }) {
       const categories = await Category.findAll({
         where: {
-          competitionId,
-          '$Cards.id$': { [Op.not]: null }
+          competitionId
+          // '$Cards.id$': { [Op.not]: null }
         },
         include: [ 'Cards', {
-          model   : Fight,
-          as      : 'Fights',
-          include : [
+          model    : Fight,
+          as       : 'Fights',
+          required : true,
+          include  : [
             { model: Card, as: 'FirstCard', include: [ 'Fighter', 'Club', 'Coach' ] },
             { model: Card, as: 'SecondCard', include: [ 'Fighter', 'Club', 'Coach' ] }
           ]
-        } ]
-        // limit,
-        // offset,
+        } ],
+        limit,
+        offset
         // order: [ [ sort, order ] ]
       });
 

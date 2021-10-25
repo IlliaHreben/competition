@@ -1,0 +1,6 @@
+@import './assets/styles/sizes.module.css';
+
+.content {
+  margin-left: var(--navbar-width);
+  padding: 5px;
+}

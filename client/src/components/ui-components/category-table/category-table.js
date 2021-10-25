@@ -113,7 +113,7 @@ function CategoryTable ({ category }) {
 }
 
 CategoryTable.propTypes = {
-    category: {
+    category: PropTypes.shape({
         id         : PropTypes.string.isRequired,
         section    : PropTypes.string.isRequired,
         sex        : PropTypes.string.isRequired,
@@ -169,7 +169,7 @@ CategoryTable.propTypes = {
                 }).isRequired
             })).isRequired
         }).isRequired
-    }
+    }).isRequired
 };
 
 export default CategoryTable;

@@ -1,0 +1,16 @@
+@import '../../../assets/styles/sizes.module.css';
+
+.sideBar {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    /* justify-content: center; */
+    top: 0;
+    left: 0;
+    width: var(--navbar-width);
+    height: 100%;
+    background-color:rgb(225, 225, 225);
+}
