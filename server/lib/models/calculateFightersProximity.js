@@ -28,20 +28,20 @@ import { v4 as uuid } from 'uuid';
 //   //   city          : 'Хоролss',
 //   //   birthDate     : '2008-02-03T00:00:00.000Z'
 //   // },
-//   // {
-//   //   id            : '0017630c-4858-4f72-887c-b45c527834f1',
-//   //   fighterId     : '055ce55a-1743-4ed7-9ff6-bf53ad666865',
-//   //   clubId        : '17460e95-8713-4138-befa-8442f9dedc0c',
-//   //   coachId       : '25639d54-5bf5-4380-85b4-1d8b2fbf7609',
-//   //   categoryId    : 'f45ca04f-d647-4c80-a12c-fb222495efaa',
-//   //   competitionId : 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb',
-//   //   section       : 'low-kick',
-//   //   weight        : 34.2,
-//   //   realWeight    : 34.2,
-//   //   group         : 'B',
-//   //   city          : 'Хоролss',
-//   //   birthDate     : '2008-02-03T00:00:00.000Z'
-//   // },
+//   {
+//     id            : '0017630c-4858-4f72-887c-b45c527834f1',
+//     fighterId     : '055ce55a-1743-4ed7-9ff6-bf53ad666865',
+//     clubId        : '17460e95-8713-4138-befa-8442f9dedc0c',
+//     coachId       : '25639d54-5bf5-4380-85b4-1d8b2fbf7609',
+//     categoryId    : 'f45ca04f-d647-4c80-a12c-fb222495efaa',
+//     competitionId : 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb',
+//     section       : 'low-kick',
+//     weight        : 34.2,
+//     realWeight    : 34.2,
+//     group         : 'B',
+//     city          : 'Хоролss',
+//     birthDate     : '2008-02-03T00:00:00.000Z'
+//   },
 //   {
 //     id            : '0017630f-4858-4f72-887c-b45c527834f1',
 //     fighterId     : '055ce55a-1743-4ed7-9ff6-bf53ad666865',
@@ -208,31 +208,52 @@ function deepFlat (array, savePairs = false) {
   return res;
 }
 
-function mapPairsToFights (outerPairs, outerFights) {
-  const firstBranchPair = deepFlat(outerPairs[0], true);
-  const secondBranchPair = outerPairs[1] ? deepFlat(outerPairs[1], true) : [];
-  const pairs = firstBranchPair.flat().length > secondBranchPair.flat().length
-    ? [ ...firstBranchPair, ...secondBranchPair ]
-    : [ ...secondBranchPair, ...firstBranchPair ];
+const isLowerPartFull = (total, count) => (count - total / 2 / 2) > total / 2;
 
-  const fights = [ ...outerFights ].sort((a, b) => a.orderNumber - b.orderNumber)
-    .filter(({ id }, _, arr) => arr.filter(f => f.nextFightId === id).length < 2);
+function mapPairsToFights (outerPairs, outerFights) {
+  const fights = [ ...outerFights ]
+    // .sort((a, b) => a.orderNumber - b.orderNumber)
+    .filter(({ id }, _, arr) => arr.filter(f => f.nextFightId === id).length < 2)
+    .reverse();
+  // console.log('='.repeat(50)); // !nocommit
+  // console.log(fights);
+  // console.log('='.repeat(50));
   const fightsWithoutFighters = [ ...outerFights ].sort((a, b) => a.orderNumber - b.orderNumber)
     .filter(({ id }, _, arr) => arr.filter(f => f.nextFightId === id).length === 2);
 
   const maxPower = fights.reduce((acc, f) => f.degree > acc ? f.degree : acc, 0);
   const maxPowerFights = fights.filter(fight => maxPower === fight.degree)
     .sort((a, b) => a.orderNumber - b.orderNumber);
-  // const maxPowerFightsLength = maxPowerFights.length;
+    // const maxPowerFightsLength = maxPowerFights.length;
   let orderNumber = fights.length - maxPowerFights.length;
+
+  const isFightWithOneFigtherMustBeInUpperBranch = isLowerPartFull(maxPower, fights.length);
+  const rightIndex = +isFightWithOneFigtherMustBeInUpperBranch;
+  switchUnits(outerPairs, rightIndex);
+
+  // const firstBranchPair = deepFlat(outerPairs[0], true);
+  // const secondBranchPair = outerPairs[1] ? deepFlat(outerPairs[1], true) : [];
+
+  // // const firstBranchFights = firstBranchPair.flat();
+  // // const secondBranchFights = secondBranchPair.flat();
+
+  // const pairs = firstBranchPair.length > secondBranchPair.flat().length
+  //   ? [ ...firstBranchPair, ...secondBranchPair ]
+  //   : [ ...secondBranchPair, ...firstBranchPair ];
+
+  const pairs = deepFlat(outerPairs, true);
+
+  // console.log('+'.repeat(50)); // !nocommit
+  // console.log(pairs);
+  // console.log('+'.repeat(50));
 
   fights.forEach((fight, i) => {
     const pair = pairs[i];
     orderNumber++;
     if (orderNumber === fights.length) orderNumber = 0;
-    if (!pair) {
+    if (!pair[0]) {
       console.log('='.repeat(50)); // !nocommit
-      console.log(pairs, orderNumber, secondBranchPair);
+      console.log(i, outerPairs);
       console.log('='.repeat(50));
     }
     fight.firstCardId = pair[0].id;
@@ -240,6 +261,25 @@ function mapPairsToFights (outerPairs, outerFights) {
   });
 
   return [ ...fights, ...fightsWithoutFighters ];
+}
+
+function switchUnits (pairs, rightIndex) {
+  const needToSwitch = pairs.findIndex(p => p.includeOneFighter) === rightIndex;
+  // console.log('='.repeat(50)); // !nocommit
+  // console.log(needToSwitch);
+  // console.log('='.repeat(50));
+  if (!needToSwitch) return;
+
+  const index = +(rightIndex === 1);
+
+  const nestedRightIndex = pairs[index].pair.findIndex(p => p.includeOneFighter);
+  const fn = nestedRightIndex === 1 ? 'pop' : 'shift';
+
+  const nestedUnit = pairs[index].pair[fn]();
+  if (pairs[+(!index)].pair.length === 2) {
+    pairs[index].pair.push(pairs[+(!index)].pair[1]);
+  }
+  pairs[+(!index)].pair.push(nestedUnit);
 }
 
 function calculatePairsToPairsCombinations (units, coefficientMap) {
@@ -274,12 +314,13 @@ function aggregateByMinimalCoefficient (combinations, coefficients, isFirstLap) 
   let pairs = [ ...combinations ];
   const fightersCoefficients = [ ...coefficients ];
   const fights = [];
+
   fightersCoefficients.forEach(([ id ], i) => {
     if (!id) return;
 
     const potentialFights = pairs
       .filter(({ pair }) => [ pair[0].id, pair[1].id ].includes(id))
-      // .sort((a, b) => a.coefficient - b.coefficient)
+      .sort((a, b) => a.coefficient - b.coefficient)
       .filter(({ coefficient }, _, arr) => coefficient === arr[0].coefficient);
 
     const potentialRivalIds = potentialFights
@@ -289,7 +330,7 @@ function aggregateByMinimalCoefficient (combinations, coefficients, isFirstLap) 
 
     const idToCoefficient =  Object.fromEntries(fightersCoefficients.filter(c => c.length)); // to avoid cycle in cycle
     const moreNeededIdToMerge = potentialRivalIds.reduce(
-      (grCoefId, id) => idToCoefficient[id] > idToCoefficient[grCoefId] ? id : grCoefId,
+      (grCoefId, id) => idToCoefficient[id] < idToCoefficient[grCoefId] ? id : grCoefId,
       potentialRivalIds[0]
     );
 
@@ -300,7 +341,11 @@ function aggregateByMinimalCoefficient (combinations, coefficients, isFirstLap) 
     if (!fight) {
       const lastFighterWithoutPair = combinations.flatMap(c => c.pair).find(fighter => fighter.id === id);
 
-      return fights.push({ pair: [ lastFighterWithoutPair ], id: uuid(), includeOneFighter: isFirstLap });
+      return fights.push({
+        pair              : [ lastFighterWithoutPair ],
+        id                : uuid(),
+        includeOneFighter : lastFighterWithoutPair.includeOneFighter || isFirstLap
+      });
     }
 
     if (fight.pair.find(p => p.includeOneFighter)) fight.includeOneFighter = true;
@@ -316,40 +361,7 @@ function aggregateByMinimalCoefficient (combinations, coefficients, isFirstLap) 
   });
 
   return fights;
-
-  // if (pairs.length === 2) return pairs;
-  // const pairsToPair = pairs.slice(1);
-  // const pairsPairs = permutations([
-  //   pairs,
-  //   pairsToPair
-  // ]);
-
-  //   return pairs.flatMap((from, i) => {
-  //     const cattedCards = cards.slice(i + 1);
-
-//     return cattedCards.map(to => {
-//       const coefficient = {
-//         // pairs:
-//         coefficient: 0
-//       };
-//       if (cardFrom.coachId === cardTo.coachId) coefficient.coefficient += proximityCoefficients.coach;
-//       if (cardFrom.clubId === cardTo.clubId) coefficient.coefficient += proximityCoefficients.club;
-//       if (cardFrom.city === cardTo.city) coefficient.coefficient += proximityCoefficients.city;
-//       // if (cardFrom.city === cardTo.city) coefficient.coefficient += proximityCoefficients.city;
-//       return coefficient;
-//     });
-//   });
 }
-
-// function permutations (input) {
-//   return input.reduce((acc, line) => {
-//     return line.flatMap(number => {
-//       return acc.map(permutation => [ ...permutation, number ]);
-//     });
-//   }, [ [] ]);
-// }
-
-// let a = 0;
 
 function calculate (cards, fights, isFirstLap = true) {
   const proximityCoefficients = { // TODO rank
@@ -363,24 +375,28 @@ function calculate (cards, fights, isFirstLap = true) {
   const cardsToCardsCombinations = calculatePairsToPairsCombinations(cards, proximityCoefficients);
   const pairs = aggregateByMinimalCoefficient(cardsToCardsCombinations, fightersProximityCoefficient, isFirstLap)
     .sort((a, b) => b.length - a.length);
-  // a++;
-  // if (a < 6) {
-  //   console.log('+'.repeat(50)); // !nocommit
-  //   console.log(cardsToCardsCombinations, pairs);
-  //   console.log('+'.repeat(50));
+
+  // if (a === 2) {
+  //   // console.log('+'.repeat(50)); // !nocommit
+  //   // // console.log(cardsToCardsCombinations);
+  //   // console.log(pairs.map(p => p.pair)[0].map(p => p.pair.map(pp => ({ fighterId: pp.fighterId, clubId: pp.clubId }))));
+  //   // console.log('+'.repeat(50));
+  //   // // console.log(cardsToCardsCombinations);
+  //   // console.log(pairs.map(p => p.pair)[1].map(p => p.pair.map(pp => ({ fighterId: pp.fighterId, clubId: pp.clubId }))));
+  //   // console.log('+'.repeat(50));
+  //   // // console.log(cardsToCardsCombinations);
+  //   // console.log(pairs.map(p => p.pair)[2].map(p => p.pair.map(pp => ({ fighterId: pp.fighterId, clubId: pp.clubId }))));
+  //   // console.log('+'.repeat(50));
+  //   // console.log(pairs.map(p => p.pair)[3].map(p => p.pair.map(pp => ({ fighterId: pp.fighterId, clubId: pp.clubId }))));
+  //   // console.log('+'.repeat(50));
+  //   // console.log(pairs.map(p => p.pair)[4]?.map(p => p.pair.map(pp => ({ fighterId: pp.fighterId, clubId: pp.clubId }))));
+  //   // console.log('+'.repeat(50));
   // }
   return pairs.length <= 2
     ? mapPairsToFights(pairs, fights)
     : calculate(pairs, fights, false);
 }
 
-// const fightersProximityCoefficient = calculateFightersProximityCoefficient(data, proximityCoefficients);
-// const cardsToCardsCombinations = calculatePairsToPairsCombinations(data, proximityCoefficients);
-// const pairs = aggregateByMinimalCoefficient(cardsToCardsCombinations, fightersProximityCoefficient);
-
-// const pairsProximityCoefficient = calculateFightersProximityCoefficient(pairs, proximityCoefficients);
-// const pp = calculatePairsToPairsCombinations(pairs, proximityCoefficients);
-// const pairsPairsPairs = aggregateByMinimalCoefficient(pp, pairsProximityCoefficient);
 // const fights = generateFights(data.length);
 // const result = calculate(data, fights);
 // .sort((a, b) => a.length - b.length);
@@ -388,7 +404,3 @@ export default calculate;
 // console.log('='.repeat(50)); // !nocommit
 // console.log(result);
 // console.log('='.repeat(50));
-
-// const res = calculate(data);
-
-// fightersProximityCoefficient.

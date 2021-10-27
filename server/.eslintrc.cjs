@@ -56,5 +56,12 @@ module.exports = {
     'object-curly-spacing'     : [ 'error', 'always' ],
     'array-bracket-spacing'    : [ 'error', 'always' ],
     'node/no-callback-literal' : 0
+  },
+  settings: {
+    linkComponents: [
+      // Components used as alternatives to <a> for linking, eg. <Link to={ url } />
+      { name: 'Link', linkAttribute: 'to' },
+      { name: 'NavLink', linkAttribute: 'to' }
+    ]
   }
 };
