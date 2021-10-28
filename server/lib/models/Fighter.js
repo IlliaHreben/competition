@@ -3,6 +3,7 @@ import Base              from './Base.js';
 
 import Club              from './Club.js';
 import Coach             from './Coach.js';
+import Card              from './Card.js';
 
 export default class Fighter extends Base {
   static initRelation () {
@@ -18,6 +19,14 @@ export default class Fighter extends Base {
       as         : 'Coach',
       foreignKey : {
         name      : 'coachId',
+        allowNull : false
+      }
+    });
+
+    this.hasMany(Card, {
+      as         : 'Cards',
+      foreignKey : {
+        name      : 'fighterId',
         allowNull : false
       }
     });

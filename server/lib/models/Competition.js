@@ -17,7 +17,7 @@ export default class Competition extends Base {
       }
     });
     this.hasMany(Card, {
-      as         : 'Card',
+      as         : 'Cards',
       foreignKey : {
         name      : 'competitionId',
         allowNull : false
@@ -41,10 +41,10 @@ export default class Competition extends Base {
     const fightSpacesPromise = await FightSpace.bulkCreate(
       [
         ...Array.from({ length: ringsCount }).flatMap(
-          () => Array.from({ length: competition.days }).map(i => ({ type: 'ring', competitionDay: i }))
+          () => Array.from({ length: competition.days }).map((_, i) => ({ type: 'ring', competitionDay: i + 1 }))
         ),
         ...Array.from({ length: tatamisCount }).flatMap(
-          () => Array.from({ length: competition.days }).map(i => ({ type: 'tatami', competitionDay: i }))
+          () => Array.from({ length: competition.days }).map((_, i) => ({ type: 'tatami', competitionDay: i + 1 }))
         )
       ].map(({ type, competitionDay }, i) => ({
         type,

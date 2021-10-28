@@ -10,4 +10,7 @@ router.get('/categories/:id', controllers.categories.show);
 
 router.post('/cards/bulk', controllers.cards.bulkCreate);
 
+router.get('/competitions', controllers.competitions.list);
+router.post('/competitions', controllers.competitions.create);
+
 export default router;

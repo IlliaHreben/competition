@@ -1,4 +1,4 @@
-import path                from 'path';
+// import path                from 'path';
 import React, { Suspense } from 'react';
 import {
     Route,
@@ -16,6 +16,8 @@ import GraphicsIcon        from './assets/icons/graphics.png';
 
 const Graphics = React.lazy(() => import('./components/pages/graphics'));
 const Home = React.lazy(() => import('./components/pages/home')); ;
+const CompetitionCreate = React.lazy(() => import('./components/pages/competitions/create.js'));
+const CompetitionList = React.lazy(() => import('./components/pages/competitions/list.js'));
 
 function dummyLayout (props) {
     return props.children;
@@ -25,8 +27,14 @@ const routes = [
     {
         name      : 'Home',
         path      : '/',
-        icon      : CompetitionIcon,
+        icon      : '',
         component : Home
+    },
+    {
+        name      : 'Competitions',
+        path      : '/competitions',
+        icon      : CompetitionIcon,
+        component : CompetitionList
     },
     {
         name      : 'Graphics',
@@ -34,11 +42,6 @@ const routes = [
         icon      : GraphicsIcon,
         component : Graphics
     }
-    // {
-    //     name     : 'Competitions',
-    //     path     : '/competitions',
-    //     iconPath : '../public/tournament.png'
-    // }
 ];
 
 function AppRoute ({ component: Page, isLoginRequire, layout, ...rest }) { // eslint-disable-line react/prop-types
@@ -72,6 +75,11 @@ function App () {
                             exact
                         />
                     ))}
+                    <AppRoute
+                        path={'/competitions/create'}
+                        component={CompetitionCreate}
+                        exact
+                    />
                     <Redirect to='/' />
                 </Switch>
             </div>

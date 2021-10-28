@@ -130,12 +130,12 @@ CategoryTable.propTypes = {
                 degree       : PropTypes.number.isRequired,
                 orderNumber  : PropTypes.number.isRequired,
                 firstCardId  : PropTypes.string.isRequired,
-                secondCardId : PropTypes.string.isRequired,
-                winnerId     : PropTypes.string.isRequired,
-                nextFightId  : PropTypes.string.isRequired,
+                secondCardId : PropTypes.string,
+                winnerId     : PropTypes.string,
+                nextFightId  : PropTypes.string,
                 categoryId   : PropTypes.string.isRequired,
-                fightSpaceId : PropTypes.string.isRequired,
-                executedAt   : PropTypes.string.isRequired,
+                fightSpaceId : PropTypes.string,
+                executedAt   : PropTypes.string,
                 linked       : PropTypes.shape({
                     cards: PropTypes.arrayOf(PropTypes.shape({
                         id              : PropTypes.string.isRequired,
@@ -165,7 +165,7 @@ CategoryTable.propTypes = {
                                 lastName : PropTypes.string.isRequired
                             }).isRequired
                         }).isRequired
-                    })).isRequired
+                    }))
                 }).isRequired
             })).isRequired
         }).isRequired

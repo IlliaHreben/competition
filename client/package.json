@@ -7,6 +7,7 @@
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@mui/icons-material": "^5.0.4",
+    "@mui/lab": "^5.0.0-alpha.51",
     "@mui/material": "^5.0.4",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
@@ -15,12 +16,15 @@
     "@visx/hierarchy": "^2.1.2",
     "@visx/shape": "^2.1.2",
     "element-to-path": "^1.2.1",
+    "lodash.debounce": "^4.0.8",
     "luxon": "^2.0.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-infinite-scroll-component": "^6.1.0",
     "react-router-dom": "5.3.0",
     "react-scripts": "4.0.3",
+    "react-swipeable-views": "^0.14.0",
+    "use-constant": "^1.1.0",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

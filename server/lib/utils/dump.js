@@ -119,18 +119,22 @@ export function dumpFightSpace (data) {
   };
 }
 
-export function dumpCompetition (data) {
+export function dumpCompetition ({ data, meta = {} }) {
   const linked = {};
 
   if (data.FightSpaces) linked.fightSpace = dumpFightSpace(data.FightSpaces);
   if (data.Categories) linked.categories = dumpCard(data.Categories);
 
   return {
-    id          : data.id,
-    name        : data.name,
-    description : data.description,
-    startDate   : data.startDate,
-    endDate     : data.endDate,
-    clubId      : data.clubId
+    id            : data.id,
+    name          : data.name,
+    description   : data.description,
+    startDate     : data.startDate,
+    endDate       : data.endDate,
+    days          : data.days,
+    clubId        : data.clubId,
+    cardsCount    : meta.cardsCount,
+    fightersCount : meta.fightersCount,
+    linked
   };
 }

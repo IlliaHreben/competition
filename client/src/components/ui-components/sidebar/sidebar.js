@@ -38,7 +38,7 @@ SideBar.propTypes = {
     tabs: PropTypes.arrayOf(PropTypes.shape({
         name : PropTypes.string.isRequired,
         path : PropTypes.string.isRequired,
-        icon : PropTypes.object.isRequired
+        icon : PropTypes.string.isRequired
     })).isRequired
 };
 

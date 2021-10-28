@@ -1,4 +1,4 @@
-import Base from './Base.js';
+import Base from './base.js';
 
 class Categories extends Base {
     // create = (payload) => {

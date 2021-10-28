@@ -10,8 +10,8 @@ export default class CompetitionUpdate extends ServiceBase {
       nested_object: {
         name         : [ 'required', 'string', { max_length: 1000 } ],
         description  : [ 'required', 'string', { max_length: 5000 } ],
-        startDate    : [ 'required', 'date' ],
-        endDate      : [ 'required', 'date' ],
+        startDate    : [ 'required', 'iso_date' ],
+        endDate      : [ 'required', 'iso_date' ],
         ringsCount   : [ 'required', 'positive_integer' ],
         tatamisCount : [ 'required', 'positive_integer' ]
       }
