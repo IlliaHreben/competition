@@ -34,7 +34,7 @@ export default class CompetitionsList extends ServiceBase {
           distinct : true,
           include  : 'Cards'
         });
-        return { data: competition, meta: { cardsCount, fightersCount } };
+        return { competition, meta: { cardsCount, fightersCount } };
       }));
 
       const [ totalCount, filteredCount ] = await Promise.all([
@@ -43,7 +43,7 @@ export default class CompetitionsList extends ServiceBase {
       ]);
 
       return {
-        data : data.map(dumpCompetition),
+        data : data.map(({ competition, meta }) => dumpCompetition(competition, meta)),
         meta : {
           totalCount,
           filteredCount,

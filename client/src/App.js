@@ -18,6 +18,7 @@ const Graphics = React.lazy(() => import('./components/pages/graphics'));
 const Home = React.lazy(() => import('./components/pages/home')); ;
 const CompetitionCreate = React.lazy(() => import('./components/pages/competitions/create.js'));
 const CompetitionList = React.lazy(() => import('./components/pages/competitions/list.js'));
+const CompetitionUpdate = React.lazy(() => import('./components/pages/competitions/update.js'));
 
 function dummyLayout (props) {
     return props.children;
@@ -78,6 +79,11 @@ function App () {
                     <AppRoute
                         path={'/competitions/create'}
                         component={CompetitionCreate}
+                        exact
+                    />
+                    <AppRoute
+                        path={'/competitions/:id/edit'}
+                        component={CompetitionUpdate}
                         exact
                     />
                     <Redirect to='/' />

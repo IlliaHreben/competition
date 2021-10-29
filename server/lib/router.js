@@ -12,5 +12,6 @@ router.post('/cards/bulk', controllers.cards.bulkCreate);
 
 router.get('/competitions', controllers.competitions.list);
 router.post('/competitions', controllers.competitions.create);
+router.get('/competitions/:id', controllers.competitions.show);
 
 export default router;

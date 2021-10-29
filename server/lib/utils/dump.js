@@ -119,11 +119,11 @@ export function dumpFightSpace (data) {
   };
 }
 
-export function dumpCompetition ({ data, meta = {} }) {
+export function dumpCompetition (data, meta = {}) {
   const linked = {};
 
-  if (data.FightSpaces) linked.fightSpace = dumpFightSpace(data.FightSpaces);
-  if (data.Categories) linked.categories = dumpCard(data.Categories);
+  if (data.FightSpaces) linked.fightSpace = data.FightSpaces.map(dumpFightSpace);
+  if (data.Categories) linked.categories = data.Categories.map(dumpCard);
 
   return {
     id            : data.id,

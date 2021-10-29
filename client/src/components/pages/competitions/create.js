@@ -120,6 +120,7 @@ export default function CompetitionCreate ({ history, location }) {
                             onChange={handleDateChange('startDate')}
                             renderInput={(params) => <TextField {...params} />}
                         />
+                        <Box sx={{ padding: '0.75vh' }} />
                         <DatePicker className={styles.endDateInput}
                             label="End date"
                             value={endDate}

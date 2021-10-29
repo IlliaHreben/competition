@@ -1,4 +1,5 @@
-import X from 'chista/Exception';
+import x from 'chista/Exception';
+const Exception = x.default;
 
 const errors = {
   NOT_FOUND: data => ({
@@ -10,7 +11,7 @@ const errors = {
   })
 };
 
-export class ServiceError extends X {
+export class ServiceError extends Exception {
   constructor (type, data) {
     const errorData = errors[type]?.(data) || { code: 'SERVER_ERROR', fields: { type } };
 
