@@ -197,6 +197,8 @@ export default function List ({ history, location }) {
     const [ search, setSearch ] = useState('');
     const [ loading, setLoading ] = useState(false);
 
+    useEffect(() => document.title = 'Create competition', []);
+
     const debouncedSearchFunction = useConstant(() => debounce(() => {
         setLoading(false);
     }, 500));

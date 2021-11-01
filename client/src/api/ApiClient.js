@@ -61,30 +61,35 @@ export default class ApiClient {
             ? `?${new URLSearchParams(params).toString()}`
             : '';
 
-        const response = await fetch(
-            `${this.apiUrl}${this.prefix}${url}${query}`,
-            {
-                method,
-                headers: {
-                    'Content-Type': 'application/json'
-                    // 'Cache-Control' : 'no-cache',
-                    // pragma          : 'no-cache',
-                    // ...(this.lang ? { 'Accept-Language': this.lang } : {}),
-                },
-                // credentials : 'include',
-                body: method !== 'GET'
-                    ? JSON.stringify(body)
-                    : undefined
-            }
-        );
+        let response;
+
+        try {
+            response = await fetch(
+                `${this.apiUrl}${this.prefix}${url}${query}`,
+                {
+                    method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                        // 'Cache-Control' : 'no-cache',
+                        // pragma          : 'no-cache',
+                        // ...(this.lang ? { 'Accept-Language': this.lang } : {}),
+                    },
+                    // credentials : 'include',
+                    body: method !== 'GET'
+                        ? JSON.stringify(body)
+                        : undefined
+                }
+            );
+        } catch (err) {
+            throw this.errorsHandler({}, 500, url);
+        }
 
         const json = await response.json();
-
         // const serverTime = response.headers.get('X-Server-Timestamp');
 
         // if (serverTime) this.onServerTimeReceive(serverTime);
 
-        if (response.status !== 200) throw this.errorsHandler(json, response.status, url);
+        if (response.status !== 200 || !json.status) throw this.errorsHandler(json, response.status, url);
 
         return json;
     }

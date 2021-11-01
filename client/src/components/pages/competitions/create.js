@@ -1,16 +1,16 @@
 
-import { useState }         from 'react';
-import Box                  from '@mui/material/Box';
-import TextField            from '@mui/material/TextField';
-import Container            from '@mui/material/Container';
-import AdapterDateFns       from '@mui/lab/AdapterLuxon';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DatePicker           from '@mui/lab/DatePicker';
-import Button               from '@mui/material/Button';
+import { useState, useEffect } from 'react';
+import Box                     from '@mui/material/Box';
+import TextField               from '@mui/material/TextField';
+import Container               from '@mui/material/Container';
+import AdapterDateFns          from '@mui/lab/AdapterLuxon';
+import LocalizationProvider    from '@mui/lab/LocalizationProvider';
+import DatePicker              from '@mui/lab/DatePicker';
+import Button                  from '@mui/material/Button';
 
-import api                  from '../../../api-singleton';
+import api                     from '../../../api-singleton';
 
-import styles               from './create.module.css';
+import styles                  from './create.module.css';
 
 // eslint-disable-next-line react/prop-types
 export default function CompetitionCreate ({ history, location }) {
@@ -20,6 +20,8 @@ export default function CompetitionCreate ({ history, location }) {
     const [ tatamisCount, setTatamisCount ] = useState('');
     const [ startDate, setStartDate ] = useState(null);
     const [ endDate, setEndDate ] = useState(null);
+
+    useEffect(() => document.title = 'Create competition');
 
     const disableCreateButton = name < 2 ||
         description < 2 ||

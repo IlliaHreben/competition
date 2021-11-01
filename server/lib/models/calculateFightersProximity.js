@@ -215,9 +215,6 @@ function mapPairsToFights (outerPairs, outerFights) {
     // .sort((a, b) => a.orderNumber - b.orderNumber)
     .filter(({ id }, _, arr) => arr.filter(f => f.nextFightId === id).length < 2)
     .reverse();
-  // console.log('='.repeat(50)); // !nocommit
-  // console.log(fights);
-  // console.log('='.repeat(50));
   const fightsWithoutFighters = [ ...outerFights ].sort((a, b) => a.orderNumber - b.orderNumber)
     .filter(({ id }, _, arr) => arr.filter(f => f.nextFightId === id).length === 2);
 

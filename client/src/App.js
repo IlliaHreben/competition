@@ -1,5 +1,7 @@
 // import path                from 'path';
-import React, { Suspense } from 'react';
+import {
+    Suspense, lazy
+} from 'react';
 import {
     Route,
     Switch,
@@ -8,17 +10,18 @@ import {
 
 import PageLoader          from './components/ui-components/PageLoader/index.js';
 import SideBar             from './components/ui-components/sidebar/sidebar.js';
+import useErrors           from './components/ui-components/notifiers/useErrors.js';
 
 import styles              from './App.module.css';
 
 import CompetitionIcon     from './assets/icons/tournament.png';
 import GraphicsIcon        from './assets/icons/graphics.png';
 
-const Graphics = React.lazy(() => import('./components/pages/graphics'));
-const Home = React.lazy(() => import('./components/pages/home')); ;
-const CompetitionCreate = React.lazy(() => import('./components/pages/competitions/create.js'));
-const CompetitionList = React.lazy(() => import('./components/pages/competitions/list.js'));
-const CompetitionUpdate = React.lazy(() => import('./components/pages/competitions/update.js'));
+const Graphics = lazy(() => import('./components/pages/graphics'));
+const Home = lazy(() => import('./components/pages/home')); ;
+const CompetitionCreate = lazy(() => import('./components/pages/competitions/create.js'));
+const CompetitionList = lazy(() => import('./components/pages/competitions/list.js'));
+const CompetitionUpdate = lazy(() => import('./components/pages/competitions/update.js'));
 
 function dummyLayout (props) {
     return props.children;
@@ -63,6 +66,8 @@ function AppRoute ({ component: Page, isLoginRequire, layout, ...rest }) { // es
 }
 
 function App () {
+    useErrors();
+
     return (
         <Suspense fallback={<PageLoader />}>
             <SideBar tabs={routes} />

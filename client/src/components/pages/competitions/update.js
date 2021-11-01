@@ -2,11 +2,12 @@
 import { Fragment, useEffect, useState } from 'react';
 import SwipeableViews                    from 'react-swipeable-views';
 import PropTypes                         from 'prop-types';
+import { connect }                       from 'react-redux';
+import { useParams }                     from 'react-router';
+
 import Box                               from '@mui/material/Box';
 import Tabs                              from '@mui/material/Tabs';
 import Tab                               from '@mui/material/Tab';
-// import AppBar                  from '@mui/material/AppBar';
-import Typography                        from '@mui/material/Typography';
 import TextField                         from '@mui/material/TextField';
 import Container                         from '@mui/material/Container';
 import AdapterDateFns                    from '@mui/lab/AdapterLuxon';
@@ -15,24 +16,22 @@ import DatePicker                        from '@mui/lab/DatePicker';
 import Button                            from '@mui/material/Button';
 import List                              from '@mui/material/List';
 import ListItem                          from '@mui/material/ListItem';
-import ListItemButton                    from '@mui/material/ListItemButton';
 import ListItemIcon                      from '@mui/material/ListItemIcon';
 import ListItemText                      from '@mui/material/ListItemText';
 import Avatar                            from '@mui/material/Avatar';
 import IconButton                        from '@mui/material/IconButton';
 import Divider                           from '@mui/material/Divider';
 import Paper                             from '@mui/material/Paper';
-
 import DeleteIcon                        from '@mui/icons-material/Delete';
 import AddIcon                           from '@mui/icons-material/Add';
 
 import RingIcon                          from '../../../assets/icons/ring.png';
 import TatamiIcon                        from '../../../assets/icons/tatami.png';
-
 import api                               from '../../../api-singleton';
-
+import { show as showCompetition }       from '../../../actions/competitions';
 import styles                            from './edit.module.css';
-import { useParams }                     from 'react-router';
+
+const uuid = crypto.randomUUID.bind(crypto);
 
 function TabPanel (props) {
     const { children, value, index } = props;
@@ -54,11 +53,16 @@ TabPanel.propTypes = {
     value    : PropTypes.number.isRequired
 };
 
-// eslint-disable-next-line react/prop-types
-export default function CompetitionCreate () {
+CompetitionCreate.propTypes = {
+    history          : PropTypes.object.isRequired,
+    location         : PropTypes.object.isRequired,
+    competition      : PropTypes.object,
+    fetchCompetition : PropTypes.func.isRequired
+};
+
+function CompetitionCreate ({ history, location, competition, fetchCompetition }) {
     const [ tab, setTab ] = useState(0);
     const [ loading, setLoading ] = useState(false);
-    const [ competition, setCompetition ] = useState({});
     const [ name, setCompetitionName ] = useState('');
     const [ description, setCompetitionDesc ] = useState('');
     const [ startDate, setStartDate ] = useState(null);
@@ -73,36 +77,55 @@ export default function CompetitionCreate () {
     const { id: competitionId } = useParams();
 
     useEffect(() => {
-        const requestData = async (params) => {
-            const { data } = await api.competitions.show(competitionId, params);
-            setCompetition(data);
-            setCompetitionName(data.name);
-            setCompetitionDesc(data.description);
-            setStartDate(data.startDate);
-            setEndDate(data.endDate);
-            setFightSpaces(data.linked.fightSpace);
+        if (!competition) {
+            fetchCompetition(competitionId);
+        }
+    }, [ competitionId, fetchCompetition, competition ]);
+
+    useEffect(() => {
+        if (competition) {
+            setCompetitionName(competition.name);
+            setCompetitionDesc(competition.description);
+            setStartDate(competition.startDate);
+            setEndDate(competition.endDate);
+            setFightSpaces(competition.linked.fightSpace);
             setLoading(true);
-        };
+        }
+    }, [ competition ]);
 
-        requestData();
-    }, [ competitionId ]);
+    useEffect(() => document.title = `Settings - ${name}`, [ name ]);
 
-    const changeSpaceState = (id) => {
-        const spaceIndex = fightSpaces.findIndex(fs => fs.id === id);
+    useEffect(() => {
+        const queryTab = +(new URLSearchParams(location.search).get('tab'));
+        setTab(queryTab || 0);
+    }, [ location.search ]);
+
+    const changeTab = (i1, i2) => history.replace(`${location.pathname}?tab=${i2 !== undefined ? i2 : i1}`);
+
+    const onDeleteSpace = ({ id, customId }) => {
+        const paranoid = !!id;
+        const spaceIndex = fightSpaces.findIndex(fs => fs.id === id || (customId && fs.customId === customId));
         const data = [ ...fightSpaces ];
         const [ currentSpace ] = data.splice(spaceIndex, 1);
         setFightSpaces([
             ...data,
-            { ...currentSpace, disabled: !(currentSpace.disabled === true) }
+            ...paranoid ? [ { ...currentSpace, disabled: !(currentSpace.disabled === true) } ] : []
         ]);
     };
 
-    const handleChangeTab = (event, newValue) => {
-        setTab(newValue);
-    };
-
-    const handleChangeTab2 = (index) => {
-        setTab(index);
+    const createSpace = (type, day) => {
+        const orderNumber = Math.max(...fightSpaces
+            .filter(s => s.type === type && s.competitionDay === day)
+            .map(s => s.orderNumber)) + 1;
+        setFightSpaces([
+            ...fightSpaces,
+            {
+                customId       : uuid(),
+                competitionDay : day,
+                type,
+                orderNumber
+            }
+        ]);
     };
 
     const handleChange = type => e => {
@@ -124,7 +147,7 @@ export default function CompetitionCreate () {
     return (
         <div className={styles.page}>
             <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                <Tabs value={tab} onChange={handleChangeTab} centered>
+                <Tabs value={tab} onChange={changeTab} centered>
                     <Tab label="General" />
                     <Tab label="Fight spaces" />
                     <Tab label="Categories" />
@@ -132,9 +155,9 @@ export default function CompetitionCreate () {
 
                 {loading &&
                     <SwipeableViews
-                    // axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                        // axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                         index={tab}
-                        onChangeIndex={handleChangeTab2}
+                        onChangeIndex={changeTab}
                     >
                         <TabPanel value={tab} index={0}>
                             <GeneralSettingsTab
@@ -153,7 +176,8 @@ export default function CompetitionCreate () {
                             <FightSpacesTab
                                 fightSpaces={fightSpaces}
                                 days={competition.days}
-                                changeSpaceState={changeSpaceState}
+                                onDeleteSpace={onDeleteSpace}
+                                createSpace={createSpace}
                             />
                         </TabPanel>
                         <TabPanel value={tab} index={2}>
@@ -244,16 +268,17 @@ function GeneralSettingsTab (props) {
 FightSpacesTab.propTypes = {
     fightSpaces: PropTypes.arrayOf(PropTypes.shape({
         id             : PropTypes.string,
+        customId       : PropTypes.string,
         type           : PropTypes.string,
         orderNumber    : PropTypes.number,
         competitionDay : PropTypes.number
     }).isRequired),
-    days             : PropTypes.number.isRequired,
-    changeSpaceState : PropTypes.func.isRequired
-
+    days          : PropTypes.number.isRequired,
+    onDeleteSpace : PropTypes.func.isRequired,
+    createSpace   : PropTypes.func.isRequired
 };
 
-function FightSpacesTab ({ changeSpaceState, ...props }) {
+function FightSpacesTab ({ onDeleteSpace, createSpace, ...props }) {
     const fightSpaces = Array.from({ length: props.days }).map((_, i) => {
         return props.fightSpaces
             .filter(fs => fs.competitionDay === i + 1)
@@ -277,20 +302,39 @@ function FightSpacesTab ({ changeSpaceState, ...props }) {
                 {fightSpaces.map((fs, i) => (
                     <Fragment key={i}>
                         {i > 0 && <Divider sx={{ marginTop: '2vh' }} />}
-                        <ListItem divider>
+                        <ListItem
+                            divider
+                            secondaryAction={
+                                <>
+                                    {[ 'ring', 'tatami' ].map(type => (
+                                        <Button
+                                            key={type}
+                                            onClick={() => createSpace(type, i + 1)}
+                                            disabled={fs.some(f => f.type === type && f.disabled)}
+                                        >
+                                            {`Create ${type}`}
+                                        </Button>
+                                    ))}
+
+                                </>
+                            }
+                        >
                             <ListItemText primary={`Competition day ${i + 1}`}/>
                         </ListItem>
                         {fs.map((f, k) => (
                             <ListItem
-                                key={f.id}
+                                key={f.id || f.customId}
                                 disabled={f.disabled}
                                 secondaryAction={
                                     <IconButton
                                         // disabled={fs[k + 1]?.type === f.type && !fs[k + 1]?.disabled}
-                                        disabled={fs[k - 1]?.type === f.type && fs[k - 1]?.disabled && f.disabled}
+                                        disabled={f.disabled
+                                            ? fs[k - 1]?.type === f.type && fs[k - 1]?.disabled
+                                            : fs[k + 1]?.type === f.type && !fs[k + 1]?.disabled
+                                        }
                                         edge="end"
                                         aria-label="delete"
-                                        onClick={() => changeSpaceState(f.id)}
+                                        onClick={() => onDeleteSpace({ id: f.id, customId: f.customId })}
                                     >
                                         {f.disabled
                                             ? <AddIcon/>
@@ -308,6 +352,29 @@ function FightSpacesTab ({ changeSpaceState, ...props }) {
                     </Fragment>
                 ))}
             </List>
+            <Button
+                // disabled={disableUpdateButton}
+                fullWidth
+                variant="contained"
+                size="large"
+                // onClick={onSave}
+            >Save
+            </Button>
         </Paper>
     );
 }
+
+function mapStateToProps (state) {
+    return {
+        competition : state.competitions.active,
+        isLoading   : state.competitions.isLoading
+    };
+}
+
+function mapDispatchToProps (dispatch) {
+    return {
+        fetchCompetition: (...args) => dispatch(showCompetition(...args))
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CompetitionCreate);
