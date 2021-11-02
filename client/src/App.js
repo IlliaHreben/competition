@@ -8,7 +8,7 @@ import {
     Redirect
 } from 'react-router';
 
-import PageLoader          from './components/ui-components/PageLoader/index.js';
+import PageLoader          from './components/ui-components/PageLoader';
 import SideBar             from './components/ui-components/sidebar/sidebar.js';
 import useErrors           from './components/ui-components/notifiers/useErrors.js';
 
@@ -21,7 +21,7 @@ const Graphics = lazy(() => import('./components/pages/graphics'));
 const Home = lazy(() => import('./components/pages/home')); ;
 const CompetitionCreate = lazy(() => import('./components/pages/competitions/create.js'));
 const CompetitionList = lazy(() => import('./components/pages/competitions/list.js'));
-const CompetitionUpdate = lazy(() => import('./components/pages/competitions/update.js'));
+const CompetitionUpdate = lazy(() => import('./components/pages/competitions/update'));
 
 function dummyLayout (props) {
     return props.children;
