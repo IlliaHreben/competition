@@ -29,10 +29,22 @@ export function show (...args) {
     };
 }
 
+export function update (...args) {
+    return async dispatch => {
+        try {
+            dispatch(reducer.updateRequest());
+
+            const { data } = await api.competitions.update(...args);
+
+            dispatch(reducer.updateCompetition(data));
+        } catch (err) {}
+    };
+}
+
 export function getActive (...args) {
     return async dispatch => {
         try {
-            dispatch(reducer.listRequest());
+            dispatch(reducer.showRequest());
 
             const { data } = await api.competitions.show(...args);
 

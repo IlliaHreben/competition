@@ -4,10 +4,7 @@ import { dumpCard }      from '../../utils';
 import Card              from '../../models/Card.js';
 import Category          from '../../models/Category.js';
 
-const sections = [
-  'full-contact', 'low-kick', 'K-1', 'low-kick-light',
-  'K-1-light', 'light-contact', 'semi-contact', 'point-fighting'
-];
+import { sections }      from '../../constants/categories.js';
 
 const fullSections = sections.slice(0, 3);
 

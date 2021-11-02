@@ -69,6 +69,27 @@ export default class Competition extends Base {
 
     return competition;
   }
+
+  async recalculateFightSpaces (spaces) {
+    const FightSpace = sequelize.model('FightSpace');
+    const toBeAbandonedIds = spaces.filter(s => s.id).map(s => s.id);
+
+    const currentSpaces = await this.getFightSpaces();
+    const toBeAbandoned = currentSpaces.filter(s => toBeAbandonedIds.includes(s.id));
+
+    const toBeDeletedIds = currentSpaces
+      .filter(s => !toBeAbandonedIds.includes(s.id))
+      .map(s => s.id);
+
+    const toBeAdded = spaces.filter(s => !s.id).map(s => ({ competitionId: this.id, ...s }));
+
+    const [ added ] = await Promise.all([
+      FightSpace.bulkCreate(toBeAdded),
+      FightSpace.destroy({ where: { id: toBeDeletedIds } })
+    ]);
+
+    return [ ...toBeAbandoned, ...added ];
+  }
 }
 
 Competition.init({
@@ -95,5 +116,7 @@ Competition.init({
   updatedAt : { type: DT.DATE, allowNull: false }
 }, {
   sequelize,
-  paranoid: true
+  paranoid: true,
+
+  scopes: {}
 });

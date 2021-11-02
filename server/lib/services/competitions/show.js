@@ -9,9 +9,9 @@ export default class CompetitionShow extends ServiceBase {
       id: [ 'required', 'uuid' ]
     };
 
-    async execute ({ id }) {
+    async execute ({ id, withCategories }) {
       const competition = await Competition.findById(id, {
-        include: [ 'FightSpaces', 'Categories' ]
+        include: [ 'FightSpaces' ]
       });
 
       if (!competition) throw new ServiceError('NOT_FOUND', { id });

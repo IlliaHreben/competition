@@ -76,7 +76,6 @@ function CompetitionUpdate ({ history, location }) {
     const { id: competitionId } = useParams();
 
     useEffect(() => {
-        if (competition) return;
         dispatch(showCompetition(competitionId));
     }, [ competition, competitionId, dispatch ]);
 

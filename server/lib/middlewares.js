@@ -24,7 +24,7 @@ export default {
     const keys = Object.keys(req.query);
 
     keys
-      .filter(key => req.query[key].includes(','))
+      .filter(key => req.query[key].includes(',') || req.query[key] === 'include')
       .forEach(key => req.query[key] = req.query[key].split(','));
 
     return next();

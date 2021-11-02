@@ -119,6 +119,27 @@ export default class Category extends Base {
           });
       });
   }
+
+  static initScopes () {
+    const Card = sequelize.model('Card');
+    const Fight = sequelize.model('Fight');
+
+    const scopes = {
+      cards: {
+        include: [ 'Cards', {
+          model    : Fight,
+          as       : 'Fights',
+          required : true,
+          include  : [
+            { model: Card, as: 'FirstCard', include: [ 'Fighter', 'Club', 'Coach' ] },
+            { model: Card, as: 'SecondCard', include: [ 'Fighter', 'Club', 'Coach' ] }
+          ]
+        } ]
+      }
+    };
+
+    Object.entries(scopes).forEach(scope => Category.addScope(...scope));
+  }
 }
 
 Category.init({

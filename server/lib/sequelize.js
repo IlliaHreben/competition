@@ -12,6 +12,7 @@ import './models/Fight.js';
 
 for (const Model of Object.values(sequelize.models)) {
   Model.initRelation?.(sequelize);
+  Model.initScopes?.();
 }
 
 const { database, host, port, dialect } = sequelize.config;

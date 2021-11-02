@@ -13,15 +13,17 @@ const competitions = createSlice({
     initialState,
     reducers : {
         list: (state, action) => {
-            state.list.push(...action.payload.data);
+            state.list = action.payload.data;
             state.listMeta = action.payload.meta;
             state.isLoading = false;
         },
-        listRequest : state => { state.isLoading = true; },
-        clearList   : state => { state.list = []; state.listMeta = {}; },
-        show        : (state, action) => { state.current = action.payload; },
-        setActive   : (state, action) => { state.active = action.payload; },
-        showRequest : state => { state.isLoading = true; }
+        listRequest       : state => { state.isLoading = true; },
+        clearList         : state => { state.list = []; state.listMeta = {}; },
+        show              : (state, action) => { state.current = action.payload; },
+        setActive         : (state, action) => { state.active = action.payload; },
+        showRequest       : state => { state.isLoading = true; },
+        updateRequest     : state => { state.isLoading = true; },
+        updateCompetition : (state, action) => { state.current = action.payload; }
     }
 });
 
@@ -30,7 +32,8 @@ const { actions, reducer } = competitions;
 export const {
     list, listRequest, clearList,
     show, showRequest,
-    setActive
+    setActive,
+    updateRequest, updateCompetition
 } = actions;
 
 export default reducer;
