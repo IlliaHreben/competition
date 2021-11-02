@@ -5,6 +5,7 @@ import api                           from '../../../api-singleton';
 import InfiniteScroll                from 'react-infinite-scroll-component';
 
 import CircularProgress              from '@mui/material/CircularProgress';
+import Container                     from '@mui/material/Container';
 
 import styles                        from './graphics.module.css';
 
@@ -60,12 +61,12 @@ export default function FightTrees () {
             loader={<CircularProgress />}
         >
             {graphics.map((category) => (
-                <>
-                    <CategoryTable key={category.id} category={category} />
+                <Container key={category.id} maxWidth="xl">
+                    <CategoryTable category={category} />
                     <div className={styles.treeContainer}>
                         {category.linked.fights.length && <FightTree key={category.id} category={category} />}
                     </div>
-                </>
+                </Container>
             ))}
         </InfiniteScroll>
     );

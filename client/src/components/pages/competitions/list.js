@@ -1,31 +1,34 @@
-import { useEffect, useState }       from 'react';
-import PropTypes                     from 'prop-types';
-import debounce                      from 'lodash.debounce';
-import useConstant                   from 'use-constant';
+import { useEffect, useState }                    from 'react';
+import PropTypes                                  from 'prop-types';
+import debounce                                   from 'lodash.debounce';
+import useConstant                                from 'use-constant';
 
-import Box                           from '@mui/material/Box';
-import Container                     from '@mui/material/Container';
-import Table                         from '@mui/material/Table';
-import TableBody                     from '@mui/material/TableBody';
-import TableCell                     from '@mui/material/TableCell';
-import TableContainer                from '@mui/material/TableContainer';
-import TableHead                     from '@mui/material/TableHead';
-import TablePagination               from '@mui/material/TablePagination';
-import TableRow                      from '@mui/material/TableRow';
-import TableSortLabel                from '@mui/material/TableSortLabel';
-import Toolbar                       from '@mui/material/Toolbar';
-import Paper                         from '@mui/material/Paper';
-import Button                        from '@mui/material/Button';
-import SearchIcon                    from '@mui/icons-material/Search';
-import TextField                     from '@mui/material/TextField';
-import InputAdornment                from '@mui/material/InputAdornment';
-import CircularProgress              from '@mui/material/CircularProgress';
-import { visuallyHidden }            from '@mui/utils';
+import Box                                        from '@mui/material/Box';
+import Container                                  from '@mui/material/Container';
+import Table                                      from '@mui/material/Table';
+import TableBody                                  from '@mui/material/TableBody';
+import TableCell                                  from '@mui/material/TableCell';
+import TableContainer                             from '@mui/material/TableContainer';
+import TableHead                                  from '@mui/material/TableHead';
+import TablePagination                            from '@mui/material/TablePagination';
+import TableRow                                   from '@mui/material/TableRow';
+import TableSortLabel                             from '@mui/material/TableSortLabel';
+import Toolbar                                    from '@mui/material/Toolbar';
+import Paper                                      from '@mui/material/Paper';
+import Button                                     from '@mui/material/Button';
+import SearchIcon                                 from '@mui/icons-material/Search';
+import TextField                                  from '@mui/material/TextField';
+import InputAdornment                             from '@mui/material/InputAdornment';
+import CircularProgress                           from '@mui/material/CircularProgress';
+import { visuallyHidden }                         from '@mui/utils';
 
-import api                           from '../../../api-singleton';
-import { formatISODate }             from '../../../utils/datetime';
+import { formatISODate }                          from '../../../utils/datetime';
+import {
+    list as listCompetitions
+} from '../../../actions/competitions';
 
-import styles                        from './list.module.css';
+import styles                                     from './list.module.css';
+import { useDispatch, useSelector }               from 'react-redux';
 
 function createData ({ id, name, description, startDate, endDate, days, fightersCount, cardsCount }) {
     return {
@@ -187,15 +190,16 @@ List.propTypes = {
     location : PropTypes.object.isRequired
 };
 
-export default function List ({ history, location }) {
+function List ({ history, location }) {
     const [ order, setOrder ] = useState('desc');
     const [ orderBy, setOrderBy ] = useState('startDate');
     const [ page, setPage ] = useState(0);
     const [ rowsPerPage, setRowsPerPage ] = useState(5);
-    const [ totalCount, setTotalCount ] = useState(0);
-    const [ rows, setRows ] = useState([]);
     const [ search, setSearch ] = useState('');
     const [ loading, setLoading ] = useState(false);
+
+    const { rows, meta } = useSelector(mapStateToProps);
+    const dispatch = useDispatch();
 
     useEffect(() => document.title = 'Create competition', []);
 
@@ -214,27 +218,18 @@ export default function List ({ history, location }) {
         setOrderBy(property);
     };
 
-    const requestData = async (params) => {
-        if (!params) {
-            params = {
-                order,
-                sort   : orderBy,
-                limit  : rowsPerPage,
-                offset : page * rowsPerPage,
-                ...search && { search }
-            };
-        }
+    useEffect(() => {
+        if (loading) return;
+        const params = {
+            order,
+            sort   : orderBy,
+            limit  : rowsPerPage,
+            offset : page * rowsPerPage,
+            ...search && { search }
+        };
 
-        const { data, meta } = await api.competitions.list(params);
-        setTotalCount(meta.filteredCount);
-        setRows(data.map(createData));
-    };
-
-    useEffect(
-        () => (!loading) && requestData(),
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        [ order, orderBy, page, rowsPerPage, loading ]
-    );
+        dispatch(listCompetitions(params));
+    }, [ dispatch, loading, order, orderBy, page, rowsPerPage, search ]);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -246,7 +241,7 @@ export default function List ({ history, location }) {
     };
 
     // Avoid a layout jump when reaching the last page with empty rows.
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - totalCount) : 0;
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - meta.filteredCount) : 0;
 
     return (
         <Container className={styles.page}>
@@ -270,7 +265,7 @@ export default function List ({ history, location }) {
                                 orderBy={orderBy}
                             />
                             <TableBody>
-                                {rows.map(row => {
+                                {rows.map(createData).map(row => {
                                     const labelId = `enhanced-table-checkbox-${row.id}`;
 
                                     return (
@@ -302,7 +297,7 @@ export default function List ({ history, location }) {
                     <TablePagination
                         rowsPerPageOptions={[ 5, 10, 25 ]}
                         component="div"
-                        count={totalCount}
+                        count={meta.filteredCount || 0}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}
@@ -313,3 +308,13 @@ export default function List ({ history, location }) {
         </Container>
     );
 }
+
+function mapStateToProps (state) {
+    return {
+        rows      : state.competitions.list,
+        meta      : state.competitions.listMeta,
+        isLoading : state.competitions.isLoading
+    };
+}
+
+export default (List);

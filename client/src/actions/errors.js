@@ -1,9 +1,6 @@
-const uuid = crypto.randomUUID.bind(crypto);
+import * as reducer from '../reducers/errors';
 
-export const MESSAGE_ERROR   = 'MESSAGE_ERROR';
-export const MESSAGE_SUCCESS = 'MESSAGE_SUCCESS';
-export const MESSAGE_CLEAR   = 'MESSAGE_CLEAR';
-export const MESSAGES_CLEAR  = 'MESSAGES_CLEAR';
+const uuid = crypto.randomUUID.bind(crypto);
 
 export function showError (error = {}, autoclose = true) {
     return async dispatch => {
@@ -21,21 +18,21 @@ export function showError (error = {}, autoclose = true) {
                 refresh : !autoclose
             };
 
-        dispatch({ type: MESSAGE_ERROR, payload: item });
+        dispatch(reducer.showError(item));
     };
 }
 
 export function showSuccess (message, autoclose = true) {
     return async dispatch => {
         const id = uuid();
-        dispatch({ type: MESSAGE_SUCCESS, payload: { id, message, refresh: false } });
+        dispatch(reducer.showSuccess({ id, message, refresh: false }));
     };
 }
 
 export function removeMessage (id) {
-    return { type: MESSAGE_CLEAR, payload: { id } };
+    return reducer.removeMessage({ id });
 }
 
 export function removeMessages (params) {
-    return { type: MESSAGES_CLEAR, payload: { params } };
+    return reducer.removeMessages({ params });
 }

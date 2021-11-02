@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from 'react';
+import PropTypes               from 'prop-types';
 import Box                     from '@mui/material/Box';
 import TextField               from '@mui/material/TextField';
 import Container               from '@mui/material/Container';
@@ -12,7 +13,11 @@ import api                     from '../../../api-singleton';
 
 import styles                  from './create.module.css';
 
-// eslint-disable-next-line react/prop-types
+CompetitionCreate.propTypes = {
+    history  : PropTypes.object.isRequired,
+    location : PropTypes.object.isRequired
+};
+
 export default function CompetitionCreate ({ history, location }) {
     const [ name, setCompetitionName ] = useState('');
     const [ description, setCompetitionDesc ] = useState('');
@@ -57,8 +62,8 @@ export default function CompetitionCreate ({ history, location }) {
             ringsCount,
             tatamisCount
         });
-        // eslint-disable-next-line react/prop-types
-        history.push(`${location.pathname}/${data.id}/edit`);
+
+        history.push(`${data.id}/edit?tab=1`);
     };
 
     return (
@@ -71,7 +76,7 @@ export default function CompetitionCreate ({ history, location }) {
                     '& > :not(style)' : { m: 1 }
                 }}
                 // noValidate
-                // autoComplete="off"
+                autoComplete="off"
             >
                 <TextField
                     required

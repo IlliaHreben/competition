@@ -1,40 +1,36 @@
-import produce from 'immer';
-import C       from '../constants/competitions.js';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     list      : [],
+    listMeta  : {},
     active    : null,
+    current   : null,
     isLoading : false
 };
 
-export default function competitions (state = initialState, action) {
-    const { type, payload } = action;
+const competitions = createSlice({
+    name     : 'competitions',
+    initialState,
+    reducers : {
+        list: (state, action) => {
+            state.list.push(...action.payload.data);
+            state.listMeta = action.payload.meta;
+            state.isLoading = false;
+        },
+        listRequest : state => { state.isLoading = true; },
+        clearList   : state => { state.list = []; state.listMeta = {}; },
+        show        : (state, action) => { state.current = action.payload; },
+        setActive   : (state, action) => { state.active = action.payload; },
+        showRequest : state => { state.isLoading = true; }
+    }
+});
 
-    return produce(state, draft => {
-        switch (type) {
-        case C.GET_COMPETITIONS_LIST_SUCCESS:
-            draft.list = payload;
-            draft.isLoading = false;
-            break;
-        case C.GET_COMPETITIONS_LIST_REQUEST:
-            draft.isLoading = true;
-            break;
-        case C.GET_COMPETITIONS_LIST_ERROR:
-            draft.isLoading = false;
-            break;
-        case C.GET_ACTIVE_COMPETITION_SUCCESS:
-            draft.active = payload;
-            draft.isLoading = false;
-            break;
-        case C.GET_ACTIVE_COMPETITION_ERROR:
-            draft.active = null;
-            draft.isLoading = false;
-            break;
-        case C.GET_ACTIVE_COMPETITION_REQUEST:
-            draft.isLoading = true;
-            break;
-        default:
-            return state;
-        }
-    });
-}
+const { actions, reducer } = competitions;
+
+export const {
+    list, listRequest, clearList,
+    show, showRequest,
+    setActive
+} = actions;
+
+export default reducer;

@@ -129,7 +129,7 @@ CategoryTable.propTypes = {
                 id           : PropTypes.string.isRequired,
                 degree       : PropTypes.number.isRequired,
                 orderNumber  : PropTypes.number.isRequired,
-                firstCardId  : PropTypes.string.isRequired,
+                firstCardId  : PropTypes.string,
                 secondCardId : PropTypes.string,
                 winnerId     : PropTypes.string,
                 nextFightId  : PropTypes.string,

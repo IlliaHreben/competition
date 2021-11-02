@@ -1,45 +1,33 @@
-import produce              from 'immer';
-import {
-    MESSAGE_ERROR,
-    MESSAGE_SUCCESS,
-    MESSAGE_CLEAR,
-    MESSAGES_CLEAR
-} from '../actions/errors.js';
+import { createSlice }      from '@reduxjs/toolkit';
 
 const initialState = {
     list: []
 };
 
-export default function errors (state = initialState, action) {
-    const { type, payload } = action;
+const errors = createSlice({
+    name     : 'errors',
+    initialState,
+    reducers : {
+        showError     : (state, action) => { state.list.push({ ...action.payload, type: 'error' }); },
+        showSuccess   : (state, action) => { state.list.push({ ...action.payload, type: 'success' }); },
+        removeMessage : (state, action) => {
+            state.list = state.list.filter(item => item.id !== action.payload.id);
+        },
+        removeMessages: (state, action) => {
+            const { params } = action.payload;
 
-    return produce(state, draft => {
-        switch (type) {
-        case MESSAGE_ERROR:
-            draft.list.push({
-                ...payload,
-                type: 'error'
-            });
-            break;
-        case MESSAGE_SUCCESS:
-            draft.list.push({
-                ...payload,
-                type: 'success'
-            });
-            break;
-        case MESSAGE_CLEAR:
-            draft.list = draft.list.filter(item => item.id !== payload.id);
-            break;
-        case MESSAGES_CLEAR: {
-            const { params } = payload;
-
-            draft.list = draft.list.filter(item =>
+            state.list = state.list.filter(item =>
                 !Object.keys(params).every(key => item[key] === params[key])
             );
-            break;
         }
-        default:
-            return state;
-        }
-    });
-}
+    }
+});
+
+const { actions, reducer } = errors;
+
+export const {
+    showError, showSuccess,
+    removeMessage, removeMessages
+} = actions;
+
+export default reducer;

@@ -1,35 +1,34 @@
 
-import { Fragment, useEffect, useState } from 'react';
-import SwipeableViews                    from 'react-swipeable-views';
-import PropTypes                         from 'prop-types';
-import { connect }                       from 'react-redux';
-import { useParams }                     from 'react-router';
+import { Fragment, useEffect, useState }              from 'react';
+import SwipeableViews                                 from 'react-swipeable-views';
+import PropTypes                                      from 'prop-types';
+import { useParams }                                  from 'react-router';
 
-import Box                               from '@mui/material/Box';
-import Tabs                              from '@mui/material/Tabs';
-import Tab                               from '@mui/material/Tab';
-import TextField                         from '@mui/material/TextField';
-import Container                         from '@mui/material/Container';
-import AdapterDateFns                    from '@mui/lab/AdapterLuxon';
-import LocalizationProvider              from '@mui/lab/LocalizationProvider';
-import DatePicker                        from '@mui/lab/DatePicker';
-import Button                            from '@mui/material/Button';
-import List                              from '@mui/material/List';
-import ListItem                          from '@mui/material/ListItem';
-import ListItemIcon                      from '@mui/material/ListItemIcon';
-import ListItemText                      from '@mui/material/ListItemText';
-import Avatar                            from '@mui/material/Avatar';
-import IconButton                        from '@mui/material/IconButton';
-import Divider                           from '@mui/material/Divider';
-import Paper                             from '@mui/material/Paper';
-import DeleteIcon                        from '@mui/icons-material/Delete';
-import AddIcon                           from '@mui/icons-material/Add';
+import Box                                            from '@mui/material/Box';
+import Tabs                                           from '@mui/material/Tabs';
+import Tab                                            from '@mui/material/Tab';
+import TextField                                      from '@mui/material/TextField';
+import Container                                      from '@mui/material/Container';
+import AdapterDateFns                                 from '@mui/lab/AdapterLuxon';
+import LocalizationProvider                           from '@mui/lab/LocalizationProvider';
+import DatePicker                                     from '@mui/lab/DatePicker';
+import Button                                         from '@mui/material/Button';
+import List                                           from '@mui/material/List';
+import ListItem                                       from '@mui/material/ListItem';
+import ListItemIcon                                   from '@mui/material/ListItemIcon';
+import ListItemText                                   from '@mui/material/ListItemText';
+import Avatar                                         from '@mui/material/Avatar';
+import IconButton                                     from '@mui/material/IconButton';
+import Divider                                        from '@mui/material/Divider';
+import Paper                                          from '@mui/material/Paper';
+import DeleteIcon                                     from '@mui/icons-material/Delete';
+import AddIcon                                        from '@mui/icons-material/Add';
 
-import RingIcon                          from '../../../assets/icons/ring.png';
-import TatamiIcon                        from '../../../assets/icons/tatami.png';
-import api                               from '../../../api-singleton';
-import { show as showCompetition }       from '../../../actions/competitions';
-import styles                            from './edit.module.css';
+import RingIcon                                       from '../../../assets/icons/ring.png';
+import TatamiIcon                                     from '../../../assets/icons/tatami.png';
+import { show as showCompetition }                    from '../../../actions/competitions';
+import styles                                         from './edit.module.css';
+import { useDispatch, useSelector }                   from 'react-redux';
 
 const uuid = crypto.randomUUID.bind(crypto);
 
@@ -53,21 +52,21 @@ TabPanel.propTypes = {
     value    : PropTypes.number.isRequired
 };
 
-CompetitionCreate.propTypes = {
-    history          : PropTypes.object.isRequired,
-    location         : PropTypes.object.isRequired,
-    competition      : PropTypes.object,
-    fetchCompetition : PropTypes.func.isRequired
+CompetitionUpdate.propTypes = {
+    history  : PropTypes.object.isRequired,
+    location : PropTypes.object.isRequired
 };
 
-function CompetitionCreate ({ history, location, competition, fetchCompetition }) {
+function CompetitionUpdate ({ history, location }) {
     const [ tab, setTab ] = useState(0);
-    const [ loading, setLoading ] = useState(false);
     const [ name, setCompetitionName ] = useState('');
     const [ description, setCompetitionDesc ] = useState('');
     const [ startDate, setStartDate ] = useState(null);
     const [ endDate, setEndDate ] = useState(null);
     const [ fightSpaces, setFightSpaces ] = useState([]);
+
+    const { competition } = useSelector(mapStateToProps);
+    const dispatch = useDispatch();
 
     const disableUpdateButton = name < 2 ||
         description < 2 ||
@@ -77,20 +76,17 @@ function CompetitionCreate ({ history, location, competition, fetchCompetition }
     const { id: competitionId } = useParams();
 
     useEffect(() => {
-        if (!competition) {
-            fetchCompetition(competitionId);
-        }
-    }, [ competitionId, fetchCompetition, competition ]);
+        if (competition) return;
+        dispatch(showCompetition(competitionId));
+    }, [ competition, competitionId, dispatch ]);
 
     useEffect(() => {
-        if (competition) {
-            setCompetitionName(competition.name);
-            setCompetitionDesc(competition.description);
-            setStartDate(competition.startDate);
-            setEndDate(competition.endDate);
-            setFightSpaces(competition.linked.fightSpace);
-            setLoading(true);
-        }
+        if (!competition) return;
+        setCompetitionName(competition.name);
+        setCompetitionDesc(competition.description);
+        setStartDate(competition.startDate);
+        setEndDate(competition.endDate);
+        setFightSpaces(competition.linked.fightSpace);
     }, [ competition ]);
 
     useEffect(() => document.title = `Settings - ${name}`, [ name ]);
@@ -153,7 +149,7 @@ function CompetitionCreate ({ history, location, competition, fetchCompetition }
                     <Tab label="Categories" />
                 </Tabs>
 
-                {loading &&
+                {competition &&
                     <SwipeableViews
                         // axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                         index={tab}
@@ -366,15 +362,9 @@ function FightSpacesTab ({ onDeleteSpace, createSpace, ...props }) {
 
 function mapStateToProps (state) {
     return {
-        competition : state.competitions.active,
+        competition : state.competitions.current,
         isLoading   : state.competitions.isLoading
     };
 }
 
-function mapDispatchToProps (dispatch) {
-    return {
-        fetchCompetition: (...args) => dispatch(showCompetition(...args))
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CompetitionCreate);
+export default (CompetitionUpdate);

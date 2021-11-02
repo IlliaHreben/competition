@@ -1,44 +1,42 @@
 import api            from '../api-singleton';
-import COMPETITIONS   from '../constants/competitions';
+import * as reducer   from '../reducers/competitions';
 
 export function list (...args) {
     return async dispatch => {
         try {
-            dispatch({
-                type: COMPETITIONS.GET_COMPETITIONS_LIST_REQUEST
-            });
+            dispatch(reducer.listRequest());
 
-            const list = await api.competitions.list(...args);
+            const data = await api.competitions.list(...args);
 
-            dispatch({
-                type    : COMPETITIONS.GET_COMPETITIONS_LIST_SUCCESS,
-                payload : list
-            });
-        } catch (err) {
-            dispatch({
-                type: COMPETITIONS.GET_COMPETITIONS_LIST_ERROR
-            });
-        }
+            dispatch(reducer.list(data));
+        } catch (err) {}
     };
+}
+
+export function clearList () {
+    return reducer.clearList();
 }
 
 export function show (...args) {
     return async dispatch => {
         try {
-            dispatch({
-                type: COMPETITIONS.GET_ACTIVE_COMPETITION_REQUEST
-            });
+            dispatch(reducer.showRequest());
 
             const { data } = await api.competitions.show(...args);
 
-            dispatch({
-                type    : COMPETITIONS.GET_ACTIVE_COMPETITION_SUCCESS,
-                payload : data
-            });
-        } catch (err) {
-            dispatch({
-                type: COMPETITIONS.GET_ACTIVE_COMPETITION_ERROR
-            });
-        }
+            dispatch(reducer.show(data));
+        } catch (err) {}
+    };
+}
+
+export function getActive (...args) {
+    return async dispatch => {
+        try {
+            dispatch(reducer.listRequest());
+
+            const { data } = await api.competitions.show(...args);
+
+            dispatch(reducer.setActive(data));
+        } catch (err) {}
     };
 }
