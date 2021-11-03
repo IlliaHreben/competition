@@ -1,46 +1,114 @@
+import {
+    useDispatch, useSelector
+} from 'react-redux';
+import {
+    Fragment,
+    useEffect,
+    useState
+} from 'react';
+import Button          from '@mui/lab/LoadingButton';
+import List            from '@mui/material/List';
+import ListItem        from '@mui/material/ListItem';
+import ListItemIcon    from '@mui/material/ListItemIcon';
+import ListItemText    from '@mui/material/ListItemText';
+import Avatar          from '@mui/material/Avatar';
+import IconButton      from '@mui/material/IconButton';
+import Divider         from '@mui/material/Divider';
+import Paper           from '@mui/material/Paper';
+import Typography      from '@mui/material/Typography';
+import DeleteIcon      from '@mui/icons-material/Delete';
+import AddIcon         from '@mui/icons-material/Add';
 
-import PropTypes    from 'prop-types';
-import { Fragment } from 'react';
+import RingIcon        from '../../../../assets/icons/ring.png';
+import TatamiIcon      from '../../../../assets/icons/tatami.png';
 
-import Button       from '@mui/material/Button';
-import List         from '@mui/material/List';
-import ListItem     from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Avatar       from '@mui/material/Avatar';
-import IconButton   from '@mui/material/IconButton';
-import Divider      from '@mui/material/Divider';
-import Paper        from '@mui/material/Paper';
-import DeleteIcon   from '@mui/icons-material/Delete';
-import AddIcon      from '@mui/icons-material/Add';
+import { bulkUpdate }  from '../../../../actions/fightSpaces';
+import { showSuccess } from '../../../../actions/errors';
+import { useParams }   from 'react-router';
 
-import RingIcon     from '../../../../assets/icons/ring.png';
-import TatamiIcon   from '../../../../assets/icons/tatami.png';
+const uuid = crypto.randomUUID.bind(crypto);
 
 FightSpacesTab.propTypes = {
-    fightSpaces: PropTypes.arrayOf(PropTypes.shape({
-        id             : PropTypes.string,
-        customId       : PropTypes.string,
-        type           : PropTypes.string,
-        orderNumber    : PropTypes.number,
-        competitionDay : PropTypes.number
-    }).isRequired),
-    days          : PropTypes.number.isRequired,
-    onDeleteSpace : PropTypes.func.isRequired,
-    createSpace   : PropTypes.func.isRequired
+    // fightSpaces: PropTypes.arrayOf(PropTypes.shape({
+    //     id             : PropTypes.string,
+    //     customId       : PropTypes.string,
+    //     type           : PropTypes.string,
+    //     orderNumber    : PropTypes.number,
+    //     competitionDay : PropTypes.number
+    // }).isRequired),
+    // days          : PropTypes.number.isRequired,
+    // onDeleteSpace : PropTypes.func.isRequired,
+    // createSpace   : PropTypes.func.isRequired
 };
 
-export default function FightSpacesTab ({ onDeleteSpace, createSpace, ...props }) {
-    const fightSpaces = Array.from({ length: props.days }).map((_, i) => {
-        return props.fightSpaces
-            .filter(fs => fs.competitionDay === i + 1)
-            .sort((a, b) => b.orderNumber - a.orderNumber)
-            .sort((a, b) => a.type < b.type ? 1 : -1);
-    });
+function mapStateToProps (state) {
+    return {
+        competition : state.competitions.current,
+        fightSpaces : state.fightSpaces.list,
+        isLoading   : state.fightSpaces.isLoading
+    };
+}
+
+export default function FightSpacesTab () {
+    const { competition, isLoading, ...store } = useSelector(mapStateToProps);
+
+    const [ fightSpaces, setFightSpaces ] = useState(store.fightSpaces);
+
+    const dispatch = useDispatch();
+
+    function formatSpaces (days, fs) {
+        return Array.from({ length: days }).map((_, i) => {
+            return fs
+                .filter(fs => fs.competitionDay === i + 1)
+                .sort((a, b) => b.orderNumber - a.orderNumber)
+                .sort((a, b) => a.type < b.type ? 1 : -1);
+        });
+    }
+
+    useEffect(() => {
+        setFightSpaces(store.fightSpaces);
+    }, [ store.fightSpaces ]);
 
     const types = {
         ring   : 'Ring',
         tatami : 'Tatami'
+    };
+
+    const onDeleteSpace = ({ id, customId }) => {
+        const spaceIndex = fightSpaces.findIndex(fs => (id && fs.id === id) || (customId && fs.customId === customId));
+        const data = [ ...fightSpaces ];
+        const [ currentSpace ] = data.splice(spaceIndex, 1);
+        setFightSpaces([
+            ...data,
+            ...id ? [ { ...currentSpace, disabled: !(currentSpace.disabled === true) } ] : []
+        ]);
+    };
+
+    const createSpace = (type, day) => {
+        const spacesNumbers = fightSpaces
+            .filter(s => s.type === type && s.competitionDay === day)
+            .map(s => s.orderNumber);
+
+        const orderNumber = spacesNumbers.length ? Math.max(...spacesNumbers) + 1 : 1;
+
+        setFightSpaces([
+            ...fightSpaces,
+            {
+                customId       : uuid(),
+                competitionDay : day,
+                type,
+                orderNumber
+            }
+        ]);
+    };
+
+    const { id: competitionId } = useParams();
+
+    const handleSave = () => {
+        const payload = fightSpaces.filter(s => !s.disabled);
+        dispatch(bulkUpdate(competitionId, payload,
+            () => dispatch(showSuccess('Fight spaces has been successfully updated.'))
+        ));
     };
 
     return (
@@ -51,7 +119,7 @@ export default function FightSpacesTab ({ onDeleteSpace, createSpace, ...props }
                     bgcolor : 'background.paper'
                 }}
             >
-                {fightSpaces.map((fs, i) => (
+                {formatSpaces(competition.days, fightSpaces).map((fs, i) => (
                     <Fragment key={i}>
                         {i > 0 && <Divider sx={{ marginTop: '2vh' }} />}
                         <ListItem
@@ -98,7 +166,19 @@ export default function FightSpacesTab ({ onDeleteSpace, createSpace, ...props }
                                 <ListItemIcon>
                                     <Avatar src={f.type === 'ring' ? RingIcon : TatamiIcon} variant="rounded" />
                                 </ListItemIcon>
-                                <ListItemText primary={`${types[f.type]} ${f.orderNumber}`} />
+                                <ListItemText
+                                    primary={`${types[f.type]} ${f.orderNumber}`}
+                                    secondary={!f.id &&
+                                        <Typography
+                                            sx={{ display: 'inline' }}
+                                            component="span"
+                                            variant="body2"
+                                            color="#29af34"
+                                        >
+                                            new
+                                        </Typography>
+                                    }
+                                />
                             </ListItem>
                         ))}
                     </Fragment>
@@ -106,10 +186,14 @@ export default function FightSpacesTab ({ onDeleteSpace, createSpace, ...props }
             </List>
             <Button
                 // disabled={disableUpdateButton}
+                sx={{ margin: '7px', width: '97%' }}
                 fullWidth
                 variant="contained"
                 size="large"
-                // onClick={onSave}
+                loading={isLoading}
+                loadingPosition="start"
+                // loadingIndicator="Loading..."
+                onClick={handleSave}
             >Save
             </Button>
         </Paper>

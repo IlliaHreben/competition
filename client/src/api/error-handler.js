@@ -1,22 +1,22 @@
 import { store }     from '../index';
 import { showError } from '../actions/errors';
 
-export default function errorsHandler (error, statusCode, url) {
-    const { errors } = error;
+export default function errorsHandler ({ error }, statusCode, url) {
+    // const { errors } = error;
     const errorsData = { isServer: true };
 
-    if (errors && errors.length) {
-        for (const item of errors) {
-            const field = item.uri.replace('#/', '');
+    // if (errors && errors.length) {
+    //     for (const item of errors) {
+    //         const field = item.uri.replace('#/', '');
 
-            if (field) {
-                errorsData[field] = item.message;
-            }
-        }
-    } else {
-        errorsData.serverError = error.message;
-        errorsData.type = error.type;
-    }
+    //         if (field) {
+    //             errorsData[field] = item.message;
+    //         }
+    //     }
+    // } else {
+    //     errorsData.serverError = error.message;
+    //     errorsData.type = error.code;
+    // }
     statusHandler(error, statusCode, url);
 
     return errorsData;
@@ -25,6 +25,10 @@ export default function errorsHandler (error, statusCode, url) {
 function statusHandler (error, statusCode, url) {
     switch (statusCode) {
     case 200:
+        console.log('='.repeat(50)); // !nocommit
+        console.log(error);
+        console.log('='.repeat(50));
+        if (error.code === 'FORMAT_ERROR') error.message = 'Format error.';
         store.dispatch(showError({
             ...error,
             message : getErrorMessage(error.message || 'server_error'),

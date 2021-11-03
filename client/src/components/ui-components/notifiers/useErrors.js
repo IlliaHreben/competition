@@ -19,12 +19,12 @@ export default function useErrors () {
     };
 
     useEffect(() => {
-        errors.forEach(({ id, message }) => {
+        errors.forEach(({ id, message, type }) => {
             if (displayedErrors.includes(id)) return;
 
             enqueueSnackbar(message, {
                 key      : id,
-                variant  : 'error',
+                variant  : type,
                 // onClose: (event, reason, id) => {
                 //     if (options.onClose) {
                 //         options.onClose(event, reason, id);

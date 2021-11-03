@@ -22,10 +22,10 @@ export function showError (error = {}, autoclose = true) {
     };
 }
 
-export function showSuccess (message, autoclose = true) {
+export function showSuccess (message) {
     return async dispatch => {
         const id = uuid();
-        dispatch(reducer.showSuccess({ id, message, refresh: false }));
+        dispatch(reducer.showSuccess({ id, message }));
     };
 }
 

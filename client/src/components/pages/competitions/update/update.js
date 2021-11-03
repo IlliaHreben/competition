@@ -9,12 +9,17 @@ import Box                           from '@mui/material/Box';
 import Tabs                          from '@mui/material/Tabs';
 import Tab                           from '@mui/material/Tab';
 
-import { show as showCompetition }   from '../../../../actions/competitions';
+import {
+    show as showCompetition,
+    update as updateCompetition
+} from '../../../../actions/competitions';
+import {
+    list as listFightSpaces
+} from '../../../../actions/fightSpaces';
+import { showSuccess }               from '../../../../actions/errors';
 import styles                        from './update.module.css';
 import GeneralSettingsTab            from './generalTab';
 import FightSpacesTab                from './fightSpacesTab';
-
-const uuid = crypto.randomUUID.bind(crypto);
 
 function TabPanel (props) {
     const { children, value, index } = props;
@@ -47,7 +52,6 @@ function CompetitionUpdate ({ history, location }) {
     const [ description, setCompetitionDesc ] = useState('');
     const [ startDate, setStartDate ] = useState(null);
     const [ endDate, setEndDate ] = useState(null);
-    const [ fightSpaces, setFightSpaces ] = useState([]);
 
     const { competition } = useSelector(mapStateToProps);
     const dispatch = useDispatch();
@@ -59,9 +63,18 @@ function CompetitionUpdate ({ history, location }) {
 
     const { id: competitionId } = useParams();
 
+    const handleCompetitionSave = () => {
+        dispatch(updateCompetition(competitionId, {
+            name,
+            description,
+            startDate,
+            endDate
+        }, () => dispatch(showSuccess('Competition was successfully changed.'))));
+    };
+
     useEffect(() => {
         dispatch(showCompetition(competitionId));
-    }, [ competition, competitionId, dispatch ]);
+    }, [ competitionId, dispatch ]);
 
     useEffect(() => {
         if (!competition) return;
@@ -69,8 +82,8 @@ function CompetitionUpdate ({ history, location }) {
         setCompetitionDesc(competition.description);
         setStartDate(competition.startDate);
         setEndDate(competition.endDate);
-        setFightSpaces(competition.linked.fightSpace);
-    }, [ competition ]);
+        dispatch(listFightSpaces(competitionId));
+    }, [ competition, competitionId, dispatch ]);
 
     useEffect(() => document.title = `Settings - ${name}`, [ name ]);
 
@@ -80,31 +93,6 @@ function CompetitionUpdate ({ history, location }) {
     }, [ location.search ]);
 
     const changeTab = (i1, i2) => history.replace(`${location.pathname}?tab=${i2 !== undefined ? i2 : i1}`);
-
-    const onDeleteSpace = ({ id, customId }) => {
-        const spaceIndex = fightSpaces.findIndex(fs => fs.id === id || (customId && fs.customId === customId));
-        const data = [ ...fightSpaces ];
-        const [ currentSpace ] = data.splice(spaceIndex, 1);
-        setFightSpaces([
-            ...data,
-            ...id ? [ { ...currentSpace, disabled: !(currentSpace.disabled === true) } ] : []
-        ]);
-    };
-
-    const createSpace = (type, day) => {
-        const orderNumber = Math.max(...fightSpaces
-            .filter(s => s.type === type && s.competitionDay === day)
-            .map(s => s.orderNumber)) + 1;
-        setFightSpaces([
-            ...fightSpaces,
-            {
-                customId       : uuid(),
-                competitionDay : day,
-                type,
-                orderNumber
-            }
-        ]);
-    };
 
     const handleChange = type => e => {
         const typeToSetStateFn = {
@@ -139,6 +127,7 @@ function CompetitionUpdate ({ history, location }) {
                     >
                         <TabPanel value={tab} index={0}>
                             <GeneralSettingsTab
+                                onSave={handleCompetitionSave}
                                 handleDateChange={handleDateChange}
                                 handleChange={handleChange}
                                 disableUpdateButton={disableUpdateButton}
@@ -151,12 +140,7 @@ function CompetitionUpdate ({ history, location }) {
                             />
                         </TabPanel>
                         <TabPanel value={tab} index={1}>
-                            <FightSpacesTab
-                                fightSpaces={fightSpaces}
-                                days={competition.days}
-                                onDeleteSpace={onDeleteSpace}
-                                createSpace={createSpace}
-                            />
+                            <FightSpacesTab/>
                         </TabPanel>
                         <TabPanel value={tab} index={2}>
                             Item Three

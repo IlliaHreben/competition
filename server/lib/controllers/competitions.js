@@ -8,6 +8,6 @@ import Update         from '../services/competitions/update';
 export default {
   create : chista.makeServiceRunner(Create, req => ({ ...req.body })),
   show   : chista.makeServiceRunner(Show, req => ({ ...req.params, ...req.query })),
-  update : chista.makeServiceRunner(Update, req => ({ ...req.body })),
+  update : chista.makeServiceRunner(Update, req => ({ ...req.params, ...req.body })),
   list   : chista.makeServiceRunner(List, req => ({ ...req.query }))
 };

@@ -89,7 +89,7 @@ export default class ApiClient {
 
         // if (serverTime) this.onServerTimeReceive(serverTime);
 
-        if (response.status !== 200 || !json.status) throw this.errorsHandler(json, response.status, url);
+        if (response.status !== 200 || !json.status) this.errorsHandler(json, response.status, url);
 
         return json;
     }

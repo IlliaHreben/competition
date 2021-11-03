@@ -6,7 +6,7 @@ class Competitions extends Base {
     }
 
     update = (id, payload) => {
-        return this.apiClient.post(`competitions/${id}`, payload);
+        return this.apiClient.patch(`competitions/${id}`, { data: payload });
     }
 
     list = async (params) => {

@@ -9,18 +9,18 @@ export default class BulkFightSpaceUpdate extends ServiceBase {
     competitionId : [ 'required', 'uuid' ],
     data          : [ 'required', {
       list_of_objects: [ {
-        id          : [ 'uuid' ],
-        day         : [ 'required', 'positive_integer' ],
-        type        : [ 'required', 'string', { max_length: 5000 } ],
-        orderNumber : [ 'required', 'positive_integer' ]
+        id             : [ 'uuid' ],
+        competitionDay : [ 'required', 'positive_integer' ],
+        type           : [ 'required', 'string', { max_length: 5000 } ],
+        orderNumber    : [ 'required', 'positive_integer' ]
       } ]
     } ]
   };
 
-  async execute ({ id, data }) {
-    const competition = await Competition.findById(id);
+  async execute ({ competitionId, data }) {
+    const competition = await Competition.findById(competitionId);
 
-    if (!competition) throw new ServiceError('NOT_FOUND', { id });
+    if (!competition) throw new ServiceError('NOT_FOUND', { id: competitionId });
 
     const spaces = await competition.recalculateFightSpaces(data);
 

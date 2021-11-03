@@ -29,14 +29,16 @@ export function show (...args) {
     };
 }
 
-export function update (...args) {
+export function update (id, payload, onSuccess) {
     return async dispatch => {
         try {
             dispatch(reducer.updateRequest());
 
-            const { data } = await api.competitions.update(...args);
+            const { data } = await api.competitions.update(id, payload);
 
             dispatch(reducer.updateCompetition(data));
+
+            onSuccess?.();
         } catch (err) {}
     };
 }

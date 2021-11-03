@@ -9,9 +9,9 @@ import bulkDelete            from '../services/categories/bulkDelete';
 
 export default {
   show                : chista.makeServiceRunner(show, req => ({ id: req.params.id, ...req.query })),
-  list                : chista.makeServiceRunner(list, req => req.query),
-  calculateFights     : chista.makeServiceRunner(calculateFights, req => req.query),
-  bulkCalculateFights : chista.makeServiceRunner(bulkCalculateFights, req => req.query),
+  list                : chista.makeServiceRunner(list, req => ({ ...req.query })),
+  calculateFights     : chista.makeServiceRunner(calculateFights, req => ({ ...req.query })),
+  bulkCalculateFights : chista.makeServiceRunner(bulkCalculateFights, req => ({ ...req.query })),
   bulkCreate          : chista.makeServiceRunner(bulkCreate, req => ({ ...req.query })),
   bulkDelete          : chista.makeServiceRunner(bulkDelete, req => ({ ...req.query }))
 };

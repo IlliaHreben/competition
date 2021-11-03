@@ -15,6 +15,9 @@ router.post('/cards/bulk', controllers.cards.bulkCreate);
 router.get('/competitions', controllers.competitions.list);
 router.get('/competitions/:id', controllers.competitions.show);
 router.post('/competitions', controllers.competitions.create);
-router.patch('/competitions', controllers.competitions.update);
+router.patch('/competitions/:id', controllers.competitions.update);
+
+router.get('/fight-spaces', controllers.fightSpaces.list);
+router.patch('/fight-spaces/bulk', controllers.fightSpaces.bulkUpdate);
 
 export default router;
