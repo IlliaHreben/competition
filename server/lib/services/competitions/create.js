@@ -7,8 +7,8 @@ export default class CompetitionCreate extends ServiceBase {
     static validationRules = {
       name         : [ 'required', 'string', { max_length: 1000 } ],
       description  : [ 'required', 'string', { max_length: 5000 } ],
-      startDate    : [ 'required', 'iso_date' ],
-      endDate      : [ 'required', 'iso_date' ],
+      startDate    : [ 'required', 'iso_date', { date_before: 'endDate' } ],
+      endDate      : [ 'required', 'iso_date', { date_after: 'startDate' } ],
       ringsCount   : [ 'required', 'positive_integer' ],
       tatamisCount : [ 'required', 'positive_integer' ]
     };

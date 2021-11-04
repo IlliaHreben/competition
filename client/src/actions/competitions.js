@@ -9,7 +9,9 @@ export function list (...args) {
             const data = await api.competitions.list(...args);
 
             dispatch(reducer.list(data));
-        } catch (err) {}
+        } catch (errData) {
+            dispatch(reducer.listRequestError(errData));
+        }
     };
 }
 
@@ -25,7 +27,9 @@ export function show (...args) {
             const { data } = await api.competitions.show(...args);
 
             dispatch(reducer.show(data));
-        } catch (err) {}
+        } catch (errData) {
+            dispatch(reducer.showRequestError(errData));
+        }
     };
 }
 
@@ -39,7 +43,9 @@ export function update (id, payload, onSuccess) {
             dispatch(reducer.updateCompetition(data));
 
             onSuccess?.();
-        } catch (err) {}
+        } catch (errData) {
+            dispatch(reducer.updateRequestError(errData));
+        }
     };
 }
 

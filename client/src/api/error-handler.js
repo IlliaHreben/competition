@@ -2,37 +2,34 @@ import { store }     from '../index';
 import { showError } from '../actions/errors';
 
 export default function errorsHandler ({ error }, statusCode, url) {
-    // const { errors } = error;
+    const { fields } = error;
     const errorsData = { isServer: true };
 
-    // if (errors && errors.length) {
-    //     for (const item of errors) {
-    //         const field = item.uri.replace('#/', '');
+    if (fields) {
+        for (const key in fields) {
+            const field = key.replace('data/', '');
 
-    //         if (field) {
-    //             errorsData[field] = item.message;
-    //         }
-    //     }
-    // } else {
-    //     errorsData.serverError = error.message;
-    //     errorsData.type = error.code;
-    // }
+            if (field) {
+                errorsData[field] = getMessageByType(fields[key]);
+            }
+        }
+    } else {
+        errorsData.serverError = error.message;
+        errorsData.type = error.code;
+    }
+
     statusHandler(error, statusCode, url);
-
     return errorsData;
 }
 
 function statusHandler (error, statusCode, url) {
     switch (statusCode) {
     case 200:
-        console.log('='.repeat(50)); // !nocommit
-        console.log(error);
-        console.log('='.repeat(50));
-        if (error.code === 'FORMAT_ERROR') error.message = 'Format error.';
+        console.log('Api error:', error);
+        error.message = getMessageByType(error.code);
         store.dispatch(showError({
             ...error,
-            message : getErrorMessage(error.message || 'server_error'),
-            proto   : 'rest',
+            message : error.message,
             request : url
         }));
         break;
@@ -40,8 +37,7 @@ function statusHandler (error, statusCode, url) {
     case 500:
     case 502:
         store.dispatch(showError({
-            message : getErrorMessage(error.message || 'server_error'),
-            proto   : 'rest',
+            message : error.message,
             request : url
         }));
         break;
@@ -69,7 +65,6 @@ function statusHandler (error, statusCode, url) {
     default:
         store.dispatch(showError({
             message : getErrorMessage('unknown_error'),
-            proto   : 'rest',
             request : url
         }));
     }
@@ -90,4 +85,14 @@ function getErrorMessage (error) {
     default:
         return error;
     }
+}
+
+function getMessageByType (type) {
+    const messageByType = {
+        DATE_TOO_HIGH : 'Date is too high.',
+        DATE_TOO_LOW  : 'Date is too low.',
+        FORMAT_ERROR  : 'Format error.'
+    };
+
+    return messageByType[type] || 'Server error.';
 }

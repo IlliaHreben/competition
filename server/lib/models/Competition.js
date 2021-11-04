@@ -38,20 +38,17 @@ export default class Competition extends Base {
 
     const competition = await this.create(data);
 
+    const generateSpaces = (count, type) => {
+      return Array.from({ length: competition.days }).flatMap(
+        (_, i) => Array.from({ length: count }).map((_, k) => ({ type, competitionDay: i + 1, orderNumber: k + 1 }))
+      );
+    };
+
     const fightSpacesPromise = await FightSpace.bulkCreate(
       [
-        ...Array.from({ length: ringsCount }).flatMap(
-          () => Array.from({ length: competition.days }).map((_, i) => ({ type: 'ring', competitionDay: i + 1 }))
-        ),
-        ...Array.from({ length: tatamisCount }).flatMap(
-          () => Array.from({ length: competition.days }).map((_, i) => ({ type: 'tatami', competitionDay: i + 1 }))
-        )
-      ].map(({ type, competitionDay }, i) => ({
-        type,
-        orderNumber   : i + 1,
-        competitionDay,
-        competitionId : competition.id
-      })),
+        ...generateSpaces(ringsCount, 'ring'),
+        ...generateSpaces(tatamisCount, 'tatami')
+      ].map((space) => ({ ...space, competitionId: competition.id })),
       { returning: true }
     );
 

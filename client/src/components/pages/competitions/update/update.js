@@ -10,13 +10,13 @@ import Tabs                          from '@mui/material/Tabs';
 import Tab                           from '@mui/material/Tab';
 
 import {
-    show as showCompetition,
-    update as updateCompetition
+    show as showCompetition
+    // update as updateCompetition
 } from '../../../../actions/competitions';
 import {
     list as listFightSpaces
 } from '../../../../actions/fightSpaces';
-import { showSuccess }               from '../../../../actions/errors';
+// import { showSuccess }               from '../../../../actions/errors';
 import styles                        from './update.module.css';
 import GeneralSettingsTab            from './generalTab';
 import FightSpacesTab                from './fightSpacesTab';
@@ -48,29 +48,10 @@ CompetitionUpdate.propTypes = {
 
 function CompetitionUpdate ({ history, location }) {
     const [ tab, setTab ] = useState(0);
-    const [ name, setCompetitionName ] = useState('');
-    const [ description, setCompetitionDesc ] = useState('');
-    const [ startDate, setStartDate ] = useState(null);
-    const [ endDate, setEndDate ] = useState(null);
-
     const { competition } = useSelector(mapStateToProps);
     const dispatch = useDispatch();
 
-    const disableUpdateButton = name < 2 ||
-        description < 2 ||
-        !startDate ||
-        !endDate;
-
     const { id: competitionId } = useParams();
-
-    const handleCompetitionSave = () => {
-        dispatch(updateCompetition(competitionId, {
-            name,
-            description,
-            startDate,
-            endDate
-        }, () => dispatch(showSuccess('Competition was successfully changed.'))));
-    };
 
     useEffect(() => {
         dispatch(showCompetition(competitionId));
@@ -78,37 +59,17 @@ function CompetitionUpdate ({ history, location }) {
 
     useEffect(() => {
         if (!competition) return;
-        setCompetitionName(competition.name);
-        setCompetitionDesc(competition.description);
-        setStartDate(competition.startDate);
-        setEndDate(competition.endDate);
-        dispatch(listFightSpaces(competitionId));
-    }, [ competition, competitionId, dispatch ]);
+        dispatch(listFightSpaces(competition.id));
+    }, [ competition, dispatch ]);
 
-    useEffect(() => document.title = `Settings - ${name}`, [ name ]);
+    useEffect(() => document.title = `Settings - ${competition ? competition.name : ''}`, [ competition ]);
 
     useEffect(() => {
         const queryTab = +(new URLSearchParams(location.search).get('tab'));
         setTab(queryTab || 0);
     }, [ location.search ]);
 
-    const changeTab = (i1, i2) => history.replace(`${location.pathname}?tab=${i2 !== undefined ? i2 : i1}`);
-
-    const handleChange = type => e => {
-        const typeToSetStateFn = {
-            name        : setCompetitionName,
-            description : setCompetitionDesc
-        };
-        typeToSetStateFn[type](e.target.value);
-    };
-
-    const handleDateChange = type => value => {
-        const typeToSetStateFn = {
-            startDate : setStartDate,
-            endDate   : setEndDate
-        };
-        typeToSetStateFn[type](value);
-    };
+    const changeTab = (i1, i2) => history.replace(`${location.pathname}?tab=${i2 ?? i1}`);
 
     return (
         <div className={styles.page}>
@@ -127,16 +88,7 @@ function CompetitionUpdate ({ history, location }) {
                     >
                         <TabPanel value={tab} index={0}>
                             <GeneralSettingsTab
-                                onSave={handleCompetitionSave}
-                                handleDateChange={handleDateChange}
-                                handleChange={handleChange}
-                                disableUpdateButton={disableUpdateButton}
-                                data={{
-                                    name,
-                                    description,
-                                    startDate,
-                                    endDate
-                                }}
+                                competition={competition}
                             />
                         </TabPanel>
                         <TabPanel value={tab} index={1}>

@@ -9,10 +9,10 @@ export default class CompetitionUpdate extends ServiceBase {
     id   : [ 'required', 'uuid' ],
     data : [ 'required', {
       nested_object: {
-        name        : [ 'string', { max_length: 1000 } ],
-        description : [ 'string', { max_length: 5000 } ],
-        startDate   : [ 'iso_date' ],
-        endDate     : [ 'iso_date' ]
+        name        : [ 'required', 'string', { max_length: 1000 } ],
+        description : [ 'required', 'string', { max_length: 5000 } ],
+        startDate   : [ 'required', 'iso_date', { date_before: 'endDate' } ],
+        endDate     : [ 'required', 'iso_date', { date_after: 'startDate' } ]
       }
     } ]
   };

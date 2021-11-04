@@ -167,7 +167,7 @@ export default function FightSpacesTab () {
                                     <Avatar src={f.type === 'ring' ? RingIcon : TatamiIcon} variant="rounded" />
                                 </ListItemIcon>
                                 <ListItemText
-                                    primary={`${types[f.type]} ${f.orderNumber}`}
+                                    primary={`${types[f.type]} ${f.type === 'ring' ? String.fromCharCode(64 + f.orderNumber) : f.orderNumber}`}
                                     secondary={!f.id &&
                                         <Typography
                                             sx={{ display: 'inline' }}
@@ -191,7 +191,7 @@ export default function FightSpacesTab () {
                 variant="contained"
                 size="large"
                 loading={isLoading}
-                loadingPosition="start"
+                // loadingPosition="start"
                 // loadingIndicator="Loading..."
                 onClick={handleSave}
             >Save

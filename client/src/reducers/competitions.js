@@ -5,6 +5,7 @@ const initialState = {
     listMeta  : {},
     active    : null,
     current   : null,
+    errors    : {},
     isLoading : false
 };
 
@@ -17,23 +18,35 @@ const competitions = createSlice({
             state.listMeta = action.payload.meta;
             state.isLoading = false;
         },
-        listRequest       : state => { state.isLoading = true; },
-        clearList         : state => { state.list = []; state.listMeta = {}; },
-        show              : (state, action) => { state.current = action.payload; },
-        setActive         : (state, action) => { state.active = action.payload; },
-        showRequest       : state => { state.isLoading = true; },
-        updateRequest     : state => { state.isLoading = true; },
-        updateCompetition : (state, action) => { state.current = action.payload; }
+        listRequest      : state => { state.isLoading = true; },
+        listRequestError : (state, action) => {
+            state.isLoading = false;
+            state.errors = action.payload;
+        },
+        clearList        : state => { state.list = []; state.listMeta = {}; },
+        show             : (state, action) => { state.current = action.payload; },
+        setActive        : (state, action) => { state.active = action.payload; },
+        showRequest      : state => { state.isLoading = true; },
+        showRequestError : (state, action) => {
+            state.isLoading = false;
+            state.errors = action.payload;
+        },
+        updateRequest      : state => { state.isLoading = true; },
+        updateCompetition  : (state, action) => { state.current = action.payload; },
+        updateRequestError : (state, action) => {
+            state.isLoading = false;
+            state.errors = action.payload;
+        }
     }
 });
 
 const { actions, reducer } = competitions;
 
 export const {
-    list, listRequest, clearList,
-    show, showRequest,
+    list, listRequest, clearList, listRequestError,
+    show, showRequest, showRequestError,
     setActive,
-    updateRequest, updateCompetition
+    updateRequest, updateCompetition, updateRequestError
 } = actions;
 
 export default reducer;
