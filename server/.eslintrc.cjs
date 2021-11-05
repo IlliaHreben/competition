@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-commonjs
 module.exports = {
-  env: {
+  parser : '@babel/eslint-parser',
+  env    : {
     // es6      : true,
     commonjs : true,
     es2021   : true

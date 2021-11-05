@@ -13,5 +13,5 @@ export default {
   calculateFights     : chista.makeServiceRunner(calculateFights, req => ({ ...req.query })),
   bulkCalculateFights : chista.makeServiceRunner(bulkCalculateFights, req => ({ ...req.query })),
   bulkCreate          : chista.makeServiceRunner(bulkCreate, req => ({ ...req.query })),
-  bulkDelete          : chista.makeServiceRunner(bulkDelete, req => ({ ...req.query }))
+  bulkDelete          : chista.makeServiceRunner(bulkDelete, req => ({ ...req.body }))
 };

@@ -17,7 +17,7 @@ module.exports = {
         }
     },
     rules: {
-    // 'react/react-in-jsx-scope'              : 0,
+        // 'react/react-in-jsx-scope'              : 0,
         'no-unused-vars'                        : 1,
         indent                                  : [ 'warn', 4 ],
         semi                                    : [ 'warn', 'always' ],
@@ -68,5 +68,12 @@ module.exports = {
         'react/jsx-closing-tag-location'     : 2,
         'react/jsx-indent'                   : 1,
         'react/jsx-indent-props'             : 1
+    },
+    settings: {
+        linkComponents: [
+            // Components used as alternatives to <a> for linking, eg. <Link to={ url } />
+            { name: 'Link', linkAttribute: 'to' },
+            { name: 'NavLink', linkAttribute: 'to' }
+        ]
     }
 };

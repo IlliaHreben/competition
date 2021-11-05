@@ -93,6 +93,23 @@ const defaultRules = {
       if (dateBefore > currentDate) return 'DATE_TOO_LOW';
     };
   },
+  required_if_not_present (query) {
+    if (arguments.length > 1) {
+      if (!query) {
+        throw new Error(
+          'LIVR: the target key of the "required_if_not_present" rule is missed'
+        );
+      }
+    }
+
+    return (value, params) => {
+      // if (isNoValue(value)) return;
+
+      const valueToCheck = JSONPointer(params, query);
+
+      if (isNoValue(valueToCheck) && isNoValue(value)) return 'REQUIRED';
+    };
+  },
   ...extraRules
 };
 

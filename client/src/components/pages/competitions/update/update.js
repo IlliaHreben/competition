@@ -16,10 +16,14 @@ import {
 import {
     list as listFightSpaces
 } from '../../../../actions/fightSpaces';
+import {
+    list as listCategories
+} from '../../../../actions/categories';
 // import { showSuccess }               from '../../../../actions/errors';
 import styles                        from './update.module.css';
 import GeneralSettingsTab            from './generalTab';
 import FightSpacesTab                from './fightSpacesTab';
+import CategoriesTab                 from './categoriesTab';
 
 function TabPanel (props) {
     const { children, value, index } = props;
@@ -60,6 +64,7 @@ function CompetitionUpdate ({ history, location }) {
     useEffect(() => {
         if (!competition) return;
         dispatch(listFightSpaces(competition.id));
+        dispatch(listCategories({ competitionId: competition.id, limit: 100000 }));
     }, [ competition, dispatch ]);
 
     useEffect(() => document.title = `Settings - ${competition ? competition.name : ''}`, [ competition ]);
@@ -95,7 +100,7 @@ function CompetitionUpdate ({ history, location }) {
                             <FightSpacesTab/>
                         </TabPanel>
                         <TabPanel value={tab} index={2}>
-                            Item Three
+                            <CategoriesTab />
                         </TabPanel>
                     </SwipeableViews>
                 }

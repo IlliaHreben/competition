@@ -1,9 +1,9 @@
 /* eslint import/imports-first:0  import/newline-after-import:0 */
 
-import express                from 'express';
-import { app as appConfig }   from './config.js';
-import middlewares            from './lib/middlewares.js';
-import router                 from './lib/router.js';
+import express              from 'express';
+import { app as appConfig } from './config.js';
+import middlewares          from './lib/middlewares.js';
+import router               from './lib/router.js';
 import './lib/sequelize';
 
 import './lib/registerValidationRules';

@@ -7,7 +7,7 @@ class Categories extends Base {
     //     return this.apiClient.post(`user/orders/${type}`, rest);
     // }
 
-    getList = async (params) => {
+    list = async (params) => {
         return this.apiClient.get('categories', params);
     }
 
@@ -17,6 +17,10 @@ class Categories extends Base {
 
     calculateFights = async (params) => {
         return this.apiClient.get('categories/calculate-fights', params);
+    }
+
+    bulkDelete = async (params) => {
+        return this.apiClient.delete('categories/bulk', params);
     }
 }
 
