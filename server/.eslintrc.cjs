@@ -1,17 +1,12 @@
-/* eslint-disable import/no-commonjs */
+// eslint-disable-next-line import/no-commonjs
 module.exports = {
-  parser : '@babel/eslint-parser',
-  env    : {
+  env: {
     // es6      : true,
     commonjs : true,
     es2021   : true
   },
   extends: [
-    'standard',
-    'plugin:import/recommended'
-  ],
-  plugins: [
-    'import'
+    'standard'
   ],
   parserOptions: {
     ecmaVersion       : 'latest',
@@ -56,12 +51,5 @@ module.exports = {
     'object-curly-spacing'     : [ 'error', 'always' ],
     'array-bracket-spacing'    : [ 'error', 'always' ],
     'node/no-callback-literal' : 0
-  },
-  settings: {
-    linkComponents: [
-      // Components used as alternatives to <a> for linking, eg. <Link to={ url } />
-      { name: 'Link', linkAttribute: 'to' },
-      { name: 'NavLink', linkAttribute: 'to' }
-    ]
   }
 };
