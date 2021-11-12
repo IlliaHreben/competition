@@ -91,8 +91,9 @@ function getMessageByType (type) {
     const messageByType = {
         DATE_TOO_HIGH : 'Date is too high.',
         DATE_TOO_LOW  : 'Date is too low.',
-        FORMAT_ERROR  : 'Format error.'
+        FORMAT_ERROR  : 'Format error.',
+        REQUIRED      : 'This field is required.'
     };
 
-    return messageByType[type] || 'Server error.';
+    return messageByType[type] || type;
 }

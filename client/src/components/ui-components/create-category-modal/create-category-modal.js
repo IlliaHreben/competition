@@ -8,8 +8,8 @@ import {
 import ListFields                      from '../list-fields';
 import { useState }                    from 'react';
 import { omit }                        from 'lodash';
-import { useDispatch }                 from 'react-redux';
-import { bulkCreate }                  from '../../../actions/categories';
+import { useDispatch, useSelector }    from 'react-redux';
+import { bulkCreate, deleteError }     from '../../../actions/categories';
 import { showSuccess }                 from '../../../actions/errors';
 
 CreateCategory.propTypes = {
@@ -18,7 +18,14 @@ CreateCategory.propTypes = {
     competitionId : PropTypes.string.isRequired
 };
 
+function mapStateToProps (state) {
+    return {
+        errors: state.categories.errors
+    };
+}
+
 export default function CreateCategory ({ open, handleClose, competitionId }) {
+    const state = useSelector(mapStateToProps);
     const [ name, setName ] = useState('');
     const [ type, setType ] = useState('full');
     const [ menSubCategories, setMenSubCategories ] = useState([ { from: '', to: '', nested: [] } ]);
@@ -29,9 +36,13 @@ export default function CreateCategory ({ open, handleClose, competitionId }) {
     const handleChange = (e, field) => {
         const value = e.target.value;
         const fieldNameToState = {
-            name : setName,
-            type : setType
+            section : setName,
+            type    : setType
         };
+        console.log('='.repeat(50)); // !nocommit
+        console.log(state.errors);
+        console.log('='.repeat(50));
+        if (state.errors[field]) dispatch(deleteError(field));
         checkOnErrors(value, field);
         fieldNameToState[field](value);
     };
@@ -74,8 +85,8 @@ export default function CreateCategory ({ open, handleClose, competitionId }) {
     };
 
     const fieldToCheckFn = {
-        name: name => {
-            if (name.length < 2) {
+        section: section => {
+            if (section.length < 2) {
                 return 'Name must be at least 2 characters.';
             }
         }
@@ -94,9 +105,9 @@ export default function CreateCategory ({ open, handleClose, competitionId }) {
                 id="category-name-input"
                 label="Category name"
                 value={name}
-                onChange={e => handleChange(e, 'name')}
-                error={!!errors.name}
-                helperText={errors.name || ' '}
+                onChange={e => handleChange(e, 'section')}
+                error={!!(errors.section || state.errors.section)}
+                helperText={errors.section || state.errors.section || ' '}
                 sx={{ marginTop: '10px', marginBottom: '10px' }}
             >
             </TextField>

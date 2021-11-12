@@ -60,7 +60,7 @@ function mapStateToProps (state) {
     };
 }
 
-export default function FightSpacesTab () {
+export default function CategoriesTab () {
     const { categories } = useSelector(mapStateToProps);
     const [ selected, setSelected ] = useState([]);
     const [ openModal, setStatusModal ] = useState(false);
@@ -157,7 +157,7 @@ export default function FightSpacesTab () {
                 >Create
                 </Button>
                 <Tooltip title="Delete" disabled={!selected.length}>
-                    <IconButton onClick={handleDeleteItems}>
+                    <IconButton onClick={handleDeleteItems} component={!selected.length ? 'div' : undefined}>
                         <DeleteIcon/>
                     </IconButton>
                 </Tooltip>

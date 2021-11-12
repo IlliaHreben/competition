@@ -11,6 +11,12 @@ const categories = createSlice({
     name     : 'categories',
     initialState,
     reducers : {
+        deleteError: (state, action) => {
+            console.log('='.repeat(50)); // !nocommit
+            console.log(action);
+            console.log('='.repeat(50));
+            delete state.errors[action.payload];
+        },
         list: (state, action) => {
             state.list = action.payload.data;
             state.listMeta = action.payload.meta;
@@ -48,6 +54,7 @@ const categories = createSlice({
 const { actions, reducer } = categories;
 
 export const {
+    deleteError,
     list, listRequest, clearList, listRequestError,
     bulkDelete, bulkDeleteRequest, bulkDeleteRequestError,
     bulkCreate, bulkCreateRequest, bulkCreateRequestError

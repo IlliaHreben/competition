@@ -15,6 +15,10 @@ export function list (...args) {
     };
 }
 
+export function deleteError (field) {
+    return reducer.deleteError(field);
+}
+
 // export function clearList () {
 //     return reducer.clearList();
 // }
