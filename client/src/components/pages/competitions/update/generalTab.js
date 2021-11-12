@@ -47,11 +47,11 @@ export default function GeneralSettingsTab (props) {
         name        : e => e.target.value.length < 3 && setErrors({ ...errors, name: 'Name is too short.' }),
         description : e => e.target.value.length < 3 && setErrors({ ...errors, description: 'Description is too short.' }),
         startDate   : value => {
-            if (new Date(value) < new Date(endDate)) return;
+            if (new Date(value) <= new Date(endDate)) return;
             setErrors({ ...errors, startDate: 'Must be earlier than end date.' });
         },
         endDate: value => {
-            if (new Date(value) < new Date(endDate)) return;
+            if (new Date(value) >= new Date(endDate)) return;
             setErrors({ ...errors, endDate: 'Must be later than start date.' });
         }
     };

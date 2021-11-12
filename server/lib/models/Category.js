@@ -153,13 +153,23 @@ Category.init({
   weightFrom : { type: DT.FLOAT, allowNull: false },
   weightTo   : { type: DT.FLOAT, allowNull: false },
   weightName : { type: DT.STRING, allowNull: false },
-  group      : { type: DT.ENUM([ 'A', 'B' ]), allowNull: true },
+  group      : {
+    type      : DT.ENUM([ 'A', 'B' ]),
+    allowNull : true,
+    validate  : {
+      groupByType () {
+        if ((this.type === 'full') && !this.group) {
+          throw new Error('Full category must have group.');
+        }
+      }
+    }
+  },
 
   competitionId: { type: DT.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Competitions', key: 'id' }, allowNull: false },
 
-  createdAt : { type: DT.DATE, allowNull: false },
+  createdAt : { type: DT.DATE, allowNull: false, defaultValue: new Date() },
   deletedAt : { type: DT.DATE, allowNull: true },
-  updatedAt : { type: DT.DATE, allowNull: false }
+  updatedAt : { type: DT.DATE, allowNull: false, defaultValue: new Date() }
 }, {
   sequelize,
   paranoid: true

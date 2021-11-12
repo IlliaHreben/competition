@@ -21,13 +21,24 @@ const categories = createSlice({
             state.isLoading = false;
             state.errors = action.payload;
         },
-        clearList  : state => { state.list = []; state.listMeta = {}; },
-        bulkDelete : (state, action) => {
+        clearList: state => { state.list = []; state.listMeta = {}; },
+
+        bulkDelete: (state, action) => {
             state.list = state.list.filter(({ id }) => !action.payload.includes(id));
             state.isLoading = false;
         },
         bulkDeleteRequest      : state => { state.isLoading = true; },
         bulkDeleteRequestError : (state, action) => {
+            state.isLoading = false;
+            state.errors = action.payload;
+        },
+
+        bulkCreate: (state, action) => {
+            state.list.push(...action.payload);
+            state.isLoading = false;
+        },
+        bulkCreateRequest      : state => { state.isLoading = true; },
+        bulkCreateRequestError : (state, action) => {
             state.isLoading = false;
             state.errors = action.payload;
         }
@@ -38,7 +49,8 @@ const { actions, reducer } = categories;
 
 export const {
     list, listRequest, clearList, listRequestError,
-    bulkDelete, bulkDeleteRequest, bulkDeleteRequestError
+    bulkDelete, bulkDeleteRequest, bulkDeleteRequestError,
+    bulkCreate, bulkCreateRequest, bulkCreateRequestError
 } = actions;
 
 export default reducer;

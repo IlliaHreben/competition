@@ -17,10 +17,11 @@ export default function FightTrees () {
 
     async function fetchAndConcat () {
         const competitionId = 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb';
-        const { data } = await api.categories.getList({
+        const { data } = await api.categories.list({
             competitionId,
             offset,
-            limit
+            limit,
+            include: 'cards'
         });
 
         if (data.length < limit) return setHasMore(false);
@@ -36,10 +37,11 @@ export default function FightTrees () {
         // setGraphics([ data ]);
         // setHasMore(false);
             const competitionId = 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb';
-            const { data } = await api.categories.getList({
+            const { data } = await api.categories.list({
                 competitionId,
                 offset,
-                limit
+                limit,
+                include: 'cards'
             });
 
             if (data.length < limit) return setHasMore(false);

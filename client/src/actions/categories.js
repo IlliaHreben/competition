@@ -48,6 +48,21 @@ export function bulkDelete (payload, onSuccess) {
     };
 }
 
+export function bulkCreate (payload, onSuccess) {
+    return async dispatch => {
+        try {
+            dispatch(reducer.bulkCreateRequest());
+
+            const { data } = await api.categories.bulkCreate(payload);
+            dispatch(reducer.bulkCreate(data));
+
+            onSuccess?.();
+        } catch (errData) {
+            dispatch(reducer.bulkCreateRequestError(errData));
+        }
+    };
+}
+
 // export function getActive (...args) {
 //     return async dispatch => {
 //         try {

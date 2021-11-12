@@ -8,6 +8,17 @@ const errors = {
       main    : 'NOT_FOUND',
       _reason : `Entity with id ${data.id} not found.`
     }
+  }),
+  AggregateError: data => ({
+    code   : 'VALIDATION_ERROR',
+    fields : {
+      main: 'VALIDATION_ERROR',
+      ...data.errors.reduce((acc, error) => {
+        const nestedErrors = error.errors.errors
+          .reduce((acc2, error2) => ({ ...acc2, [error2.path]: error2.message }), {});
+        return { ...acc, ...nestedErrors };
+      }, {})
+    }
   })
 };
 

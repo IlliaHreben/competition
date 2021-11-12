@@ -1,8 +1,4 @@
 /* eslint-disable import/no-commonjs */
-const sections = [
-  'full-contact', 'low-kick', 'low-kick-light', 'K-1-light',
-  'K-1', 'light-contact', 'semi-contact', 'point-fighting'
-];
 
 const up = async (queryInterface, Sequelize) => {
   const transaction = await queryInterface.sequelize.transaction();
@@ -15,7 +11,7 @@ const up = async (queryInterface, Sequelize) => {
       realWeight : { type: Sequelize.FLOAT, allowNull: false },
       group      : { type: Sequelize.ENUM([ 'A', 'B' ]), allowNull: true },
       city       : { type: Sequelize.STRING, allowNull: false },
-      section    : { type: Sequelize.ENUM(sections), allowNull: false },
+      section    : { type: Sequelize.STRING, allowNull: false },
       birthDate  : { type: Sequelize.DATE, allowNull: false },
 
       fighterId       : { type: Sequelize.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Fighters', key: 'id' }, allowNull: false },
@@ -43,7 +39,6 @@ const down = async (queryInterface) => {
 
   try {
     await queryInterface.dropTable('Cards', { transaction });
-    await queryInterface.sequelize.query('DROP TYPE "enum_Cards_section"', { transaction });
     await queryInterface.sequelize.query('DROP TYPE "enum_Cards_group"', { transaction });
 
     await transaction.commit();

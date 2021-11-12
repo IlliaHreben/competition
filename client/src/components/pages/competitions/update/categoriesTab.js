@@ -3,21 +3,12 @@ import PropTypes                       from 'prop-types';
 import { useState }                    from 'react';
 import { useParams }                   from 'react-router';
 import without                         from 'lodash/without';
-import Checkbox                        from '@mui/material/Checkbox';
-import Paper                           from '@mui/material/Paper';
-import Tooltip                         from '@mui/material/Tooltip';
-import Toolbar                         from '@mui/material/Toolbar';
-import Typography                      from '@mui/material/Typography';
-import IconButton                      from '@mui/material/IconButton';
-import Table                           from '@mui/material/Table';
-import TableBody                       from '@mui/material/TableBody';
-import TableCell                       from '@mui/material/TableCell';
-import TableContainer                  from '@mui/material/TableContainer';
-import TableHead                       from '@mui/material/TableHead';
-import TableRow                        from '@mui/material/TableRow';
-import Accordion                       from '@mui/material/Accordion';
-import AccordionSummary                from '@mui/material/AccordionSummary';
-import AccordionDetails                from '@mui/material/AccordionDetails';
+import {
+    Checkbox, Paper, Tooltip, Toolbar, Typography,
+    IconButton, Table, TableBody, TableCell, TableContainer,
+    TableHead, TableRow, Accordion, AccordionSummary,
+    AccordionDetails, Button
+} from '@mui/material';
 import ExpandMoreIcon                  from '@mui/icons-material/ExpandMore';
 import DeleteIcon                      from '@mui/icons-material/Delete';
 
@@ -25,6 +16,7 @@ import { bulkDelete }                  from '../../../../actions/categories';
 import { showSuccess }                 from '../../../../actions/errors';
 
 import Modal                           from '../../../ui-components/modal';
+import CreateModal                     from '../../../ui-components/create-category-modal';
 
 const aggregateBy = (array, by) => {
     return array.reduce((acc, c) => {
@@ -72,11 +64,16 @@ export default function FightSpacesTab () {
     const { categories } = useSelector(mapStateToProps);
     const [ selected, setSelected ] = useState([]);
     const [ openModal, setStatusModal ] = useState(false);
+    const [ openCreateModal, setStatusCreateModal ] = useState(false);
     const accordionData = createAccordionData(categories);
 
     const { id: competitionId } = useParams();
 
     const dispatch = useDispatch();
+
+    const handleCreateCategory = () => {
+        setStatusCreateModal(true);
+    };
 
     const handleClick = (e, section) => {
         setSelected(e.target.checked
@@ -116,20 +113,25 @@ export default function FightSpacesTab () {
     // };
     return (
         <Paper sx={{ maxWidth: '500px', width: '100%' }}>
+            <CreateModal
+                open={openCreateModal}
+                handleClose={() => setStatusCreateModal(false)}
+                competitionId={competitionId}
+            />
             <Modal
                 open={openModal}
                 handleConfirm={onConfirmModal}
-                text="You cannot revert this."
-                handleCancel={() => setStatusModal(false)}
-            >
+                handleClose={() => setStatusModal(false)}
+            >You cannot revert this.
             </Modal>
-            <Toolbar sx={{ pl: { sm: 2 } }} >
+            <Toolbar sx={{ pl: { sm: 2 }, pr: { sm: 1 } }} >
                 <Checkbox
                     color="primary"
                     indeterminate={selected.length > 0 && selected.length < accordionData.length}
                     checked={accordionData.length > 0 && selected.length === accordionData.length}
                     onChange={onSelectAllClick}
                     inputProps={{ 'aria-label': 'select all desserts' }}
+                    sx={{ marginRight: '10px' }}
                 />
                 {selected.length
                     ? (
@@ -150,8 +152,12 @@ export default function FightSpacesTab () {
                         </Typography>
                     )}
 
-                <Tooltip title="Delete">
-                    <IconButton disabled={!selected.length} onClick={handleDeleteItems}>
+                <Button
+                    onClick={handleCreateCategory}
+                >Create
+                </Button>
+                <Tooltip title="Delete" disabled={!selected.length}>
+                    <IconButton onClick={handleDeleteItems}>
                         <DeleteIcon/>
                     </IconButton>
                 </Tooltip>
@@ -261,15 +267,14 @@ function CategoriesTable ({ categories }) {
             <Modal
                 open={openModal}
                 handleConfirm={onConfirmModal}
-                text="You cannot revert this operation."
                 handleCancel={() => setStatusModal(false)}
-            >
+            >You cannot revert this.
             </Modal>
             <Toolbar
                 sx={{
                     pl : { sm: 2 },
                     pr : { xs: 1, sm: 1 },
-                    ...(selected.length > 0 && { bgcolor: 'grba(0,0,0,0.1)' })
+                    ...(selected.length > 0 && { bgcolor: 'rgb(0 0 0 / 5%)' })
                 }}
             >
                 {selected.length

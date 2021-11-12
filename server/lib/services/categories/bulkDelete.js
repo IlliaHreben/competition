@@ -2,7 +2,6 @@ import ServiceBase       from '../Base.js';
 // import { dumpCategory }  from '../../utils';
 
 import Category          from '../../models/Category.js';
-import { sections }      from '../../constants/categories.js';
 
 export default class BulkCategoriesDelete extends ServiceBase {
     static validationRules = {
@@ -16,7 +15,7 @@ export default class BulkCategoriesDelete extends ServiceBase {
           // sex        : [ { list_of: { one_of: [ 'man', 'woman' ] } } ],
           // ageFrom    : [ 'positive_integer' ],
           // ageTo      : [ 'positive_integer' ],
-          section       : [ { list_of: { one_of: sections } } ]
+          section       : [ { list_of: 'string' } ]
         }
       } ]
     };

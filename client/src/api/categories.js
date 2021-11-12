@@ -22,6 +22,10 @@ class Categories extends Base {
     bulkDelete = async (params) => {
         return this.apiClient.delete('categories/bulk', params);
     }
+
+    bulkCreate = async (params) => {
+        return this.apiClient.post('categories/bulk', params);
+    }
 }
 
 export default Categories;

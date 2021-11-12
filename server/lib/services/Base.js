@@ -1,6 +1,9 @@
 import ServiceBaseModule from 'chista/ServiceBase';
 
 import '../../lib/registerValidationRules';
+import { ServiceError }  from './service-error';
+import x                 from 'chista/Exception';
+const Exception = x.default;
 
 const ServiceBase = ServiceBaseModule.default;
 
@@ -12,24 +15,26 @@ export default class Base extends ServiceBase {
       offset : [ 'integer', { min_number: 0 } ]
     }
 
-  // async run (params) {
+    async run (params) {
+      const cleanParams = await this.validate(params);
 
-  //   const cleanParams = await this.validate(params);
+      return this.execute(cleanParams).catch(this.handleError);
+    }
 
-  //   return this.execute(cleanParams).catch(this.handleError);
-  // }
+  handleError = error => {
+    if (error.name === 'SequelizeUniqueConstraintError') {
+      throw new ServiceError('SequelizeUniqueConstraintError', error);
+    }
+    if (error.name === 'AggregateError') {
+      throw new ServiceError('AggregateError', error);
+    }
 
-  // handleError = error => {
-  //   if (error.name === 'SequelizeUniqueConstraintError') {
-  //     throwError('SequelizeUniqueConstraintError', error);
-  //   }
+    if (error instanceof Exception) {
+      const { code, data } = error.toHash();
 
-  //   if (error instanceof X) {
-  //     const { code, data } = error.toHash();
-
-  //     // eslint-disable-next-line no-unused-expressions
-  //     this.errors?.[code]?.({ code, data });
-  //   }
-  //   throw error;
-  // }
+      // eslint-disable-next-line no-unused-expressions
+      this.errors?.[code]?.({ code, data });
+    }
+    throw error;
+  }
 }
