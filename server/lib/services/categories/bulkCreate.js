@@ -12,11 +12,11 @@ export default class BulkCategoriesCreate extends ServiceBase {
       type          : [ 'required', { one_of: [ 'full', 'light' ] } ],
       data          : [ 'required', {
         list_of_objects: [ {
-          weightFrom : [ 'required', 'positive_integer' ],
-          weightTo   : [ 'required', 'positive_integer' ],
+          weightFrom : [ 'required', 'positive_decimal' ],
+          weightTo   : [ 'required', 'positive_decimal' ],
           sex        : [ 'required', { one_of: [ 'man', 'woman' ] } ],
-          ageFrom    : [ 'required', 'positive_integer' ],
-          ageTo      : [ 'required', 'positive_integer' ]
+          ageFrom    : [ 'required', 'positive_decimal' ],
+          ageTo      : [ 'required', 'positive_decimal' ]
         } ]
       } ]
     };
@@ -24,6 +24,9 @@ export default class BulkCategoriesCreate extends ServiceBase {
     async execute ({ competitionId, data, ...commonData }) {
       const competition = await Competition.findById(competitionId);
       if (!competition) throw new ServiceError('NOT_FOUND', { id: competitionId });
+
+      const errors = Category.validateCategories(data);
+      if (errors.length) throw new ServiceError('CATEGORIES_VALIDATION', errors);
 
       const prepared = commonData.type === 'full'
         ? [ 'A', 'B' ].flatMap(group => prepareCategories(competitionId, data, commonData, group))

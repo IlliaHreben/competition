@@ -27,6 +27,7 @@
     "express": "^4.17.1",
     "json-pointer": "^0.6.1",
     "livr-extra-rules": "^1.2.1",
+    "lodash": "^4.17.21",
     "nodemon": "^2.0.13",
     "pg": "^8.7.1",
     "pino": "^6.13.3",

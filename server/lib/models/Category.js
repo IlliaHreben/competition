@@ -3,6 +3,8 @@ import Base                  from './Base.js';
 import { v4 as uuid }        from 'uuid';
 
 import calculateFights       from './calculateFightersProximity';
+import { splitBy }           from '../utils/index.js';
+import upperFirst            from 'lodash/upperFirst';
 
 export default class Category extends Base {
   static initRelation () {
@@ -24,6 +26,41 @@ export default class Category extends Base {
         allowNull : false
       }
     });
+  }
+
+  static validateCategories (data) {
+    const [ women, men ] = splitBy(data, c => c.sex === 'man');
+
+    const maxWeightWomen = Math.max(...women.map(c => c.weightTo));
+    const maxWeightMen = Math.max(...men.map(c => c.weightTo));
+    const maxAgeWomen = Math.max(...women.map(c => c.ageTo));
+    const maxAgeMen = Math.max(...men.map(c => c.ageTo));
+
+    const errors = data.flatMap((category, index) => { // for every index find error
+      const maxWeight  = category.sex === 'man' ? maxWeightMen : maxWeightWomen;
+      const maxAge = category.sex === 'man' ? maxAgeMen : maxAgeWomen;
+      const bySex = category.sex === 'man' ? men : women;
+
+      if (category.ageFrom > category.ageTo) {
+        return [
+          { index, key: 'ageTo', message: 'Age to must be greater.', code: 'TOO_LOW' },
+          { index, key: 'ageFrom', message: 'Age from must be lower.', code: 'TOO_HIGHT' }
+        ];
+      }
+      if (category.weightFrom > category.weightTo) {
+        return [
+          { index, key: 'weightTo', message: 'Age to must be greater.', code: 'TOO_LOW' },
+          { index, key: 'weightFrom', message: 'Age from must be lower.', code: 'TOO_HIGHT' }
+        ];
+      }
+
+      return [
+        ...findErrors(data, category, index, bySex, maxAge, 'age', 1),
+        ...findErrors(data, category, index, bySex, maxWeight, 'weight', 0.1)
+      ];
+    });
+
+    return errors;
   }
 
   async calculateFights () {
@@ -141,6 +178,43 @@ export default class Category extends Base {
     Object.entries(scopes).forEach(scope => Category.addScope(...scope));
   }
 }
+
+const findErrors = (data, category, index, bySex, maxCharacteristic, by, gap) => {
+  const keyFrom = `${by}From`;
+  const keyTo = `${by}To`;
+  const errors = [];
+  if (category[keyTo] !== maxCharacteristic) { // check on gap with greater nearest element
+    const nearestElement = data.reduce((acc, current) => {
+      if (
+        category[keyTo] < current[keyFrom] &&
+        current[keyFrom] < acc[keyFrom]
+      ) return current;
+      return acc;
+    }, { ageFrom: Infinity, weightFrom: Infinity });
+    if (+(nearestElement[keyFrom] - category[keyTo]).toFixed(1) !== +gap.toFixed(1)) {
+      errors.push(
+        { index, key: keyTo, code: 'WRONG_GAP', message: `Gap should be ${gap}.` }
+      );
+    }
+  }
+  bySex.forEach((c, i) => { // Age should not overlap
+    if (i === index) return;
+    const message = `${upperFirst(by)} should not overlap.`;
+
+    if (category[keyFrom] > c[keyFrom] && category[keyFrom] < c[keyTo]) {
+      errors.push({ index, key: keyFrom, message, code: 'WRONG_OVERLAP' });
+    } else if (category[keyTo] > c[keyFrom] && category[keyTo] < c[keyTo]) {
+      errors.push({ index, key: keyTo, message, code: 'WRONG_OVERLAP' });
+    } else if (c[keyFrom] <= category[keyFrom] && c[keyTo] >= category[keyFrom]) {
+      errors.push(
+        { index, key: keyFrom, message, code: 'WRONG_OVERLAP' },
+        { index, key: keyTo, message, code: 'WRONG_OVERLAP' }
+      );
+    };
+  });
+
+  return errors;
+};
 
 Category.init({
   id: { type: DT.UUID, defaultValue: DT.UUIDV4, primaryKey: true },

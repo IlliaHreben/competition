@@ -19,6 +19,20 @@ const errors = {
         return { ...acc, ...nestedErrors };
       }, {})
     }
+  }),
+  CATEGORIES_VALIDATION: data => ({
+    code   : 'VALIDATION_ERROR',
+    fields : {
+      main : 'CATEGORIES_VALIDATION',
+      data : data.reduce((acc, { index, code, key }) => {
+        acc[index]
+          ? acc[index][key] = code
+          : acc[index] = { [key]: code };
+        return acc;
+        // const key = `/${error.index}/${error.key}`;
+        // return { ...acc, [key]: error.code };
+      }, [])
+    }
   })
 };
 
