@@ -1,4 +1,6 @@
 import { useEffect, useState }                    from 'react';
+import { useNavigate }                            from 'react-router-dom';
+import { useDispatch, useSelector }               from 'react-redux';
 import PropTypes                                  from 'prop-types';
 import debounce                                   from 'lodash.debounce';
 import useConstant                                from 'use-constant';
@@ -28,7 +30,6 @@ import {
 } from '../../../actions/competitions';
 
 import styles                                     from './list.module.css';
-import { useDispatch, useSelector }               from 'react-redux';
 
 function createData ({ id, name, description, startDate, endDate, days, fightersCount, cardsCount }) {
     return {
@@ -185,23 +186,24 @@ EnhancedTableToolbar.propTypes = {
     handleClickCreate : PropTypes.func.isRequired
 };
 
-List.propTypes = {
-    history  : PropTypes.object.isRequired,
-    location : PropTypes.object.isRequired
-};
+// List.propTypes = {
+//     history  : PropTypes.object.isRequired,
+//     location : PropTypes.object.isRequired
+// };
 
-function List ({ history, location }) {
+function List () {
     const [ order, setOrder ] = useState('desc');
     const [ orderBy, setOrderBy ] = useState('startDate');
     const [ page, setPage ] = useState(0);
     const [ rowsPerPage, setRowsPerPage ] = useState(5);
     const [ search, setSearch ] = useState('');
     const [ loading, setLoading ] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => document.title = 'Competitions', []);
 
     const { rows, meta } = useSelector(mapStateToProps);
     const dispatch = useDispatch();
-
-    useEffect(() => document.title = 'Create competition', []);
 
     const debouncedSearchFunction = useConstant(() => debounce(() => {
         setLoading(false);
@@ -251,7 +253,7 @@ function List ({ history, location }) {
                         handleChange={handleSearch}
                         search={search}
                         loading={loading}
-                        handleClickCreate={() => history.push(`${location.pathname}/create`)}
+                        handleClickCreate={() => navigate('./create')}
                     />
                     <TableContainer>
                         <Table

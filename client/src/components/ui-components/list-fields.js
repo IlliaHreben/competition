@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import PropTypes    from 'prop-types';
+import { useState }                     from 'react';
+import PropTypes                        from 'prop-types';
 import {
     TextField, Stack, IconButton, Typography,
-    Button, Popover, Box, Container
+    Popover, Box, SvgIcon
 } from '@mui/material';
-import DeleteIcon   from '@mui/icons-material/Delete';
+import DeleteIcon                       from '@mui/icons-material/Delete';
+import { ReactComponent as IconWeight } from '../../assets/icons/scales.svg';
 
 ListFields.propTypes = {
     items             : PropTypes.array.isRequired,
@@ -31,6 +32,7 @@ export default function ListFields (props) {
         const value = +items[i][key];
         const nextValueFrom = +items[i + 1]?.from;
         const prevValueTo = +items[i - 1]?.to;
+
         if (isNaN(value) || items[i][key] === '') {
             return 'Value must be a number.';
         } else if (key === 'from') { // can't be a gap
@@ -92,9 +94,10 @@ export default function ListFields (props) {
                     anchorEl={anchorEl?.target}
                     onClose={handleClosePopover}
                     anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-                    transformOrigin={{ vertical: 'center', horizontal: 'center' }}
+                    transformOrigin={{ vertical: 'center', horizontal: 'right' }}
                 >
                     <Box sx={{ p: 2 }}>
+                        <Typography>Weight categories</Typography>
                         <ListFields
                             items={anchorEl ? items[anchorEl.i].nested : []}
                             nested
@@ -105,7 +108,7 @@ export default function ListFields (props) {
                 </Popover>
             }
             {items.map((item, i) => (
-                <Stack key={i} direction='row' >
+                <Stack key={i} direction='row' sx={{ alignItems: 'flex-start' }} >
                     <Typography
                         variant='h7'
                         sx={{ width: '23px', mr: i < 9 ? 2.2 : 1, mt: '6px' }}
@@ -141,19 +144,22 @@ export default function ListFields (props) {
                     >{item.to}
                     </TextField>
                     {!nested &&
-                        <Button
+                        <IconButton
+                            size='medium'
                             aria-describedby={'popover'}
                             onClick={(e) => handleOpenPopover(e, i)}
-                            sx={{ ml: 1, mr: 1 }}
+                            sx={{ ml: 0 }}
                         >
-                            Weight
-                        </Button>
+                            <SvgIcon fontSize='small'><IconWeight style={{ fontSize: '5' }}/></SvgIcon>
+
+                        </IconButton>
                     }
                     <IconButton
+                        size='small'
                         aria-label='delete'
                         onClick={() => handleDelete(i)}
                     >
-                        <DeleteIcon fontSize='small' />
+                        <DeleteIcon/>
                     </IconButton>
                 </Stack>
             ))}
@@ -162,11 +168,11 @@ export default function ListFields (props) {
                     direction='row'
                     onClick={() => handleChangeItems([ ...items, { from: '', to: '', nested: [] } ])}
                 >
-                    <Typography variant='h7' sx={{ w: 2, mr: '29px', mb: '6px', alignSelf: 'center' }}></Typography>
+                    <Typography variant='h7' sx={{ w: 2, mr: '29px', mb: '6px' }}></Typography>
                     <TextField variant='standard' fullWidth onClick={() => setFocusStatus(1)}/>
                     <Typography variant='h6' sx={{ mr: 2, ml: 2 }}>-</Typography>
                     <TextField variant='standard' fullWidth onClick={() => setFocusStatus(2)}></TextField>
-                    <Box sx={{ width: '0px', mr: 14.5 }}/>
+                    <Box sx={{ width: '0px', mr: nested ? 4.5 : 8.75 }}/>
                 </Stack>
                 {/* <IconButton
                     aria-label='delete'

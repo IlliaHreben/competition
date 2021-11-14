@@ -7,14 +7,15 @@ import Avatar      from '@mui/material/Avatar';
 import styles      from './sidebar.module.css';
 
 import {
-    Link,
-    useRouteMatch
-    // useParams
+    Link
 } from 'react-router-dom';
+// import {
+//     useRouteMatch
+// } from 'react-router';
 
 function SideBar ({ tabs }) {
-    const match = useRouteMatch();
-    const path = match.path;
+    // const match = useRouteMatch();
+    // const path = match.path;
 
     return (
         <div className={styles.sideBar}>

@@ -267,7 +267,7 @@ function CategoriesTable ({ categories }) {
             <Modal
                 open={openModal}
                 handleConfirm={onConfirmModal}
-                handleCancel={() => setStatusModal(false)}
+                handleClose={() => setStatusModal(false)}
             >You cannot revert this.
             </Modal>
             <Toolbar

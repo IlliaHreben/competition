@@ -2,7 +2,7 @@
 import { useEffect, useState }       from 'react';
 import SwipeableViews                from 'react-swipeable-views';
 import PropTypes                     from 'prop-types';
-import { useParams }                 from 'react-router';
+import { useParams, useLocation }    from 'react-router';
 import { useDispatch, useSelector }  from 'react-redux';
 
 import Box                           from '@mui/material/Box';
@@ -24,6 +24,7 @@ import styles                        from './update.module.css';
 import GeneralSettingsTab            from './generalTab';
 import FightSpacesTab                from './fightSpacesTab';
 import CategoriesTab                 from './categoriesTab';
+import { useNavigate }               from 'react-router-dom';
 
 function TabPanel (props) {
     const { children, value, index } = props;
@@ -50,10 +51,12 @@ CompetitionUpdate.propTypes = {
     location : PropTypes.object.isRequired
 };
 
-function CompetitionUpdate ({ history, location }) {
+function CompetitionUpdate () {
     const [ tab, setTab ] = useState(0);
     const { competition } = useSelector(mapStateToProps);
     const dispatch = useDispatch();
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const { id: competitionId } = useParams();
 
@@ -74,7 +77,7 @@ function CompetitionUpdate ({ history, location }) {
         setTab(queryTab || 0);
     }, [ location.search ]);
 
-    const changeTab = (i1, i2) => history.replace(`${location.pathname}?tab=${i2 ?? i1}`);
+    const changeTab = (i1, i2) => navigate(`?tab=${i2 ?? i1}`, { replace: true });
 
     return (
         <div className={styles.page}>

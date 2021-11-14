@@ -10,7 +10,7 @@ export default class BulkCategoriesCreate extends ServiceBase {
       competitionId : [ 'required', 'uuid' ],
       section       : [ 'required', { min_length: 2 }, { max_length: 500 } ],
       type          : [ 'required', { one_of: [ 'full', 'light' ] } ],
-      data          : [ 'required', {
+      data          : [ 'required', 'not_empty_list', {
         list_of_objects: [ {
           weightFrom : [ 'required', 'positive_decimal' ],
           weightTo   : [ 'required', 'positive_decimal' ],

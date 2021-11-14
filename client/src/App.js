@@ -2,11 +2,11 @@
 import {
     Suspense, lazy
 } from 'react';
+
 import {
     Route,
-    Switch,
-    Redirect
-} from 'react-router';
+    Routes
+} from 'react-router-dom';
 
 import PageLoader          from './components/ui-components/PageLoader';
 import SideBar             from './components/ui-components/sidebar/sidebar.js';
@@ -27,10 +27,6 @@ const Home = lazy(() => import('./components/pages/home')); ;
 const CompetitionCreate = lazy(() => import('./components/pages/competitions/create.js'));
 const CompetitionList = lazy(() => import('./components/pages/competitions/list.js'));
 const CompetitionUpdate = lazy(() => import('./components/pages/competitions/update'));
-
-function dummyLayout (props) {
-    return props.children;
-}
 
 const routes = [
     {
@@ -53,23 +49,6 @@ const routes = [
     }
 ];
 
-function AppRoute ({ component: Page, isLoginRequire, layout, ...rest }) { // eslint-disable-line react/prop-types
-    return (
-        <Route
-            {...rest}
-            render={props => {
-                const Layout = layout || dummyLayout;
-
-                return (
-                    <Layout>
-                        <Page {...props} />
-                    </Layout>
-                );
-            }}
-        />
-    );
-}
-
 function App () {
     useErrors();
 
@@ -77,27 +56,23 @@ function App () {
         <Suspense fallback={<PageLoader />}>
             <SideBar tabs={routes} />
             <div className={styles.content}>
-                <Switch>
-                    {routes.map(route => (
-                        <AppRoute
+                <Routes>
+                    {routes.map(({ component: Page, ...route }) => (
+                        <Route
                             key={route.name}
                             path={route.path}
-                            component={route.component}
-                            exact
+                            element={<Page/>}
                         />
                     ))}
-                    <AppRoute
+                    <Route
                         path={'/competitions/create'}
-                        component={CompetitionCreate}
-                        exact
+                        element={<CompetitionCreate/>}
                     />
-                    <AppRoute
+                    <Route
                         path={'/competitions/:id/edit'}
-                        component={CompetitionUpdate}
-                        exact
+                        element={<CompetitionUpdate/>}
                     />
-                    <Redirect to='/' />
-                </Switch>
+                </Routes>
             </div>
         </Suspense>
     );

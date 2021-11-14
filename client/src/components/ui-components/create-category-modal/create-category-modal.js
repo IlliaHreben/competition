@@ -6,11 +6,11 @@ import {
     Chip
 } from '@mui/material';
 import ListFields                      from '../list-fields';
-import { useState }                    from 'react';
+import { useState, useEffect }         from 'react';
 import { omit }                        from 'lodash';
 import { useDispatch, useSelector }    from 'react-redux';
 import { bulkCreate, deleteError }     from '../../../actions/categories';
-import { showSuccess }                 from '../../../actions/errors';
+import { showSuccess, showError }      from '../../../actions/errors';
 
 CreateCategory.propTypes = {
     open          : PropTypes.bool.isRequired,
@@ -39,13 +39,18 @@ export default function CreateCategory ({ open, handleClose, competitionId }) {
             section : setName,
             type    : setType
         };
-        console.log('='.repeat(50)); // !nocommit
-        console.log(state.errors);
-        console.log('='.repeat(50));
+
         if (state.errors[field]) dispatch(deleteError(field));
         checkOnErrors(value, field);
         fieldNameToState[field](value);
     };
+
+    useEffect(() => {
+        if (state.errors.data) {
+            dispatch(showError('At least one age/weight category should be provided.'));
+            dispatch(deleteError('data'));
+        }
+    }, [ dispatch, state.errors ]);
 
     const handleConfirm = () => {
         const categories = [
