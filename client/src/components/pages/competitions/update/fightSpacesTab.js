@@ -28,19 +28,6 @@ import { useParams }   from 'react-router';
 
 const uuid = crypto.randomUUID.bind(crypto);
 
-FightSpacesTab.propTypes = {
-    // fightSpaces: PropTypes.arrayOf(PropTypes.shape({
-    //     id             : PropTypes.string,
-    //     customId       : PropTypes.string,
-    //     type           : PropTypes.string,
-    //     orderNumber    : PropTypes.number,
-    //     competitionDay : PropTypes.number
-    // }).isRequired),
-    // days          : PropTypes.number.isRequired,
-    // onDeleteSpace : PropTypes.func.isRequired,
-    // createSpace   : PropTypes.func.isRequired
-};
-
 function mapStateToProps (state) {
     return {
         competition : state.competitions.current,

@@ -2,7 +2,7 @@ import ServiceBase          from '../Base.js';
 import { dumpCompetition }  from '../../utils';
 
 import Competition          from '../../models/Competition.js';
-import { ServiceError }     from '../service-error';
+import ServiceError         from '../service-error';
 
 export default class CompetitionShow extends ServiceBase {
     static validationRules = {

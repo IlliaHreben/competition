@@ -19,6 +19,10 @@ export function clearList () {
     return reducer.clearList();
 }
 
+export function clearShow () {
+    return reducer.clearShow();
+}
+
 export function show (...args) {
     return async dispatch => {
         try {
@@ -58,5 +62,21 @@ export function getActive (...args) {
 
             dispatch(reducer.setActive(data));
         } catch (err) {}
+    };
+}
+
+export function deleteCompetition (id, onSuccess) {
+    return async dispatch => {
+        try {
+            dispatch(reducer.deleteRequest());
+
+            const { data } = await api.competitions.delete(id);
+
+            dispatch(reducer.deleteCompetition(data));
+
+            onSuccess?.();
+        } catch (errData) {
+            dispatch(reducer.deleteRequestError(errData));
+        }
     };
 }

@@ -10,7 +10,8 @@ import Tabs                          from '@mui/material/Tabs';
 import Tab                           from '@mui/material/Tab';
 
 import {
-    show as showCompetition
+    show as showCompetition,
+    clearShow
     // update as updateCompetition
 } from '../../../../actions/competitions';
 import {
@@ -46,11 +47,6 @@ TabPanel.propTypes = {
     value    : PropTypes.number.isRequired
 };
 
-CompetitionUpdate.propTypes = {
-    history  : PropTypes.object.isRequired,
-    location : PropTypes.object.isRequired
-};
-
 function CompetitionUpdate () {
     const [ tab, setTab ] = useState(0);
     const { competition } = useSelector(mapStateToProps);
@@ -61,7 +57,8 @@ function CompetitionUpdate () {
     const { id: competitionId } = useParams();
 
     useEffect(() => {
-        dispatch(showCompetition(competitionId));
+        if (competitionId) dispatch(showCompetition(competitionId));
+        return () => dispatch(clearShow());
     }, [ competitionId, dispatch ]);
 
     useEffect(() => {

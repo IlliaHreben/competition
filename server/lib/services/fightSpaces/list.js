@@ -3,7 +3,7 @@ import { dumpFightSpace }             from '../../utils';
 
 import FightSpace                     from '../../models/FightSpace.js';
 import Competition                    from '../../models/Competition.js';
-import { ServiceError }               from '../service-error.js';
+import ServiceError               from '../service-error.js';
 
 export default class FightSpacesList extends ServiceBase {
     static validationRules = {

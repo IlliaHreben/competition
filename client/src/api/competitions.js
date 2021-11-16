@@ -16,6 +16,10 @@ class Competitions extends Base {
     show = async (id, params) => {
         return this.apiClient.get(`competitions/${id}`, params);
     }
+
+    delete = async (id) => {
+        return this.apiClient.delete('competitions', { id });
+    }
 }
 
 export default Competitions;

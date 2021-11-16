@@ -1,7 +1,7 @@
 import ServiceBaseModule from 'chista/ServiceBase';
 
 import '../../lib/registerValidationRules';
-import { ServiceError }  from './service-error';
+import ServiceError  from './service-error';
 import x                 from 'chista/Exception';
 const Exception = x.default;
 

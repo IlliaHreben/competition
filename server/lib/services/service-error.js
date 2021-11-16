@@ -29,16 +29,23 @@ const errors = {
           ? acc[index][key] = code
           : acc[index] = { [key]: code };
         return acc;
-        // const key = `/${error.index}/${error.key}`;
-        // return { ...acc, [key]: error.code };
       }, [])
     }
+  }),
+  IS_ACTIVE: () => ({
+    code   : 'CANNOT_BE_DELETED',
+    fields : { main: 'IS_ACTIVE' }
+  }),
+  HAS_UNCOMPLETED_FIGHTS: () => ({
+    code   : 'CANNOT_BE_COMPLETED',
+    fields : { main: 'HAS_UNCOMPLETED_FIGHTS' }
   })
 };
 
-export class ServiceError extends Exception {
+export default class ServiceError extends Exception {
   constructor (type, data) {
-    const errorData = errors[type]?.(data) || { code: 'SERVER_ERROR', fields: { type } };
+    const defaultError = { code: 'SERVER_ERROR', fields: { type } };
+    const errorData = errors[type]?.(data) || defaultError;
 
     super(errorData);
   }

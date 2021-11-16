@@ -3,7 +3,7 @@ import { dumpCategory }  from '../../utils';
 
 import Category          from '../../models/Category.js';
 import Competition       from '../../models/Competition.js';
-import { ServiceError }  from '../service-error.js';
+import ServiceError      from '../service-error.js';
 
 export default class BulkCategoriesCreate extends ServiceBase {
     static validationRules = {

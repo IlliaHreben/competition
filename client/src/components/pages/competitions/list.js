@@ -1,35 +1,41 @@
-import { useEffect, useState }                    from 'react';
-import { useNavigate }                            from 'react-router-dom';
-import { useDispatch, useSelector }               from 'react-redux';
-import PropTypes                                  from 'prop-types';
-import debounce                                   from 'lodash.debounce';
-import useConstant                                from 'use-constant';
-
-import Box                                        from '@mui/material/Box';
-import Container                                  from '@mui/material/Container';
-import Table                                      from '@mui/material/Table';
-import TableBody                                  from '@mui/material/TableBody';
-import TableCell                                  from '@mui/material/TableCell';
-import TableContainer                             from '@mui/material/TableContainer';
-import TableHead                                  from '@mui/material/TableHead';
-import TablePagination                            from '@mui/material/TablePagination';
-import TableRow                                   from '@mui/material/TableRow';
-import TableSortLabel                             from '@mui/material/TableSortLabel';
-import Toolbar                                    from '@mui/material/Toolbar';
-import Paper                                      from '@mui/material/Paper';
-import Button                                     from '@mui/material/Button';
-import SearchIcon                                 from '@mui/icons-material/Search';
-import TextField                                  from '@mui/material/TextField';
-import InputAdornment                             from '@mui/material/InputAdornment';
-import CircularProgress                           from '@mui/material/CircularProgress';
-import { visuallyHidden }                         from '@mui/utils';
-
-import { formatISODate }                          from '../../../utils/datetime';
+import { useEffect, useState }                      from 'react';
+import { useNavigate }                              from 'react-router-dom';
+import { useDispatch, useSelector }                 from 'react-redux';
+import PropTypes                                    from 'prop-types';
+import debounce                                     from 'lodash.debounce';
+import useConstant                                  from 'use-constant';
 import {
-    list as listCompetitions
-} from '../../../actions/competitions';
+    Box, IconButton
+} from '@mui/material';
+import Container                                    from '@mui/material/Container';
+import Table                                        from '@mui/material/Table';
+import TableBody                                    from '@mui/material/TableBody';
+import TableCell                                    from '@mui/material/TableCell';
+import TableContainer                               from '@mui/material/TableContainer';
+import TableHead                                    from '@mui/material/TableHead';
+import TablePagination                              from '@mui/material/TablePagination';
+import TableRow                                     from '@mui/material/TableRow';
+import TableSortLabel                               from '@mui/material/TableSortLabel';
+import Toolbar                                      from '@mui/material/Toolbar';
+import Paper                                        from '@mui/material/Paper';
+import Button                                       from '@mui/material/Button';
+import SearchIcon                                   from '@mui/icons-material/Search';
+import TextField                                    from '@mui/material/TextField';
+import InputAdornment                               from '@mui/material/InputAdornment';
+import CircularProgress                             from '@mui/material/CircularProgress';
+import MoreVertIcon                                 from '@mui/icons-material/MoreVert';
+import { visuallyHidden }                           from '@mui/utils';
 
-import styles                                     from './list.module.css';
+import { formatISODate }                            from '../../../utils/datetime';
+import {
+    list as listCompetitions,
+    deleteCompetition
+} from '../../../actions/competitions';
+import { showSuccess }                              from '../../../actions/errors';
+import SettingsPopover                              from '../../ui-components/settings-popover';
+import Modal                                        from '../../ui-components/modal';
+
+import styles                                       from './list.module.css';
 
 function createData ({ id, name, description, startDate, endDate, days, fightersCount, cardsCount }) {
     return {
@@ -45,48 +51,14 @@ function createData ({ id, name, description, startDate, endDate, days, fighters
 }
 
 const headCells = [
-    {
-        id             : 'name',
-        disablePadding : true,
-        allowSort      : true,
-        label          : 'Name'
-    },
-    {
-        id             : 'description',
-        disablePadding : false,
-        allowSort      : true,
-        label          : 'Description'
-    },
-    {
-        id             : 'startDate',
-        disablePadding : false,
-        allowSort      : true,
-        label          : 'Start date'
-    },
-    {
-        id             : 'endDate',
-        disablePadding : false,
-        allowSort      : true,
-        label          : 'End date'
-    },
-    {
-        id             : 'days',
-        disablePadding : false,
-        allowSort      : false,
-        label          : 'Days'
-    },
-    {
-        id             : 'fighters',
-        disablePadding : false,
-        allowSort      : false,
-        label          : 'Fighters'
-    },
-    {
-        id             : 'cards',
-        disablePadding : false,
-        allowSort      : false,
-        label          : 'Cards'
-    }
+    { id: 'name', allowSort: true, label: 'Name' },
+    { id: 'description', allowSort: true, label: 'Description' },
+    { id: 'startDate', allowSort: true, label: 'Start date' },
+    { id: 'endDate', allowSort: true, label: 'End date' },
+    { id: 'days', allowSort: false, label: 'Days' },
+    { id: 'fighters', allowSort: false, label: 'Fighters' },
+    { id: 'cards', allowSort: false, label: 'Cards' },
+    { id: 'settings', allowSort: false, label: '', disablePadding: true }
 ];
 
 function EnhancedTableHead (props) {
@@ -103,6 +75,7 @@ function EnhancedTableHead (props) {
                         key={headCell.id}
                         align='left'
                         sortDirection={orderBy === headCell.id ? order : false}
+                        padding={headCell.disablePadding ? 'none' : 'normal'}
                     >
                         {
                             // eslint-disable-next-line operator-linebreak
@@ -157,8 +130,8 @@ const EnhancedTableToolbar = (props) => {
                             {loading ? // eslint-disable-line operator-linebreak
                                 <CircularProgress
                                     disableShrink
-                                    size={24}
-                                    thickness={4}
+                                    size={18}
+                                    thickness={5}
                                     sx={{ animationDuration: '550ms' }}
                                 />
                                 : <SearchIcon />}
@@ -186,12 +159,7 @@ EnhancedTableToolbar.propTypes = {
     handleClickCreate : PropTypes.func.isRequired
 };
 
-// List.propTypes = {
-//     history  : PropTypes.object.isRequired,
-//     location : PropTypes.object.isRequired
-// };
-
-function List () {
+function CompetitionsList () {
     const [ order, setOrder ] = useState('desc');
     const [ orderBy, setOrderBy ] = useState('startDate');
     const [ page, setPage ] = useState(0);
@@ -233,20 +201,58 @@ function List () {
         dispatch(listCompetitions(params));
     }, [ dispatch, loading, order, orderBy, page, rowsPerPage, search ]);
 
-    const handleChangePage = (event, newPage) => {
+    const handleChangePage = (_, newPage) => {
         setPage(newPage);
     };
 
     const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
+        setRowsPerPage(+event.target.value);
         setPage(0);
     };
+
+    const [ anchor, setAnchor ] = useState(null);
+    const handleClickSettings = (event, id) => {
+        setAnchor({ element: event.currentTarget, id });
+    };
+    const handleCloseSettings = () => {
+        setAnchor(null);
+    };
+
+    const [ deleteModalStatus, setDeleteModalStatus ] = useState(false);
+    const handleChangeStatusDeleteModal = () => {
+        setDeleteModalStatus(!deleteModalStatus);
+    };
+    const handleDeleteCompetition = () => {
+        dispatch(deleteCompetition(
+            anchor.id,
+            () => dispatch(showSuccess('Competition was successfully deleted.'))
+        ));
+        handleChangeStatusDeleteModal();
+        handleCloseSettings();
+    };
+
+    // useState(() => showError(errors.))
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - meta.filteredCount) : 0;
 
     return (
         <Container className={styles.page}>
+            <Modal
+                title={'Are you really want to delete the competition?'}
+                open={deleteModalStatus}
+                handleClose={handleChangeStatusDeleteModal}
+                handleConfirm={handleDeleteCompetition}
+            >
+                If you delete competition all categories and cards related to this competition will be deleted too.
+                Also you can&#39;t delete competition if it in progress. Finish the competition first.
+            </Modal>
+            <SettingsPopover
+                anchorEl={anchor?.element}
+                handleEdit={() => navigate(`${anchor.id}/edit`)}
+                handleDelete={handleChangeStatusDeleteModal}
+                handleClose={handleCloseSettings}
+            />
             <Box sx={{ width: '100%' }}>
                 <Paper sx={{ width: '100%', mb: 2 }}>
                     <EnhancedTableToolbar
@@ -284,7 +290,12 @@ function List () {
                                             <TableCell width="11%" align="left">{row.endDate}</TableCell>
                                             <TableCell width="7%" align="left">{row.days}</TableCell>
                                             <TableCell width="7%" align="left">{row.fightersCount}</TableCell>
-                                            <TableCell width="7%" align="left">{row.cardsCount}</TableCell>
+                                            <TableCell width="7%" align="left" sx={{ pr: 0 }}>{row.cardsCount}</TableCell>
+                                            <TableCell width="2%" align="right" sx={{ p: 0.5, pl: 0 }}>
+                                                <IconButton onClick={e => handleClickSettings(e, row.id)}>
+                                                    <MoreVertIcon/>
+                                                </IconButton>
+                                            </TableCell>
                                         </TableRow>
                                     );
                                 })}
@@ -315,8 +326,9 @@ function mapStateToProps (state) {
     return {
         rows      : state.competitions.list,
         meta      : state.competitions.listMeta,
+        errors    : state.competitions.errors,
         isLoading : state.competitions.isLoading
     };
 }
 
-export default (List);
+export default (CompetitionsList);

@@ -2,6 +2,7 @@ import sequelize, { DT } from '../sequelize-singleton.js';
 import Base              from './Base.js';
 
 import defaultCategories from '../constants/categories.json';
+import ServiceError      from '../services/service-error';
 
 export default class Competition extends Base {
   static initRelation () {
@@ -87,6 +88,23 @@ export default class Competition extends Base {
 
     return [ ...toBeAbandoned, ...added ];
   }
+
+  async complete () {
+    const Fight = sequelize.model('Fight');
+
+    const categories = await this.getCategories({
+      include: { model: Fight, as: 'Fights', required: true }
+    });
+
+    const fights = categories.flatMap(c => c.Fights);
+
+    const hasAtLeastOneWinner = fights.some(fight => fight.winnerId);
+    const hasUncompletedFights = fights.some(fight => !fight.winnerId);
+
+    if (!hasAtLeastOneWinner && hasUncompletedFights) throw new ServiceError('HAS_UNCOMPLETED_FIGHTS');
+
+    return this.update({ completed: true, active: false });
+  }
 }
 
 Competition.init({
@@ -107,6 +125,8 @@ Competition.init({
       throw new Error('Do not try to set the `days` value!');
     }
   },
+  active    : { type: DT.BOOLEAN, allowNull: false, defaultValue: false },
+  completed : { type: DT.BOOLEAN, allowNull: false, defaultValue: false },
 
   createdAt : { type: DT.DATE, allowNull: false },
   deletedAt : { type: DT.DATE, allowNull: true },

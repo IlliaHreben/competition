@@ -15,7 +15,10 @@ router.post('/cards/bulk', controllers.cards.bulkCreate);
 router.get('/competitions', controllers.competitions.list);
 router.get('/competitions/:id', controllers.competitions.show);
 router.post('/competitions', controllers.competitions.create);
+router.post('/competitions/:id/activate', controllers.competitions.activate);
+router.post('/competitions/:id/complete', controllers.competitions.complete);
 router.patch('/competitions/:id', controllers.competitions.update);
+router.delete('/competitions', controllers.competitions.delete);
 
 router.get('/fight-spaces', controllers.fightSpaces.list);
 router.patch('/fight-spaces/bulk', controllers.fightSpaces.bulkUpdate);

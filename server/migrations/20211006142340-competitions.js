@@ -8,6 +8,8 @@ const up = async (queryInterface, Sequelize) => {
 
       name        : { type: Sequelize.STRING, allowNull: false },
       description : { type: Sequelize.STRING, allowNull: false },
+      active      : { type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false },
+      completed   : { type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false },
       startDate   : { type: Sequelize.DATE, allowNull: false },
       endDate     : { type: Sequelize.DATE, allowNull: false },
 

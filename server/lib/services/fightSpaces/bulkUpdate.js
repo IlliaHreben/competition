@@ -2,7 +2,7 @@ import ServiceBase              from '../Base.js';
 import { dumpFightSpace }       from '../../utils';
 
 import Competition              from '../../models/Competition.js';
-import { ServiceError }         from '../service-error.js';
+import ServiceError         from '../service-error.js';
 
 export default class BulkFightSpaceUpdate extends ServiceBase {
   static validationRules = {
