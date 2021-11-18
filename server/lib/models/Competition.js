@@ -36,7 +36,7 @@ export default class Competition extends Base {
     this.hasMany(Section, {
       as         : 'Sections',
       foreignKey : {
-        name      : 'sectionId',
+        name      : 'competitionId',
         allowNull : false
       }
     });

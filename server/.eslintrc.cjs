@@ -9,7 +9,8 @@ module.exports = {
   extends: [
     'standard'
   ],
-  parserOptions: {
+  plugins       : [ 'align-import', 'arca' ],
+  parserOptions : {
     ecmaVersion       : 'latest',
     sourceType        : 'module',
     es6               : true,
@@ -51,6 +52,7 @@ module.exports = {
     } ],
     'object-curly-spacing'     : [ 'error', 'always' ],
     'array-bracket-spacing'    : [ 'error', 'always' ],
-    'node/no-callback-literal' : 0
+    'node/no-callback-literal' : 0,
+    'arca/import-align'        : [ 'error', { collapseExtraSpaces: true } ]
   }
 };

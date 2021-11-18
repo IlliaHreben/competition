@@ -1,8 +1,8 @@
-import ServiceBase       from '../Base.js';
-import { dumpCard }      from '../../utils';
+import ServiceBase  from '../Base.js';
+import { dumpCard } from '../../utils';
 
-import Card              from '../../models/Card.js';
-import Category          from '../../models/Category.js';
+import Card         from '../../models/Card.js';
+import Category     from '../../models/Category.js';
 
 export default class CardsBulkCreate extends ServiceBase {
     static validationRules = {

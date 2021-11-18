@@ -1,5 +1,5 @@
-import sequelize, { DT }     from '../sequelize-singleton.js';
-import Base                  from './Base.js';
+import sequelize, { DT } from '../sequelize-singleton.js';
+import Base              from './Base.js';
 
 export default class Section extends Base {
   static initRelation () {
@@ -8,7 +8,7 @@ export default class Section extends Base {
     const Competition = sequelize.model('Competition');
 
     this.belongsTo(Competition, {
-      as         : 'Sections',
+      as         : 'Competition',
       foreignKey : {
         name      : 'competitionId',
         allowNull : false

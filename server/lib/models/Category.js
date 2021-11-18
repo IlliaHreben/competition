@@ -1,10 +1,10 @@
-import sequelize, { DT }     from '../sequelize-singleton.js';
-import Base                  from './Base.js';
-import { v4 as uuid }        from 'uuid';
+import sequelize, { DT } from '../sequelize-singleton.js';
+import Base              from './Base.js';
+import { v4 as uuid }    from 'uuid';
 
-import calculateFights       from './calculateFightersProximity';
-import { splitBy }           from '../utils/index.js';
-import upperFirst            from 'lodash/upperFirst';
+import calculateFights   from './calculateFightersProximity';
+import { splitBy }       from '../utils/index.js';
+import upperFirst        from 'lodash/upperFirst';
 
 export default class Category extends Base {
   static initRelation () {
@@ -181,6 +181,9 @@ export default class Category extends Base {
             { model: Card, as: 'SecondCard', include: [ 'Fighter', 'Club', 'Coach' ] }
           ]
         } ]
+      },
+      sections: {
+        include: [ 'Section' ]
       }
     };
 
