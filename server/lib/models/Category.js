@@ -10,6 +10,15 @@ export default class Category extends Base {
   static initRelation () {
     const Card = sequelize.model('Card');
     const Fight = sequelize.model('Fight');
+    const Section = sequelize.model('Section');
+
+    this.belongsTo(Section, {
+      as         : 'Section',
+      foreignKey : {
+        name      : 'sectionId',
+        allowNull : false
+      }
+    });
 
     this.hasMany(Card, {
       as         : 'Cards',
@@ -28,7 +37,7 @@ export default class Category extends Base {
     });
   }
 
-  static validateCategories (data) {
+  static validateCategories (data, target = data) {
     const [ women, men ] = splitBy(data, c => c.sex === 'man');
 
     const maxWeightWomen = Math.max(...women.map(c => c.weightTo));
@@ -36,7 +45,7 @@ export default class Category extends Base {
     const maxAgeWomen = Math.max(...women.map(c => c.ageTo));
     const maxAgeMen = Math.max(...men.map(c => c.ageTo));
 
-    const errors = data.flatMap((category, index) => { // for every index find error
+    const errors = target.flatMap((category, index) => { // for every index find error
       const maxWeight  = category.sex === 'man' ? maxWeightMen : maxWeightWomen;
       const maxAge = category.sex === 'man' ? maxAgeMen : maxAgeWomen;
       const bySex = category.sex === 'man' ? men : women;
@@ -219,9 +228,7 @@ const findErrors = (data, category, index, bySex, maxCharacteristic, by, gap) =>
 Category.init({
   id: { type: DT.UUID, defaultValue: DT.UUIDV4, primaryKey: true },
 
-  section    : { type: DT.STRING, allowNull: false },
   sex        : { type: DT.ENUM([ 'man', 'woman' ]), allowNull: false },
-  type       : { type: DT.ENUM([ 'full', 'light' ]), allowNull: false },
   ageFrom    : { type: DT.INTEGER, allowNull: false },
   ageTo      : { type: DT.INTEGER, allowNull: false },
   weightFrom : { type: DT.FLOAT, allowNull: false },
@@ -231,15 +238,20 @@ Category.init({
     type      : DT.ENUM([ 'A', 'B' ]),
     allowNull : true,
     validate  : {
-      groupByType () {
-        if ((this.type === 'full') && !this.group) {
-          throw new Error('Full category must have group.');
-        }
+      groupByType (next) {
+        this.getSection().done((err, section) => {
+          if (err) next(err);
+          if ((section.type === 'full') && !this.group) {
+            next('Full category must have group.');
+          }
+          next();
+        });
       }
     }
   },
 
-  competitionId: { type: DT.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Competitions', key: 'id' }, allowNull: false },
+  sectionId     : { type: DT.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Sections', key: 'id' }, allowNull: false },
+  competitionId : { type: DT.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Competitions', key: 'id' }, allowNull: false },
 
   createdAt : { type: DT.DATE, allowNull: false, defaultValue: new Date() },
   deletedAt : { type: DT.DATE, allowNull: true },

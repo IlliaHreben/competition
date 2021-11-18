@@ -15,7 +15,7 @@ export default class BulkCategoriesDelete extends ServiceBase {
           // sex        : [ { list_of: { one_of: [ 'man', 'woman' ] } } ],
           // ageFrom    : [ 'positive_integer' ],
           // ageTo      : [ 'positive_integer' ],
-          section       : [ { list_of: 'string' } ]
+          sectionId     : [ { list_of: 'uuid' } ]
         }
       } ]
     };

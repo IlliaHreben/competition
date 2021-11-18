@@ -1,0 +1,74 @@
+[
+  {
+    "id": "0e53d5b6-5563-4d2a-ae09-1b460a0d77b1",
+    "name": "full-contact",
+    "type":"full",
+    "competitionId": "ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb",
+    "createdAt": "2021-10-07T19:05:37.345Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T19:05:37.345Z"
+  },
+  {
+    "id": "e9925422-c272-40ea-85a1-e27411a864e1",
+    "name": "low-kick",
+    "type":"full",
+    "competitionId": "ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb",
+    "createdAt": "2021-10-07T19:05:37.345Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T19:05:37.345Z"
+  },
+  {
+    "id": "72d54db6-5356-4266-88c0-39d9fd4e16e4",
+    "name": "K-1",
+    "type":"full",
+    "competitionId": "ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb",
+    "createdAt": "2021-10-07T19:05:37.345Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T19:05:37.345Z"
+  },
+  {
+    "id": "2ceb45e2-097b-4e73-9b2a-b056150275e3",
+    "name": "low-kick-light",
+    "type":"light",
+    "competitionId": "ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb",
+    "createdAt": "2021-10-07T19:05:37.345Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T19:05:37.345Z"
+  },
+  {
+    "id": "a9116c87-b6b9-4cfc-a469-0c795d998a92",
+    "name": "K-1-light",
+    "type":"light",
+    "competitionId": "ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb",
+    "createdAt": "2021-10-07T19:05:37.345Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T19:05:37.345Z"
+  },
+  {
+    "id": "d9d241d9-dbcf-42c6-8711-92190179cbb5",
+    "name": "light-contact",
+    "type":"light",
+    "competitionId": "ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb",
+    "createdAt": "2021-10-07T19:05:37.345Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T19:05:37.345Z"
+  },
+  {
+    "id": "c6c73107-328b-4b66-9974-69f3a64d1ac0",
+    "name": "semi-contact",
+    "type":"light",
+    "competitionId": "ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb",
+    "createdAt": "2021-10-07T19:05:37.345Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T19:05:37.345Z"
+  },
+  {
+    "id": "fca18f4d-7f40-415a-8840-7be3e419af9d",
+    "name": "point-fighting",
+    "type":"light",
+    "competitionId": "ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb",
+    "createdAt": "2021-10-07T19:05:37.345Z",
+    "deletedAt": null,
+    "updatedAt": "2021-10-07T19:05:37.345Z"
+  }
+]

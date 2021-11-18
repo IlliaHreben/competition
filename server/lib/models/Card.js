@@ -64,8 +64,8 @@ Card.init({
   coachId         : { type: DT.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Coaches', key: 'id' }, allowNull: false },
   categoryId      : { type: DT.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Categories', key: 'id' }, allowNull: false },
   competitionId   : { type: DT.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Competition', key: 'id' }, allowNull: false },
+  sectionId       : { type: DT.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Sections', key: 'id' }, allowNull: false },
 
-  section    : { type: DT.STRING, allowNull: false },
   weight     : { type: DT.FLOAT, allowNull: false },
   realWeight : { type: DT.FLOAT, allowNull: false },
   group      : { type: DT.ENUM([ 'A', 'B' ]), allowNull: true },
@@ -113,7 +113,7 @@ async function assignCategoryHook (card, options) {
       ageFrom       : { [Op.lte]: card.age },
       ageTo         : { [Op.gte]: card.age },
       group         : card.group,
-      section       : card.section,
+      sectionId     : card.sectionId,
       sex           : fighter.sex,
       competitionId : card.competitionId
     }
@@ -135,14 +135,13 @@ async function assignBulkCategoryHook (cards, options) {
     const fighter = await Fighter.findById(card.fighterId);
     const category = await Category.findOne({
       where: {
-        weightFrom    : { [Op.lte]: card.weight },
-        weightTo      : { [Op.gte]: card.weight },
-        ageFrom       : { [Op.lte]: card.age },
-        ageTo         : { [Op.gte]: card.age },
-        group         : card.group,
-        section       : card.section,
-        sex           : fighter.sex,
-        competitionId : card.competitionId
+        weightFrom : { [Op.lte]: card.weight },
+        weightTo   : { [Op.gte]: card.weight },
+        ageFrom    : { [Op.lte]: card.age },
+        ageTo      : { [Op.gte]: card.age },
+        group      : card.group,
+        sectionId  : card.sectionId,
+        sex        : fighter.sex
       }
     });
     card.categoryId = category.id;

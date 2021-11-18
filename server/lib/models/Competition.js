@@ -9,6 +9,7 @@ export default class Competition extends Base {
     const Category = sequelize.model('Category');
     const Card = sequelize.model('Card');
     const FightSpace = sequelize.model('FightSpace');
+    const Section = sequelize.model('Section');
 
     this.hasMany(Category, {
       as         : 'Categories',
@@ -31,11 +32,20 @@ export default class Competition extends Base {
         allowNull : false
       }
     });
+
+    this.hasMany(Section, {
+      as         : 'Sections',
+      foreignKey : {
+        name      : 'sectionId',
+        allowNull : false
+      }
+    });
   }
 
   static async createCompetition ({ ringsCount, tatamisCount, ...data }) {
     const FightSpace = sequelize.model('FightSpace');
     const Category = sequelize.model('Category');
+    const Section = sequelize.model('Section');
 
     const competition = await this.create(data);
 
@@ -53,10 +63,19 @@ export default class Competition extends Base {
       { returning: true }
     );
 
+    const sectionsNames = [ ...new Set(defaultCategories.map(c => c.section)) ];
+
+    const sections = await Section.bulkCreate(sectionsNames.map(name => ({
+      name,
+      type          : defaultCategories.find(c => c.section === name).type,
+      competitionId : this.id
+    })));
+
     const categoriesPromise =  Category.bulkCreate(
-      defaultCategories.map(category => ({
+      defaultCategories.map(({ type, section, ...category }) => ({
         ...category,
-        competitionId: competition.id
+        sectionId     : sections.find(s => s.name === section).id,
+        competitionId : competition.id
       }))
     );
 

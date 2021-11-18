@@ -1,6 +1,7 @@
 import sequelize from './sequelize-singleton.js';
 
 import './models/Competition.js';
+import './models/Section.js';
 import './models/Category.js';
 import './models/FightSpace.js';
 import './models/Club.js';

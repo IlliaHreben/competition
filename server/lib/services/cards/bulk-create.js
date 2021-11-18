@@ -4,10 +4,6 @@ import { dumpCard }      from '../../utils';
 import Card              from '../../models/Card.js';
 import Category          from '../../models/Category.js';
 
-import { sections }      from '../../constants/categories.js';
-
-const fullSections = sections.slice(0, 3);
-
 export default class CardsBulkCreate extends ServiceBase {
     static validationRules = {
       competitionId : [ 'required', 'uuid' ],
@@ -17,10 +13,10 @@ export default class CardsBulkCreate extends ServiceBase {
           clubId          : [ 'required', 'uuid' ],
           secondaryClubId : [ 'uuid' ],
           coachId         : [ 'required', 'uuid' ],
-          section         : [ 'required', { one_of: sections } ],
+          sectionId       : [ 'required', 'uuid' ],
           weight          : [ 'required', { number_between: [ 0, 999 ] } ],
           realWeight      : [ { number_between: [ 0, 999 ] } ],
-          group           : [ { or: fullSections.map(s => ({ required_if: { section: s } })) }, { one_of: [ 'A', 'B' ] } ],
+          group           : [ { one_of: [ 'A', 'B' ] } ],
           city            : [ 'required', 'string' ],
           birthDate       : [ 'required', 'iso_date' ]
         } ]

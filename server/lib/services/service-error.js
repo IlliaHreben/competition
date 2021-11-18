@@ -32,6 +32,16 @@ const errors = {
       }, [])
     }
   }),
+  CATEGORY_VALIDATION: data => ({
+    code   : 'VALIDATION_ERROR',
+    fields : {
+      main : 'CATEGORY_VALIDATION',
+      data : data.reduce((acc, { code, key }) => {
+        acc.data[key] = code;
+        return acc;
+      }, { data: {} })
+    }
+  }),
   IS_ACTIVE: () => ({
     code   : 'CANNOT_BE_DELETED',
     fields : { main: 'IS_ACTIVE' }

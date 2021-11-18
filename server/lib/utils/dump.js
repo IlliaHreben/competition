@@ -3,12 +3,12 @@ export function dumpCategory (data) {
 
   if (data.Cards) linked.cards = data.Cards.map(dumpCard);
   if (data.Fights) linked.fights = data.Fights.map(dumpFight);
+  if (data.Section) linked.section = dumpSection(data.Section);
 
   return {
     id            : data.id,
-    section       : data.section,
+    sectionId     : data.sectionId,
     sex           : data.sex,
-    type          : data.type,
     ageFrom       : data.ageFrom,
     ageTo         : data.ageTo,
     weightFrom    : data.weightFrom,
@@ -22,11 +22,28 @@ export function dumpCategory (data) {
   };
 }
 
+export function dumpSection (data) {
+  const linked = {};
+
+  if (data.Cards) linked.cards = data.Cards.map(dumpCard);
+  if (data.Fights) linked.fights = data.Fights.map(dumpFight);
+  if (data.Categories) linked.categories = data.Categories.map(dumpCategory);
+
+  return {
+    id        : data.id,
+    name      : data.name,
+    createdAt : data.createdAt,
+    updatedAt : data.updatedAt,
+    linked
+  };
+}
+
 export function dumpCard (data) {
   const linked = {
     ...data.Coach && { coach: dumpCoach(data.Coach) },
     ...data.Club && { club: dumpCoach(data.Club) },
-    ...data.Fighter && { fighter: dumpFighter(data.Fighter) }
+    ...data.Fighter && { fighter: dumpFighter(data.Fighter) },
+    ...data.Section && { section: dumpSection(data.Section) }
   };
 
   return {
@@ -37,7 +54,7 @@ export function dumpCard (data) {
     coachId         : data.coachId,
     categoryId      : data.categoryId,
     competitionId   : data.competitionId,
-    section         : data.section,
+    sectionId       : data.sectionId,
     weight          : data.weight,
     realWeight      : data.realWeight,
     group           : data.group,

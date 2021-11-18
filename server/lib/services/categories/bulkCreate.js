@@ -3,6 +3,7 @@ import { dumpCategory }  from '../../utils';
 
 import Category          from '../../models/Category.js';
 import Competition       from '../../models/Competition.js';
+import Section           from '../../models/Section.js';
 import ServiceError      from '../service-error.js';
 
 export default class BulkCategoriesCreate extends ServiceBase {
@@ -21,16 +22,24 @@ export default class BulkCategoriesCreate extends ServiceBase {
       } ]
     };
 
-    async execute ({ competitionId, data, ...commonData }) {
+    async execute ({ competitionId, data, ...payload }) {
       const competition = await Competition.findById(competitionId);
       if (!competition) throw new ServiceError('NOT_FOUND', { id: competitionId });
 
       const errors = Category.validateCategories(data);
       if (errors.length) throw new ServiceError('CATEGORIES_VALIDATION', errors);
 
+      const section = await Section.create({ name: payload.section, competitionId });
+
+      const commonData = {
+        sectionId : section.id,
+        competitionId,
+        type      : payload.type
+      };
+
       const prepared = commonData.type === 'full'
-        ? [ 'A', 'B' ].flatMap(group => prepareCategories(competitionId, data, commonData, group))
-        : prepareCategories(competitionId, data, commonData);
+        ? [ 'A', 'B' ].flatMap(group => prepareCategories(commonData, data, group))
+        : prepareCategories(commonData, data);
 
       const categories = await Category.bulkCreate(prepared, { returning: true, validate: true });
 
@@ -40,14 +49,14 @@ export default class BulkCategoriesCreate extends ServiceBase {
     }
 }
 
-const prepareCategories = (competitionId, data, commonData, group = null) => {
+const prepareCategories = (commonData, data, group = null) => {
   const maxWeight = Math.max(...data.map(c => c.weightTo));
 
   return data.map(c => ({
-    competitionId,
-    section    : commonData.section,
-    type       : commonData.type,
-    weightName : (maxWeight === c.weightTo ? '+' : '-') + c.weightTo,
+    competitionId : commonData.competitionId,
+    sectionId     : commonData.sectionId,
+    type          : commonData.type,
+    weightName    : (maxWeight === c.weightTo ? '+' : '-') + c.weightTo,
     group,
     ...c
   }));
