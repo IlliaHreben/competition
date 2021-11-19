@@ -31,6 +31,16 @@ export default class Section extends Base {
       }
     });
   }
+
+  static initScopes () {
+    const scopes = {
+      categories: {
+        include: [ 'Categories' ]
+      }
+    };
+
+    Object.entries(scopes).forEach(scope => Section.addScope(...scope));
+  }
 }
 
 Section.init({

@@ -60,9 +60,6 @@ export default function CompetitionForm ({ competition, handleConfirm, withFight
         name        : e => e.target.value.length < 3 && setErrors({ ...errors, name: 'Name is too short.' }),
         description : e => e.target.value.length < 3 && setErrors({ ...errors, description: 'Description is too short.' }),
         startDate   : value => {
-            console.log('='.repeat(50)); // !nocommit
-            console.log(new Date(value) <= new Date(endDate));
-            console.log('='.repeat(50));
             if (!endDate || new Date(value) <= new Date(endDate)) return;
             setErrors({ ...errors, startDate: 'Must be earlier than end date.' });
         },

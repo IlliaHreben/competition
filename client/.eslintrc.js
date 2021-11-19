@@ -11,7 +11,8 @@ module.exports = {
         'plugin:react/recommended',
         'plugin:react/jsx-runtime'
     ],
-    parserOptions: {
+    plugins       : [ 'arca' ],
+    parserOptions : {
         ecmaFeatures: {
             jsx: true
         }

@@ -14,12 +14,8 @@ import {
     clearShow
     // update as updateCompetition
 } from '../../../../actions/competitions';
-import {
-    list as listFightSpaces
-} from '../../../../actions/fightSpaces';
-import {
-    list as listCategories
-} from '../../../../actions/categories';
+import { list as listFightSpaces }   from '../../../../actions/fightSpaces';
+import { list as listSections }      from '../../../../actions/sections';
 // import { showSuccess }               from '../../../../actions/errors';
 import styles                        from './update.module.css';
 import GeneralSettingsTab            from './generalTab';
@@ -64,7 +60,7 @@ function CompetitionUpdate () {
     useEffect(() => {
         if (!competition) return;
         dispatch(listFightSpaces(competition.id));
-        dispatch(listCategories({ competitionId: competition.id, limit: 100000 }));
+        dispatch(listSections({ competitionId: competition.id, limit: 100000, include: 'categories' }));
     }, [ competition, dispatch ]);
 
     useEffect(() => document.title = `Settings - ${competition ? competition.name : ''}`, [ competition ]);

@@ -1,11 +1,11 @@
-import chista                from '../chista.js';
+import chista              from '../chista.js';
 
-import list                  from '../services/categories/list';
-import show                  from '../services/categories/show';
-import calculateFights       from '../services/categories/calculate-fights';
-import bulkCalculateFights   from '../services/categories/bulk-calculate-fights';
-import bulkCreate            from '../services/categories/bulkCreate';
-import bulkDelete            from '../services/categories/bulkDelete';
+import list                from '../services/categories/list';
+import show                from '../services/categories/show';
+import calculateFights     from '../services/categories/calculate-fights';
+import bulkCalculateFights from '../services/categories/bulk-calculate-fights';
+import bulkCreate          from '../services/categories/bulkCreate';
+import bulkDelete          from '../services/categories/bulkDelete';
 
 export default {
   show                : chista.makeServiceRunner(show, req => ({ id: req.params.id, ...req.query })),

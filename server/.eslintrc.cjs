@@ -9,7 +9,7 @@ module.exports = {
   extends: [
     'standard'
   ],
-  plugins       : [ 'align-import', 'arca' ],
+  plugins       : [ 'arca' ],
   parserOptions : {
     ecmaVersion       : 'latest',
     sourceType        : 'module',

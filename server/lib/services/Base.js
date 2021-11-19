@@ -1,8 +1,8 @@
 import ServiceBaseModule from 'chista/ServiceBase';
 
 import '../../lib/registerValidationRules';
-import ServiceError  from './service-error';
-import x                 from 'chista/Exception';
+import ServiceError from './service-error';
+import x            from 'chista/Exception';
 const Exception = x.default;
 
 const ServiceBase = ServiceBaseModule.default;
@@ -23,10 +23,10 @@ export default class Base extends ServiceBase {
 
   handleError = error => {
     if (error.name === 'SequelizeUniqueConstraintError') {
-      throw new ServiceError('SequelizeUniqueConstraintError', error);
+      error = new ServiceError('SequelizeUniqueConstraintError', error);
     }
     if (error.name === 'AggregateError') {
-      throw new ServiceError('AggregateError', error);
+      error = new ServiceError('AggregateError', error);
     }
 
     if (error instanceof Exception) {

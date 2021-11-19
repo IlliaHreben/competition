@@ -11,12 +11,16 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon                  from '@mui/icons-material/ExpandMore';
 import DeleteIcon                      from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import SaveIcon from '@mui/icons-material/Save';
 
-import { bulkDelete }                  from '../../../../actions/categories';
+import { deleteSection }               from '../../../../actions/sections';
+import { bulkDelete, bulkCreate }      from '../../../../actions/categories';
 import { showSuccess }                 from '../../../../actions/errors';
 
 import Modal                           from '../../../ui-components/modal';
 import CreateModal                     from '../../../ui-components/create-category-modal';
+import CategoryRow                     from '../../../ui-components/category-row';
 
 const aggregateBy = (array, by) => {
     return array.reduce((acc, c) => {
@@ -29,43 +33,49 @@ const aggregateBy = (array, by) => {
     }, []);
 };
 
-function createAccordionData (categories) {
-    const sections = aggregateBy(categories, 'section');
-    for (const section of sections) {
-        section.children = aggregateBy(section.children, 'sex')
-            .reduce((acc, c) => {
-                c.children[0]?.type === 'full'
-                    ? acc.push({
-                        header   : `${c.sex} - group A`,
-                        children : c.children.filter(({ group }) => group === 'A')
-                    }, {
-                        header   : `${c.sex} - group B`,
-                        children : c.children.filter(({ group }) => group === 'B')
-                    })
-                    : acc.push({
-                        header   : `${c.sex}`,
-                        children : c.children
-                    });
-                return acc;
-            }, []);
-    }
-    return sections;
+function createAccordionData (sections) {
+    return sections.map(section => {
+        return {
+            id       : section.id,
+            section  : section.name,
+            children : aggregateBy(section.linked.categories, 'sex')
+                .reduce((acc, c) => {
+                    section.type === 'full'
+                        ? acc.push({
+                            sex      : c.sex,
+                            header   : `${c.sex} - group A`,
+                            group    : 'A',
+                            children : c.children.filter(({ group }) => group === 'A')
+                        }, {
+                            sex      : c.sex,
+                            header   : `${c.sex} - group B`,
+                            group    : 'B',
+                            children : c.children.filter(({ group }) => group === 'B')
+                        })
+                        : acc.push({
+                            sex      : c.sex,
+                            header   : c.sex,
+                            children : c.children
+                        });
+                    return acc;
+                }, [])
+        };
+    });
 }
 
 function mapStateToProps (state) {
     return {
         competition : state.competitions.current,
-        categories  : state.categories.list,
-        isLoading   : state.categories.isLoading
+        sections    : state.sections.list,
+        isLoading   : state.sections.isLoading
     };
 }
 
 export default function CategoriesTab () {
-    const { categories } = useSelector(mapStateToProps);
-    const [ selected, setSelected ] = useState([]);
-    const [ openModal, setStatusModal ] = useState(false);
+    const { sections } = useSelector(mapStateToProps);
+    const [ deleteCandidate, setDeleteCandidate ] = useState(null);
     const [ openCreateModal, setStatusCreateModal ] = useState(false);
-    const accordionData = createAccordionData(categories);
+    const accordionData = createAccordionData(sections);
 
     const { id: competitionId } = useParams();
 
@@ -75,42 +85,18 @@ export default function CategoriesTab () {
         setStatusCreateModal(true);
     };
 
-    const handleClick = (e, section) => {
-        setSelected(e.target.checked
-            ? ([ ...selected, section ])
-            : without(selected, section)
-        );
-    };
-
-    const handleDeleteItems = () => {
-        setStatusModal(true);
+    const handleDeleteItem = (id) => {
+        setDeleteCandidate(id);
     };
     const onConfirmModal = () => {
-        dispatch(bulkDelete(
-            { competitionId, section: selected },
-            showSuccess('Categories has been successfully deleted.'))
+        dispatch(deleteSection(
+            deleteCandidate,
+            () => dispatch(showSuccess('Categories has been successfully deleted.')))
         );
-        setStatusModal(false);
-        setSelected([]);
+
+        setDeleteCandidate(null);
     };
 
-    const onSelectAllClick = (event) => {
-        if (event.target.checked) {
-            const newSelecteds = accordionData.map(c => c.section);
-            setSelected(newSelecteds);
-            return;
-        }
-        setSelected([]);
-    };
-
-    const isSelected = (name) => selected.includes(name);
-
-    // const handleSave = () => {
-    //     const payload = fightSpaces.filter(s => !s.disabled);
-    //     dispatch(bulkUpdate(competitionId, payload,
-    //         () => dispatch(showSuccess('Fight spaces has been successfully updated.'))
-    //     ));
-    // };
     return (
         <Paper sx={{ maxWidth: '500px', width: '100%' }}>
             <CreateModal
@@ -119,71 +105,57 @@ export default function CategoriesTab () {
                 competitionId={competitionId}
             />
             <Modal
-                open={openModal}
+                open={!!deleteCandidate}
                 handleConfirm={onConfirmModal}
-                handleClose={() => setStatusModal(false)}
+                handleClose={() => setDeleteCandidate(null)}
             >You cannot revert this.
             </Modal>
             <Toolbar sx={{ pl: { sm: 2 }, pr: { sm: 1 } }} >
-                <Checkbox
-                    color="primary"
-                    indeterminate={selected.length > 0 && selected.length < accordionData.length}
-                    checked={accordionData.length > 0 && selected.length === accordionData.length}
-                    onChange={onSelectAllClick}
-                    inputProps={{ 'aria-label': 'select all desserts' }}
-                    sx={{ marginRight: '10px' }}
-                />
-                {selected.length
-                    ? (
-                        <Typography
-                            sx={{ flex: '1 1 100%' }}
-                            color="inherit"
-                            variant="subtitle1"
-                            component="div"
-                        >{selected.length} selected
-                        </Typography>
-                    )
-                    : (
-                        <Typography
-                            sx={{ flex: '1 1 100%' }}
-                            variant="h6"
-                            id="tableTitle"
-                        >Categories
-                        </Typography>
-                    )}
+                <Typography
+                    sx={{ flex: '1 1 100%', pl: 2 }}
+                    variant="h6"
+                    id="tableTitle"
+                >Sections
+                </Typography>
 
                 <Button
                     onClick={handleCreateCategory}
                 >Create
                 </Button>
-                <Tooltip title="Delete" disabled={!selected.length}>
-                    <IconButton onClick={handleDeleteItems} component={!selected.length ? 'div' : undefined}>
-                        <DeleteIcon/>
-                    </IconButton>
-                </Tooltip>
             </Toolbar>
-            {accordionData.map(categorySection => (
-                <Accordion disableGutters key={categorySection.section} TransitionProps={{ unmountOnExit: true }}>
+            {accordionData.map(section => (
+                <Accordion disableGutters key={section.id} TransitionProps={{ unmountOnExit: true }}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"
                         id="panel1a-header"
-                        sx={{ '.MuiAccordionSummary-content': { margin: 0 } }}
+                        sx={{
+                            '.MuiAccordionSummary-content' : { margin: 0, justifyContent: 'space-between' },
+                            flexDirection                  : 'row-reverse'
+                        }}
                     >
-                        <Checkbox
-                            onClick={e => e.stopPropagation()}
-                            color="primary"
-                            sx={{ marginRight: '10px' }}
-                            // indeterminate={selected.length > 0 && selected.length < categories.length}
-                            checked={isSelected(categorySection.section)}
-                            onChange={e => handleClick(e, categorySection.section)}
-                            // sx={{ padding: 0 }}
-                        />
-                        <Typography alignSelf="center">{categorySection.section}</Typography>
+                        <Typography sx={{ ml: 3 }} alignSelf="center">{section.section}</Typography>
+                        <Tooltip title="Delete">
+                            <IconButton onClick={(e) => {
+                                e.stopPropagation();
+                                handleDeleteItem(section.id);
+                            } }
+                            >
+                                <DeleteIcon/>
+                            </IconButton>
+                        </Tooltip>
                     </AccordionSummary>
-                    <AccordionDetails>
-                        {categorySection.children.map(categorySex => (
-                            <Accordion key = {categorySex.header} TransitionProps={{ unmountOnExit: true }}>
+                    <AccordionDetails
+                        elevation={0}
+                        square
+                        sx={{ padding: 0, '.MuiAccordionDetails-root': { padding: 0 } }}
+                    >
+                        {section.children.map(categorySex => (
+                            <Accordion
+                                key={categorySex.header}
+                                TransitionProps={{ unmountOnExit: true }}
+                                // sx={{ border: 0, boxShadow: 'none' }}
+                            >
                                 <AccordionSummary
                                     expandIcon={<ExpandMoreIcon />}
                                     aria-controls="panel1a-content"
@@ -194,47 +166,31 @@ export default function CategoriesTab () {
                                 <AccordionDetails>
                                     <CategoriesTable
                                         categories={categorySex.children}
+                                        sectionId={section.id}
+                                        sex={categorySex.sex}
+                                        group={categorySex.group}
                                     />
                                 </AccordionDetails>
                             </Accordion>
                         ))}
                     </AccordionDetails>
                 </Accordion>
-
             ))}
-            {/* <Button
-                // disabled={disableUpdateButton}
-                sx={{ margin: '7px', width: '97%' }}
-                fullWidth
-                variant="contained"
-                size="large"
-                loading={isLoading}
-                // loadingPosition="start"
-                // loadingIndicator="Loading..."
-                onClick={handleSave}
-            >Save
-            </Button> */}
         </Paper>
     );
 }
 
-function createTableData (data) {
-    return {
-        id      : data.id,
-        section : data.section,
-        age     : `${data.ageFrom} - ${data.ageTo}`,
-        weight  : `${data.weightFrom} - ${data.weightTo}`
-    };
-}
-
 CategoriesTable.propTypes = {
-    categories: PropTypes.array.isRequired
+    categories : PropTypes.array.isRequired,
+    sectionId  : PropTypes.string.isRequired,
+    sex        : PropTypes.string.isRequired,
+    group      : PropTypes.string
 };
 
-function CategoriesTable ({ categories }) {
+function CategoriesTable ({ categories, sectionId, sex, group }) {
     const [ selected, setSelected ] = useState([]);
     const [ openModal, setStatusModal ] = useState(false);
-
+    const [ categoriesFields, setCategoriesFields ] = useState([]);
     const dispatch = useDispatch();
 
     const handleClick = (_, id) => {
@@ -259,6 +215,28 @@ function CategoriesTable ({ categories }) {
             return;
         }
         setSelected([]);
+    };
+
+    const handleChangeNewRow = (data, i) => {
+        const _categoriesFields = [ ...categoriesFields ];
+        _categoriesFields.splice(i, 1, data);
+        setCategoriesFields(_categoriesFields);
+    };
+
+    const handleAddCategory = () => {
+        setCategoriesFields([
+            { ageFrom: '', ageTo: '', weightFrom: '', weightTo: '' },
+            ...categoriesFields
+        ]);
+    };
+    const handleSaveCategories = () => {
+        dispatch(bulkCreate({
+            sectionId,
+            data: categoriesFields.map(c => ({ ...c, sex, group }))
+        }, () => {
+            dispatch(showSuccess('Categories has been successfully created.'));
+            setCategoriesFields([]);
+        }));
     };
 
     const isSelected = (name) => selected.includes(name);
@@ -299,13 +277,30 @@ function CategoriesTable ({ categories }) {
                         </Typography>
                     )}
 
-                {selected.length > 0 &&
-                    <Tooltip title="Delete">
-                        <IconButton onClick={handleDeleteItems} >
-                            <DeleteIcon/>
+                {categoriesFields.length > 0 && (
+                    <Tooltip title="Save">
+                        <IconButton onClick={handleSaveCategories} >
+                            <SaveIcon/>
                         </IconButton>
                     </Tooltip>
+                )}
+                {selected.length > 0
+                    ? (
+                        <Tooltip title="Delete">
+                            <IconButton onClick={handleDeleteItems} >
+                                <DeleteIcon/>
+                            </IconButton>
+                        </Tooltip>
+                    )
+                    : (
+                        <Tooltip title="Add">
+                            <IconButton onClick={handleAddCategory} >
+                                <AddIcon/>
+                            </IconButton>
+                        </Tooltip>
+                    )
                 }
+
             </Toolbar>
             <TableContainer sx={{ maxHeight: 440 }}>
                 <Table
@@ -313,6 +308,13 @@ function CategoriesTable ({ categories }) {
                     aria-labelledby="tableTitle"
                 >
                     <TableHead>
+                        <TableRow sx={{ fontWeight: '700' }}>
+                            <TableCell></TableCell>
+                            <TableCell padding="none" colSpan={2} align="center">Age</TableCell>
+                            <TableCell></TableCell>
+                            <TableCell padding="none" colSpan={2} align="center">Weight</TableCell>
+                            <TableCell></TableCell>
+                        </TableRow>
                         <TableRow sx={{ fontWeight: '700' }}>
                             <TableCell padding="checkbox">
                                 <Checkbox
@@ -325,42 +327,50 @@ function CategoriesTable ({ categories }) {
                                     }}
                                 />
                             </TableCell>
-                            <TableCell>Section</TableCell>
-                            <TableCell>Age</TableCell>
-                            <TableCell>Weight</TableCell>
+                            <TableCell>From</TableCell>
+                            <TableCell>To</TableCell>
+                            <TableCell></TableCell>
+                            <TableCell>From</TableCell>
+                            <TableCell>To</TableCell>
+                            <TableCell></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {categories.map(createTableData)
-                            .map((row, index) => {
-                                const isItemSelected = isSelected(row.id);
-                                const labelId = `enhanced-table-checkbox-${index}`;
+                        {categoriesFields.map((data, i) => (
+                            <CategoryRow key={i} data={data} onChange={data => handleChangeNewRow(data, i)}/>
+                        ))}
+                        {categories.map((row, index) => {
+                            const isItemSelected = isSelected(row.id);
+                            const labelId = `enhanced-table-checkbox-${index}`;
 
-                                return (
-                                    <TableRow
-                                        hover
-                                        onClick={(event) => handleClick(event, row.id)}
-                                        role="checkbox"
-                                        aria-checked={isItemSelected}
-                                        tabIndex={-1}
-                                        key={row.id}
-                                        selected={isItemSelected}
-                                    >
-                                        <TableCell padding="checkbox" width={'5%'}>
-                                            <Checkbox
-                                                color="primary"
-                                                checked={isItemSelected}
-                                                inputProps={{
-                                                    'aria-labelledby': labelId
-                                                }}
-                                            />
-                                        </TableCell>
-                                        <TableCell width={'43%'}> {row.section} </TableCell>
-                                        <TableCell width={'25%'}>{row.age}</TableCell>
-                                        <TableCell width={'33%'}>{row.weight}</TableCell>
-                                    </TableRow>
-                                );
-                            })}
+                            return (
+                                <TableRow
+                                    hover
+                                    onClick={(event) => handleClick(event, row.id)}
+                                    role="checkbox"
+                                    aria-checked={isItemSelected}
+                                    tabIndex={-1}
+                                    key={row.id}
+                                    selected={isItemSelected}
+                                >
+                                    <TableCell padding="checkbox" width={'15%'}>
+                                        <Checkbox
+                                            color="primary"
+                                            checked={isItemSelected}
+                                            inputProps={{
+                                                'aria-labelledby': labelId
+                                            }}
+                                        />
+                                    </TableCell>
+                                    <TableCell width={'15%'}>{row.ageFrom}</TableCell>
+                                    <TableCell width={'15%'}>{row.ageTo}</TableCell>
+                                    <TableCell width={'10%'}></TableCell>
+                                    <TableCell width={'15%'}>{row.weightFrom}</TableCell>
+                                    <TableCell width={'15%'}>{row.weightTo}</TableCell>
+                                    <TableCell width={'10%'}></TableCell>
+                                </TableRow>
+                            );
+                        })}
                     </TableBody>
                 </Table>
             </TableContainer>

@@ -10,6 +10,10 @@ router.get('/categories/:id', controllers.categories.show);
 router.post('/categories/bulk', controllers.categories.bulkCreate);
 router.delete('/categories/bulk', controllers.categories.bulkDelete);
 
+router.get('/sections', controllers.sections.list);
+router.get('/sections/:id', controllers.sections.show);
+router.delete('/sections', controllers.sections.delete);
+
 router.post('/cards/bulk', controllers.cards.bulkCreate);
 
 router.get('/competitions', controllers.competitions.list);

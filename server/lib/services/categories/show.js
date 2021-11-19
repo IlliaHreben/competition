@@ -1,11 +1,11 @@
-import ServiceBase       from '../Base.js';
-import { dumpCategory }  from '../../utils';
+import ServiceBase      from '../Base.js';
+import { dumpCategory } from '../../utils';
 
-import Category          from '../../models/Category.js';
-import Card              from '../../models/Card.js';
-import Fight             from '../../models/Fight.js';
+import Category         from '../../models/Category.js';
+import Card             from '../../models/Card.js';
+import Fight            from '../../models/Fight.js';
 
-export default class CategoriesList extends ServiceBase {
+export default class ShowCategory extends ServiceBase {
     static validationRules = {
       id: [ 'required', 'uuid' ]
     };

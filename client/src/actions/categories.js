@@ -56,7 +56,6 @@ export function bulkCreate (payload, onSuccess) {
     return async dispatch => {
         try {
             dispatch(reducer.bulkCreateRequest());
-
             const { data } = await api.categories.bulkCreate(payload);
             dispatch(reducer.bulkCreate(data));
 

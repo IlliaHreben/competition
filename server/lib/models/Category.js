@@ -4,7 +4,6 @@ import { v4 as uuid }    from 'uuid';
 
 import calculateFights   from './calculateFightersProximity';
 import { splitBy }       from '../utils/index.js';
-import upperFirst        from 'lodash/upperFirst';
 
 export default class Category extends Base {
   static initRelation () {
@@ -37,36 +36,39 @@ export default class Category extends Base {
     });
   }
 
-  static validateCategories (data, target = data) {
-    const [ women, men ] = splitBy(data, c => c.sex === 'man');
-
-    const maxWeightWomen = Math.max(...women.map(c => c.weightTo));
-    const maxWeightMen = Math.max(...men.map(c => c.weightTo));
-    const maxAgeWomen = Math.max(...women.map(c => c.ageTo));
-    const maxAgeMen = Math.max(...men.map(c => c.ageTo));
+  static validateCategories (categories, target = categories) {
+    const [ women, men ] = splitBy(categories, c => c.sex === 'man');
 
     const errors = target.flatMap((category, index) => { // for every index find error
-      const maxWeight  = category.sex === 'man' ? maxWeightMen : maxWeightWomen;
-      const maxAge = category.sex === 'man' ? maxAgeMen : maxAgeWomen;
-      const bySex = category.sex === 'man' ? men : women;
-
-      if (category.ageFrom > category.ageTo) {
+      if (category.ageFrom >= category.ageTo) {
         return [
-          { index, key: 'ageTo', message: 'Age to must be greater.', code: 'TOO_LOW' },
-          { index, key: 'ageFrom', message: 'Age from must be lower.', code: 'TOO_HIGHT' }
+          { index, key: 'ageTo', code: 'TOO_LOW' },
+          { index, key: 'ageFrom', code: 'TOO_HIGHT' }
         ];
       }
-      if (category.weightFrom > category.weightTo) {
+      if (category.weightFrom >= category.weightTo) {
         return [
-          { index, key: 'weightTo', message: 'Age to must be greater.', code: 'TOO_LOW' },
-          { index, key: 'weightFrom', message: 'Age from must be lower.', code: 'TOO_HIGHT' }
+          { index, key: 'weightTo', code: 'TOO_LOW' },
+          { index, key: 'weightFrom', code: 'TOO_HIGHT' }
         ];
       }
 
-      return [
-        ...findErrors(data, category, index, bySex, maxAge, 'age', 1),
-        ...findErrors(data, category, index, bySex, maxWeight, 'weight', 0.1)
-      ];
+      let _categories = [ ...category.sex === 'man' ? men : women ];
+      if (category.group) {
+        _categories = _categories.filter(c => c.group === category.group);
+      }
+
+      const currentIndex = _categories.indexOf(category);
+      if (currentIndex >= 0) _categories.splice(currentIndex, 1);
+
+      const maxWeight = Math.max(..._categories.map(c => c.weightTo));
+      const maxAge = Math.max(..._categories.map(c => c.ageTo));
+
+      const _errors = findErrors(_categories, category, index, maxAge, 'age', 1);
+      if (_errors.length) return _errors;
+
+      const filteredByAge = _categories.filter(c => c.ageFrom === category.ageFrom && c.ageTo === category.ageTo);
+      return findErrors(filteredByAge, category, index, maxWeight, 'weight', 0.1);
     });
 
     return errors;
@@ -191,41 +193,70 @@ export default class Category extends Base {
   }
 }
 
-const findErrors = (data, category, index, bySex, maxCharacteristic, by, gap) => {
+const findErrors = (categories, categoryToCheck, index, maxCharacteristic, by, gap) => {
   const keyFrom = `${by}From`;
   const keyTo = `${by}To`;
   const errors = [];
-  if (category[keyTo] !== maxCharacteristic) { // check on gap with greater nearest element
-    const nearestElement = data.reduce((acc, current) => {
-      if (
-        category[keyTo] < current[keyFrom] &&
-        current[keyFrom] < acc[keyFrom]
-      ) return current;
-      return acc;
-    }, { ageFrom: Infinity, weightFrom: Infinity });
-    if (+(nearestElement[keyFrom] - category[keyTo]).toFixed(1) !== +gap.toFixed(1)) {
-      errors.push(
-        { index, key: keyTo, code: 'WRONG_GAP', message: `Gap should be ${gap}.` }
-      );
+  if (categoryToCheck[keyTo] !== maxCharacteristic) { // check on gap with greater nearest element
+    const nearestGreaterElement = findNearestGreaterElement(categoryToCheck, categories, keyTo, keyFrom);
+    if (nearestGreaterElement) {
+      const wrongGap = +(nearestGreaterElement[keyFrom] - categoryToCheck[keyTo]).toFixed(1) !== +gap.toFixed(1);
+      if (wrongGap) {
+        errors.push({ index, key: keyTo, code: 'WRONG_GAP' });
+      }
+    }
+    const nearestLowerElement = findNearestLowerElement(categoryToCheck, categories, keyTo, keyFrom);
+    if (nearestLowerElement) {
+      const wrongGap = +(nearestLowerElement[keyFrom] - categoryToCheck[keyTo]).toFixed(1) !== +gap.toFixed(1);
+      if (wrongGap) {
+        errors.push({ index, key: keyTo, code: 'WRONG_GAP' });
+      }
     }
   }
-  bySex.forEach((c, i) => { // Age should not overlap
-    if (i === index) return;
-    const message = `${upperFirst(by)} should not overlap.`;
-
-    if (category[keyFrom] > c[keyFrom] && category[keyFrom] < c[keyTo]) {
-      errors.push({ index, key: keyFrom, message, code: 'WRONG_OVERLAP' });
-    } else if (category[keyTo] > c[keyFrom] && category[keyTo] < c[keyTo]) {
-      errors.push({ index, key: keyTo, message, code: 'WRONG_OVERLAP' });
-    } else if (c[keyFrom] <= category[keyFrom] && c[keyTo] >= category[keyFrom]) {
+  categories.forEach((c, i) => { // Age should not overlap
+    if (categoryToCheck[keyFrom] >= c[keyFrom] && categoryToCheck[keyFrom] <= c[keyTo]) {
+      errors.push({ index, key: keyFrom, code: 'WRONG_OVERLAP' });
+    } else if (categoryToCheck[keyTo] > c[keyFrom] && categoryToCheck[keyTo] < c[keyTo]) {
+      errors.push({ index, key: keyTo, code: 'WRONG_OVERLAP' });
+    } else if (c[keyFrom] < categoryToCheck[keyFrom] && c[keyTo] > categoryToCheck[keyTo]) {
       errors.push(
-        { index, key: keyFrom, message, code: 'WRONG_OVERLAP' },
-        { index, key: keyTo, message, code: 'WRONG_OVERLAP' }
+        { index, key: keyFrom, code: 'WRONG_OVERLAP' },
+        { index, key: keyTo, code: 'WRONG_OVERLAP' }
+      );
+    } else if (c[keyFrom] === categoryToCheck[keyFrom] && c[keyTo] === categoryToCheck[keyTo] && by === 'weight') {
+      errors.push(
+        { index, key: keyFrom, code: 'WRONG_OVERLAP' },
+        { index, key: keyTo, code: 'WRONG_OVERLAP' }
       );
     };
   });
 
   return errors;
+};
+
+const findNearestGreaterElement = (categoryToCheck, categories, keyTo, keyFrom) => {
+  return findNearestElement(
+    categories,
+    (acc, current) => categoryToCheck[keyTo] < current[keyFrom] && current[keyFrom] < acc[keyFrom]
+  );
+};
+
+const findNearestLowerElement = (categoryToCheck, categories, keyTo, keyFrom) => {
+  return findNearestElement(
+    categories,
+    (acc, current) => categoryToCheck[keyFrom] > current[keyTo] && current[keyTo] > acc[keyTo]
+  );
+};
+
+const findNearestElement = (categories, getCondition) => {
+  const fakeInitialValue = { ageFrom: Infinity, weightFrom: Infinity };
+  const nearestElement = categories.reduce((acc, current) => {
+    return getCondition(acc, current)
+      ? current
+      : acc;
+  }, fakeInitialValue);
+
+  if (fakeInitialValue !== nearestElement) return nearestElement;
 };
 
 Category.init({
@@ -241,14 +272,15 @@ Category.init({
     type      : DT.ENUM([ 'A', 'B' ]),
     allowNull : true,
     validate  : {
-      groupByType (next) {
-        this.getSection().done((err, section) => {
-          if (err) next(err);
-          if ((section.type === 'full') && !this.group) {
-            next('Full category must have group.');
-          }
-          next();
-        });
+      groupByType (group, next) {
+        this.getSection()
+          .then(section => {
+            if ((section.type === 'full') && !group) {
+              next('Full category must have group.');
+            }
+            next();
+          })
+          .catch(err => next(err));
       }
     }
   },

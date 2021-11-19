@@ -240,10 +240,6 @@ function mapPairsToFights (outerPairs, outerFights) {
 
   const pairs = deepFlat(outerPairs, true);
 
-  // console.log('+'.repeat(50)); // !nocommit
-  // console.log(pairs);
-  // console.log('+'.repeat(50));
-
   fights.forEach((fight, i) => {
     const pair = pairs[i];
     orderNumber++;

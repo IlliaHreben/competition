@@ -32,6 +32,7 @@ export function dumpSection (data) {
   return {
     id        : data.id,
     name      : data.name,
+    type      : data.type,
     createdAt : data.createdAt,
     updatedAt : data.updatedAt,
     linked
