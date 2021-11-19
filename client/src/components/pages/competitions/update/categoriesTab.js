@@ -39,7 +39,7 @@ function createAccordionData (sections) {
             id       : section.id,
             section  : section.name,
             children : aggregateBy(section.linked.categories, 'sex')
-                .reduce((acc, c) => {
+                ?.reduce((acc, c) => {
                     section.type === 'full'
                         ? acc.push({
                             sex      : c.sex,

@@ -8,7 +8,7 @@ import ServiceError     from '../service-error.js';
 
 export default class BulkCategoriesCreate extends ServiceBase {
   async validate (payload) {
-    let sectionType = payload.type;
+    // let sectionType = payload.type;
 
     const groupValidationRule = [ 'required', { one_of: [ 'A', 'B' ] } ];
     const dataRules = {
@@ -21,9 +21,9 @@ export default class BulkCategoriesCreate extends ServiceBase {
     };
 
     if (payload.sectionId) {
-      sectionType = (await Section.findById(payload.sectionId)).type;
+      const sectionType = (await Section.findById(payload.sectionId)).type;
+      if (sectionType === 'full') dataRules.group = groupValidationRule;
     }
-    if (sectionType === 'full') dataRules.group = groupValidationRule;
 
     const validationRules = {
       competitionId : [ { required_if_not_present: 'sectionId' }, 'uuid' ],

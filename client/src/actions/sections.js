@@ -2,7 +2,7 @@ import api               from '../api-singleton';
 import * as reducer      from '../reducers/sections';
 import * as categoryReducer      from '../reducers/categories';
 
-export function list (params) {
+export function list (params = {}) {
     return async dispatch => {
         try {
             dispatch(reducer.listRequest());

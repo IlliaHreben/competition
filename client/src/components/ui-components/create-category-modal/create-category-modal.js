@@ -10,6 +10,7 @@ import { useState, useEffect }         from 'react';
 import { omit }                        from 'lodash';
 import { useDispatch, useSelector }    from 'react-redux';
 import { bulkCreate, deleteError }     from '../../../actions/categories';
+import { list as listSections }     from '../../../actions/sections';
 import { showSuccess, showError }      from '../../../actions/errors';
 
 CreateCategory.propTypes = {
@@ -64,6 +65,7 @@ export default function CreateCategory ({ open, handleClose, competitionId }) {
             data    : categories
         };
         dispatch(bulkCreate(data, () => {
+            dispatch(listSections({ competitionId, include: [ 'categories' ] }));
             dispatch(showSuccess('Category has been successfully created.'));
             handleClose();
         }));
