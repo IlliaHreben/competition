@@ -4,7 +4,7 @@ import CategoryTable                 from '../../ui-components/category-table';
 import api                           from '../../../api-singleton';
 import InfiniteScroll                from 'react-infinite-scroll-component';
 
-import CircularProgress              from '@mui/material/CircularProgress';
+import { CircularProgress, Box }     from '@mui/material';
 import Container                     from '@mui/material/Container';
 
 import styles                        from './graphics.module.css';
@@ -59,7 +59,10 @@ export default function FightTrees () {
                     <Container key={category.id} maxWidth="xl">
                         <CategoryTable category={category} />
                         <div className={styles.treeContainer}>
-                            {category.linked.fights.length && <FightTree key={category.id} category={category} />}
+                            {category.linked.fights.length > 0
+                                ? <FightTree key={category.id} category={category} />
+                                : <Box sx= {{ mt: 1, mb: 1 }} />
+                            }
                         </div>
                     </Container>
                 ))}

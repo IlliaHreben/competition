@@ -11,18 +11,21 @@ import styles                              from './category-table.module.css';
 import { formatISODate, getFormattedDate } from '../../../utils/datetime';
 
 function dumpCategoryData (category) {
-    const cards = category.linked.fights.map(f => ([ {
-        ...f.linked.firstCard,
-        fight   : f,
-        isFirst : true
-    }, {
-        ...f.linked.secondCard,
-        fight   : f,
-        isFirst : false
-    }
-    ])).flat();
+    const { fights, cards } = category.linked;
+    const cardsData = fights.length
+        ? fights.flatMap(f => ([ {
+            ...f.linked.firstCard,
+            fight   : f,
+            isFirst : true
+        }, {
+            ...f.linked.secondCard,
+            fight   : f,
+            isFirst : false
+        }
+        ]))
+        : cards;
 
-    return cards.map(dumpCardData).sort((a, b) => a.number - b.number);
+    return cardsData.map(dumpCardData).sort((a, b) => a.number - b.number);
 }
 
 function dumpCardData (card) {
@@ -31,10 +34,10 @@ function dumpCardData (card) {
     const coach = card.linked?.coach;
 
     return {
-        date      : getFormattedDate(), // TODO
-        degree    : `1/${card.fight.degree}`,
-        color     : isFirst ? 'red' : 'blue',
-        number    : card.fight.orderNumber * 2 - +isFirst,
+        date      : card.fight && getFormattedDate(), // TODO
+        degree    : card.fight ? `1/${card.fight.degree}` : '',
+        color     : isFirst !== undefined ? (isFirst ? 'red' : 'blue') : '',
+        number    : card.fight ? (card.fight.orderNumber * 2 - +isFirst) : 1,
         fullName  : getFullName(fighter),
         sex       : fighter?.sex || '',
         city      : card.city || '',

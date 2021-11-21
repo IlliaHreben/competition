@@ -174,15 +174,34 @@ export default class Category extends Base {
 
     const scopes = {
       cards: {
-        include: [ 'Cards', {
-          model    : Fight,
-          as       : 'Fights',
-          required : true,
-          include  : [
-            { model: Card, as: 'FirstCard', include: [ 'Fighter', 'Club', 'Coach' ] },
-            { model: Card, as: 'SecondCard', include: [ 'Fighter', 'Club', 'Coach' ] }
-          ]
-        } ]
+        attributes: [
+          ...Object.keys(this.rawAttributes),
+          [ sequelize.literal('(SELECT COUNT(*) FROM "Cards" WHERE "Cards"."categoryId" = "Category"."id")'), 'cardsCount' ]
+        ],
+        include: [
+          {
+            model    : Card,
+            as       : 'Cards',
+            required : true,
+            include  : [ 'Fighter', 'Club', 'Coach' ],
+            order    : [ [ 'id', 'ASC' ] ]
+          },
+          {
+            model   : Fight,
+            as      : 'Fights',
+            include : [
+              { model: Card, as: 'FirstCard', include: [ 'Fighter', 'Club', 'Coach' ] },
+              {
+                model   : Card,
+                as      : 'SecondCard',
+                include : [ 'Fighter', 'Club', 'Coach' ]
+              }
+            ]
+          }
+        ],
+        // order   : [ [ { model: Fight, as: 'Fights' }, 'secondCardId', 'ASC' ] ],
+        order   : [ [ sequelize.literal('"cardsCount"'), 'DESC' ] ],
+        logging : true
       },
       sections: {
         include: [ 'Section' ]
