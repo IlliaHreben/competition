@@ -62,7 +62,7 @@ function CategoryTable ({ category }) {
                             colSpan={12}
                             align="center"
                         >
-                            {`${category.section} in: ${category.sex}'s ${category.ageFrom} - ${category.ageTo} years, weight category ${category.weightName}`}
+                            {`${category.linked.section.name} in: ${category.sex}'s ${category.ageFrom} - ${category.ageTo} years, weight category ${category.weightName}`}
                         </TableCell>
                     </TableRow>
                     <TableRow className={styles.tableHeadDesc}>
@@ -167,7 +167,8 @@ CategoryTable.propTypes = {
                         }).isRequired
                     }))
                 }).isRequired
-            })).isRequired
+            })).isRequired,
+            section: PropTypes.object.isRequired
         }).isRequired
     }).isRequired
 };

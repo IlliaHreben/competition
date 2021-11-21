@@ -1,15 +1,27 @@
 
 import ReactDOM             from 'react-dom';
 import { BrowserRouter }    from 'react-router-dom';
-import { configureStore }   from '@reduxjs/toolkit';
+import { configureStore, combineReducers }   from '@reduxjs/toolkit';
 import { Provider }         from 'react-redux';
 import { SnackbarProvider } from 'notistack';
 import reducers             from './reducers';
-
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { PersistGate } from 'redux-persist/integration/react';
 import App                  from './App';
 
+const persistConfig = {
+    key       : 'root',
+    storage,
+    whitelist : [ 'competitions' ]
+};
+const persistedReducer = persistReducer(
+    persistConfig,
+    combineReducers(reducers)
+);
+
 export const store = configureStore({
-    reducer    : { ...reducers },
+    reducer    : persistedReducer,
     middleware : (getDefaultMiddleware) => getDefaultMiddleware({
         immutableCheck    : false,
         serializableCheck : false,
@@ -18,19 +30,23 @@ export const store = configureStore({
     devTools: process.env.NODE_ENV !== 'production'
 });
 
+const persistor = persistStore(store);
+
 ReactDOM.render(
     <Provider store={store}>
-        <SnackbarProvider
-            maxSnack={3}
-            anchorOrigin={{
-                vertical   : 'bottom',
-                horizontal : 'right'
-            }}
-        >
-            <BrowserRouter>
-                <App />
-            </BrowserRouter>
-        </SnackbarProvider>
+        <PersistGate loading={null} persistor={persistor}>
+            <SnackbarProvider
+                maxSnack={3}
+                anchorOrigin={{
+                    vertical   : 'bottom',
+                    horizontal : 'right'
+                }}
+            >
+                <BrowserRouter>
+                    <App />
+                </BrowserRouter>
+            </SnackbarProvider>
+        </PersistGate>
     </Provider>,
     document.getElementById('root')
 );

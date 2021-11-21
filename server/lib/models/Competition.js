@@ -68,7 +68,7 @@ export default class Competition extends Base {
     const sections = await Section.bulkCreate(sectionsNames.map(name => ({
       name,
       type          : defaultCategories.find(c => c.section === name).type,
-      competitionId : this.id
+      competitionId : competition.id
     })));
 
     const categoriesPromise =  Category.bulkCreate(

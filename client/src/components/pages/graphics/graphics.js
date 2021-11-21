@@ -8,6 +8,13 @@ import CircularProgress              from '@mui/material/CircularProgress';
 import Container                     from '@mui/material/Container';
 
 import styles                        from './graphics.module.css';
+import { useSelector } from 'react-redux';
+
+function mapStateToProps (state) {
+    return {
+        competition: state.competitions.active
+    };
+}
 
 export default function FightTrees () {
     const [ graphics, setGraphics ] = useState([]);
@@ -15,20 +22,7 @@ export default function FightTrees () {
     const [ hasMore, setHasMore ] = useState(true);
     const limit = 10;
 
-    async function fetchAndConcat () {
-        const competitionId = 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb';
-        const { data } = await api.categories.list({
-            competitionId,
-            offset,
-            limit,
-            include: 'cards'
-        });
-
-        if (data.length < limit) return setHasMore(false);
-
-        setGraphics(graphics.concat(data));
-        setOffset(offset + limit);
-    }
+    const { competition } = useSelector(mapStateToProps);
 
     useEffect(() => {
         async function fetchGraphic () {
@@ -36,40 +30,40 @@ export default function FightTrees () {
         // const { data } = await api.categories.show(categoryId);
         // setGraphics([ data ]);
         // setHasMore(false);
-            const competitionId = 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb';
             const { data } = await api.categories.list({
-                competitionId,
+                competitionId : competition.id,
                 offset,
                 limit,
-                include: 'cards'
+                include       : [ 'cards', 'sections' ]
             });
 
             if (data.length < limit) return setHasMore(false);
 
-            setGraphics(data);
-            setOffset(offset + limit);
+            setGraphics(graphics.concat(data));
         }
 
-        fetchGraphic();
+        if (competition) fetchGraphic();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [ competition, offset ]);
 
     return (
-        <InfiniteScroll
-            dataLength={graphics.length}
-            next={fetchAndConcat}
-            hasMore={hasMore}
-            // scrollableTarget="scroll-container"
-            loader={<CircularProgress />}
-        >
-            {graphics.map((category) => (
-                <Container key={category.id} maxWidth="xl">
-                    <CategoryTable category={category} />
-                    <div className={styles.treeContainer}>
-                        {category.linked.fights.length && <FightTree key={category.id} category={category} />}
-                    </div>
-                </Container>
-            ))}
-        </InfiniteScroll>
+        <div id="scroll-root" style={{ height: '100%', overflow: 'auto' }}>
+            <InfiniteScroll
+                dataLength={graphics.length}
+                next={() => setOffset(offset + limit)}
+                hasMore={hasMore}
+                scrollableTarget="scroll-root"
+                loader={<CircularProgress />}
+            >
+                {graphics.map((category) => (
+                    <Container key={category.id} maxWidth="xl">
+                        <CategoryTable category={category} />
+                        <div className={styles.treeContainer}>
+                            {category.linked.fights.length && <FightTree key={category.id} category={category} />}
+                        </div>
+                    </Container>
+                ))}
+            </InfiniteScroll>
+        </div>
     );
 }

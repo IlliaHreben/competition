@@ -29,7 +29,8 @@ import { visuallyHidden }                           from '@mui/utils';
 import { formatISODate }                            from '../../../utils/datetime';
 import {
     list as listCompetitions,
-    deleteCompetition
+    deleteCompetition,
+    activateCompetition
 } from '../../../actions/competitions';
 import { showSuccess }                              from '../../../actions/errors';
 import SettingsPopover                              from '../../ui-components/settings-popover';
@@ -231,6 +232,14 @@ function CompetitionsList () {
         handleCloseSettings();
     };
 
+    const handleActivateCompetition = () => {
+        dispatch(activateCompetition(
+            anchor.id,
+            () => dispatch(showSuccess('Competition was successfully activated.'))
+        ));
+        handleCloseSettings();
+    };
+
     // useState(() => showError(errors.))
 
     // Avoid a layout jump when reaching the last page with empty rows.
@@ -252,6 +261,7 @@ function CompetitionsList () {
                 handleEdit={() => navigate(`${anchor.id}/edit`)}
                 handleDelete={handleChangeStatusDeleteModal}
                 handleClose={handleCloseSettings}
+                handleActivate={handleActivateCompetition}
             />
             <Box sx={{ width: '100%' }}>
                 <Paper sx={{ width: '100%', mb: 2 }}>

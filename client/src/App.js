@@ -10,6 +10,7 @@ import {
 
 import PageLoader          from './components/ui-components/PageLoader';
 import SideBar             from './components/ui-components/sidebar/sidebar.js';
+import AppBar             from './components/ui-components/app-bar.js';
 import useErrors           from './components/ui-components/notifiers/useErrors.js';
 
 import styles              from './App.module.css';
@@ -54,25 +55,28 @@ function App () {
 
     return (
         <Suspense fallback={<PageLoader />}>
-            <SideBar tabs={routes} />
-            <div className={styles.content}>
-                <Routes>
-                    {routes.map(({ component: Page, ...route }) => (
+            <AppBar />
+            <div style={{ display: 'flex' }}>
+                <SideBar tabs={routes} />
+                <div className={styles.content}>
+                    <Routes>
+                        {routes.map(({ component: Page, ...route }) => (
+                            <Route
+                                key={route.name}
+                                path={route.path}
+                                element={<Page/>}
+                            />
+                        ))}
                         <Route
-                            key={route.name}
-                            path={route.path}
-                            element={<Page/>}
+                            path={'/competitions/create'}
+                            element={<CompetitionCreate/>}
                         />
-                    ))}
-                    <Route
-                        path={'/competitions/create'}
-                        element={<CompetitionCreate/>}
-                    />
-                    <Route
-                        path={'/competitions/:id/edit'}
-                        element={<CompetitionUpdate/>}
-                    />
-                </Routes>
+                        <Route
+                            path={'/competitions/:id/edit'}
+                            element={<CompetitionUpdate/>}
+                        />
+                    </Routes>
+                </div>
             </div>
         </Suspense>
     );

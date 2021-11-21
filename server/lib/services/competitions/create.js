@@ -1,7 +1,7 @@
-import ServiceBase              from '../Base.js';
-import { dumpCompetition }      from '../../utils';
+import ServiceBase         from '../Base.js';
+import { dumpCompetition } from '../../utils';
 
-import Competition              from '../../models/Competition.js';
+import Competition         from '../../models/Competition.js';
 
 export default class CompetitionCreate extends ServiceBase {
     static validationRules = {

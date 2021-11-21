@@ -131,7 +131,7 @@ async function assignBulkCategoryHook (cards, options) {
   const Fighter = sequelize.model('Fighter');
   const Category = sequelize.model('Category');
 
-  await Promise.all(cards.map(async card => {
+  await Promise.all(cards.map(async (card, i) => {
     const fighter = await Fighter.findById(card.fighterId);
     const category = await Category.findOne({
       where: {
@@ -144,6 +144,7 @@ async function assignBulkCategoryHook (cards, options) {
         sex        : fighter.sex
       }
     });
+    if (!category) throw new Error(`Category for card ${card.id} not found.`);
     card.categoryId = category.id;
   }));
 }

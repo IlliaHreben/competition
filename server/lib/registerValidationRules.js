@@ -1,5 +1,5 @@
-import LIVR        from 'livr';
-import extraRules  from 'livr-extra-rules';
+import LIVR       from 'livr';
+import extraRules from 'livr-extra-rules';
 
 const JSONPointer = (object, pointer) => {
   const parts = pointer.split('/');
@@ -66,7 +66,7 @@ const defaultRules = {
       const dateAfter = new Date(valueToCheck);
       const currentDate = new Date(value);
 
-      if (currentDate > dateAfter) return 'DATE_TOO_HIGH';
+      if (currentDate > dateAfter) return 'TOO_HIGH';
     };
   },
   date_after (query) {
@@ -87,10 +87,10 @@ const defaultRules = {
           'LIVR: the target value of the "date_before" rule is missed'
         );
       }
-      const dateBefore = new Date(valueToCheck);
+      const [ dateBefore ] = new Date(valueToCheck).toISOString().split('T');
       const currentDate = new Date(value);
 
-      if (dateBefore > currentDate) return 'DATE_TOO_LOW';
+      if (dateBefore > currentDate) return 'TOO_LOW';
     };
   },
   required_if_not_present (query) {

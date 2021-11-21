@@ -1,12 +1,26 @@
 @import './assets/styles/sizes.module.css';
 
 .content {
-  margin-left: var(--navbar-width);
+  /* margin-left: var(--navbar-width); */
+  /* margin-top: var(--app-bar-height); */
   padding: 5px;
+  padding-top:10px;
+  width: 100%;
+  height: calc(100vh - var(--app-bar-height) - 15px);
+  overflow: scroll;
+  /* box-sizing: border-box; */
+  /* height: 80vh; */
 }
+
+/* #root {
+  overflow: hidden;
+} */
+
+
 
 body {
   margin: 0;
+  overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;

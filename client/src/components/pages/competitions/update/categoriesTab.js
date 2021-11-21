@@ -1,3 +1,4 @@
+/* eslint-disable prefer-template */
 import { useDispatch, useSelector }    from 'react-redux';
 import PropTypes                       from 'prop-types';
 import { useState }                    from 'react';
@@ -43,12 +44,12 @@ function createAccordionData (sections) {
                     section.type === 'full'
                         ? acc.push({
                             sex      : c.sex,
-                            header   : `${c.sex} - group A`,
+                            header   : c.sex + '- group A',
                             group    : 'A',
                             children : c.children.filter(({ group }) => group === 'A')
                         }, {
                             sex      : c.sex,
-                            header   : `${c.sex} - group B`,
+                            header   : c.sex + '- group B',
                             group    : 'B',
                             children : c.children.filter(({ group }) => group === 'B')
                         })

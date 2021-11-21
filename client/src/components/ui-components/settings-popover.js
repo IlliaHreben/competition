@@ -4,17 +4,24 @@ import {
     List, ListItem, ListItemIcon, ListItemButton, ListItemText
 } from '@mui/material';
 import EditIcon        from '@mui/icons-material/Edit';
-import DeleteIcon      from '@mui/icons-material/Delete';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CheckIcon from '@mui/icons-material/Check';
 
 SettingsPopover.propTypes = {
-    anchorEl     : PropTypes.object,
-    handleEdit   : PropTypes.func.isRequired,
-    handleDelete : PropTypes.func.isRequired,
-    handleClose  : PropTypes.func.isRequired
+    anchorEl       : PropTypes.object,
+    handleEdit     : PropTypes.func.isRequired,
+    handleDelete   : PropTypes.func.isRequired,
+    handleClose    : PropTypes.func.isRequired,
+    handleActivate : PropTypes.func.isRequired
 };
 
-export default function SettingsPopover ({ anchorEl, handleClose, handleEdit, handleDelete }) {
+export default function SettingsPopover ({ anchorEl, handleClose, handleEdit, handleDelete, handleActivate }) {
     const settingsList = [
+        {
+            icon    : <CheckIcon fontSize={'small'}/>,
+            onClick : handleActivate,
+            text    : { primary: 'Activate' }
+        },
         {
             icon    : <EditIcon fontSize={'small'}/>,
             onClick : handleEdit,

@@ -65,6 +65,15 @@ export function getActive (...args) {
     };
 }
 
+export function activateCompetition (id, onSuccess) {
+    return async (dispatch, getState) => {
+        const competition = getState().competitions.list.find(c => c.id === id);
+        dispatch(reducer.setActive(competition));
+
+        onSuccess?.();
+    };
+}
+
 export function deleteCompetition (id, onSuccess) {
     return async dispatch => {
         try {
