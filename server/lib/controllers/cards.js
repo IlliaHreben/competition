@@ -1,7 +1,9 @@
-import chista       from '../chista.js';
+import chista     from '../chista.js';
 
-import bulkCreate   from '../services/cards/bulk-create.js';
+import bulkCreate from '../services/cards/bulk-create.js';
+import list       from '../services/cards/list';
 
 export default {
-  bulkCreate: chista.makeServiceRunner(bulkCreate, req => ({ ...req.query, ...req.body }))
+  bulkCreate : chista.makeServiceRunner(bulkCreate, req => ({ ...req.query, ...req.body })),
+  list       : chista.makeServiceRunner(list, req => ({ ...req.query }))
 };

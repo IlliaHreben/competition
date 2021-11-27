@@ -4,6 +4,7 @@ import Categories             from './categories';
 import Competitions           from './competitions';
 import FightSpaces            from './fight-spaces';
 import Sections               from './sections';
+import Cards               from './cards';
 
 export default function apiAggregator ({ apiUrl, apiPrefix } = {}) {
     const apiClient = new ApiClient({
@@ -19,6 +20,7 @@ export default function apiAggregator ({ apiUrl, apiPrefix } = {}) {
         categories   : new Categories(params),
         competitions : new Competitions(params),
         fightSpaces  : new FightSpaces(params),
-        sections     : new Sections(params)
+        sections     : new Sections(params),
+        cards        : new Cards(params)
     };
 }

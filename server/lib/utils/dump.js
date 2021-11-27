@@ -44,7 +44,8 @@ export function dumpCard (data) {
     ...data.Coach && { coach: dumpCoach(data.Coach) },
     ...data.Club && { club: dumpCoach(data.Club) },
     ...data.Fighter && { fighter: dumpFighter(data.Fighter) },
-    ...data.Section && { section: dumpSection(data.Section) }
+    ...data.Section && { section: dumpSection(data.Section) },
+    ...data.Category && { category: dumpCategory(data.Category) }
   };
 
   return {

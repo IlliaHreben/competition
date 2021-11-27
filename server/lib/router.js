@@ -15,6 +15,7 @@ router.get('/sections/:id', controllers.sections.show);
 router.delete('/sections', controllers.sections.delete);
 
 router.post('/cards/bulk', controllers.cards.bulkCreate);
+router.get('/cards', controllers.cards.list);
 
 router.get('/competitions', controllers.competitions.list);
 router.get('/competitions/:id', controllers.competitions.show);

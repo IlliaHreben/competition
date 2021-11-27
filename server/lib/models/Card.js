@@ -9,6 +9,7 @@ export default class Card extends Base {
     const Fighter = sequelize.model('Fighter');
     const Category = sequelize.model('Category');
     const Competition = sequelize.model('Competition');
+    const Section = sequelize.model('Section');
 
     this.belongsTo(Club, {
       as         : 'Club',
@@ -45,6 +46,13 @@ export default class Card extends Base {
         allowNull : false
       }
     });
+    // this.belongsTo(Competition, {
+    //   as         : 'Competition',
+    //   foreignKey : {
+    //     name      : 'competitionId',
+    //     allowNull : false
+    //   }
+    // });
     this.belongsTo(Competition, {
       as         : 'Competition',
       foreignKey : {
@@ -52,6 +60,42 @@ export default class Card extends Base {
         allowNull : false
       }
     });
+    this.belongsTo(Section, {
+      as         : 'Section',
+      foreignKey : {
+        name      : 'sectionId',
+        allowNull : false
+      }
+    });
+  }
+
+  static initScopes () {
+    const Category = sequelize.model('Category');
+
+    const scopes = {
+      fighter: {
+        include: [ 'Fighter' ]
+      },
+      coach: {
+        include: [ 'Coach' ]
+      },
+      category: {
+        include: [ { model: Category, as: 'Category', include: [ 'Section' ] } ]
+      },
+      club: {
+        include: [ 'Club' ]
+      },
+      competitionRelated: (id) => {
+        return {
+          where: {
+            '$Section.competitionId$': id
+          },
+          include: 'Section'
+        };
+      }
+    };
+
+    Object.entries(scopes).forEach(scope => this.addScope(...scope));
   }
 }
 

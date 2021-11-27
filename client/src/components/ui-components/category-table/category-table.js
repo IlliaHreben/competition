@@ -57,7 +57,7 @@ function CategoryTable ({ category }) {
     const rows = dumpCategoryData(category);
     return (
         <TableContainer component={Paper} >
-            <Table sx={{ minWidth: 200 }} size="small" aria-label="a dense table">
+            <Table sx={{ minWidth: 200 }} size="small">
                 <TableHead>
                     <TableRow>
                         <TableCell
