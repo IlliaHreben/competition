@@ -1,5 +1,5 @@
 // import queryString                   from 'query-string';
-import errorHandler                 from './error-handler';
+import errorHandler from './error-handler';
 
 // const POLLING_HEADER_NAME = 'X-Polling';
 
@@ -56,9 +56,10 @@ export default class ApiClient {
     async request ({ url, method, params = {}, body }) {
         // if (!this.token) this.token = localStorage && localStorage.getItem('token');
         // if (!this.lang) this.lang = localStorage && localStorage.getItem('language') || 'en';
+        const filteredParams = Object.fromEntries(Object.entries(params).filter(([ _, value ]) => value !== undefined));
 
-        const query = Object.keys(params).length
-            ? `?${new URLSearchParams(params).toString()}`
+        const query = Object.keys(filteredParams).length
+            ? `?${new URLSearchParams(filteredParams).toString()}`
             : '';
 
         let response;

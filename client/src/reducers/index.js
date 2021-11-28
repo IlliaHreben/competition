@@ -4,6 +4,8 @@ import categories          from './categories';
 import fightSpaces         from './fight-spaces';
 import sections         from './sections';
 import cards         from './cards';
+import coaches         from './coaches';
+import clubs         from './clubs';
 
 const reducers = {
     errors,
@@ -11,7 +13,9 @@ const reducers = {
     fightSpaces,
     categories,
     sections,
-    cards
+    cards,
+    coaches,
+    clubs
 };
 
 export default reducers;

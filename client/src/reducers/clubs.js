@@ -7,27 +7,22 @@ const initialState = {
     isLoading : false
 };
 
-const cards = createSlice({
-    name     : 'cards',
+const clubs = createSlice({
+    name     : 'clubs',
     initialState,
     reducers : {
         deleteError: (state, action) => {
             delete state.errors[action.payload];
         },
-        listRequest : (state) => { state.isLoading = false; },
-        list        : (state, action) => {
+        list: (state, action) => {
             state.list = action.payload.data;
             state.listMeta = action.payload.meta;
             state.isLoading = false;
         },
-        listRequestError: (state, action) => {
+        listRequest      : state => { state.isLoading = true; },
+        listRequestError : (state, action) => {
             state.isLoading = false;
             state.errors = action.payload;
-        },
-        addList: (state, action) => {
-            state.list = state.list.concat(action.payload.data);
-            state.listMeta = action.payload.meta;
-            state.isLoading = false;
         },
         clearList: state => { state.list = []; state.listMeta = {}; },
 
@@ -35,12 +30,13 @@ const cards = createSlice({
             state.list.push(...action.payload);
             state.isLoading = false;
         },
-        createRequestError: (state, action) => {
+        createRequest      : state => { state.isLoading = true; },
+        createRequestError : (state, action) => {
             state.isLoading = false;
             state.errors = action.payload;
         },
 
-        deleteCard: (state, action) => {
+        deleteClub: (state, action) => {
             state.list = state.list.filter(({ id }) => action.payload.id !== id);
         },
         deleteRequestError: (state, action) => {
@@ -49,13 +45,13 @@ const cards = createSlice({
     }
 });
 
-const { actions, reducer } = cards;
+const { actions, reducer } = clubs;
 
 export const {
     deleteError,
-    list, listRequest, clearList, listRequestError, addList,
+    list, listRequest, clearList, listRequestError,
     create, createRequest, createRequestError,
-    deleteCard, deleteRequest, deleteRequestError
+    deleteClub, deleteRequest, deleteRequestError
 } = actions;
 
 export default reducer;

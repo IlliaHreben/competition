@@ -1,5 +1,5 @@
-import api               from '../api-singleton';
-import * as reducer      from '../reducers/cards';
+import api from '../api-singleton';
+import * as reducer from '../reducers/cards';
 
 export function listCards (params = {}) {
     return async dispatch => {
@@ -9,6 +9,20 @@ export function listCards (params = {}) {
             const data = await api.cards.list(params);
 
             dispatch(reducer.list(data));
+        } catch (errData) {
+            dispatch(reducer.listRequestError(errData));
+        }
+    };
+}
+
+export function supplementListCards (params = {}) {
+    return async dispatch => {
+        try {
+            dispatch(reducer.listRequest());
+
+            const data = await api.cards.list(params);
+
+            dispatch(reducer.addList(data));
         } catch (errData) {
             dispatch(reducer.listRequestError(errData));
         }

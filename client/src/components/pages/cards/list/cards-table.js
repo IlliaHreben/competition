@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from 'react-redux';
-import TableCell                           from '@mui/material/TableCell';
-import Paper from '@mui/material/Paper';
+import { TableCell, Stack, Paper } from '@mui/material';
 import { AutoSizer, Column, Table, InfiniteLoader } from 'react-virtualized';
+import { useEffect, useState } from 'react';
+import { withStyles } from '@mui/styles';
 
 import { formatISODate } from '../../../../utils/datetime';
-import { listCards } from '../../../../actions/cards';
-import { useEffect } from 'react';
-import { withStyles } from '@mui/styles';
+import { listCards, supplementListCards } from '../../../../actions/cards';
+import TableHeader from './table-header';
 
 const styles = (theme) => ({
     flexContainer: {
@@ -22,6 +22,7 @@ const styles = (theme) => ({
             ...(theme.direction === 'rtl' && {
                 paddingLeft: '0 !important'
             }),
+
             ...(theme.direction !== 'rtl' && {
                 paddingRight: undefined
             })
@@ -68,7 +69,7 @@ const columns = [
         dataKey : 'fullName'
     },
     {
-        width   : 60,
+        width   : 65,
         label   : 'Sex',
         dataKey : 'sex'
     },
@@ -117,6 +118,7 @@ const columns = [
 ];
 
 export default withStyles(styles)(function CardsTable (props) {
+    const [ filters, setFilters ] = useState({});
     const dispatch = useDispatch();
 
     const getRowClassName = ({ index }) => {
@@ -174,69 +176,78 @@ export default withStyles(styles)(function CardsTable (props) {
             dispatch(listCards({
                 limit         : 30,
                 competitionId : active.id,
-                include       : [ 'category', 'coach', 'club', 'fighter' ]
+                include       : [ 'category', 'coach', 'club', 'fighter' ],
+                ...filters
             }));
         }
-    }, [ active, dispatch ]);
+    }, [ filters, active, dispatch ]);
 
     const loadMoreRows = () => {
-        return dispatch(listCards({
+        return dispatch(supplementListCards({
             offset        : meta.offset + meta.limit,
             limit         : meta.limit,
             competitionId : active.id,
-            include       : [ 'category', 'coach', 'club', 'fighter' ]
+            include       : [ 'category', 'coach', 'club', 'fighter' ],
+            ...filters
         }));
     };
 
     return (
-        <Paper style={{ height: '100%', width: '1150px', minWidth: '1150px' }}>
-            <InfiniteLoader
-                isRowLoaded={({ index }) => !!cards[index]}
-                loadMoreRows={loadMoreRows}
-                rowCount={meta.filteredCount}
-            >
-                {({ onRowsRendered, registerChild }) => (
-                    <AutoSizer>
-                        {({ height, width }) => (
-                            <Table
-                                ref={registerChild}
-                                height={height}
-                                width={width}
-                                rowHeight={48}
-                                gridStyle={{
-                                    direction: 'row'
-                                }}
-                                headerHeight={48}
-                                onRowsRendered={onRowsRendered}
-                                rowCount={cards.length}
-                                rowClassName={getRowClassName}
-                                rowGetter={({ index }) => dumpCard(cards[index])}
-                            >
-                                {columns.map((column, index) => {
-                                    return (
-                                        <Column
-                                            key={column.dataKey}
-                                            headerRenderer={(headerProps) => {
-                                                return headerRenderer({
-                                                    ...headerProps,
-                                                    columnIndex: index
-                                                });
-                                            }}
-                                            style={{
-                                                display    : 'flex',
-                                                alignItems : 'center',
-                                                boxSizing  : 'border-box'
-                                            }}
-                                            cellRenderer={cellRenderer}
-                                            {...column}
-                                        />
-                                    );
-                                })}
-                            </Table>
+        <Stack>
+            <Paper style={{ height: '100%', width: '1150px', minWidth: '1150px', display: 'flex', flexDirection: 'column' }}>
+                <TableHeader
+                    onChange={current => setFilters(prev => ({ ...prev, ...current }))}
+                />
+                <div style={{ flexGrow: 1 }}>
+                    <InfiniteLoader
+                        isRowLoaded={({ index }) => !!cards[index]}
+                        loadMoreRows={loadMoreRows}
+                        rowCount={meta.filteredCount}
+                    >
+                        {({ onRowsRendered, registerChild }) => (
+                            <AutoSizer>
+                                {({ height, width }) => (
+                                    <Table
+                                        ref={registerChild}
+                                        height={height}
+                                        width={width}
+                                        rowHeight={48}
+                                        gridStyle={{
+                                            direction: 'row'
+                                        }}
+                                        headerHeight={48}
+                                        onRowsRendered={onRowsRendered}
+                                        rowCount={cards.length}
+                                        rowClassName={getRowClassName}
+                                        rowGetter={({ index }) => dumpCard(cards[index])}
+                                    >
+                                        {columns.map((column, index) => {
+                                            return (
+                                                <Column
+                                                    key={column.dataKey}
+                                                    headerRenderer={(headerProps) => {
+                                                        return headerRenderer({
+                                                            ...headerProps,
+                                                            columnIndex: index
+                                                        });
+                                                    }}
+                                                    style={{
+                                                        display    : 'flex',
+                                                        alignItems : 'center',
+                                                        boxSizing  : 'border-box'
+                                                    }}
+                                                    cellRenderer={cellRenderer}
+                                                    {...column}
+                                                />
+                                            );
+                                        })}
+                                    </Table>
+                                )}
+                            </AutoSizer>
                         )}
-                    </AutoSizer>
-                )}
-            </InfiniteLoader>
-        </Paper>
+                    </InfiniteLoader>
+                </div>
+            </Paper>
+        </Stack>
     );
 });

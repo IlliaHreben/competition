@@ -1,6 +1,6 @@
 import Base from './base.js';
 
-class Competitions extends Base {
+class FightSpaces extends Base {
     bulkUpdate = (competitionId, payload) => {
         return this.apiClient.patch('fight-spaces/bulk', { competitionId, data: payload });
     }
@@ -18,4 +18,4 @@ class Competitions extends Base {
     }
 }
 
-export default Competitions;
+export default FightSpaces;

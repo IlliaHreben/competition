@@ -71,6 +71,7 @@ export default class Card extends Base {
 
   static initScopes () {
     const Category = sequelize.model('Category');
+    const Fighter = sequelize.model('Fighter');
 
     const scopes = {
       fighter: {
@@ -92,7 +93,20 @@ export default class Card extends Base {
           },
           include: 'Section'
         };
-      }
+      },
+      sectionId : (sectionId) => ({ where: { sectionId } }),
+      clubId    : (clubId) => ({ where: { clubId } }),
+      coachId   : (coachId) => ({ where: { coachId } }),
+      city      : (city) => ({ where: { city } }),
+      group     : (group) => ({ where: { group } }),
+      sex       : sex => ({
+        include: [ {
+          as       : 'Fighter',
+          model    : Fighter,
+          where    : { sex },
+          required : true
+        } ]
+      })
     };
 
     Object.entries(scopes).forEach(scope => this.addScope(...scope));

@@ -24,14 +24,6 @@
     "updatedAt": "2021-10-07T19:39:10.282Z"
   },
   {
-    "id": "999f65c2-17a0-49cf-9d95-d82bf7427176",
-    "coachId": "be78334a-1374-4761-89b1-9f16c00d70ae",
-    "clubId": "ff078d71-54dc-4432-a63a-c1350b0791f4",
-    "deletedAt": null,
-    "createdAt": "2021-10-07T19:39:10.282Z",
-    "updatedAt": "2021-10-07T19:39:10.282Z"
-  },
-  {
     "id": "1b7856d2-684f-4dfc-ab04-e5f26ce69092",
     "coachId": "3f03ef20-331e-43bd-b97a-97c7a20f548e",
     "clubId": "89b141a2-fc6a-4863-8222-77abbe774098",

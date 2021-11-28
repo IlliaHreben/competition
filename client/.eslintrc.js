@@ -58,8 +58,7 @@ module.exports = {
             'error',
             {
                 exceptions: {
-                    VariableDeclarator : true,
-                    ImportDeclaration  : true
+                    VariableDeclarator: true
                 }
             }
         ],

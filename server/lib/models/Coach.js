@@ -1,10 +1,11 @@
-import Sequelize         from 'sequelize';
-import sequelize         from '../sequelize-singleton.js';
-import Base              from './Base.js';
+import Sequelize from 'sequelize';
+import sequelize from '../sequelize-singleton.js';
+import Base      from './Base.js';
 
 export default class Coach extends Base {
   static initRelation () {
     const Club = sequelize.model('Club');
+    const Card = sequelize.model('Card');
 
     this.belongsToMany(Club, {
       as         : 'Clubs',
@@ -16,6 +17,37 @@ export default class Coach extends Base {
       onDelete : 'cascade',
       onUpdate : 'cascade'
     });
+
+    this.hasMany(Card, {
+      as         : 'Cards',
+      foreignKey : {
+        name      : 'coachId',
+        allowNull : false
+      }
+    });
+  }
+
+  static initScopes () {
+    const Card = sequelize.model('Card');
+
+    const scopes = {
+      clubId: id => ({
+        where   : { '$Clubs.id$': id },
+        include : 'Clubs'
+      }),
+      competitionId: id => ({
+        include: [ {
+          as       : 'Cards',
+          model    : Card,
+          where    : { competitionId: id },
+          required : true,
+          distinct : true,
+          limit    : 1
+        } ]
+      })
+    };
+
+    Object.entries(scopes).forEach(scope => this.addScope(...scope));
   }
 }
 

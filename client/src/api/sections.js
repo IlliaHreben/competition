@@ -1,6 +1,6 @@
 import Base from './base.js';
 
-class Categories extends Base {
+class Sections extends Base {
     list = async (params) => {
         return this.apiClient.get('sections', params);
     }
@@ -14,4 +14,4 @@ class Categories extends Base {
     }
 }
 
-export default Categories;
+export default Sections;

@@ -39,7 +39,7 @@ export default class Section extends Base {
       }
     };
 
-    Object.entries(scopes).forEach(scope => Section.addScope(...scope));
+    Object.entries(scopes).forEach(scope => this.addScope(...scope));
   }
 }
 
