@@ -1,42 +1,42 @@
-import { useEffect, useState }                      from 'react';
-import { useNavigate }                              from 'react-router-dom';
-import { useDispatch, useSelector }                 from 'react-redux';
-import PropTypes                                    from 'prop-types';
-import debounce                                     from 'lodash.debounce';
-import useConstant                                  from 'use-constant';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import debounce from 'lodash.debounce';
+import useConstant from 'use-constant';
 import {
     Box, IconButton
 } from '@mui/material';
-import Container                                    from '@mui/material/Container';
-import Table                                        from '@mui/material/Table';
-import TableBody                                    from '@mui/material/TableBody';
-import TableCell                                    from '@mui/material/TableCell';
-import TableContainer                               from '@mui/material/TableContainer';
-import TableHead                                    from '@mui/material/TableHead';
-import TablePagination                              from '@mui/material/TablePagination';
-import TableRow                                     from '@mui/material/TableRow';
-import TableSortLabel                               from '@mui/material/TableSortLabel';
-import Toolbar                                      from '@mui/material/Toolbar';
-import Paper                                        from '@mui/material/Paper';
-import Button                                       from '@mui/material/Button';
-import SearchIcon                                   from '@mui/icons-material/Search';
-import TextField                                    from '@mui/material/TextField';
-import InputAdornment                               from '@mui/material/InputAdornment';
-import CircularProgress                             from '@mui/material/CircularProgress';
-import MoreVertIcon                                 from '@mui/icons-material/MoreVert';
-import { visuallyHidden }                           from '@mui/utils';
+import Container from '@mui/material/Container';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+import TableSortLabel from '@mui/material/TableSortLabel';
+import Toolbar from '@mui/material/Toolbar';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
+import SearchIcon from '@mui/icons-material/Search';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import CircularProgress from '@mui/material/CircularProgress';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { visuallyHidden } from '@mui/utils';
 
-import { formatISODate }                            from '../../../utils/datetime';
+import { formatISODate } from '../../../utils/datetime';
 import {
     list as listCompetitions,
     deleteCompetition,
     activateCompetition
 } from '../../../actions/competitions';
-import { showSuccess }                              from '../../../actions/errors';
-import SettingsPopover                              from '../../ui-components/settings-popover';
-import Modal                                        from '../../ui-components/modal';
+import { showSuccess } from '../../../actions/errors';
+import SettingsPopover from '../../ui-components/settings-popover';
+import Modal from '../../ui-components/modal';
 
-import styles                                       from './list.module.css';
+import styles from './list.module.css';
 
 function createData ({ id, name, description, startDate, endDate, days, fightersCount, cardsCount }) {
     return {

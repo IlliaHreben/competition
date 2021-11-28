@@ -1,9 +1,9 @@
-import ServiceBase       from '../Base.js';
-import { dumpCategory }  from '../../utils';
+import ServiceBase      from '../Base.js';
+import { dumpCategory } from '../../utils';
 
-import Category          from '../../models/Category.js';
-import Competition       from '../../models/Competition.js';
-import ServiceError      from '../service-error.js';
+import Category         from '../../models/Category.js';
+import Competition      from '../../models/Competition.js';
+import ServiceError     from '../service-error.js';
 
 export default class CategoriesCreate extends ServiceBase {
     static validationRules = {

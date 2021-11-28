@@ -1,12 +1,16 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from 'react-redux';
-import { TableCell, Stack, Paper } from '@mui/material';
+import { TableCell, Stack, Paper, IconButton } from '@mui/material';
 import { AutoSizer, Column, Table, InfiniteLoader } from 'react-virtualized';
 import { useEffect, useState } from 'react';
 import { withStyles } from '@mui/styles';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import { formatISODate } from '../../../../utils/datetime';
-import { listCards, supplementListCards } from '../../../../actions/cards';
+import { listCards, deleteCard, supplementListCards } from '../../../../actions/cards';
+import { showSuccess } from '../../../../actions/errors';
+import SettingsPopover from '../../../ui-components/settings-popover';
+import Modal from '../../../ui-components/modal';
 import TableHeader from './table-header';
 
 const styles = (theme) => ({
@@ -46,7 +50,7 @@ function mapState (state) {
         active : state.competitions.active
     };
 }
-const dumpCard = card => {
+const dumpCard = (card, handleClickSettings) => {
     return {
         fullName      : `${card.linked.fighter.name} ${card.linked.fighter.lastName}`,
         sex           : card.linked.fighter.sex,
@@ -57,8 +61,12 @@ const dumpCard = card => {
         birthDate     : formatISODate(card.birthDate),
         weight        : card.weight,
         group         : card.group || ' ',
-        section       : card.linked.category?.linked?.section?.name
-
+        section       : card.linked.category?.linked?.section?.name,
+        settings      : (
+            <IconButton >
+                <MoreVertIcon onClick={e => handleClickSettings(e, card.id)}/>
+            </IconButton>
+        )
     };
 };
 
@@ -114,6 +122,12 @@ const columns = [
         width   : 120,
         label   : 'Section',
         dataKey : 'section'
+    },
+    {
+        width   : 50,
+        label   : '',
+        dataKey : 'settings',
+        padding : 'checkbox'
     }
 ];
 
@@ -144,6 +158,7 @@ export default withStyles(styles)(function CardsTable (props) {
                         ? 'right'
                         : 'left'
                 }
+                padding={columns[columnIndex].padding}
             >
                 {cellData}
             </TableCell>
@@ -192,11 +207,44 @@ export default withStyles(styles)(function CardsTable (props) {
         }));
     };
 
+    const [ anchor, setAnchor ] = useState(null);
+    const handleClickSettings = (event, id) => {
+        setAnchor({ element: event.currentTarget, id });
+    };
+    const handleCloseSettings = () => {
+        setAnchor(null);
+    };
+
+    const [ deleteModalStatus, setDeleteModalStatus ] = useState(false);
+    const handleChangeStatusDeleteModal = () => {
+        setDeleteModalStatus(!deleteModalStatus);
+    };
+    const handleDeleteCard = () => {
+        dispatch(deleteCard(
+            anchor.id,
+            () => dispatch(showSuccess('Card was successfully deleted.'))
+        ));
+        handleChangeStatusDeleteModal();
+        handleCloseSettings();
+    };
+
     return (
         <Stack>
-            <Paper style={{ height: '100%', width: '1150px', minWidth: '1150px', display: 'flex', flexDirection: 'column' }}>
+            <Modal
+                title={'Are you really want to delete the card?'}
+                open={deleteModalStatus}
+                handleClose={handleChangeStatusDeleteModal}
+                handleConfirm={handleDeleteCard}
+            />
+            <Paper style={{ height: '100%', width: '1180px', minWidth: '1180px', display: 'flex', flexDirection: 'column' }}>
                 <TableHeader
                     onChange={current => setFilters(prev => ({ ...prev, ...current }))}
+                />
+                <SettingsPopover
+                    anchorEl={anchor?.element}
+                    // handleEdit={() => navigate(`${anchor.id}/edit`)}
+                    handleDelete={handleChangeStatusDeleteModal}
+                    handleClose={handleCloseSettings}
                 />
                 <div style={{ flexGrow: 1 }}>
                     <InfiniteLoader
@@ -219,7 +267,7 @@ export default withStyles(styles)(function CardsTable (props) {
                                         onRowsRendered={onRowsRendered}
                                         rowCount={cards.length}
                                         rowClassName={getRowClassName}
-                                        rowGetter={({ index }) => dumpCard(cards[index])}
+                                        rowGetter={({ index }) => dumpCard(cards[index], handleClickSettings)}
                                     >
                                         {columns.map((column, index) => {
                                             return (

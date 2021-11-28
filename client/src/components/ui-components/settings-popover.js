@@ -1,9 +1,9 @@
-import PropTypes       from 'prop-types';
+import PropTypes from 'prop-types';
 import {
     Popover,
     List, ListItem, ListItemIcon, ListItemButton, ListItemText
 } from '@mui/material';
-import EditIcon        from '@mui/icons-material/Edit';
+import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
 
@@ -12,16 +12,18 @@ SettingsPopover.propTypes = {
     handleEdit     : PropTypes.func.isRequired,
     handleDelete   : PropTypes.func.isRequired,
     handleClose    : PropTypes.func.isRequired,
-    handleActivate : PropTypes.func.isRequired
+    handleActivate : PropTypes.func
 };
 
 export default function SettingsPopover ({ anchorEl, handleClose, handleEdit, handleDelete, handleActivate }) {
     const settingsList = [
-        {
-            icon    : <CheckIcon fontSize={'small'}/>,
-            onClick : handleActivate,
-            text    : { primary: 'Activate' }
-        },
+        ...handleActivate
+            ? [ {
+                icon    : <CheckIcon fontSize={'small'}/>,
+                onClick : handleActivate,
+                text    : { primary: 'Activate' }
+            } ]
+            : [],
         {
             icon    : <EditIcon fontSize={'small'}/>,
             onClick : handleEdit,
@@ -31,7 +33,6 @@ export default function SettingsPopover ({ anchorEl, handleClose, handleEdit, ha
             onClick : handleDelete,
             text    : { sx: { color: 'rgb(254 6 5/ 0.7);' }, primary: 'Delete' }
         }
-
     ];
 
     return (
@@ -48,7 +49,7 @@ export default function SettingsPopover ({ anchorEl, handleClose, handleEdit, ha
                 horizontal : 'right'
             }}
         >
-            <List>
+            <List sx={{ p: 0 }}>
                 {settingsList.map(({ text, icon, onClick }) => (
                     <ListItem disablePadding key={text.primary}>
                         <ListItemButton sx={{ pt: 0.5, pb: 0.5 }} onClick={onClick}>
