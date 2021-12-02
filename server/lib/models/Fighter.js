@@ -39,7 +39,6 @@ Fighter.init({
   name      : { type: DT.STRING, allowNull: false },
   lastName  : { type: DT.STRING, allowNull: false },
   sex       : { type: DT.ENUM([ 'man', 'woman' ]), allowNull: false },
-  city      : { type: DT.STRING, allowNull: false },
   clubId    : { type: DT.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Clubs', key: 'id' }, allowNull: false },
   coachId   : { type: DT.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Coaches', key: 'id' }, allowNull: false },
   birthDate : { type: DT.DATE, allowNull: false },

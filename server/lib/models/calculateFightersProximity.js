@@ -11,7 +11,6 @@ import { v4 as uuid } from 'uuid';
 //   //   weight        : 34.2,
 //   //   realWeight    : 34.2,
 //   //   group         : 'B',
-//   //   city          : 'Хоролss',
 //   //   birthDate     : '2008-02-03T00:00:00.000Z'
 //   // },
 //   // {
@@ -25,7 +24,6 @@ import { v4 as uuid } from 'uuid';
 //   //   weight        : 34.2,
 //   //   realWeight    : 34.2,
 //   //   group         : 'B',
-//   //   city          : 'Хоролss',
 //   //   birthDate     : '2008-02-03T00:00:00.000Z'
 //   // },
 //   {
@@ -39,7 +37,6 @@ import { v4 as uuid } from 'uuid';
 //     weight        : 34.2,
 //     realWeight    : 34.2,
 //     group         : 'B',
-//     city          : 'Хоролss',
 //     birthDate     : '2008-02-03T00:00:00.000Z'
 //   },
 //   {
@@ -53,7 +50,6 @@ import { v4 as uuid } from 'uuid';
 //     weight        : 34.2,
 //     realWeight    : 34.2,
 //     group         : 'B',
-//     city          : 'Хорол',
 //     birthDate     : '2008-02-03T00:00:00.000Z'
 //   },
 //   {
@@ -67,7 +63,6 @@ import { v4 as uuid } from 'uuid';
 //     weight        : 34.2,
 //     realWeight    : 34.2,
 //     group         : 'B',
-//     city          : 'Київ',
 //     birthDate     : '2009-02-03T00:00:00.000Z'
 //   },
 //   {
@@ -81,7 +76,6 @@ import { v4 as uuid } from 'uuid';
 //     weight        : 35,
 //     realWeight    : 35,
 //     group         : 'B',
-//     city          : 'Київ',
 //     birthDate     : '2009-02-02T00:00:00.000Z'
 //   },
 //   {
@@ -95,7 +89,6 @@ import { v4 as uuid } from 'uuid';
 //     weight        : 34.2,
 //     realWeight    : 34.2,
 //     group         : 'B',
-//     city          : 'Київ',
 //     birthDate     : '2009-02-03T00:00:00.000Z'
 //   },
 //   {
@@ -109,7 +102,6 @@ import { v4 as uuid } from 'uuid';
 //     weight        : 36,
 //     realWeight    : 36,
 //     group         : 'B',
-//     city          : 'Київ',
 //     birthDate     : '2009-05-12T00:00:00.000Z'
 //   },
 //   {
@@ -123,7 +115,6 @@ import { v4 as uuid } from 'uuid';
 //     weight        : 34.2,
 //     realWeight    : 34.2,
 //     group         : 'B',
-//     city          : 'Київ',
 //     birthDate     : '2009-02-03T00:00:00.000Z'
 //   }
 // ];
@@ -183,7 +174,7 @@ function calculateProximityCoefficient (units, coefficientMap) {
         deepTo.forEach(fightTo => {
           if (fightFrom.coachId === fightTo.coachId) coefficient += coefficientMap.coach;
           if (fightFrom.clubId === fightTo.clubId) coefficient += coefficientMap.club;
-          if (fightFrom.city === fightTo.city) coefficient += coefficientMap.city;
+          // if (fightFrom.city === fightTo.city) coefficient += coefficientMap.city;
         });
       });
 
@@ -291,7 +282,7 @@ function calculatePairsToPairsCombinations (units, coefficientMap) {
         flattenTo.forEach(fightTo => {
           if (fightFrom.coachId === fightTo.coachId) coefficient.coefficient += coefficientMap.coach;
           if (fightFrom.clubId === fightTo.clubId) coefficient.coefficient += coefficientMap.club;
-          if (fightFrom.city === fightTo.city) coefficient.coefficient += coefficientMap.city;
+          // if (fightFrom.city === fightTo.city) coefficient.coefficient += coefficientMap.city;
         });
       });
 
@@ -359,8 +350,8 @@ function aggregateByMinimalCoefficient (combinations, coefficients, isFirstLap) 
 function calculate (cards, fights, isFirstLap = true) {
   const proximityCoefficients = { // TODO rank
     coach : 1000000,
-    club  : 10000,
-    city  : 100
+    club  : 10000
+    // city  : 100
     // rank  : 1
   };
   const fightersProximityCoefficient = calculateProximityCoefficient(cards, proximityCoefficients);

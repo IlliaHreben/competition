@@ -8,6 +8,7 @@ export default class Club extends Base {
   static initRelation () {
     const Coach = sequelize.model('Coach');
     const Card = sequelize.model('Card');
+    const Settlement = sequelize.model('Settlement');
 
     this.belongsToMany(Coach, {
       as         : 'Coaches',
@@ -24,6 +25,14 @@ export default class Club extends Base {
       as         : 'Cards',
       foreignKey : {
         name      : 'clubId',
+        allowNull : false
+      }
+    });
+
+    this.belongsTo(Settlement, {
+      as         : 'Settlement',
+      foreignKey : {
+        name      : 'settlementId',
         allowNull : false
       }
     });
@@ -56,7 +65,8 @@ export default class Club extends Base {
 Club.init({
   id: { type: Sequelize.UUID, defaultValue: Sequelize.UUIDV4, primaryKey: true },
 
-  name: { type: Sequelize.STRING, allowNull: false },
+  name         : { type: Sequelize.STRING, allowNull: false },
+  settlementId : { type: Sequelize.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Settlements', key: 'id' }, allowNull: false },
 
   createdAt : { type: Sequelize.DATE, allowNull: false },
   deletedAt : { type: Sequelize.DATE, allowNull: true },

@@ -24,7 +24,6 @@ module.exports = {
     // //     fighterId     : fighters.find(f => f.name === c.name && c.lastName === f.lastName).id,
     // //     clubId        : clubs.find(a => a.name === c.club).id,
     // //     competitionId : 'ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb',
-    // //     city          : c.city,
     // //     coachId       : coaches.find(a => c.trainer.includes(`${a.lastName} ${a.name}`))?.id,
     // //     birthDate     : new Date(c.birthDate),
     // //     weight        : c.weight,

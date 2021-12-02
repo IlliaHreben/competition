@@ -60,7 +60,6 @@ export function dumpCard (data) {
     weight          : data.weight,
     realWeight      : data.realWeight,
     group           : data.group,
-    city            : data.city,
     birthDate       : data.birthDate,
     age             : data.age,
     createdAt       : data.createdAt,
@@ -114,6 +113,7 @@ export function dumpClub (data) {
   const linked = {};
 
   if (data.Coaches) linked.coaches = data.Coaches.map(dumpClub);
+  if (data.Settlement) linked.settlement = dumpSettlement(data.Settlement);
 
   return {
     id        : data.id,
@@ -125,13 +125,26 @@ export function dumpClub (data) {
   };
 }
 
+export function dumpSettlement (data) {
+  const linked = {};
+
+  if (data.Cards) linked.cards = data.Cards.map(dumpCard);
+
+  return {
+    id        : data.id,
+    name      : data.name,
+    createdAt : data.createdAt,
+    updatedAt : data.updatedAt,
+    linked
+  };
+}
+
 export function dumpFighter (data) {
   return {
     id        : data.id,
     name      : data.name,
     lastName  : data.lastName,
     sex       : data.sex,
-    city      : data.city,
     clubId    : data.clubId,
     coachId   : data.coachId,
     birthDate : data.birthDate,

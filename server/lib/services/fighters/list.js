@@ -1,4 +1,4 @@
-import ServiceBase  from '../Base.js';
+import ServiceBase     from '../Base.js';
 import { dumpFighter } from '../../utils';
 
 import Fighter         from '../../models/Fighter.js';
@@ -11,7 +11,7 @@ export default class FightersList extends ServiceBase {
       coachId       : [ 'not_empty', 'uuid' ],
       clubId        : [ 'not_empty', 'uuid' ],
       sectionId     : [ 'not_empty', 'uuid' ],
-      city          : [ 'string', { min_length: 1 }, { max_length: 100 } ],
+      settlementId  : [ 'not_empty', 'uuid' ],
       sex           : [ 'string', { min_length: 1 }, { max_length: 100 } ],
       group         : [ { one_of: [ 'A', 'B', null ] } ],
       include       : [ 'to_array', { list_of: { one_of: [ 'category', 'coach', 'club', 'fighter' ] } }, { default: [ [] ] } ]

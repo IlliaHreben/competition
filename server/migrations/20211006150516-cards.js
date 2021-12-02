@@ -10,7 +10,6 @@ const up = async (queryInterface, Sequelize) => {
       weight     : { type: Sequelize.FLOAT, allowNull: false },
       realWeight : { type: Sequelize.FLOAT, allowNull: false },
       group      : { type: Sequelize.ENUM([ 'A', 'B' ]), allowNull: true },
-      city       : { type: Sequelize.STRING, allowNull: false },
       birthDate  : { type: Sequelize.DATE, allowNull: false },
 
       sectionId       : { type: Sequelize.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Sections', key: 'id' }, allowNull: false },

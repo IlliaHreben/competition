@@ -6,7 +6,8 @@ const up = async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Clubs', {
       id: { type: Sequelize.UUID, defaultValue: Sequelize.UUIDV4, primaryKey: true },
 
-      name: { type: Sequelize.STRING, allowNull: false },
+      name         : { type: Sequelize.STRING, allowNull: false },
+      settlementId : { type: Sequelize.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Settlements', key: 'id' }, allowNull: false },
 
       createdAt : { type: Sequelize.DATE, allowNull: false },
       deletedAt : { type: Sequelize.DATE, allowNull: true },

@@ -55,7 +55,7 @@ const dumpCard = (card, handleClickSettings) => {
     return {
         fullName      : `${card.linked.fighter.name} ${card.linked.fighter.lastName}`,
         sex           : card.linked.fighter.sex,
-        city          : card.city,
+        city          : card.linked.club.linked.settlement.name,
         clubName      : card.linked.club.name,
         coachFullName : `${card.linked.coach.name} ${card.linked.coach.lastName}`,
         age           : card.age,

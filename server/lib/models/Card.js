@@ -95,12 +95,15 @@ export default class Card extends Base {
           include: 'Section'
         };
       },
-      sectionId : (sectionId) => ({ where: { sectionId } }),
-      clubId    : (clubId) => ({ where: { clubId } }),
-      coachId   : (coachId) => ({ where: { coachId } }),
-      city      : (city) => ({ where: { city } }),
-      group     : (group) => ({ where: { group } }),
-      sex       : sex => ({
+      sectionId    : (sectionId) => ({ where: { sectionId } }),
+      clubId       : (clubId) => ({ where: { clubId } }),
+      coachId      : (coachId) => ({ where: { coachId } }),
+      settlementId : (settlementId) => ({
+        where   : { '$Club.settlementId$': settlementId },
+        include : 'Club'
+      }),
+      group : (group) => ({ where: { group } }),
+      sex   : sex => ({
         include: [ {
           as       : 'Fighter',
           model    : Fighter,
@@ -203,7 +206,6 @@ Card.init({
   weight     : { type: DT.FLOAT, allowNull: false },
   realWeight : { type: DT.FLOAT, allowNull: false },
   group      : { type: DT.ENUM([ 'A', 'B' ]), allowNull: true },
-  city       : { type: DT.STRING, allowNull: false },
   birthDate  : { type: DT.DATE, allowNull: false },
   age        : {
     type: DT.VIRTUAL,

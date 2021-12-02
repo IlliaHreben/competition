@@ -17,7 +17,6 @@ export default class CardsBulkCreate extends ServiceBase {
           weight          : [ 'required', { number_between: [ 0, 999 ] } ],
           realWeight      : [ { number_between: [ 0, 999 ] } ],
           group           : [ { one_of: [ 'A', 'B' ] } ],
-          city            : [ 'required', 'string' ],
           birthDate       : [ 'required', 'iso_date' ]
         } ]
       } ]

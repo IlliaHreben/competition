@@ -17,7 +17,6 @@ export default class CardUpdate extends ServiceBase {
           weight          : [ 'not_empty', { number_between: [ 0, 999 ] } ],
           realWeight      : [ { number_between: [ 0, 999 ] } ],
           group           : [ { one_of: [ 'A', 'B' ] } ],
-          city            : [ 'not_empty', 'string' ],
           birthDate       : [ 'not_empty', 'iso_date' ]
         }
       } ]

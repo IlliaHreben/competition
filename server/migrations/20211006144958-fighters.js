@@ -10,7 +10,6 @@ const up = async (queryInterface, Sequelize) => {
       name      : { type: Sequelize.STRING, allowNull: false },
       lastName  : { type: Sequelize.STRING, allowNull: false },
       sex       : { type: Sequelize.ENUM([ 'man', 'woman' ]), allowNull: false },
-      city      : { type: Sequelize.STRING, allowNull: false },
       group     : { type: Sequelize.ENUM([ 'A', 'B' ]), allowNull: true },
       birthDate : { type: Sequelize.DATE, allowNull: false },
 
