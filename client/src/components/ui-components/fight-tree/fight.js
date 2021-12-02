@@ -1,15 +1,15 @@
-import Button                                     from '@mui/material/Button';
-import ButtonGroup                                from '@mui/material/ButtonGroup';
-import { styled }                                 from '@mui/material/styles';
-import Chip                                       from '@mui/material/Chip';
-import Stack                                      from '@mui/material/Stack';
-import SportsMmaIcon                              from '@mui/icons-material/SportsMma';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import { styled } from '@mui/material/styles';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+import SportsMmaIcon from '@mui/icons-material/SportsMma';
 
-import PropTypes                                  from 'prop-types';
-import { useRef, useState, useEffect }            from 'react';
+import PropTypes from 'prop-types';
+import { useRef, useState, useEffect } from 'react';
 // import toPath    from 'element-to-path';
 
-import styles                                     from './index.module.css';
+import styles from './index.module.css';
 
 // const circle = {
 //     type       : 'element',

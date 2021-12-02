@@ -9,6 +9,42 @@ const errors = {
       _reason : `Entity with id ${data.id} not found.`
     }
   }),
+  CLUB_NOT_FOUND: data => ({
+    code   : 'NOT_FOUND',
+    fields : {
+      main: 'CLUB_NOT_FOUND'
+    }
+  }),
+  COACH_NOT_FOUND: data => ({
+    code   : 'NOT_FOUND',
+    fields : {
+      main: 'COACH_NOT_FOUND'
+    }
+  }),
+  SECTION_NOT_FOUND: data => ({
+    code   : 'NOT_FOUND',
+    fields : {
+      main: 'SECTION_NOT_FOUND'
+    }
+  }),
+  FIGHTER_NOT_FOUND: data => ({
+    code   : 'NOT_FOUND',
+    fields : {
+      main: 'FIGHTER_NOT_FOUND'
+    }
+  }),
+  GROUP_DOES_NOT_EXIST: data => ({
+    code   : 'VALIDATION_ERROR',
+    fields : {
+      main: 'GROUP_DOES_NOT_EXIST'
+    }
+  }),
+  GROUP_CANNON_EXIST: data => ({
+    code   : 'VALIDATION_ERROR',
+    fields : {
+      main: 'GROUP_CANNON_EXIST'
+    }
+  }),
   AggregateError: data => ({
     code   : 'VALIDATION_ERROR',
     fields : {

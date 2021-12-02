@@ -1,13 +1,13 @@
-import PropTypes                       from 'prop-types';
-import { useDispatch }                 from 'react-redux';
-import Paper                           from '@mui/material/Paper';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import Paper from '@mui/material/Paper';
 
 import {
     update as updateCompetition
 } from '../../../../actions/competitions';
-import { showSuccess }                 from '../../../../actions/errors';
-import styles                          from './update.module.css';
-import CompetitionForm                 from '../../../ui-components/competition-form';
+import { showSuccess } from '../../../../actions/errors';
+import styles from './update.module.css';
+import CompetitionForm from '../../../ui-components/competition-form';
 
 GeneralSettingsTab.propTypes = {
     competition: PropTypes.object.isRequired

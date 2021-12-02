@@ -45,6 +45,15 @@ const cards = createSlice({
         },
         deleteRequestError: (state, action) => {
             state.errors = action.payload;
+        },
+
+        update: (state, action) => {
+            const cardIndex = state.list.findIndex(c => c.id === action.payload.id);
+            state.list[cardIndex] = action.payload;
+        },
+        updateRequestError: (state, action) => {
+            state.isLoading = false;
+            state.errors = action.payload;
         }
     }
 });
@@ -55,7 +64,8 @@ export const {
     deleteError,
     list, listRequest, clearList, listRequestError, addList,
     create, createRequest, createRequestError,
-    deleteCard, deleteRequest, deleteRequestError
+    deleteCard, deleteRequest, deleteRequestError,
+    update, updateRequestError
 } = actions;
 
 export default reducer;

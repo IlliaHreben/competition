@@ -1,14 +1,14 @@
-import Button            from '@mui/material/Button';
-import Dialog            from '@mui/material/Dialog';
-import DialogActions     from '@mui/material/DialogActions';
-import DialogContent     from '@mui/material/DialogContent';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle       from '@mui/material/DialogTitle';
-import useMediaQuery     from '@mui/material/useMediaQuery';
-import { useTheme }      from '@mui/material/styles';
-import Slide             from '@mui/material/Slide';
-import PropTypes         from 'prop-types';
-import { forwardRef }    from 'react';
+import DialogTitle from '@mui/material/DialogTitle';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+import Slide from '@mui/material/Slide';
+import PropTypes from 'prop-types';
+import { forwardRef } from 'react';
 
 Modal.propTypes = {
     open          : PropTypes.bool.isRequired,

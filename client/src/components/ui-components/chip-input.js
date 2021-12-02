@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import PropTypes            from 'prop-types';
-import Chip                 from '@mui/material/Chip';
-import TextField            from '@mui/material/TextField';
-import Downshift            from 'downshift';
+import PropTypes from 'prop-types';
+import Chip from '@mui/material/Chip';
+import TextField from '@mui/material/TextField';
+import Downshift from 'downshift';
 
 export default function TagsInput ({ ...props }) {
     const { selectedTags, placeholder, tags, ...other } = props;

@@ -1,13 +1,13 @@
-import { useState, useEffect }       from 'react';
-import FightTree                     from '../../ui-components/fight-tree';
-import CategoryTable                 from '../../ui-components/category-table';
-import api                           from '../../../api-singleton';
-import InfiniteScroll                from 'react-infinite-scroll-component';
+import { useState, useEffect } from 'react';
+import FightTree from '../../ui-components/fight-tree';
+import CategoryTable from '../../ui-components/category-table';
+import api from '../../../api-singleton';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
-import { CircularProgress, Box }     from '@mui/material';
-import Container                     from '@mui/material/Container';
+import { CircularProgress, Box } from '@mui/material';
+import Container from '@mui/material/Container';
 
-import styles                        from './graphics.module.css';
+import styles from './graphics.module.css';
 import { useSelector } from 'react-redux';
 
 function mapStateToProps (state) {

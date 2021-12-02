@@ -1,12 +1,12 @@
-import chista         from '../chista.js';
+import chista   from '../chista.js';
 
-import Create         from '../services/competitions/create';
-import List           from '../services/competitions/list';
-import Show           from '../services/competitions/show';
-import Update         from '../services/competitions/update';
-import Delete         from '../services/competitions/delete';
-import Activate       from '../services/competitions/activate';
-import Complete       from '../services/competitions/complete';
+import Create   from '../services/competitions/create';
+import List     from '../services/competitions/list';
+import Show     from '../services/competitions/show';
+import Update   from '../services/competitions/update';
+import Delete   from '../services/competitions/delete';
+import Activate from '../services/competitions/activate';
+import Complete from '../services/competitions/complete';
 
 export default {
   create   : chista.makeServiceRunner(Create, req => ({ ...req.body })),

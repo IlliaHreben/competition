@@ -8,15 +8,15 @@ import {
     Routes
 } from 'react-router-dom';
 
-import PageLoader          from './components/ui-components/PageLoader';
-import SideBar             from './components/ui-components/sidebar/sidebar.js';
-import AppBar             from './components/ui-components/app-bar.js';
-import useErrors           from './components/ui-components/notifiers/useErrors.js';
+import PageLoader from './components/ui-components/PageLoader';
+import SideBar from './components/ui-components/sidebar/sidebar.js';
+import AppBar from './components/ui-components/app-bar.js';
+import useErrors from './components/ui-components/notifiers/useErrors.js';
 
-import styles              from './App.module.css';
+import styles from './App.module.css';
 
-import CompetitionIcon     from './assets/icons/tournament.png';
-import GraphicsIcon        from './assets/icons/graphics.png';
+import CompetitionIcon from './assets/icons/tournament.png';
+import GraphicsIcon from './assets/icons/graphics.png';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';

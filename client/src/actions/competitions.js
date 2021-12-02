@@ -1,5 +1,5 @@
-import api            from '../api-singleton';
-import * as reducer   from '../reducers/competitions';
+import api from '../api-singleton';
+import * as reducer from '../reducers/competitions';
 
 export function list (...args) {
     return async dispatch => {

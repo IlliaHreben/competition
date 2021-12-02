@@ -1,4 +1,5 @@
 import sequelize, { Op, DT } from '../sequelize-singleton.js';
+import ServiceError          from '../services/service-error.js';
 
 import Base                  from './Base.js';
 
@@ -110,6 +111,81 @@ export default class Card extends Base {
     };
 
     Object.entries(scopes).forEach(scope => this.addScope(...scope));
+  }
+
+  async updateCard (data) {
+    const Club = sequelize.model('Club');
+    const Coach = sequelize.model('Coach');
+    const Section = sequelize.model('Section');
+    const Category = sequelize.model('Category');
+    const Fighter = sequelize.model('Fighter');
+
+    if (data.fighterId) {
+      const fighter = await Fighter.findById(data.fighterId);
+      if (!fighter) throw new ServiceError('FIGHTER_NOT_FOUND');
+    }
+    if (data.clubId) {
+      const club = await Club.findById(data.clubId);
+      if (!club) throw new ServiceError('CLUB_NOT_FOUND');
+    }
+    if (data.coachId) {
+      const coach = await Coach.findById(data.coachId);
+      if (!coach) throw new ServiceError('COACH_NOT_FOUND');
+    }
+    if (data.sectionId) {
+      const section = await Section.findById(data.sectionId);
+      if (!section) throw new ServiceError('SECTION_NOT_FOUND');
+      if (section.type === 'full' && !data.group && !this.group) {
+        throw new ServiceError('GROUP_DOES_NOT_EXIST');
+      }
+      if (section.type === 'light' && data.group !== null && this.group !== null) {
+        throw new ServiceError('GROUP_CANNOT_EXIST');
+      }
+    } else if (data.group !== undefined) {
+      const section = await Section.findById(this.sectionId);
+      if (section.type === 'full' && !data.group) {
+        throw new ServiceError('GROUP_DOES_NOT_EXIST');
+      }
+      if (section.type === 'light' && data.group !== null) {
+        throw new ServiceError('GROUP_CANNOT_EXIST');
+      }
+    }
+
+    const oldCategoryId = this.categoryId;
+    const category = await Category.findById(oldCategoryId);
+    await category.calculateFights();
+
+    await this.update(data);
+    await this.assignCategory();
+    await this.calculateFights();
+
+    return this;
+  }
+
+  async assignCategory () {
+    const Fighter = sequelize.model('Fighter');
+    const Category = sequelize.model('Category');
+
+    const fighter = await Fighter.findById(this.fighterId);
+    const category = await Category.findOne({
+      where: {
+        weightFrom    : { [Op.lte]: this.weight },
+        weightTo      : { [Op.gte]: this.weight },
+        ageFrom       : { [Op.lte]: this.age },
+        ageTo         : { [Op.gte]: this.age },
+        group         : this.group,
+        sectionId     : this.sectionId,
+        sex           : fighter.sex,
+        competitionId : this.competitionId
+      }
+    });
+    await this.update({ categoryId: category?.id });
+  }
+
+  async calculateFights () {
+    const Category = sequelize.model('Category');
+    const category = await Category.findById(this.categoryId);
+    await category.calculateFights();
   }
 }
 

@@ -1,5 +1,5 @@
-import api               from '../api-singleton';
-import * as reducer      from '../reducers/coaches';
+import api from '../api-singleton';
+import * as reducer from '../reducers/coaches';
 
 export function listCoaches (params = {}) {
     return async dispatch => {

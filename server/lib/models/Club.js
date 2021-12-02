@@ -34,8 +34,8 @@ export default class Club extends Base {
 
     const scopes = {
       coachId: id => ({
-        where   : { '$Coach.id$': id },
-        include : 'Coach'
+        where   : { '$Coaches.id$': id },
+        include : 'Coaches'
       }),
       competitionId: id => ({
         include: [ {

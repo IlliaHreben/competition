@@ -1,4 +1,4 @@
-import { store }     from '../index';
+import { store } from '../index';
 import { showError } from '../actions/errors';
 
 export default function errorsHandler ({ error }, statusCode, url) {
@@ -10,7 +10,7 @@ export default function errorsHandler ({ error }, statusCode, url) {
             const field = key.replace('data/', '');
 
             if (field) {
-                errorsData[field] = getMessageByType(fields[key]);
+                errorsData[field] = getMessageByType(fields[key]) || fields[key];
             }
         }
     } else {
@@ -26,7 +26,10 @@ function statusHandler (error, statusCode, url) {
     switch (statusCode) {
     case 200:
         console.log('Api error:', error);
-        error.message = getMessageByType(error.code);
+        error.message = getMessageByType(error.fields?.main) ||
+            getMessageByType(error.code) ||
+            error.fields?.main ||
+            error.code;
         store.dispatch(showError({
             ...error,
             message : error.message,
@@ -89,11 +92,13 @@ function getErrorMessage (error) {
 
 function getMessageByType (type) {
     const messageByType = {
-        DATE_TOO_HIGH : 'Date is too high.',
-        DATE_TOO_LOW  : 'Date is too low.',
-        FORMAT_ERROR  : 'Format error.',
-        REQUIRED      : 'This field is required.'
+        DATE_TOO_HIGH        : 'Date is too high.',
+        DATE_TOO_LOW         : 'Date is too low.',
+        FORMAT_ERROR         : 'Format error.',
+        VALIDATION_ERROR     : 'Validation error.',
+        REQUIRED             : 'This field is required.',
+        GROUP_DOES_NOT_EXIST : 'For full sections group must be specified.'
     };
 
-    return messageByType[type] || type;
+    return messageByType[type];
 }

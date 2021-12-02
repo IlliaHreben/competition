@@ -24,9 +24,7 @@ export default class CategoriesList extends ServiceBase {
           offset
         // order: [ [ sort, order ] ]
         });
-      console.log('='.repeat(50)); // !nocommit
-      console.log(rows);
-      console.log('='.repeat(50));
+
       return {
         data : rows.map(dumpCategory),
         meta : {

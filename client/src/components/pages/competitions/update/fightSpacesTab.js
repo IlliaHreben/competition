@@ -6,25 +6,25 @@ import {
     useEffect,
     useState
 } from 'react';
-import Button          from '@mui/lab/LoadingButton';
-import List            from '@mui/material/List';
-import ListItem        from '@mui/material/ListItem';
-import ListItemIcon    from '@mui/material/ListItemIcon';
-import ListItemText    from '@mui/material/ListItemText';
-import Avatar          from '@mui/material/Avatar';
-import IconButton      from '@mui/material/IconButton';
-import Divider         from '@mui/material/Divider';
-import Paper           from '@mui/material/Paper';
-import Typography      from '@mui/material/Typography';
-import DeleteIcon      from '@mui/icons-material/Delete';
-import AddIcon         from '@mui/icons-material/Add';
+import Button from '@mui/lab/LoadingButton';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import Divider from '@mui/material/Divider';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
 
-import RingIcon        from '../../../../assets/icons/ring.png';
-import TatamiIcon      from '../../../../assets/icons/tatami.png';
+import RingIcon from '../../../../assets/icons/ring.png';
+import TatamiIcon from '../../../../assets/icons/tatami.png';
 
-import { bulkUpdate }  from '../../../../actions/fightSpaces';
+import { bulkUpdate } from '../../../../actions/fightSpaces';
 import { showSuccess } from '../../../../actions/errors';
-import { useParams }   from 'react-router';
+import { useParams } from 'react-router';
 
 const uuid = crypto.randomUUID.bind(crypto);
 

@@ -1,10 +1,10 @@
-import PropTypes   from 'prop-types';
-import Divider     from '@mui/material/Divider';
-import Stack       from '@mui/material/Stack';
-import IconButton  from '@mui/material/IconButton';
-import Avatar      from '@mui/material/Avatar';
+import PropTypes from 'prop-types';
+import Divider from '@mui/material/Divider';
+import Stack from '@mui/material/Stack';
+import IconButton from '@mui/material/IconButton';
+import Avatar from '@mui/material/Avatar';
 
-import styles      from './sidebar.module.css';
+import styles from './sidebar.module.css';
 
 import {
     Link

@@ -94,6 +94,10 @@ export function dumpFight (data) {
 }
 
 export function dumpCoach (data) {
+  const linked = {};
+
+  if (data.Clubs) linked.clubs = data.Clubs.map(dumpClub);
+
   return {
     id                : data.id,
     name              : data.name,
@@ -101,17 +105,23 @@ export function dumpCoach (data) {
     assistantName     : data.assistantName,
     assistantLastName : data.assistantLastName,
     createdAt         : data.createdAt,
-    updatedAt         : data.updatedAt
+    updatedAt         : data.updatedAt,
+    linked
   };
 }
 
 export function dumpClub (data) {
+  const linked = {};
+
+  if (data.Coaches) linked.coaches = data.Coaches.map(dumpClub);
+
   return {
     id        : data.id,
     name      : data.name,
     createdAt : data.createdAt,
     deletedAt : data.deletedAt,
-    updatedAt : data.updatedAt
+    updatedAt : data.updatedAt,
+    linked
   };
 }
 

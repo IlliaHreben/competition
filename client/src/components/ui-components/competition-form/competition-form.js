@@ -1,15 +1,15 @@
-import PropTypes             from 'prop-types';
-import { useState }          from 'react';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
 
-import TextField             from '@mui/material/TextField';
-import Container             from '@mui/material/Container';
-import Box                   from '@mui/material/Box';
-import Button                from '@mui/material/Button';
-import AdapterDateFns        from '@mui/lab/AdapterLuxon';
-import LocalizationProvider  from '@mui/lab/LocalizationProvider';
-import DatePicker            from '@mui/lab/DatePicker';
+import TextField from '@mui/material/TextField';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import AdapterDateFns from '@mui/lab/AdapterLuxon';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
 
-import styles                from './competition-form.module.css';
+import styles from './competition-form.module.css';
 
 CompetitionForm.propTypes = {
     // handleDateChange : PropTypes.func.isRequired,

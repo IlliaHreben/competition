@@ -11,6 +11,7 @@ import { listCards, deleteCard, supplementListCards } from '../../../../actions/
 import { showSuccess } from '../../../../actions/errors';
 import SettingsPopover from '../../../ui-components/settings-popover';
 import Modal from '../../../ui-components/modal';
+import EditCardModal from '../../../ui-components/edit-card-modal';
 import TableHeader from './table-header';
 
 const styles = (theme) => ({
@@ -63,8 +64,8 @@ const dumpCard = (card, handleClickSettings) => {
         group         : card.group || ' ',
         section       : card.linked.category?.linked?.section?.name,
         settings      : (
-            <IconButton >
-                <MoreVertIcon onClick={e => handleClickSettings(e, card.id)}/>
+            <IconButton onClick={e => handleClickSettings(e, card)}>
+                <MoreVertIcon/>
             </IconButton>
         )
     };
@@ -208,8 +209,8 @@ export default withStyles(styles)(function CardsTable (props) {
     };
 
     const [ anchor, setAnchor ] = useState(null);
-    const handleClickSettings = (event, id) => {
-        setAnchor({ element: event.currentTarget, id });
+    const handleClickSettings = (event, card) => {
+        setAnchor({ element: event.currentTarget, card });
     };
     const handleCloseSettings = () => {
         setAnchor(null);
@@ -221,20 +222,38 @@ export default withStyles(styles)(function CardsTable (props) {
     };
     const handleDeleteCard = () => {
         dispatch(deleteCard(
-            anchor.id,
+            anchor.card.id,
             () => dispatch(showSuccess('Card was successfully deleted.'))
         ));
         handleChangeStatusDeleteModal();
         handleCloseSettings();
     };
 
+    const [ editModalStatus, setEditModalStatus ] = useState(false);
+    const handleChangeStatusEditModal = () => {
+        setEditModalStatus(prevState => !prevState);
+    };
+    // const handleEditCard = () => {
+    //     dispatch(deleteCard(
+    //         anchor.id,
+    //         () => dispatch(showSuccess('Card was successfully deleted.'))
+    //     ));
+    //     handleChangeStatusDeleteModal();
+    //     handleCloseSettings();
+    // };
     return (
         <Stack>
             <Modal
-                title={'Are you really want to delete the card?'}
+                title={'Do you really want to delete the card?'}
                 open={deleteModalStatus}
                 handleClose={handleChangeStatusDeleteModal}
                 handleConfirm={handleDeleteCard}
+            />
+            <EditCardModal
+                open={editModalStatus}
+                handleClose={handleChangeStatusEditModal}
+                handleConfirm={handleChangeStatusEditModal}
+                card={anchor?.card}
             />
             <Paper style={{ height: '100%', width: '1180px', minWidth: '1180px', display: 'flex', flexDirection: 'column' }}>
                 <TableHeader
@@ -242,7 +261,7 @@ export default withStyles(styles)(function CardsTable (props) {
                 />
                 <SettingsPopover
                     anchorEl={anchor?.element}
-                    // handleEdit={() => navigate(`${anchor.id}/edit`)}
+                    handleEdit={handleChangeStatusEditModal}
                     handleDelete={handleChangeStatusDeleteModal}
                     handleClose={handleCloseSettings}
                 />

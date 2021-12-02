@@ -1,12 +1,12 @@
-import errorsHandler          from './error-handler';
-import ApiClient              from './ApiClient.js';
-import Categories             from './categories';
-import Competitions           from './competitions';
-import FightSpaces            from './fight-spaces';
-import Sections               from './sections';
-import Cards               from './cards';
-import Clubs               from './clubs';
-import Coaches               from './coaches';
+import errorsHandler from './error-handler';
+import ApiClient from './ApiClient.js';
+import Categories from './categories';
+import Competitions from './competitions';
+import FightSpaces from './fight-spaces';
+import Sections from './sections';
+import Cards from './cards';
+import Clubs from './clubs';
+import Coaches from './coaches';
 
 export default function apiAggregator ({ apiUrl, apiPrefix } = {}) {
     const apiClient = new ApiClient({

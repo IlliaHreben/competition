@@ -1,14 +1,14 @@
 
-import ReactDOM             from 'react-dom';
-import { BrowserRouter }    from 'react-router-dom';
-import { configureStore, combineReducers }   from '@reduxjs/toolkit';
-import { Provider }         from 'react-redux';
+import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
-import reducers             from './reducers';
+import reducers from './reducers';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { PersistGate } from 'redux-persist/integration/react';
-import App                  from './App';
+import App from './App';
 
 const persistConfig = {
     key       : 'root',

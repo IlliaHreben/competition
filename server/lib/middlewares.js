@@ -1,6 +1,6 @@
-import cors        from 'cors';
-import express     from 'express';
-import bytes       from 'bytes';
+import cors    from 'cors';
+import express from 'express';
+import bytes   from 'bytes';
 
 export default {
   json: express.json({

@@ -1,17 +1,17 @@
-import Modal                           from '../modal';
-import PropTypes                       from 'prop-types';
+import Modal from '../modal';
+import PropTypes from 'prop-types';
 import {
     TextField, Select, Divider,
     FormControl, InputLabel, MenuItem,
     Chip
 } from '@mui/material';
-import ListFields                      from '../list-fields';
-import { useState, useEffect }         from 'react';
-import { omit }                        from 'lodash';
-import { useDispatch, useSelector }    from 'react-redux';
-import { bulkCreate, deleteError }     from '../../../actions/categories';
-import { list as listSections }     from '../../../actions/sections';
-import { showSuccess, showError }      from '../../../actions/errors';
+import ListFields from '../list-fields';
+import { useState, useEffect } from 'react';
+import { omit } from 'lodash';
+import { useDispatch, useSelector } from 'react-redux';
+import { bulkCreate, deleteError } from '../../../actions/categories';
+import { list as listSections } from '../../../actions/sections';
+import { showSuccess, showError } from '../../../actions/errors';
 
 CreateCategory.propTypes = {
     open          : PropTypes.bool.isRequired,

@@ -54,6 +54,21 @@ export function createCard (section, categories) {
     };
 }
 
+export function updateCard (id, section, onSuccess) {
+    return async dispatch => {
+        try {
+            await api.cards.update(id, section);
+            const { data } = await api.cards.show(id, { include: [ 'category', 'coach', 'club', 'fighter' ] });
+
+            dispatch(reducer.update(data));
+
+            onSuccess?.();
+        } catch (errData) {
+            dispatch(reducer.updateRequestError(errData));
+        }
+    };
+}
+
 export function deleteError (field) {
     return reducer.deleteError(field);
 }

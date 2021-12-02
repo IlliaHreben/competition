@@ -1,10 +1,10 @@
-import { useState }                     from 'react';
-import PropTypes                        from 'prop-types';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
     TextField, Stack, IconButton, Typography,
     Popover, Box, SvgIcon
 } from '@mui/material';
-import DeleteIcon                       from '@mui/icons-material/Delete';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { ReactComponent as IconWeight } from '../../assets/icons/scales.svg';
 
 ListFields.propTypes = {

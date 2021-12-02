@@ -12,6 +12,10 @@ class Cards extends Base {
     delete = async (id) => {
         return this.apiClient.delete('cards/', { id });
     }
+
+    update = (id, payload) => {
+        return this.apiClient.patch(`cards/${id}`, { data: payload });
+    }
 }
 
 export default Cards;

@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 // import PropTypes              from 'prop-types';
 
-import styles                 from './index.module.css';
+import styles from './index.module.css';
 import { LinkHorizontalStep } from '@visx/shape';
-import { hierarchy, Tree }    from '@visx/hierarchy';
-import { Group }              from '@visx/group';
+import { hierarchy, Tree } from '@visx/hierarchy';
+import { Group } from '@visx/group';
 
-import Fight                  from './fight';
+import Fight from './fight';
 
 function pleasantHexColorGenerator () {
     const threshold = 40;

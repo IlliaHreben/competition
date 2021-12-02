@@ -1,27 +1,27 @@
 
-import { useEffect, useState }       from 'react';
-import SwipeableViews                from 'react-swipeable-views';
-import PropTypes                     from 'prop-types';
-import { useParams, useLocation }    from 'react-router';
-import { useDispatch, useSelector }  from 'react-redux';
+import { useEffect, useState } from 'react';
+import SwipeableViews from 'react-swipeable-views';
+import PropTypes from 'prop-types';
+import { useParams, useLocation } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 
-import Box                           from '@mui/material/Box';
-import Tabs                          from '@mui/material/Tabs';
-import Tab                           from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 import {
     show as showCompetition,
     clearShow
     // update as updateCompetition
 } from '../../../../actions/competitions';
-import { list as listFightSpaces }   from '../../../../actions/fightSpaces';
-import { list as listSections }      from '../../../../actions/sections';
+import { list as listFightSpaces } from '../../../../actions/fightSpaces';
+import { list as listSections } from '../../../../actions/sections';
 // import { showSuccess }               from '../../../../actions/errors';
-import styles                        from './update.module.css';
-import GeneralSettingsTab            from './generalTab';
-import FightSpacesTab                from './fightSpacesTab';
-import CategoriesTab                 from './categoriesTab';
-import { useNavigate }               from 'react-router-dom';
+import styles from './update.module.css';
+import GeneralSettingsTab from './generalTab';
+import FightSpacesTab from './fightSpacesTab';
+import CategoriesTab from './categoriesTab';
+import { useNavigate } from 'react-router-dom';
 
 function TabPanel (props) {
     const { children, value, index } = props;
