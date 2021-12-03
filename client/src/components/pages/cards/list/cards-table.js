@@ -248,7 +248,10 @@ export default withStyles(styles)(function CardsTable (props) {
                 open={deleteModalStatus}
                 handleClose={handleChangeStatusDeleteModal}
                 handleConfirm={handleDeleteCard}
-            />
+            >
+                This action can&#39;t be reverted.{'\n'}
+                Category related to this card will be recalculated.
+            </Modal>
             <EditCardModal
                 open={editModalStatus}
                 handleClose={handleChangeStatusEditModal}

@@ -30,6 +30,7 @@ const Transition = forwardRef(function Transition (props, ref) {
 export default function Modal ({ title, open, handleClose, handleConfirm, children, disabled, ...props }) {
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+    const _children = typeof children === 'string' ? [ children ] : children;
 
     return (
         <Dialog
@@ -45,12 +46,8 @@ export default function Modal ({ title, open, handleClose, handleConfirm, childr
                 {title ?? 'Are you sure you want to complete this operation?'}
             </DialogTitle>
             <DialogContent>
-                {typeof children === 'string'
-                    ? (
-                        <DialogContentText>
-                            {children}
-                        </DialogContentText>
-                    )
+                {(Array.isArray(_children) && _children.every(c => typeof c === 'string'))
+                    ? _children.map((c, i) => <DialogContentText key={i}>{c}</DialogContentText>)
                     : children
                 }
             </DialogContent>

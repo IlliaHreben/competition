@@ -20,6 +20,8 @@ router.get('/cards/:id', controllers.cards.show);
 router.delete('/cards', controllers.cards.delete);
 router.patch('/cards/:id', controllers.cards.update);
 
+router.patch('/fighters/:id', controllers.fighters.update);
+
 router.get('/competitions', controllers.competitions.list);
 router.get('/competitions/:id', controllers.competitions.show);
 router.post('/competitions', controllers.competitions.create);

@@ -82,7 +82,7 @@ export default class ApiClient {
                 }
             );
         } catch (err) {
-            throw this.errorsHandler({}, 500, url);
+            throw this.errorsHandler({ error: { message: err.message } }, 500, url);
         }
 
         const json = await response.json();

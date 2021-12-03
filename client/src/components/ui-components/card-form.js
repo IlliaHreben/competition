@@ -4,12 +4,12 @@ import {
     TextField, Select, Divider,
     FormControl, InputLabel, MenuItem,
     Autocomplete, Switch, Stack, Typography
-    , FormGroup, FormControlLabel, Checkbox
+    , FormGroup, FormControlLabel, Checkbox, Button
 } from '@mui/material';
 import { useState, useEffect, useReducer } from 'react';
 import { omit } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
-import { bulkCreate, deleteError } from '../../actions/categories';
+import { updateFighter } from '../../actions/fighters';
 import { list as listSections } from '../../actions/sections';
 import { showSuccess, showError } from '../../actions/errors';
 import api from '../../api-singleton';
@@ -91,24 +91,41 @@ function mapState (state) {
 
 export default function CardForm ({ card, onChange }) {
     const initialState = {
-        name      : card?.linked?.fighter?.name || '',
-        lastName  : card?.linked?.fighter?.lastName || '',
-        sex       : card?.linked?.fighter?.sex || '',
-        weight    : card?.weight || '',
-        age       : card?.age || '',
-        sectionId : card?.linked?.category?.linked?.section?.id || '',
-        group     : card?.group || null,
-        birthDate : card?.birthDate || '',
-        coachId   : card?.coachId || '',
-        clubId    : card?.clubId || ''
+        name        : card?.linked?.fighter?.name || '',
+        lastName    : card?.linked?.fighter?.lastName || '',
+        sex         : card?.linked?.fighter?.sex || '',
+        weight      : card?.weight || '',
+        age         : card?.age || '',
+        sectionId   : card?.linked?.category?.linked?.section?.id || '',
+        group       : card?.group || null,
+        birthDate   : card?.birthDate || '',
+        coachId     : card?.coachId || '',
+        clubId      : card?.clubId || '',
+        recalculate : true
     };
-
-    const { cards, sections, active } = useSelector(mapState);
+    const dispatch = useDispatch();
+    const { sections, active } = useSelector(mapState);
 
     const [ cardData, dispatchCard ] = useReducer(reducer, initialState);
     const { coaches, clubs } = useRelatedInfo(cardData);
     const [ selectFromExisted, setSelectFromExisted ] = useState(false);
     const [ errors, setErrors ] = useState({});
+    const [ fighterModalStatus, setFighterModalStatus ] = useState(false);
+    const [ recalculate, setRecalculate ] = useState(true);
+    const changeFighterModalStatus = () => setFighterModalStatus(prev => !prev);
+
+    const handleEditCard = () => {
+        dispatch(updateFighter(
+            card.linked.fighter.id,
+            recalculate,
+            active.id,
+            { name: cardData.name, lastName: cardData.lastName, sex: cardData.sex },
+            () => {
+                dispatch(showSuccess('Fight has been successfully created.'));
+                changeFighterModalStatus();
+            }
+        ));
+    };
 
     useEffect(() => {
         onChange(cardData);
@@ -117,49 +134,67 @@ export default function CardForm ({ card, onChange }) {
     return (
         <FormGroup >
             <Typography variant="body1" gutterBottom>Main information</Typography>
-            <Typography variant="body2" gutterBottom>Please pay an attention that name, last name and sex will be changed for all cards associated with this fighter.</Typography>
-            {/* <Divider sx={{ mb: 1.5 }}/> */}
-            <Stack direction="row" sx={{ mt: 1.5 }}>
-                <TextField
-                    fullWidth
-                    id="card-name-input"
-                    label="Name"
-                    value={cardData.name}
-                    onChange={e => dispatchCard({ type: 'name', payload: e.target.value })}
-                    error={!!errors.name}
-                    helperText={errors.name}
-                    sx={{ mr: 1.5 }}
+            <Modal
+                title={'Edit fighter'}
+                open={fighterModalStatus}
+                handleClose={changeFighterModalStatus}
+                handleConfirm={handleEditCard}
+            >
+                <Typography
+                    variant="body2"
+                    gutterBottom
+                >Please pay an attention that fighter&#39;s data will
+                    be changed for all cards associated with this fighter.
+                </Typography>
+                <Stack direction="row" sx={{ mt: 1.5, mb: 1.5 }}>
+                    <TextField
+                        fullWidth
+                        id="card-name-input"
+                        label="Name"
+                        value={cardData.name}
+                        onChange={e => dispatchCard({ type: 'name', payload: e.target.value })}
+                        error={!!errors.name}
+                        helperText={errors.name}
+                        sx={{ mr: 1.5 }}
+                    />
+                    <TextField
+                        fullWidth
+                        id="card-last-name-input"
+                        label="Last name"
+                        value={cardData.lastName}
+                        onChange={e => dispatchCard({ type: 'lastName', payload: e.target.value })}
+                        error={!!errors.lastName}
+                        helperText={errors.lastName}
+                    />
+                </Stack>
+                {/* <FormControlLabel
+                    sx={{ justifyContent: 'center', mb: 2, mt: 0.5 }}
+                    control={<Switch onChange={e => setSelectFromExisted(e.target.checked)}/>}
+                    label="Select from existed fighters"
+                /> */}
+                <FormControl fullWidth>
+                    <InputLabel id="sex-label-input">Sex</InputLabel>
+                    <Select
+                        labelId="sex-label-input"
+                        id="sex-input"
+                        label="Sex"
+                        value={cardData.sex}
+                        onChange={e => dispatchCard({ type: 'sex', payload: e.target.value })}
+                    >
+                        <MenuItem value="man">Man</MenuItem>
+                        <MenuItem value="woman">Woman</MenuItem>
+                    </Select>
+                </FormControl>
+                <FormControlLabel sx={{ justifyContent: 'center', mb: 2, mt: 0.5 }} control={(
+                    <Switch
+                        checked={recalculate}
+                        onChange={e => setRecalculate(e.target.checked)}
+                    />
+                )} label="Recalculate categories"
                 />
-                <TextField
-                    fullWidth
-                    id="card-last-name-input"
-                    label="Last name"
-                    value={cardData.lastName}
-                    onChange={e => dispatchCard({ type: 'lastName', payload: e.target.value })}
-                    error={!!errors.lastName}
-                    helperText={errors.lastName}
-                />
-            </Stack>
-            <FormControlLabel
-                sx={{ justifyContent: 'center', mb: 2, mt: 0.5 }}
-                control={<Switch onChange={e => setSelectFromExisted(e.target.checked)}/>}
-                label="Select from existed fighters"
-            />
-            <FormControl fullWidth>
-                <InputLabel id="sex-label-input">Sex</InputLabel>
-                <Select
-                    labelId="sex-label-input"
-                    id="sex-input"
-                    label="Sex"
-                    value={cardData.sex}
-                    onChange={e => dispatchCard({ type: 'sex', payload: e.target.value })}
-                >
-                    <MenuItem value="man">Man</MenuItem>
-                    <MenuItem value="woman">Woman</MenuItem>
-                </Select>
-            </FormControl>
-            <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
-            <Stack direction="row" sx={{ mb: 1.5 }}>
+                {/* <FormControlLabel control={<Checkbox defaultChecked />} label="Label" /> */}
+            </Modal>
+            <Stack direction="row" sx={{ mb: 1.5, mt: 1 }}>
                 <TextField
                     fullWidth
                     id="card-name-input"
@@ -220,6 +255,7 @@ export default function CardForm ({ card, onChange }) {
                     </Select>
                 </FormControl>
             </Stack>
+            <Button variant="text" onClick={changeFighterModalStatus}>Change fighter</Button>
             <Typography sx={{ mt: 2 }} variant="body1" gutterBottom>Club and coach information</Typography>
             <Stack direction="row" sx={{ mt: 1 }}>
                 <Autocomplete

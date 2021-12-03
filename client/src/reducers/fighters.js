@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import * as fightersReducer from './fighters';
 
 const initialState = {
     list      : [],
@@ -8,8 +7,8 @@ const initialState = {
     isLoading : false
 };
 
-const cards = createSlice({
-    name     : 'cards',
+const fighters = createSlice({
+    name     : 'fighters',
     initialState,
     reducers : {
         deleteError: (state, action) => {
@@ -41,7 +40,7 @@ const cards = createSlice({
             state.errors = action.payload;
         },
 
-        deleteCard: (state, action) => {
+        deleteFighter: (state, action) => {
             state.list = state.list.filter(({ id }) => action.payload.id !== id);
         },
         deleteRequestError: (state, action) => {
@@ -49,40 +48,24 @@ const cards = createSlice({
         },
 
         update: (state, action) => {
-            const cardIndex = state.list.findIndex(c => c.id === action.payload.id);
-            if (!cardIndex) return;
-            state.list[cardIndex] = action.payload;
+            const fighterIndex = state.list.findIndex(c => c.id === action.payload.id);
+            if (!fighterIndex) return;
+            state.list[fighterIndex] = action.payload;
         },
         updateRequestError: (state, action) => {
             state.isLoading = false;
             state.errors = action.payload;
         }
-    },
-    extraReducers: {
-        [fightersReducer.update]: (state, action) => {
-            const updatedInfo = {
-                name     : action.payload.name,
-                lastName : action.payload.lastName,
-                sex      : action.payload.sex
-            };
-            state.list.forEach((card, i) => {
-                if (card.linked?.fighter?.id !== action.payload.id) return;
-                state.list[i].linked.fighter = {
-                    ...state.list[i].linked.fighter,
-                    ...updatedInfo
-                };
-            });
-        }
     }
 });
 
-const { actions, reducer } = cards;
+const { actions, reducer } = fighters;
 
 export const {
     deleteError,
     list, listRequest, clearList, listRequestError, addList,
     create, createRequest, createRequestError,
-    deleteCard, deleteRequest, deleteRequestError,
+    deleteFighter, deleteRequest, deleteRequestError,
     update, updateRequestError
 } = actions;
 

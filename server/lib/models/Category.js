@@ -210,6 +210,15 @@ export default class Category extends Base {
       },
       sections: {
         include: [ 'Section' ]
+      },
+      cardsWithFighters: {
+        include: {
+          model    : Card,
+          as       : 'Cards',
+          required : true,
+          include  : [ 'Fighter' ],
+          order    : [ [ 'id', 'ASC' ] ]
+        }
       }
     };
 

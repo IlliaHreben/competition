@@ -2,7 +2,7 @@ import { store } from '../index';
 import { showError } from '../actions/errors';
 
 export default function errorsHandler ({ error }, statusCode, url) {
-    const { fields } = error;
+    const { fields } = error || {};
     const errorsData = { isServer: true };
 
     if (fields) {
@@ -14,15 +14,15 @@ export default function errorsHandler ({ error }, statusCode, url) {
             }
         }
     } else {
-        errorsData.serverError = error.message;
-        errorsData.type = error.code;
+        errorsData.serverError = error?.message;
+        errorsData.type = error?.code;
     }
 
     statusHandler(error, statusCode, url);
     return errorsData;
 }
 
-function statusHandler (error, statusCode, url) {
+function statusHandler (error = {}, statusCode, url) {
     switch (statusCode) {
     case 200:
         console.log('Api error:', error);
@@ -40,7 +40,7 @@ function statusHandler (error, statusCode, url) {
     case 500:
     case 502:
         store.dispatch(showError({
-            message : error.message,
+            message : `${error.message} - ${url}`,
             request : url
         }));
         break;
