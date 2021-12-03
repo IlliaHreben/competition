@@ -1,8 +1,8 @@
 import sequelize from './sequelize-singleton.js';
 
 import './models/Competition.js';
-import './models/State';
-import './models/Settlement';
+import './models/State.js';
+import './models/Settlement.js';
 import './models/Section.js';
 import './models/Category.js';
 import './models/FightSpace.js';

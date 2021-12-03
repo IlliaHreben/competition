@@ -5,6 +5,7 @@ import fightSpaces  from './fightSpaces';
 import sections     from './sections';
 import clubs        from './clubs';
 import coaches      from './coaches';
+import settlements  from './settlements';
 
 export default {
   fightSpaces,
@@ -13,5 +14,6 @@ export default {
   cards,
   sections,
   clubs,
-  coaches
+  coaches,
+  settlements
 };

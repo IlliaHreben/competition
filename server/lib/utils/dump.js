@@ -33,6 +33,7 @@ export function dumpSection (data) {
     id        : data.id,
     name      : data.name,
     type      : data.type,
+    stateId   : data.stateId,
     createdAt : data.createdAt,
     updatedAt : data.updatedAt,
     linked
@@ -42,7 +43,7 @@ export function dumpSection (data) {
 export function dumpCard (data) {
   const linked = {
     ...data.Coach && { coach: dumpCoach(data.Coach) },
-    ...data.Club && { club: dumpCoach(data.Club) },
+    ...data.Club && { club: dumpClub(data.Club) },
     ...data.Fighter && { fighter: dumpFighter(data.Fighter) },
     ...data.Section && { section: dumpSection(data.Section) },
     ...data.Category && { category: dumpCategory(data.Category) }

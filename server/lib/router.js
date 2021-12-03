@@ -35,4 +35,6 @@ router.get('/clubs', controllers.clubs.list);
 
 router.get('/coaches', controllers.coaches.list);
 
+router.get('/settlements', controllers.settlements.list);
+
 export default router;

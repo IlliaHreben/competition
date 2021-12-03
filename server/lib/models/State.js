@@ -4,7 +4,7 @@ import Base      from './Base.js';
 
 // import Coach             from './Coach.js';
 
-export default class Settlement extends Base {
+export default class State extends Base {
   static initRelation () {
     const Settlement = sequelize.model('Settlement');
 
@@ -41,7 +41,7 @@ export default class Settlement extends Base {
   // }
 }
 
-Settlement.init({
+State.init({
   id: { type: Sequelize.UUID, defaultValue: Sequelize.UUIDV4, primaryKey: true },
 
   name: { type: Sequelize.STRING, allowNull: false },

@@ -7,6 +7,7 @@ import Sections from './sections';
 import Cards from './cards';
 import Clubs from './clubs';
 import Coaches from './coaches';
+import Settlements from './settlements';
 
 export default function apiAggregator ({ apiUrl, apiPrefix } = {}) {
     const apiClient = new ApiClient({
@@ -25,6 +26,7 @@ export default function apiAggregator ({ apiUrl, apiPrefix } = {}) {
         sections     : new Sections(params),
         cards        : new Cards(params),
         clubs        : new Clubs(params),
-        coaches      : new Coaches(params)
+        coaches      : new Coaches(params),
+        settlements  : new Settlements(params)
     };
 }

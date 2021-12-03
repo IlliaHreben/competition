@@ -6,6 +6,7 @@ import sections from './sections';
 import cards from './cards';
 import coaches from './coaches';
 import clubs from './clubs';
+import settlements from './settlements';
 
 const reducers = {
     errors,
@@ -15,7 +16,8 @@ const reducers = {
     sections,
     cards,
     coaches,
-    clubs
+    clubs,
+    settlements
 };
 
 export default reducers;

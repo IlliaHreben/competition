@@ -34,18 +34,18 @@ function dumpCardData (card) {
     const coach = card.linked?.coach;
 
     return {
-        date      : card.fight && getFormattedDate(), // TODO
-        degree    : card.fight ? `1/${card.fight.degree}` : '',
-        color     : isFirst !== undefined ? (isFirst ? 'red' : 'blue') : '',
-        number    : card.fight ? (card.fight.orderNumber * 2 - +isFirst) : 1,
-        fullName  : getFullName(fighter),
-        sex       : fighter?.sex || '',
-        city      : card.city || '',
-        club      : card.linked?.club?.name || '',
-        coach     : getFullName(coach),
-        age       : card.age || '',
-        birthDate : card.birthDate ? formatISODate(card.birthDate) : '',
-        weight    : card.weight || ''
+        date       : card.fight && getFormattedDate(), // TODO
+        degree     : card.fight ? `1/${card.fight.degree}` : '',
+        color      : isFirst !== undefined ? (isFirst ? 'red' : 'blue') : '',
+        number     : card.fight ? (card.fight.orderNumber * 2 - +isFirst) : 1,
+        fullName   : getFullName(fighter),
+        sex        : fighter?.sex || '',
+        settlement : card.linked?.club?.linked?.settlement?.name || '',
+        club       : card.linked?.club?.name || '',
+        coach      : getFullName(coach),
+        age        : card.age || '',
+        birthDate  : card.birthDate ? formatISODate(card.birthDate) : '',
+        weight     : card.weight || ''
     };
 }
 
@@ -100,7 +100,7 @@ function CategoryTable ({ category }) {
                             <TableCell align="center">{row.color}</TableCell>
                             <TableCell align="left">{row.number}</TableCell>
                             <TableCell align="left">{row.fullName}</TableCell>
-                            <TableCell align="left">{row.city}</TableCell>
+                            <TableCell align="left">{row.settlement}</TableCell>
                             <TableCell align="center">{row.sex}</TableCell>
                             <TableCell align="left">{row.club}</TableCell>
                             <TableCell align="left">{row.coach}</TableCell>
@@ -118,9 +118,7 @@ function CategoryTable ({ category }) {
 CategoryTable.propTypes = {
     category: PropTypes.shape({
         id         : PropTypes.string.isRequired,
-        section    : PropTypes.string.isRequired,
         sex        : PropTypes.string.isRequired,
-        type       : PropTypes.string.isRequired,
         ageFrom    : PropTypes.number.isRequired,
         ageTo      : PropTypes.number.isRequired,
         weightFrom : PropTypes.number.isRequired,
@@ -148,7 +146,6 @@ CategoryTable.propTypes = {
                         coachId         : PropTypes.string.isRequired,
                         section         : PropTypes.string.isRequired,
                         weight          : PropTypes.number.isRequired,
-                        city            : PropTypes.string.isRequired,
                         birthDate       : PropTypes.string.isRequired,
                         age             : PropTypes.number.isRequired,
                         linked          : PropTypes.shape({

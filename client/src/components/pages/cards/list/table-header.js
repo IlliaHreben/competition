@@ -5,15 +5,17 @@ import { PropTypes } from 'prop-types';
 
 import { listClubs } from '../../../../actions/clubs';
 import { listCoaches } from '../../../../actions/coaches';
+import { listSettlements } from '../../../../actions/settlements';
 import { list as listSections } from '../../../../actions/sections';
 
 function mapState (state) {
     return {
-        clubs    : state.clubs.list,
-        coaches  : state.coaches.list,
-        cards    : state.cards.list,
-        sections : state.sections.list,
-        active   : state.competitions.active
+        clubs       : state.clubs.list,
+        coaches     : state.coaches.list,
+        cards       : state.cards.list,
+        sections    : state.sections.list,
+        settlements : state.settlements.list,
+        active      : state.competitions.active
     };
 }
 
@@ -24,17 +26,16 @@ TableHeader.propTypes = {
 export default function TableHeader ({ onChange }) {
     const dispatch = useDispatch();
 
-    const { clubs, coaches, cards, sections, active } = useSelector(mapState);
+    const { clubs, coaches, cards, sections, settlements, active } = useSelector(mapState);
 
     useEffect(() => {
         if (active) {
             dispatch(listClubs({ competitionId: active.id }));
             dispatch(listCoaches({ competitionId: active.id }));
             dispatch(listSections({ competitionId: active.id }));
+            dispatch(listSettlements({ competitionId: active.id }));
         }
     }, [ active, dispatch ]);
-
-    const cities = [ ...new Set(cards.filter(c => c.city).map(c => c.city)) ];
 
     return (
         <Stack direction="row" spacing={2} sx={{ display: 'flex', m: 2 }}>
@@ -62,10 +63,11 @@ export default function TableHeader ({ onChange }) {
                 includeInputInList
                 blurOnSelect
                 autoHighlight
-                options={cities}
+                options={settlements}
+                getOptionLabel={s => s.name}
                 sx={{ flexGrow: 4 }}
                 renderInput={(params) => <TextField {...params} size="small" label="City" />}
-                onChange={(e, city) => onChange({ city: city || undefined })}
+                onChange={(e, s) => onChange({ settlementId: s?.id || undefined })}
             />
             <Autocomplete
                 includeInputInList
