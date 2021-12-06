@@ -34,8 +34,10 @@ router.get('/fight-spaces', controllers.fightSpaces.list);
 router.patch('/fight-spaces/bulk', controllers.fightSpaces.bulkUpdate);
 
 router.get('/clubs', controllers.clubs.list);
+router.post('/clubs', controllers.clubs.create);
 
 router.get('/coaches', controllers.coaches.list);
+router.post('/coaches', controllers.coaches.create);
 
 router.get('/settlements', controllers.settlements.list);
 

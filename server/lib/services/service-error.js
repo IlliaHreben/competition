@@ -33,6 +33,12 @@ const errors = {
       main: 'FIGHTER_NOT_FOUND'
     }
   }),
+  SETTLEMENT_NOT_FOUND: data => ({
+    code   : 'NOT_FOUND',
+    fields : {
+      main: 'SETTLEMENT_NOT_FOUND'
+    }
+  }),
   GROUP_DOES_NOT_EXIST: data => ({
     code   : 'VALIDATION_ERROR',
     fields : {

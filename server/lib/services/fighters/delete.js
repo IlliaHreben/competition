@@ -2,7 +2,7 @@ import ServiceBase     from '../Base.js';
 import { dumpSection } from '../../utils';
 import ServiceError    from '../service-error.js';
 
-import Fighter            from '../../models/Fighter.js';
+import Fighter         from '../../models/Fighter.js';
 
 export default class FighterDelete extends ServiceBase {
     static validationRules = {

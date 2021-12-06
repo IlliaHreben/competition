@@ -11,12 +11,13 @@ import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
 
 Modal.propTypes = {
-    open          : PropTypes.bool.isRequired,
-    handleClose   : PropTypes.func.isRequired,
-    handleConfirm : PropTypes.func.isRequired,
-    children      : PropTypes.any.isRequired,
-    title         : PropTypes.string,
-    disabled      : PropTypes.bool
+    open              : PropTypes.bool.isRequired,
+    handleClose       : PropTypes.func.isRequired,
+    handleConfirm     : PropTypes.func.isRequired,
+    children          : PropTypes.any.isRequired,
+    title             : PropTypes.string,
+    confirmButtonText : PropTypes.string,
+    disabled          : PropTypes.bool
 };
 
 Modal.defaultProps = {
@@ -27,7 +28,10 @@ const Transition = forwardRef(function Transition (props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function Modal ({ title, open, handleClose, handleConfirm, children, disabled, ...props }) {
+export default function Modal ({
+    title, open, handleClose, handleConfirm,
+    children, disabled, confirmButtonText, ...props
+}) {
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
     const _children = typeof children === 'string' ? [ children ] : children;
@@ -60,7 +64,7 @@ export default function Modal ({ title, open, handleClose, handleConfirm, childr
                     disabled={disabled}
                     autoFocus
                 >
-                    Confirm
+                    {confirmButtonText || 'Confirm'}
                 </Button>
             </DialogActions>
         </Dialog>

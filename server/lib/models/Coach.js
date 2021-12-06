@@ -44,7 +44,8 @@ export default class Coach extends Base {
           distinct : true,
           limit    : 1
         } ]
-      })
+      }),
+      clubs: { include: 'Clubs' }
     };
 
     Object.entries(scopes).forEach(scope => this.addScope(...scope));

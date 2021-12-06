@@ -15,6 +15,38 @@ export function listCoaches (params = {}) {
     };
 }
 
+export function createCoach (payload, onSuccess) {
+    return async dispatch => {
+        try {
+            dispatch(reducer.createRequest());
+
+            const data = await api.coaches.create(payload);
+
+            dispatch(reducer.create(data));
+
+            onSuccess?.();
+        } catch (errData) {
+            dispatch(reducer.createRequestError(errData));
+        }
+    };
+}
+
+export function updateCoach (payload, onSuccess) {
+    return async dispatch => {
+        try {
+            dispatch(reducer.updateRequest());
+
+            const data = await api.coaches.update(payload);
+
+            dispatch(reducer.updateCoach(data));
+
+            onSuccess?.();
+        } catch (errData) {
+            dispatch(reducer.updateRequestError(errData));
+        }
+    };
+}
+
 export function deleteCoach (id, onSuccess) {
     return async dispatch => {
         try {

@@ -1,4 +1,4 @@
-import ServiceBase  from '../Base.js';
+import ServiceBase     from '../Base.js';
 import { dumpFighter } from '../../utils';
 
 import Fighter         from '../../models/Fighter.js';

@@ -55,7 +55,9 @@ export default class Club extends Base {
           distinct : true,
           limit    : 1
         } ]
-      })
+      }),
+      coaches    : { include: 'Coaches' },
+      settlement : { include: 'Settlement' }
     };
 
     Object.entries(scopes).forEach(scope => this.addScope(...scope));

@@ -12,6 +12,10 @@ class Coaches extends Base {
     delete = async (id) => {
         return this.apiClient.delete('coaches/', { id });
     }
+
+    create = (payload) => {
+        return this.apiClient.post('coaches', payload);
+    }
 }
 
 export default Coaches;

@@ -4,7 +4,7 @@ import { dumpFighter } from '../../utils';
 import Fighter         from '../../models/Fighter.js';
 import Category        from '../../models/Category.js';
 
-export default class FightersBulkCreate extends ServiceBase {
+export default class FightersCreate extends ServiceBase {
     static validationRules = {
       competitionId : [ 'required', 'uuid' ],
       data          : [ 'required', {

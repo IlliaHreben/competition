@@ -27,11 +27,22 @@ const coaches = createSlice({
         clearList: state => { state.list = []; state.listMeta = {}; },
 
         create: (state, action) => {
-            state.list.push(...action.payload);
+            state.list.push(action.payload);
             state.isLoading = false;
         },
         createRequest      : state => { state.isLoading = true; },
         createRequestError : (state, action) => {
+            state.isLoading = false;
+            state.errors = action.payload;
+        },
+
+        updateRequest : state => { state.isLoading = true; },
+        updateCoach   : (state, action) => {
+            const index = state.list.findIndex(c => c.id === action.payload.id);
+            if (!index) return;
+            state.list[index] = action.payload;
+        },
+        updateRequestError: (state, action) => {
             state.isLoading = false;
             state.errors = action.payload;
         },
@@ -51,7 +62,8 @@ export const {
     deleteError,
     list, listRequest, clearList, listRequestError,
     create, createRequest, createRequestError,
-    deleteCoach, deleteRequest, deleteRequestError
+    deleteCoach, deleteRequest, deleteRequestError,
+    updateRequest, updateRequestError, updateCoach
 } = actions;
 
 export default reducer;

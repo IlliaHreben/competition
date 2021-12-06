@@ -1,22 +1,22 @@
-import Modal from './modal';
 import PropTypes from 'prop-types';
 import {
-    TextField, Select, Divider,
+    TextField, Select,
     FormControl, InputLabel, MenuItem,
     Autocomplete, Switch, Stack, Typography
-    , FormGroup, FormControlLabel, Checkbox, Button
+    , FormGroup, FormControlLabel, Button
 } from '@mui/material';
 import { useState, useEffect, useReducer } from 'react';
-import { omit } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateFighter } from '../../actions/fighters';
-import { list as listSections } from '../../actions/sections';
 import { showSuccess, showError } from '../../actions/errors';
-import api from '../../api-singleton';
+// import api from '../../api-singleton';
 import AdapterDateFns from '@mui/lab/AdapterLuxon';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 import { getAgeFromBirthDate } from '../../utils/datetime';
+import Modal from './modal';
+import CoachModal from './coach-modal';
+import ClubModal from './club-modal';
 
 CardForm.propTypes = {
     card     : PropTypes.object,
@@ -34,9 +34,12 @@ const useRelatedInfo = card => {
             return;
         }
         (async () => {
-            const { data } = await api.clubs.list({ competitionId: active.id, coachId: card.coachId });
+            // const { data } = await api.clubs.list({ competitionId: active.id, coachId: card.coachId });
+            const data = clubs.filter(club => club.linked.coaches?.some(c => c.id === card.coachId));
             setClubs(data);
         })();
+    // we don't want to update on clubId changing but we want to prevent useless request when clubId doesn't exist
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ active.id, card.coachId, clubs ]);
 
     useEffect(() => {
@@ -45,9 +48,12 @@ const useRelatedInfo = card => {
             return;
         }
         (async () => {
-            const { data } = await api.coaches.list({ competitionId: active.id, clubId: card.clubId });
+            // const { data } = await api.coaches.list({ competitionId: active.id, clubId: card.clubId });
+            const data = coaches.filter(coach => coach.linked.clubs?.some(c => c.id === card.clubId));
             setCoaches(data);
         })();
+    // we don't want to update on coachId changing but we want to prevent useless request when coachId doesn't exist
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ active.id, card.clubId, coaches ]);
 
     return { coaches: _coaches, clubs: _clubs };
@@ -108,7 +114,6 @@ export default function CardForm ({ card, onChange }) {
 
     const [ cardData, dispatchCard ] = useReducer(reducer, initialState);
     const { coaches, clubs } = useRelatedInfo(cardData);
-    const [ selectFromExisted, setSelectFromExisted ] = useState(false);
     const [ errors, setErrors ] = useState({});
     const [ fighterModalStatus, setFighterModalStatus ] = useState(false);
     const [ recalculate, setRecalculate ] = useState(true);
@@ -130,6 +135,11 @@ export default function CardForm ({ card, onChange }) {
     useEffect(() => {
         onChange(cardData);
     }, [ cardData, onChange ]);
+
+    const [ coachModalStatus, setCoachModalStatus ] = useState(false);
+    const [ clubModalStatus, setClubModalStatus ] = useState(false);
+    const changeClubModalStatus = () => setClubModalStatus(prev => !prev);
+    const changeCoachModalStatus = () => setCoachModalStatus(prev => !prev);
 
     return (
         <FormGroup >
@@ -194,6 +204,18 @@ export default function CardForm ({ card, onChange }) {
                 />
                 {/* <FormControlLabel control={<Checkbox defaultChecked />} label="Label" /> */}
             </Modal>
+            <CoachModal
+                open={coachModalStatus}
+                handleClose={changeCoachModalStatus}
+                coach={coaches.find(c => c.id === cardData.coachId)}
+                isEdit={!!cardData.coachId}
+            />
+            <ClubModal
+                open={clubModalStatus}
+                handleClose={changeClubModalStatus}
+                club={clubs.find(c => c.id === cardData.clubId)}
+                isEdit={!!cardData.clubId}
+            />
             <Stack direction="row" sx={{ mb: 1.5, mt: 1 }}>
                 <TextField
                     fullWidth
@@ -239,10 +261,9 @@ export default function CardForm ({ card, onChange }) {
                         {sections.map(s => <MenuItem key={s.id} value={s.id}>{s.name}</MenuItem>)}
                     </Select>
                 </FormControl>
-                <FormControl fullWidth >
+                <FormControl fullWidth disabled={sections.find(s => s.id === cardData.sectionId)?.type !== 'full'} >
                     <InputLabel id="card-name-input">Group</InputLabel>
                     <Select required
-                        disabled={sections.find(s => s.id === cardData.sectionId)?.type !== 'full'}
                         id="card-last-name-input"
                         label="Group"
                         value={cardData.group}
@@ -258,31 +279,44 @@ export default function CardForm ({ card, onChange }) {
             <Button variant="text" onClick={changeFighterModalStatus}>Change fighter</Button>
             <Typography sx={{ mt: 2 }} variant="body1" gutterBottom>Club and coach information</Typography>
             <Stack direction="row" sx={{ mt: 1 }}>
-                <Autocomplete
-                    includeInputInList
-                    blurOnSelect
-                    autoHighlight
-                    fullWidth
-                    options={coaches}
-                    sx={{ mr: 1.5 }}
-                    value={coaches.find(c => c.id === cardData.coachId) || ''}
-                    isOptionEqualToValue={(option, value) => option.id === value.id}
-                    getOptionLabel={({ name, lastName }) => name ? `${name} ${lastName}` : ''}
-                    renderInput={(params) => <TextField {...params} label="Coach" />}
-                    onChange={(e, coach) => dispatchCard({ type: 'coachId', payload: coach?.id })}
-                />
-                <Autocomplete
-                    includeInputInList
-                    blurOnSelect
-                    autoHighlight
-                    fullWidth
-                    options={clubs}
-                    getOptionLabel={club => club.name || ''}
-                    value={clubs.find(c => c.id === cardData.clubId) || ''}
-                    isOptionEqualToValue={(option, value) => option.id === value.id}
-                    renderInput={(params) => <TextField {...params} label="Club" />}
-                    onChange={(e, club) => dispatchCard({ type: 'clubId', payload: club?.id })}
-                />
+
+                <Stack fullWidth sx={{ mr: 1.5, width: '100%' }}>
+                    <Autocomplete
+                        includeInputInList
+                        blurOnSelect
+                        autoHighlight
+                        fullWidth
+                        options={clubs}
+                        sx={{ mb: 1 }}
+                        getOptionLabel={club => club.name || ''}
+                        value={clubs.find(c => c.id === cardData.clubId) || ''}
+                        isOptionEqualToValue={(option, value) => option.id === value.id}
+                        renderInput={(params) => <TextField {...params} label="Club" />}
+                        onChange={(e, club) => dispatchCard({ type: 'clubId', payload: club?.id })}
+                    />
+                    <Button size="small" variant="text" onClick={changeClubModalStatus}>
+                        {cardData.clubId ? 'Edit' : 'Create'} club
+                    </Button>
+                </Stack>
+                <Stack fullWidth sx={{ width: '100%' }}>
+                    <Autocomplete
+                        includeInputInList
+                        blurOnSelect
+                        autoHighlight
+                        fullWidth
+                        options={coaches}
+                        sx={{ mb: 1 }}
+                        value={coaches.find(c => c.id === cardData.coachId) || ''}
+                        isOptionEqualToValue={(option, value) => option.id === value.id}
+                        getOptionLabel={({ name, lastName }) => name ? `${name} ${lastName}` : ''}
+                        renderInput={(params) => <TextField {...params} label="Coach" />}
+                        onChange={(e, coach) => dispatchCard({ type: 'coachId', payload: coach?.id })}
+                    />
+
+                    <Button size="small" variant="text" onClick={changeCoachModalStatus}>
+                        {cardData.coachId ? 'Edit' : 'Create'} coach
+                    </Button>
+                </Stack>
             </Stack>
         </FormGroup>
     );

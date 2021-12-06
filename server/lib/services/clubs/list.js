@@ -6,14 +6,15 @@ import Club         from '../../models/Club.js';
 export default class ClubsList extends ServiceBase {
     static validationRules = {
       competitionId : [ 'required', 'uuid' ],
-      coachId       : [ 'not_empty', 'uuid' ]
+      coachId       : [ 'not_empty', 'uuid' ],
+      include       : [ 'to_array', { list_of: { one_of: [ 'coaches', 'settlement' ] } }, { default: [ [] ] } ]
     };
 
-    async execute ({ ...rest }) {
+    async execute ({ include, ...rest }) {
       const filters = Object.entries(rest).map(filter => ({ method: filter }));
 
       const { rows, count } = await Club
-        .scope(...filters)
+        .scope(...filters, ...include)
         .findAndCountAll();
 
       return {

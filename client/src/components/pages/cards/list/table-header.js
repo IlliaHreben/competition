@@ -30,8 +30,8 @@ export default function TableHeader ({ onChange }) {
 
     useEffect(() => {
         if (active) {
-            dispatch(listClubs({ competitionId: active.id }));
-            dispatch(listCoaches({ competitionId: active.id }));
+            dispatch(listClubs({ competitionId: active.id, include: [ 'coaches', 'settlement' ] }));
+            dispatch(listCoaches({ competitionId: active.id, include: [ 'clubs' ] }));
             dispatch(listSections({ competitionId: active.id }));
             dispatch(listSettlements({ competitionId: active.id }));
         }
