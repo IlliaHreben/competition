@@ -6,6 +6,7 @@ import Card         from '../../models/Card.js';
 export default class CardsList extends ServiceBase {
     static validationRules = {
       competitionId : [ 'required', 'uuid' ],
+      search        : [ 'string' ],
       limit         : [ 'positive_integer', { default: 10 } ],
       offset        : [ 'integer', { min_number: 0 }, { default: 0 } ],
       coachId       : [ 'not_empty', 'uuid' ],

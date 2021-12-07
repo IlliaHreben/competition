@@ -1,5 +1,5 @@
 import { TextField, Autocomplete, Stack } from '@mui/material';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
 
@@ -7,6 +7,7 @@ import { listClubs } from '../../../../actions/clubs';
 import { listCoaches } from '../../../../actions/coaches';
 import { listSettlements } from '../../../../actions/settlements';
 import { list as listSections } from '../../../../actions/sections';
+import debounce from 'lodash/debounce';
 
 function mapState (state) {
     return {
@@ -37,8 +38,23 @@ export default function TableHeader ({ onChange }) {
         }
     }, [ active, dispatch ]);
 
+    const handleSearchChange = useMemo(
+        () =>
+            debounce((e) => {
+                onChange({ search: e.target.value });
+            }, 300),
+        // we can't recalculate cause debounce won't work
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        []
+    );
+
     return (
         <Stack direction="row" spacing={2} sx={{ display: 'flex', m: 2 }}>
+            <TextField
+                size="small" sx={{ flexGrow: 2 }}
+                label="Search"
+                onChange={handleSearchChange}
+            />
             <Autocomplete
                 includeInputInList
                 blurOnSelect

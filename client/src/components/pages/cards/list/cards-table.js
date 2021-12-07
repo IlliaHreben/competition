@@ -73,7 +73,7 @@ const dumpCard = (card, handleClickSettings) => {
 
 const columns = [
     {
-        width   : 200,
+        width   : 240,
         label   : 'Full name',
         dataKey : 'fullName'
     },
@@ -83,12 +83,12 @@ const columns = [
         dataKey : 'sex'
     },
     {
-        width   : 120,
+        width   : 170,
         label   : 'City',
         dataKey : 'settlement'
     },
     {
-        width   : 200,
+        width   : 210,
         label   : 'Club',
         dataKey : 'clubName'
     },
@@ -258,7 +258,7 @@ export default withStyles(styles)(function CardsTable (props) {
                 handleConfirm={handleChangeStatusEditModal}
                 card={anchor?.card}
             />
-            <Paper style={{ height: '100%', width: '1180px', minWidth: '1180px', display: 'flex', flexDirection: 'column' }}>
+            <Paper style={{ height: '100%', width: '1280px', minWidth: '1280px', display: 'flex', flexDirection: 'column' }}>
                 <TableHeader
                     onChange={current => setFilters(prev => ({ ...prev, ...current }))}
                 />

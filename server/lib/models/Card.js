@@ -93,14 +93,19 @@ export default class Card extends Base {
           include : { model: Settlement, as: 'Settlement', include: 'State' }
         } ]
       },
-      competitionRelated: (id) => {
-        return {
-          where: {
-            '$Section.competitionId$': id
-          },
-          include: 'Section'
-        };
-      },
+      competitionRelated: (id) => ({
+        where   : { '$Section.competitionId$': id },
+        include : 'Section'
+      }),
+      search: search => ({
+        where: {
+          [Op.or]: [
+            { '$Fighter.name$': { [Op.iLike]: `%${search}%` } },
+            { '$Fighter.lastName$': { [Op.iLike]: `%${search}%` } }
+          ]
+        },
+        include: [ 'Fighter' ]
+      }),
       sectionId    : (sectionId) => ({ where: { sectionId } }),
       clubId       : (clubId) => ({ where: { clubId } }),
       coachId      : (coachId) => ({ where: { coachId } }),
