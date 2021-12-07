@@ -15,8 +15,10 @@ import useErrors from './components/ui-components/notifiers/useErrors.js';
 
 import styles from './App.module.css';
 
+import HomeIcon from './assets/icons/home.png';
 import CompetitionIcon from './assets/icons/tournament.png';
 import GraphicsIcon from './assets/icons/graphics.png';
+import CardsIcon from './assets/icons/cards.png';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -34,7 +36,7 @@ const routes = [
     {
         name      : 'Home',
         path      : '/',
-        icon      : '',
+        icon      : HomeIcon,
         component : Home
     },
     {
@@ -52,7 +54,7 @@ const routes = [
     {
         name      : 'Cards',
         path      : '/cards',
-        // icon      : GraphicsIcon,
+        icon      : CardsIcon,
         component : CardsList
     }
 ];

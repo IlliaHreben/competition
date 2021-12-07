@@ -1,34 +1,26 @@
 import PropTypes from 'prop-types';
-import Divider from '@mui/material/Divider';
-import Stack from '@mui/material/Stack';
-import IconButton from '@mui/material/IconButton';
-import Avatar from '@mui/material/Avatar';
+import {
+    Typography, Stack,
+    IconButton, Avatar
+} from '@mui/material';
 
 import styles from './sidebar.module.css';
 
-import {
-    Link
-} from 'react-router-dom';
-// import {
-//     useRouteMatch
-// } from 'react-router';
+import { useNavigate } from 'react-router';
 
 function SideBar ({ tabs }) {
-    // const match = useRouteMatch();
-    // const path = match.path;
+    const navigate = useNavigate();
 
     return (
         <div className={styles.sideBar}>
-            <Stack
-                divider={<Divider flexItem />}
-                spacing={2}
-            >
+            <Stack >
                 {tabs.map(tab => (
-                    <Link key={tab.name} to={tab.path}>
-                        <IconButton aria-label={tab.name} size="medium">
-                            <Avatar src={tab.icon} variant="rounded" />
-                        </IconButton>
-                    </Link>
+                    <IconButton sx={{ borderRadius: 0, pt: 1.5, pb: 1 }}key={tab.name} aria-label={tab.name} size="small" onClick={() => navigate(tab.path)}>
+                        <Stack sx={{ alignItems: 'center' }} >
+                            <Avatar src={tab.icon} variant="square" sx={{ width: 36, height: 36, pb: 0.5 }} />
+                            <Typography sx={{ fontSize: '11px' }}>{tab.name}</Typography>
+                        </Stack>
+                    </IconButton>
                 ))}
             </Stack>
         </div>
