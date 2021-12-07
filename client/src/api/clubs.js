@@ -16,6 +16,10 @@ class Clubs extends Base {
     create = (payload) => {
         return this.apiClient.post('clubs', payload);
     }
+
+    update = (id, payload) => {
+        return this.apiClient.patch(`clubs/${id}`, payload);
+    }
 }
 
 export default Clubs;

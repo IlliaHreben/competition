@@ -15,7 +15,9 @@ export default class ClubsList extends ServiceBase {
 
       const { rows, count } = await Club
         .scope(...filters, ...include)
-        .findAndCountAll();
+        .findAndCountAll({
+          order: [ [ 'name', 'ASC' ] ]
+        });
 
       return {
         data : rows.map(dumpClub),

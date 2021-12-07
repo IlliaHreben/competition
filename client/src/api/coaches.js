@@ -16,6 +16,10 @@ class Coaches extends Base {
     create = (payload) => {
         return this.apiClient.post('coaches', payload);
     }
+
+    update = (id, payload) => {
+        return this.apiClient.patch(`coaches/${id}`, payload);
+    }
 }
 
 export default Coaches;

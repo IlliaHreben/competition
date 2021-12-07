@@ -24,8 +24,8 @@ export default class CardsList extends ServiceBase {
         .scope(...include, ...filters, { method: [ 'competitionRelated', competitionId ] })
         .findAndCountAll({
           limit,
-          offset
-        // order: [ [ sort, order ] ]
+          offset,
+          order: [ [ Card.associations.Fighter, 'lastName', 'ASC' ], [ Card.associations.Fighter, 'name', 'ASC' ] ]
         });
 
       return {

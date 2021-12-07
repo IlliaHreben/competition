@@ -39,7 +39,7 @@ const coaches = createSlice({
         updateRequest : state => { state.isLoading = true; },
         updateCoach   : (state, action) => {
             const index = state.list.findIndex(c => c.id === action.payload.id);
-            if (!index) return;
+            if (index === -1) return;
             state.list[index] = action.payload;
         },
         updateRequestError: (state, action) => {

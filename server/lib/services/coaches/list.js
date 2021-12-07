@@ -15,7 +15,9 @@ export default class CoachesList extends ServiceBase {
 
       const { rows, count } = await Coach
         .scope(...filters, ...include)
-        .findAndCountAll();
+        .findAndCountAll({
+          order: [ [ 'lastName', 'ASC' ] ]
+        });
 
       return {
         data : rows.map(dumpCoach),

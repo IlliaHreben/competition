@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import * as fightersReducer from './fighters';
+import * as clubsReducer from './clubs';
+import * as coachesReducer from './coaches';
 
 const initialState = {
     list      : [],
@@ -50,7 +52,8 @@ const cards = createSlice({
 
         update: (state, action) => {
             const cardIndex = state.list.findIndex(c => c.id === action.payload.id);
-            if (!cardIndex) return;
+
+            if (!cardIndex === -1) return;
             state.list[cardIndex] = action.payload;
         },
         updateRequestError: (state, action) => {
@@ -70,6 +73,33 @@ const cards = createSlice({
                 state.list[i].linked.fighter = {
                     ...state.list[i].linked.fighter,
                     ...updatedInfo
+                };
+            });
+        },
+        [coachesReducer.updateCoach]: (state, action) => {
+            const updatedInfo = {
+                name     : action.payload.name,
+                lastName : action.payload.lastName
+            };
+
+            state.list.forEach((card, i) => {
+                if (card.linked?.coach?.id !== action.payload.id) return;
+                state.list[i].linked.coach = {
+                    ...state.list[i].linked.coach,
+                    ...updatedInfo
+                };
+            });
+        },
+        [clubsReducer.updateClub]: (state, action) => {
+            state.list.forEach((card, i) => {
+                if (card.linked?.club?.id !== action.payload.id) return;
+                state.list[i].linked.club = {
+                    ...state.list[i].linked.club,
+                    name   : action.payload.name,
+                    linked : {
+                        ...state.list[i].linked.club.linked,
+                        settlement: action.payload.linked.settlement
+                    }
                 };
             });
         }

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import {
-    TextField, Select,
+    TextField, Select, FormHelperText,
     FormControl, InputLabel, MenuItem,
     Autocomplete, Switch, Stack, Typography
     , FormGroup, FormControlLabel, Button
@@ -224,7 +224,7 @@ export default function CardForm ({ card, onChange }) {
                     value={cardData.weight}
                     onChange={e => dispatchCard({ type: 'weight', payload: e.target.value })}
                     error={!!errors.weight}
-                    helperText={errors.weight}
+                    helperText={errors.weight || null}
                     sx={{ mr: 1.5 }}
                 />
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -237,53 +237,54 @@ export default function CardForm ({ card, onChange }) {
                                 fullWidth
                                 {...params}
                                 error={!!errors.birthDate}
-                                helperText={errors.birthDate}
+                                // helperText={errors.birthDate}
                             />}
                     />
                 </LocalizationProvider>
             </Stack>
             <Stack direction="row" sx={{ mb: 1.5 }}>
-                <FormControl fullWidth sx={{ mr: 1.5 }}>
+                <FormControl fullWidth sx={{ mr: 1.5 }} error={!!errors.section}>
                     <InputLabel id="card-name-input">Section</InputLabel>
                     <Select required
                         id="card-name-input"
                         label="Section"
-                        value={cardData.sectionId}
+                        value={cardData.sectionId || ''}
                         onChange={e => {
                             dispatchCard({ type: 'sectionId', payload: e.target.value });
                             const section = sections.find(s => s.id === e.target.value);
                             if (!section || section.type !== 'light') return;
                             dispatchCard({ type: 'group', payload: null });
                         }}
-                        error={!!errors.section}
-                        helperText={errors.section}
                     >
                         {sections.map(s => <MenuItem key={s.id} value={s.id}>{s.name}</MenuItem>)}
                     </Select>
+                    {errors.section && <FormHelperText>{errors.section}</FormHelperText>}
                 </FormControl>
-                <FormControl fullWidth disabled={sections.find(s => s.id === cardData.sectionId)?.type !== 'full'} >
+                <FormControl
+                    fullWidth error={!!errors.group}
+                    disabled={sections.find(s => s.id === cardData.sectionId)?.type !== 'full'}
+                >
                     <InputLabel id="card-name-input">Group</InputLabel>
                     <Select required
                         id="card-last-name-input"
                         label="Group"
-                        value={cardData.group}
+                        value={cardData.group || ''}
                         onChange={e => dispatchCard({ type: 'group', payload: e.target.value })}
-                        error={!!errors.group}
-                        helperText={errors.group}
                     >
                         <MenuItem value={'A'}>A</MenuItem>
                         <MenuItem value={'B'}>B</MenuItem>
                     </Select>
+                    {errors.group && <FormHelperText>{errors.group}</FormHelperText>}
                 </FormControl>
             </Stack>
             <Button variant="text" onClick={changeFighterModalStatus}>Change fighter</Button>
             <Typography sx={{ mt: 2 }} variant="body1" gutterBottom>Club and coach information</Typography>
             <Stack direction="row" sx={{ mt: 1 }}>
 
-                <Stack fullWidth sx={{ mr: 1.5, width: '100%' }}>
+                <Stack sx={{ mr: 1.5, width: '100%' }}>
                     <Autocomplete
                         includeInputInList
-                        blurOnSelect
+                        blurOnSelect autoSelect
                         autoHighlight
                         fullWidth
                         options={clubs}
@@ -298,10 +299,10 @@ export default function CardForm ({ card, onChange }) {
                         {cardData.clubId ? 'Edit' : 'Create'} club
                     </Button>
                 </Stack>
-                <Stack fullWidth sx={{ width: '100%' }}>
+                <Stack sx={{ width: '100%' }}>
                     <Autocomplete
                         includeInputInList
-                        blurOnSelect
+                        blurOnSelect autoSelect
                         autoHighlight
                         fullWidth
                         options={coaches}

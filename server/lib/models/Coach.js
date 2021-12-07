@@ -27,6 +27,32 @@ export default class Coach extends Base {
     });
   }
 
+  async updateCoach (data, linked) {
+    // if (data.assistantId) {
+    //   const Settlement = sequelize.model('Settlement');
+
+    //   const settlement = await Settlement.findById(data.settlementId);
+    //   if (!settlement) throw new ServiceError('SETTLEMENT_NOT_FOUND');
+    // }
+
+    await this.update(data);
+    if (linked.clubs) {
+      const clubs = await this.getClubs();
+      const toDelete = clubs.filter(club => !linked.clubs.includes(club.id));
+      await this.removeClubs(toDelete);
+      const toCreateIds = linked.clubs.filter(clubId => !clubs.some(club => club.id === clubId));
+      await this.associateClubs(toCreateIds);
+    }
+  }
+
+  async associateClubs (clubIds) {
+    const Club = sequelize.model('Club');
+
+    const clubs = await Club.findAll({ where: { id: clubIds } });
+    await this.addClubs(clubs);
+    this.Clubs = clubs;
+  }
+
   static initScopes () {
     const Card = sequelize.model('Card');
 

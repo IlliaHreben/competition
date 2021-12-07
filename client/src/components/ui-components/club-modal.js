@@ -1,8 +1,11 @@
-import Modal from './modal';
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createClub, updateClub } from '../../actions/clubs';
+import curry from 'lodash/curry';
+import debounce from 'lodash/debounce';
+import Modal from './modal';
+import { createClub, listClubs, updateClub } from '../../actions/clubs';
+import { listCoaches } from '../../actions/coaches';
 import { showSuccess } from '../../actions/errors';
 import {
     TextField, Autocomplete
@@ -22,7 +25,8 @@ ClubModal.propTypes = {
 function mapState (state) {
     return {
         settlements : state.settlements.list,
-        coaches     : state.coaches.list
+        coaches     : state.coaches.list,
+        active      : state.competitions.active
     };
 }
 
@@ -38,7 +42,7 @@ ClubModal.defaultProps = {
 export default function ClubModal ({ club, isEdit, open, handleClose, handleComplete }) {
     const [ _club, setClub ] = useState({});
     const [ _linked, setLinked ] = useState({ coaches: [] });
-    const { coaches } = useSelector(mapState);
+    const { coaches, active } = useSelector(mapState);
     const [ settlements, setSettlements ] = useState([]);
     const [ selectedSettlement, setSelectedSettlement ] = useState(null);
     const [ settlementInputValue, setSettlementInputValue ] = useState('');
@@ -52,57 +56,85 @@ export default function ClubModal ({ club, isEdit, open, handleClose, handleComp
         setLinked(linked);
 
         const cardSettlement = club.linked.settlement;
-        if (cardSettlement) {
-            setSettlements([ cardSettlement ]);
-            setSelectedSettlement(cardSettlement);
-        }
+        setSettlements(cardSettlement ? [ cardSettlement ] : []);
+        setSelectedSettlement(cardSettlement || null);
     }, [ club, open ]);
 
     const dispatch = useDispatch();
 
     const _handleConfirm = () => {
-        const actionFunction = isEdit ? updateClub : createClub;
+        const actionFunction = isEdit ? curry(updateClub)(club.id) : createClub;
+        const data = { ..._club, settlementId: selectedSettlement?.id };
 
         dispatch(actionFunction(
-            { data: _club, linked: { ..._linked, coaches: _linked.coaches.map(c => c.id) } },
+            { data, linked: { ..._linked, coaches: _linked.coaches.map(c => c.id) } },
             () => {
                 dispatch(showSuccess(`Club has been successfully ${isEdit ? 'edited' : 'created'}.`));
+                dispatch(listClubs({ competitionId: active.id, include: [ 'coaches', 'settlement' ] }));
+                dispatch(listCoaches({ competitionId: active.id, include: [ 'clubs' ] }));
                 handleComplete?.({ data: _club, _linked });
                 handleClose();
             }
         ));
     };
 
+    const listSettlements = useMemo(
+        () =>
+            debounce((run, search, selected) => {
+                (async () => {
+                    const { data } = await api.settlements.list({ search, limit: 10 });
+
+                    if (run) {
+                        let newOptions = [];
+
+                        if (search && selected) {
+                            newOptions = [ selected ];
+                        }
+
+                        if (data) {
+                            newOptions = [ ...newOptions, ...data ];
+                        }
+
+                        setSettlements(newOptions);
+                    }
+                })();
+            }, 500),
+        // we can't recalculate cause debounce won't work
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        []
+    );
+
     useEffect(() => {
-        let active = true;
+        let run = true;
 
         if (settlementInputValue === '') {
             setSettlements(selectedSettlement ? [ selectedSettlement ] : []);
             return;
         }
 
-        (async () => {
-            const { data } = await api.settlements.list({ search: settlementInputValue, limit: 10 });
+        listSettlements(run, settlementInputValue, selectedSettlement);
+        // (async () => {
+        //     const { data } = await api.settlements.list({ search: settlementInputValue, limit: 10 });
 
-            if (active) {
-                let newOptions = [];
+        //     if (run) {
+        //         let newOptions = [];
 
-                if (settlementInputValue) {
-                    newOptions = [ selectedSettlement ];
-                }
+        //         if (settlementInputValue && selectedSettlement) {
+        //             newOptions = [ selectedSettlement ];
+        //         }
 
-                if (data) {
-                    newOptions = [ ...newOptions, ...data ];
-                }
+        //         if (data) {
+        //             newOptions = [ ...newOptions, ...data ];
+        //         }
 
-                setSettlements(newOptions);
-            }
-        })();
+        //         setSettlements(newOptions);
+        //     }
+        // })();
 
         return () => {
-            active = false;
+            run = false;
         };
-    }, [ settlementInputValue, selectedSettlement ]);
+    }, [ settlementInputValue, selectedSettlement, listSettlements ]);
 
     return (
         <Modal
@@ -143,8 +175,8 @@ export default function ClubModal ({ club, isEdit, open, handleClose, handleComp
                 sx={{ mb: 1 }}
                 filterOptions={(x) => x}
                 value={selectedSettlement}
-                getOptionLabel={s => s ? s.name : ''}
-                renderInput={(params) => <TextField {...params} label="Settlement" />}
+                getOptionLabel={s => s ? `${s.name}, ${s.linked.state?.name}` : ''}
+                renderInput={(params) => <TextField {...params} label="Settlement" placeholder="Favorites" />}
                 onChange={(e, newSelected) => {
                     setSettlements(prev => ([ newSelected, ...prev ]));
                     setSelectedSettlement(newSelected);

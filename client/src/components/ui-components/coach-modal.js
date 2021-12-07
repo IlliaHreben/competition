@@ -2,11 +2,13 @@ import Modal from './modal';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createCoach, updateCoach } from '../../actions/coaches';
+import curry from 'lodash/curry';
+import { createCoach, listCoaches, updateCoach } from '../../actions/coaches';
 import { showSuccess } from '../../actions/errors';
 import {
     TextField, Autocomplete, Stack
 } from '@mui/material';
+import { listClubs } from '../../actions/clubs';
 
 CoachModal.propTypes = {
     open           : PropTypes.bool.isRequired,
@@ -20,11 +22,9 @@ CoachModal.propTypes = {
 
 function mapState (state) {
     return {
-        clubs    : state.clubs.list,
-        coaches  : state.coaches.list,
-        cards    : state.cards.list,
-        sections : state.sections.list,
-        active   : state.competitions.active
+        clubs   : state.clubs.list,
+        coaches : state.coaches.list,
+        active  : state.competitions.active
     };
 }
 
@@ -40,7 +40,7 @@ CoachModal.defaultProps = {
 export default function CoachModal ({ coach, isEdit, open, handleClose, handleComplete }) {
     const [ _coach, setCoach ] = useState({});
     const [ _linked, setLinked ] = useState({ clubs: [] });
-    const { clubs } = useSelector(mapState);
+    const { clubs, active } = useSelector(mapState);
 
     useEffect(() => {
         if (!open) return;
@@ -54,12 +54,14 @@ export default function CoachModal ({ coach, isEdit, open, handleClose, handleCo
     const dispatch = useDispatch();
 
     const _handleConfirm = () => {
-        const actionFunction = isEdit ? updateCoach : createCoach;
+        const actionFunction = isEdit ? curry(updateCoach)(coach.id) : createCoach;
 
         dispatch(actionFunction(
             { data: _coach, linked: { ..._linked, clubs: _linked.clubs.map(c => c.id) } },
             () => {
                 dispatch(showSuccess(`Coach has been successfully ${isEdit ? 'edited' : 'created'}.`));
+                dispatch(listClubs({ competitionId: active.id, include: [ 'coaches', 'settlement' ] }));
+                dispatch(listCoaches({ competitionId: active.id, include: [ 'clubs' ] }));
                 handleComplete?.({ data: _coach, _linked });
                 handleClose();
             }

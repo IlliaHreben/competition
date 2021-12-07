@@ -20,7 +20,7 @@ export function createCoach (payload, onSuccess) {
         try {
             dispatch(reducer.createRequest());
 
-            const data = await api.coaches.create(payload);
+            const { data } = await api.coaches.create(payload);
 
             dispatch(reducer.create(data));
 
@@ -31,12 +31,13 @@ export function createCoach (payload, onSuccess) {
     };
 }
 
-export function updateCoach (payload, onSuccess) {
+export function updateCoach (id, payload, onSuccess) {
     return async dispatch => {
         try {
             dispatch(reducer.updateRequest());
 
-            const data = await api.coaches.update(payload);
+            await api.coaches.update(id, payload);
+            const { data } = await api.coaches.show(id, { include: [ 'clubs' ] });
 
             dispatch(reducer.updateCoach(data));
 

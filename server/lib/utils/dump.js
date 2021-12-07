@@ -113,7 +113,7 @@ export function dumpCoach (data) {
 export function dumpClub (data) {
   const linked = {};
 
-  if (data.Coaches) linked.coaches = data.Coaches.map(dumpClub);
+  if (data.Coaches) linked.coaches = data.Coaches.map(dumpCoach);
   if (data.Settlement) linked.settlement = dumpSettlement(data.Settlement);
 
   return {
@@ -130,6 +130,22 @@ export function dumpSettlement (data) {
   const linked = {};
 
   if (data.Cards) linked.cards = data.Cards.map(dumpCard);
+  if (data.State) linked.state = dumpState(data.State);
+
+  return {
+    id        : data.id,
+    name      : data.name,
+    createdAt : data.createdAt,
+    updatedAt : data.updatedAt,
+    linked
+  };
+}
+
+export function dumpState (data) {
+  const linked = {};
+
+  if (data.Cards) linked.cards = data.Cards.map(dumpCard);
+  if (data.Settlements) linked.settlements = data.Settlements.map(dumpSettlement);
 
   return {
     id        : data.id,

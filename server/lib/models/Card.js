@@ -74,6 +74,7 @@ export default class Card extends Base {
     const Category = sequelize.model('Category');
     const Fighter = sequelize.model('Fighter');
     const Club = sequelize.model('Club');
+    const Settlement = sequelize.model('Settlement');
 
     const scopes = {
       fighter: {
@@ -86,7 +87,11 @@ export default class Card extends Base {
         include: [ { model: Category, as: 'Category', include: [ 'Section' ] } ]
       },
       club: {
-        include: [ { model: Club, as: 'Club', include: 'Settlement' } ]
+        include: [ {
+          model   : Club,
+          as      : 'Club',
+          include : { model: Settlement, as: 'Settlement', include: 'State' }
+        } ]
       },
       competitionRelated: (id) => {
         return {

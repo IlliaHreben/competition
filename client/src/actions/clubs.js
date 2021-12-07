@@ -15,26 +15,29 @@ export function listClubs (params = {}) {
     };
 }
 
-export function createClub (payload) {
+export function createClub (payload, onSuccess) {
     return async dispatch => {
         try {
             dispatch(reducer.createRequest());
 
-            const data = await api.clubs.create(payload);
+            const { data } = await api.clubs.create(payload);
 
             dispatch(reducer.create(data));
+
+            onSuccess?.();
         } catch (errData) {
             dispatch(reducer.createRequestError(errData));
         }
     };
 }
 
-export function updateClub (payload, onSuccess) {
+export function updateClub (id, payload, onSuccess) {
     return async dispatch => {
         try {
             dispatch(reducer.updateRequest());
 
-            const data = await api.clubs.update(payload);
+            await api.clubs.update(id, payload);
+            const { data } = await api.clubs.show(id, { include: [ 'coaches', 'settlement' ] });
 
             dispatch(reducer.updateClub(data));
 

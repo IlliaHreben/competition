@@ -2,16 +2,23 @@ import Sequelize         from 'sequelize';
 import sequelize, { Op } from '../sequelize-singleton.js';
 import Base              from './Base.js';
 
-// import Coach             from './Coach.js';
-
 export default class Settlement extends Base {
   static initRelation () {
+    const State = sequelize.model('State');
     const Club = sequelize.model('Club');
 
     this.hasMany(Club, {
       as         : 'Clubs',
       foreignKey : {
         name      : 'settlementId',
+        allowNull : false
+      }
+    });
+
+    this.belongsTo(State, {
+      as         : 'State',
+      foreignKey : {
+        name      : 'stateId',
         allowNull : false
       }
     });
@@ -36,7 +43,7 @@ export default class Settlement extends Base {
         }
       }),
       search: search => ({
-        where: { name: { [Op.substring]: search } }
+        where: { name: { [Op.iLike]: `%${search}%` } }
       })
     };
 

@@ -1,7 +1,6 @@
 import ServiceBase  from '../Base.js';
 import { dumpClub } from '../../utils';
 
-import Coach        from '../../models/Coach.js';
 import Club         from '../../models/Club.js';
 import Settlement   from '../../models/Settlement.js';
 import ServiceError from '../service-error.js';
@@ -25,11 +24,8 @@ export default class ClubsCreate extends ServiceBase {
       const settlement = await Settlement.findById(data.settlementId);
       if (!settlement) throw new ServiceError('SETTLEMENT_NOT_FOUND');
       const club = await Club.create(data);
-      if (linked.coaches) {
-        const coaches = await Coach.findAll({ where: { id: linked.coaches } });
-        await club.addCoaches(coaches);
-        club.Coaches = coaches;
-      }
+
+      if (linked.coaches) await club.associateCoaches(linked.coaches);
 
       return {
         data: dumpClub(club)

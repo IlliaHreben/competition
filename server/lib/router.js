@@ -34,10 +34,14 @@ router.get('/fight-spaces', controllers.fightSpaces.list);
 router.patch('/fight-spaces/bulk', controllers.fightSpaces.bulkUpdate);
 
 router.get('/clubs', controllers.clubs.list);
+router.get('/clubs/:id', controllers.clubs.show);
 router.post('/clubs', controllers.clubs.create);
+router.patch('/clubs/:id', controllers.clubs.update);
 
 router.get('/coaches', controllers.coaches.list);
+router.get('/coaches/:id', controllers.coaches.show);
 router.post('/coaches', controllers.coaches.create);
+router.patch('/coaches/:id', controllers.coaches.update);
 
 router.get('/settlements', controllers.settlements.list);
 

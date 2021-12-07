@@ -1,6 +1,7 @@
-import Sequelize from 'sequelize';
-import sequelize from '../sequelize-singleton.js';
-import Base      from './Base.js';
+import Sequelize    from 'sequelize';
+import sequelize    from '../sequelize-singleton.js';
+import Base         from './Base.js';
+import ServiceError from '../services/service-error.js';
 
 // import Coach             from './Coach.js';
 
@@ -38,8 +39,39 @@ export default class Club extends Base {
     });
   }
 
+  async updateClub (data, linked) {
+    if (data.settlementId) {
+      const Settlement = sequelize.model('Settlement');
+
+      const settlement = await Settlement.findById(data.settlementId);
+      if (!settlement) throw new ServiceError('SETTLEMENT_NOT_FOUND');
+    }
+
+    await this.update(data);
+
+    if (linked.coaches) {
+      const Coach = sequelize.model('Coach');
+
+      const coaches = await this.getCoaches();
+      const toDelete = coaches.filter(coach => !linked.coaches.includes(coach.id));
+      await this.removeCoaches(toDelete);
+      const toCreateIds = linked.coaches.filter(coachId => !coaches.some(coach => coach.id === coachId));
+      const coachesToCreate = await Coach.findAll({ where: { id: toCreateIds } });
+      await this.associateCoaches(coachesToCreate);
+    }
+  }
+
+  async associateCoaches (coachIds) {
+    const Coach = sequelize.model('Coach');
+
+    const coaches = await Coach.findAll({ where: { id: coachIds } });
+    await this.addCoaches(coaches);
+    this.Coaches = coaches;
+  }
+
   static initScopes () {
     const Card = sequelize.model('Card');
+    const Settlement = sequelize.model('Settlement');
 
     const scopes = {
       coachId: id => ({
@@ -57,7 +89,7 @@ export default class Club extends Base {
         } ]
       }),
       coaches    : { include: 'Coaches' },
-      settlement : { include: 'Settlement' }
+      settlement : { include: { model: Settlement, as: 'Settlement', include: 'State' } }
     };
 
     Object.entries(scopes).forEach(scope => this.addScope(...scope));

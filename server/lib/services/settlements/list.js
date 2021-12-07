@@ -1,7 +1,7 @@
-import ServiceBase     from '../Base.js';
-import { dumpSection } from '../../utils';
+import ServiceBase        from '../Base.js';
+import { dumpSettlement } from '../../utils';
 
-import Settlement      from '../../models/Settlement.js';
+import Settlement         from '../../models/Settlement.js';
 
 export default class SettlementsList extends ServiceBase {
   static validationRules = {
@@ -16,11 +16,13 @@ export default class SettlementsList extends ServiceBase {
     const rows = await Settlement
       .scope(...scopes)
       .findAll({
-        limit
+        limit,
+        include : [ 'State' ],
+        order   : [ [ 'name', 'ASC' ] ]
       });
 
     return {
-      data: rows.map(dumpSection)
+      data: rows.map(dumpSettlement)
     };
   }
 }
