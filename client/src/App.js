@@ -56,6 +56,13 @@ const routes = [
         path      : '/cards',
         icon      : CardsIcon,
         component : CardsList
+    },
+    {
+        name      : 'Create card',
+        path      : '/cards/create',
+        icon      : CardsIcon,
+        create    : true,
+        component : CardsList
     }
 ];
 

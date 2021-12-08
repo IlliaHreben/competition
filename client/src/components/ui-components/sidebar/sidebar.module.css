@@ -13,6 +13,6 @@
     width: var(--navbar-width);
     min-width: var(--navbar-width);
     /* height: 100%; */
-    background-color:rgb(225, 225, 225);
+    background-color:rgb(242, 242, 242);
     /* margin-top: var(--app-bar-height); */
 }
