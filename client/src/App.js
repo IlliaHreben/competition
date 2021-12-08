@@ -31,6 +31,7 @@ const CompetitionCreate = lazy(() => import('./components/pages/competitions/cre
 const CompetitionList = lazy(() => import('./components/pages/competitions/list.js'));
 const CompetitionUpdate = lazy(() => import('./components/pages/competitions/update'));
 const CardsList = lazy(() => import('./components/pages/cards/list'));
+const CardCreate = lazy(() => import('./components/pages/cards/create'));
 
 const routes = [
     {
@@ -62,7 +63,7 @@ const routes = [
         path      : '/cards/create',
         icon      : CardsIcon,
         create    : true,
-        component : CardsList
+        component : CardCreate
     }
 ];
 

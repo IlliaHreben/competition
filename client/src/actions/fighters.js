@@ -42,13 +42,17 @@ import * as reducer from '../reducers/fighters';
 //     };
 // }
 
-export function createFighter (fighter, categories) {
+export function createFighter (fighter, onSuccess) {
     return async dispatch => {
         try {
-            const { data } = await api.fighters.create(fighter);
-
+            const { data } = await api.fighters.create({ data: fighter });
             dispatch(reducer.create(data));
+
+            onSuccess?.();
         } catch (errData) {
+            console.log('='.repeat(50)); // !nocommit
+            console.log(errData);
+            console.log('='.repeat(50));
             dispatch(reducer.createRequestError(errData));
         }
     };

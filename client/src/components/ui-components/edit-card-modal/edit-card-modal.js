@@ -35,7 +35,7 @@ export default function EditCardModal ({ open, handleClose, handleConfirm, card 
             title="Edit card"
             fullWidth
         >
-            <CardFrom card={card} onChange={setCardData}/>
+            <CardFrom card={card} isEdit onChange={setCardData}/>
         </Modal>
     );
 }

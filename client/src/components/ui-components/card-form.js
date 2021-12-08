@@ -7,8 +7,9 @@ import {
 } from '@mui/material';
 import { useState, useEffect, useReducer } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateFighter } from '../../actions/fighters';
-import { showSuccess, showError } from '../../actions/errors';
+import curry from 'lodash/curry';
+import { updateFighter, createFighter } from '../../actions/fighters';
+import { showSuccess } from '../../actions/errors';
 // import api from '../../api-singleton';
 import AdapterDateFns from '@mui/lab/AdapterLuxon';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -17,9 +18,11 @@ import { getAgeFromBirthDate } from '../../utils/datetime';
 import Modal from './modal';
 import CoachModal from './coach-modal';
 import ClubModal from './club-modal';
+import FighterAutocomplete from './fighter-autocomplete';
 
 CardForm.propTypes = {
     card     : PropTypes.object,
+    isEdit   : PropTypes.bool,
     onChange : PropTypes.func.isRequired
 };
 
@@ -61,6 +64,8 @@ const useRelatedInfo = card => {
 
 function reducer (state, { type, payload }) {
     switch (type) {
+    case 'fighter':
+        return { ...state, fighter: payload };
     case 'name':
         return { ...state, name: payload };
     case 'lastName':
@@ -95,8 +100,9 @@ function mapState (state) {
     };
 }
 
-export default function CardForm ({ card, onChange }) {
+export default function CardForm ({ card, isEdit, onChange }) {
     const initialState = {
+        fighter     : card?.linked?.fighter || null,
         name        : card?.linked?.fighter?.name || '',
         lastName    : card?.linked?.fighter?.lastName || '',
         sex         : card?.linked?.fighter?.sex || '',
@@ -119,14 +125,15 @@ export default function CardForm ({ card, onChange }) {
     const [ recalculate, setRecalculate ] = useState(true);
     const changeFighterModalStatus = () => setFighterModalStatus(prev => !prev);
 
-    const handleEditCard = () => {
-        dispatch(updateFighter(
-            card.linked.fighter.id,
-            recalculate,
-            active.id,
+    const handleConfirmFighter = () => {
+        const actionFunction = isEdit
+            ? curry(updateFighter)(card.linked.fighter.id, recalculate, active.id)
+            : createFighter;
+
+        dispatch(actionFunction(
             { name: cardData.name, lastName: cardData.lastName, sex: cardData.sex },
             () => {
-                dispatch(showSuccess('Fight has been successfully created.'));
+                dispatch(showSuccess(`Fighter has been successfully ${isEdit ? 'edited' : 'created'}.`));
                 changeFighterModalStatus();
             }
         ));
@@ -145,17 +152,20 @@ export default function CardForm ({ card, onChange }) {
         <FormGroup >
             <Typography variant="body1" gutterBottom>Main information</Typography>
             <Modal
-                title={'Edit fighter'}
+                title={`${isEdit ? 'Edit' : 'Create'} fighter`}
                 open={fighterModalStatus}
                 handleClose={changeFighterModalStatus}
-                handleConfirm={handleEditCard}
+                handleConfirm={handleConfirmFighter}
+                confirmButtonText={isEdit ? 'Save' : 'Create'}
             >
-                <Typography
-                    variant="body2"
-                    gutterBottom
-                >Please pay an attention that fighter&#39;s data will
-                    be changed for all cards associated with this fighter.
-                </Typography>
+                {isEdit &&
+                    <Typography
+                        variant="body2"
+                        gutterBottom
+                    >Please pay an attention that fighter&#39;s data will
+                        be changed for all cards associated with this fighter.
+                    </Typography>
+                }
                 <Stack direction="row" sx={{ mt: 1.5, mb: 1.5 }}>
                     <TextField
                         fullWidth
@@ -195,13 +205,15 @@ export default function CardForm ({ card, onChange }) {
                         <MenuItem value="woman">Woman</MenuItem>
                     </Select>
                 </FormControl>
-                <FormControlLabel sx={{ justifyContent: 'center', mb: 2, mt: 0.5 }} control={(
-                    <Switch
-                        checked={recalculate}
-                        onChange={e => setRecalculate(e.target.checked)}
+                {isEdit &&
+                    <FormControlLabel sx={{ justifyContent: 'center', mb: 2, mt: 0.5 }} control={(
+                        <Switch
+                            checked={recalculate}
+                            onChange={e => setRecalculate(e.target.checked)}
+                        />
+                    )} label="Recalculate categories"
                     />
-                )} label="Recalculate categories"
-                />
+                }
                 {/* <FormControlLabel control={<Checkbox defaultChecked />} label="Label" /> */}
             </Modal>
             <CoachModal
@@ -216,7 +228,35 @@ export default function CardForm ({ card, onChange }) {
                 club={clubs.find(c => c.id === cardData.clubId)}
                 isEdit={!!cardData.clubId}
             />
-            <Stack direction="row" sx={{ mb: 1.5, mt: 1 }}>
+            {isEdit
+                ? (
+                    <Stack direction="row" sx={{ mt: 1.5, mb: 1 }}>
+                        <TextField
+                            fullWidth
+                            id="card-name-input"
+                            label="Name"
+                            value={cardData.name}
+                            sx={{ mr: 1.5 }}
+                            disabled={!!isEdit}
+                        />
+                        <TextField
+                            fullWidth
+                            id="card-last-name-input"
+                            label="Last name"
+                            value={cardData.lastName}
+                            disabled={!!isEdit}
+                        />
+                    </Stack>
+                )
+                : (
+                    <FighterAutocomplete
+                        fighter={cardData.fighter}
+                        onChange={fighter => dispatchCard({ type: 'fighter', payload: fighter })}
+                    />
+                )
+            }
+            <Button variant="text" onClick={changeFighterModalStatus}>{isEdit ? 'Change' : 'Create'} fighter</Button>
+            <Stack direction="row" sx={{ mb: 1.5, mt: 2 }}>
                 <TextField
                     fullWidth
                     id="card-name-input"
@@ -277,8 +317,7 @@ export default function CardForm ({ card, onChange }) {
                     {errors.group && <FormHelperText>{errors.group}</FormHelperText>}
                 </FormControl>
             </Stack>
-            <Button variant="text" onClick={changeFighterModalStatus}>Change fighter</Button>
-            <Typography sx={{ mt: 2 }} variant="body1" gutterBottom>Club and coach information</Typography>
+            <Typography sx={{ mt: 1 }} variant="body1" gutterBottom>Club and coach information</Typography>
             <Stack direction="row" sx={{ mt: 1 }}>
 
                 <Stack sx={{ mr: 1.5, width: '100%' }}>

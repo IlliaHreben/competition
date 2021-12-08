@@ -176,7 +176,7 @@ export default function ClubModal ({ club, isEdit, open, handleClose, handleComp
                 filterOptions={(x) => x}
                 value={selectedSettlement}
                 getOptionLabel={s => s ? `${s.name}, ${s.linked.state?.name}` : ''}
-                renderInput={(params) => <TextField {...params} label="Settlement" placeholder="Favorites" />}
+                renderInput={(params) => <TextField {...params} label="Settlement" />}
                 onChange={(e, newSelected) => {
                     setSettlements(prev => ([ newSelected, ...prev ]));
                     setSelectedSettlement(newSelected);

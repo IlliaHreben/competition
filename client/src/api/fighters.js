@@ -16,6 +16,10 @@ class Fighters extends Base {
     update = (id, recalculate, competitionId, payload) => {
         return this.apiClient.patch(`fighters/${id}`, { recalculate, competitionId, data: payload });
     }
+
+    create = (payload) => {
+        return this.apiClient.post('fighters/', payload);
+    }
 }
 
 export default Fighters;
