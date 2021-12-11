@@ -20,7 +20,7 @@ export default function FighterAutocomplete ({ fighter, onChange }) {
         () =>
             debounce((run, search, selected) => {
                 (async () => {
-                    const { data } = await api.fighters.list({ search, limit: 10 });
+                    const { data } = await api.fighters.list({ search, limit: 10, include: 'club' });
 
                     if (run) {
                         let newOptions = [];
@@ -28,6 +28,9 @@ export default function FighterAutocomplete ({ fighter, onChange }) {
                         if (search && selected) {
                             newOptions = [ selected ];
                         }
+                        console.log('='.repeat(50)); // !nocommit
+                        console.log(newOptions);
+                        console.log('='.repeat(50));
 
                         if (data) {
                             newOptions = [ ...newOptions, ...data ];
@@ -69,6 +72,7 @@ export default function FighterAutocomplete ({ fighter, onChange }) {
             sx={{ mb: 1 }}
             filterOptions={(x) => x}
             value={fighter}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
             getOptionLabel={c => c ? `${c.name}, ${c.lastName}` : ''}
             renderInput={(params) => <TextField {...params} label="Fighter" />}
             onChange={(e, newSelected) => {

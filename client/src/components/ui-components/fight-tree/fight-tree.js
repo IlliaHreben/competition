@@ -62,10 +62,10 @@ function getCellValues (root, colors) {
     const getFullName = ({ name, lastName }) => `${name} ${lastName}`;
     const formatData = (data) => ({
         fullName   : getFullName(data.fighter),
-        coach      : getFullName(data.coach),
-        coachColor : colors[data.coach.id] || '#eeeeee',
-        club       : data.club.name,
-        clubColor  : colors[data.club.id] || '#eeeeee'
+        coach      : getFullName(data.fighter.linked.coach),
+        coachColor : colors[data.fighter.coachId] || '#eeeeee',
+        club       : data.fighter.linked.club.name,
+        clubColor  : colors[data.fighter.clubId] || '#eeeeee'
     });
 
     return {
@@ -76,9 +76,9 @@ function getCellValues (root, colors) {
 
 function createFightersTree ({ cards, fights }) {
     let colors = {};
-    cards.forEach(({ coachId, clubId }) => {
-        colors[coachId] ? colors[coachId]++ : colors[coachId] = 1;
-        colors[clubId] ? colors[clubId]++ : colors[clubId] = 1;
+    cards.forEach(({ linked: { fighter } }) => {
+        colors[fighter.coachId] ? colors[fighter.coachId]++ : colors[fighter.coachId] = 1;
+        colors[fighter.clubId] ? colors[fighter.clubId]++ : colors[fighter.clubId] = 1;
     });
     colors = Object.fromEntries(Object.entries(colors)
         .filter(([ , count ]) => count > 1)
@@ -109,7 +109,7 @@ export default function FightTree ({
     const sizeHeight = innerHeight;
 
     if (totalWidth < 10) return null;
-    //
+
     return (
         <div className={styles.svgContainer}>
             <svg
@@ -166,22 +166,3 @@ export default function FightTree ({
         </div>
     );
 }
-
-// Graphic.propTypes = {
-//     fights: PropTypes.arrayOf(PropTypes.shape({
-//         id           : PropTypes.string.isRequired,
-//         degree       : PropTypes.number.isRequired,
-//         orderNumber  : PropTypes.number.isRequired,
-//         firstCardId  : PropTypes.string.isRequired,
-//         secondCardId : PropTypes.string.isRequired,
-//         winnerId     : PropTypes.string.isRequired,
-//         nextFightId  : PropTypes.string.isRequired,
-//         categoryId   : PropTypes.string.isRequired,
-//         fightSpaceId : PropTypes.string.isRequired,
-//         executedAt   : PropTypes.string.isRequired,
-//         createdAt    : PropTypes.string.isRequired,
-//         updatedAt    : PropTypes.string.isRequired
-//     })).isRequired
-// };
-
-// export default Graphic;

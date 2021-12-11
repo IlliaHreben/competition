@@ -5,34 +5,11 @@ import Base                  from './Base.js';
 
 export default class Card extends Base {
   static initRelation () {
-    const Club = sequelize.model('Club');
-    const Coach = sequelize.model('Coach');
     const Fighter = sequelize.model('Fighter');
     const Category = sequelize.model('Category');
     const Competition = sequelize.model('Competition');
     const Section = sequelize.model('Section');
 
-    this.belongsTo(Club, {
-      as         : 'Club',
-      foreignKey : {
-        name      : 'clubId',
-        allowNull : false
-      }
-    });
-    this.belongsTo(Club, {
-      as         : 'SecondaryClub',
-      foreignKey : {
-        name      : 'secondaryClubId',
-        allowNull : true
-      }
-    });
-    this.belongsTo(Coach, {
-      as         : 'Coach',
-      foreignKey : {
-        name      : 'coachId',
-        allowNull : false
-      }
-    });
     this.belongsTo(Fighter, {
       as         : 'Fighter',
       foreignKey : {
@@ -81,16 +58,24 @@ export default class Card extends Base {
         include: [ 'Fighter' ]
       },
       coach: {
-        include: [ 'Coach' ]
+        include: [ {
+          model   : Fighter,
+          as      : 'Fighter',
+          include : [ 'Coach' ]
+        } ]
       },
       category: {
         include: [ { model: Category, as: 'Category', include: [ 'Section' ] } ]
       },
       club: {
         include: [ {
-          model   : Club,
-          as      : 'Club',
-          include : { model: Settlement, as: 'Settlement', include: 'State' }
+          model   : Fighter,
+          as      : 'Fighter',
+          include : [ {
+            model   : Club,
+            as      : 'Club',
+            include : { model: Settlement, as: 'Settlement', include: 'State' }
+          } ]
         } ]
       },
       competitionRelated: (id) => ({
@@ -107,11 +92,21 @@ export default class Card extends Base {
         include: [ 'Fighter' ]
       }),
       sectionId    : (sectionId) => ({ where: { sectionId } }),
-      clubId       : (clubId) => ({ where: { clubId } }),
-      coachId      : (coachId) => ({ where: { coachId } }),
+      clubId       : (clubId) => ({ where: { '$Fighter.clubId$': clubId }, include: [ 'Fighter' ] }),
+      coachId      : (coachId) => ({ where: { '$Fighter.coachId$': coachId }, include: [ 'Fighter' ] }),
       settlementId : (settlementId) => ({
-        where   : { '$Club.settlementId$': settlementId },
-        include : 'Club'
+        include: [ {
+          model    : Fighter,
+          as       : 'Fighter',
+          required : true,
+          include  : [ {
+            model    : Club,
+            as       : 'Club',
+            where    : { settlementId },
+            required : true,
+            include  : { model: Settlement, as: 'Settlement', include: 'State' }
+          } ]
+        } ]
       }),
       group : (group) => ({ where: { group } }),
       sex   : sex => ({
@@ -128,8 +123,6 @@ export default class Card extends Base {
   }
 
   async updateCard (data) {
-    const Club = sequelize.model('Club');
-    const Coach = sequelize.model('Coach');
     const Section = sequelize.model('Section');
     const Category = sequelize.model('Category');
     const Fighter = sequelize.model('Fighter');
@@ -137,14 +130,6 @@ export default class Card extends Base {
     if (data.fighterId) {
       const fighter = await Fighter.findById(data.fighterId);
       if (!fighter) throw new ServiceError('FIGHTER_NOT_FOUND');
-    }
-    if (data.clubId) {
-      const club = await Club.findById(data.clubId);
-      if (!club) throw new ServiceError('CLUB_NOT_FOUND');
-    }
-    if (data.coachId) {
-      const coach = await Coach.findById(data.coachId);
-      if (!coach) throw new ServiceError('COACH_NOT_FOUND');
     }
     if (data.sectionId) {
       const section = await Section.findById(data.sectionId);
@@ -206,13 +191,10 @@ export default class Card extends Base {
 Card.init({
   id: { type: DT.UUID, defaultValue: DT.UUIDV4, primaryKey: true },
 
-  fighterId       : { type: DT.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Fighters', key: 'id' }, allowNull: false },
-  clubId          : { type: DT.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Clubs', key: 'id' }, allowNull: false },
-  secondaryClubId : { type: DT.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Clubs', key: 'id' }, allowNull: true },
-  coachId         : { type: DT.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Coaches', key: 'id' }, allowNull: false },
-  categoryId      : { type: DT.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Categories', key: 'id' }, allowNull: false },
-  competitionId   : { type: DT.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Competition', key: 'id' }, allowNull: false },
-  sectionId       : { type: DT.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Sections', key: 'id' }, allowNull: false },
+  fighterId     : { type: DT.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Fighters', key: 'id' }, allowNull: false },
+  categoryId    : { type: DT.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Categories', key: 'id' }, allowNull: false },
+  competitionId : { type: DT.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Competition', key: 'id' }, allowNull: false },
+  sectionId     : { type: DT.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Sections', key: 'id' }, allowNull: false },
 
   weight     : { type: DT.FLOAT, allowNull: false },
   realWeight : { type: DT.FLOAT, allowNull: false },

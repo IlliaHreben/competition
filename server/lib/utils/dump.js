@@ -42,29 +42,24 @@ export function dumpSection (data) {
 
 export function dumpCard (data) {
   const linked = {
-    ...data.Coach && { coach: dumpCoach(data.Coach) },
-    ...data.Club && { club: dumpClub(data.Club) },
     ...data.Fighter && { fighter: dumpFighter(data.Fighter) },
     ...data.Section && { section: dumpSection(data.Section) },
     ...data.Category && { category: dumpCategory(data.Category) }
   };
 
   return {
-    id              : data.id,
-    fighterId       : data.fighterId,
-    clubId          : data.clubId,
-    secondaryClubId : data.secondaryClubId,
-    coachId         : data.coachId,
-    categoryId      : data.categoryId,
-    competitionId   : data.competitionId,
-    sectionId       : data.sectionId,
-    weight          : data.weight,
-    realWeight      : data.realWeight,
-    group           : data.group,
-    birthDate       : data.birthDate,
-    age             : data.age,
-    createdAt       : data.createdAt,
-    updatedAt       : data.updatedAt,
+    id            : data.id,
+    fighterId     : data.fighterId,
+    categoryId    : data.categoryId,
+    competitionId : data.competitionId,
+    sectionId     : data.sectionId,
+    weight        : data.weight,
+    realWeight    : data.realWeight,
+    group         : data.group,
+    birthDate     : data.birthDate,
+    age           : data.age,
+    createdAt     : data.createdAt,
+    updatedAt     : data.updatedAt,
     linked
   };
 }
@@ -157,18 +152,25 @@ export function dumpState (data) {
 }
 
 export function dumpFighter (data) {
+  const linked = {
+    ...data.Coach && { coach: dumpCoach(data.Coach) },
+    ...data.Club && { club: dumpClub(data.Club) }
+  };
+
   return {
-    id        : data.id,
-    name      : data.name,
-    lastName  : data.lastName,
-    sex       : data.sex,
-    clubId    : data.clubId,
-    coachId   : data.coachId,
-    birthDate : data.birthDate,
-    group     : data.group,
-    age       : data.age,
-    createdAt : data.createdAt,
-    updatedAt : data.updatedAt
+    id              : data.id,
+    name            : data.name,
+    lastName        : data.lastName,
+    sex             : data.sex,
+    clubId          : data.clubId,
+    secondaryClubId : data.secondaryClubId,
+    coachId         : data.coachId,
+    birthDate       : data.birthDate,
+    group           : data.group,
+    age             : data.age,
+    createdAt       : data.createdAt,
+    updatedAt       : data.updatedAt,
+    linked
   };
 }
 
@@ -191,7 +193,6 @@ export function dumpCompetition (data, meta = {}) {
     startDate     : data.startDate,
     endDate       : data.endDate,
     days          : data.days,
-    clubId        : data.clubId,
     cardsCount    : meta.cardsCount,
     fightersCount : meta.fightersCount,
     linked

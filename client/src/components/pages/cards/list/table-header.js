@@ -59,7 +59,7 @@ export default function TableHeader ({ onChange }) {
                 includeInputInList
                 blurOnSelect
                 autoHighlight
-                options={coaches.filter(coach => cards.some(c => c.coachId === coach.id))}
+                options={coaches.filter(coach => cards.some(c => c.linked.fighter.coachId === coach.id))}
                 sx={{ flexGrow: 4 }}
                 getOptionLabel={({ name, lastName }) => `${name} ${lastName}`}
                 renderInput={(params) => <TextField {...params} size="small" label="Coach" />}
@@ -69,7 +69,7 @@ export default function TableHeader ({ onChange }) {
                 includeInputInList
                 blurOnSelect
                 autoHighlight
-                options={clubs.filter(club => cards.some(c => c.clubId === club.id))}
+                options={clubs.filter(club => cards.some(c => c.linked.fighter.clubId === club.id))}
                 sx={{ flexGrow: 4 }}
                 getOptionLabel={club => club.name}
                 renderInput={(params) => <TextField {...params} size="small" label="Club" />}

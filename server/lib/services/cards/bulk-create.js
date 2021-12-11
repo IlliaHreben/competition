@@ -9,15 +9,12 @@ export default class CardsBulkCreate extends ServiceBase {
       competitionId : [ 'required', 'uuid' ],
       data          : [ 'required', {
         list_of_objects: [ {
-          fighterId       : [ 'required', 'uuid' ],
-          clubId          : [ 'required', 'uuid' ],
-          secondaryClubId : [ 'uuid' ],
-          coachId         : [ 'required', 'uuid' ],
-          sectionId       : [ 'required', 'uuid' ],
-          weight          : [ 'required', { number_between: [ 0, 999 ] } ],
-          realWeight      : [ { number_between: [ 0, 999 ] } ],
-          group           : [ { one_of: [ 'A', 'B' ] } ],
-          birthDate       : [ 'required', 'iso_date' ]
+          fighterId  : [ 'required', 'uuid' ],
+          sectionId  : [ 'required', 'uuid' ],
+          weight     : [ 'required', { number_between: [ 0, 999 ] } ],
+          realWeight : [ { number_between: [ 0, 999 ] } ],
+          group      : [ { one_of: [ 'A', 'B' ] } ],
+          birthDate  : [ 'required', 'iso_date' ]
         } ]
       } ]
     };

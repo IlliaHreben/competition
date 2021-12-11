@@ -9,15 +9,12 @@ export default class CardUpdate extends ServiceBase {
       id   : [ 'required', 'uuid' ],
       data : [ 'required', {
         nested_object: {
-          fighterId       : [ 'not_empty', 'uuid' ],
-          clubId          : [ 'not_empty', 'uuid' ],
-          secondaryClubId : [ 'uuid' ],
-          coachId         : [ 'not_empty', 'uuid' ],
-          sectionId       : [ 'not_empty', 'uuid' ],
-          weight          : [ 'not_empty', { number_between: [ 0, 999 ] } ],
-          realWeight      : [ { number_between: [ 0, 999 ] } ],
-          group           : [ { one_of: [ 'A', 'B' ] } ],
-          birthDate       : [ 'not_empty', 'iso_date' ]
+          fighterId  : [ 'not_empty', 'uuid' ],
+          sectionId  : [ 'not_empty', 'uuid' ],
+          weight     : [ 'not_empty', { number_between: [ 0, 999 ] } ],
+          realWeight : [ { number_between: [ 0, 999 ] } ],
+          group      : [ { one_of: [ 'A', 'B' ] } ],
+          birthDate  : [ 'not_empty', 'iso_date' ]
         }
       } ]
     };

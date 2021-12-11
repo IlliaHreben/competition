@@ -1,8 +1,8 @@
 // import { Op }           from '../../sequelize.js';
-import ServiceBase      from '../Base.js';
-import { dumpFight }    from '../../utils';
+import ServiceBase   from '../Base.js';
+import { dumpFight } from '../../utils';
 
-import Category         from '../../models/Category.js';
+import Category      from '../../models/Category.js';
 
 export default class CalculateCategoryFights extends ServiceBase {
     static validationRules = {

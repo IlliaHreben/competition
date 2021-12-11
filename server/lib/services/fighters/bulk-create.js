@@ -11,7 +11,7 @@ export default class FightersBulkCreate extends ServiceBase {
         list_of_objects: [ {
           fighterId       : [ 'required', 'uuid' ],
           clubId          : [ 'required', 'uuid' ],
-          secondaryClubId : [ 'uuid' ],
+          secondaryClubId : [ 'not_empty', 'uuid' ],
           coachId         : [ 'required', 'uuid' ],
           sectionId       : [ 'required', 'uuid' ],
           weight          : [ 'required', { number_between: [ 0, 999 ] } ],

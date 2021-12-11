@@ -8,7 +8,7 @@ import ServiceError from '../services/service-error.js';
 export default class Club extends Base {
   static initRelation () {
     const Coach = sequelize.model('Coach');
-    const Card = sequelize.model('Card');
+    const Fighter = sequelize.model('Fighter');
     const Settlement = sequelize.model('Settlement');
 
     this.belongsToMany(Coach, {
@@ -22,8 +22,8 @@ export default class Club extends Base {
       onUpdate : 'cascade'
     });
 
-    this.hasMany(Card, {
-      as         : 'Cards',
+    this.hasMany(Fighter, {
+      as         : 'Fighters',
       foreignKey : {
         name      : 'clubId',
         allowNull : false
@@ -71,6 +71,7 @@ export default class Club extends Base {
 
   static initScopes () {
     const Card = sequelize.model('Card');
+    const Fighter = sequelize.model('Fighter');
     const Settlement = sequelize.model('Settlement');
 
     const scopes = {
@@ -80,9 +81,16 @@ export default class Club extends Base {
       }),
       competitionId: id => ({
         include: [ {
-          as       : 'Cards',
-          model    : Card,
-          where    : { competitionId: id },
+          model   : Fighter,
+          as      : 'Fighters',
+          include : [ {
+            as       : 'Cards',
+            model    : Card,
+            where    : { competitionId: id },
+            required : true,
+            distinct : true,
+            limit    : 1
+          } ],
           required : true,
           distinct : true,
           limit    : 1

@@ -12,9 +12,12 @@ export default class FighterUpdate extends ServiceBase {
       recalculate   : [ 'boolean', { default: true } ],
       data          : [ 'required', {
         nested_object: {
-          name     : [ 'required', 'string', { min_length: 1 }, { max_length: 1000 } ],
-          lastName : [ 'required', 'string', { min_length: 1 }, { max_length: 1000 } ],
-          sex      : [ 'required', { one_of: [ 'man', 'woman' ] } ]
+          name            : [ 'required', 'string', { min_length: 1 }, { max_length: 1000 } ],
+          lastName        : [ 'required', 'string', { min_length: 1 }, { max_length: 1000 } ],
+          sex             : [ 'required', { one_of: [ 'man', 'woman' ] } ],
+          clubId          : [ 'uuid' ],
+          secondaryClubId : [ 'not_empty', 'uuid' ],
+          coachId         : [ 'uuid' ]
         }
       } ]
     };

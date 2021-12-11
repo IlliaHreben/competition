@@ -31,7 +31,8 @@ function dumpCategoryData (category) {
 function dumpCardData (card) {
     const isFirst = card.isFirst;
     const fighter = card.linked?.fighter;
-    const coach = card.linked?.coach;
+    const coach = card.linked?.fighter?.linked.coach;
+    const club = card.linked?.fighter?.linked.club;
 
     return {
         date       : card.fight && getFormattedDate(), // TODO
@@ -40,8 +41,8 @@ function dumpCardData (card) {
         number     : card.fight ? (card.fight.orderNumber * 2 - +isFirst) : 1,
         fullName   : getFullName(fighter),
         sex        : fighter?.sex || '',
-        settlement : card.linked?.club?.linked?.settlement?.name || '',
-        club       : card.linked?.club?.name || '',
+        settlement : club?.linked?.settlement?.name || '',
+        club       : club?.name || '',
         coach      : getFullName(coach),
         age        : card.age || '',
         birthDate  : card.birthDate ? formatISODate(card.birthDate) : '',
@@ -139,21 +140,21 @@ CategoryTable.propTypes = {
                 executedAt   : PropTypes.string,
                 linked       : PropTypes.shape({
                     cards: PropTypes.arrayOf(PropTypes.shape({
-                        id              : PropTypes.string.isRequired,
-                        fighterId       : PropTypes.number.isRequired,
-                        clubId          : PropTypes.number.isRequired,
-                        secondaryClubId : PropTypes.string,
-                        coachId         : PropTypes.string.isRequired,
-                        section         : PropTypes.string.isRequired,
-                        weight          : PropTypes.number.isRequired,
-                        birthDate       : PropTypes.string.isRequired,
-                        age             : PropTypes.number.isRequired,
-                        linked          : PropTypes.shape({
+                        id        : PropTypes.string.isRequired,
+                        fighterId : PropTypes.number.isRequired,
+                        section   : PropTypes.string.isRequired,
+                        weight    : PropTypes.number.isRequired,
+                        birthDate : PropTypes.string.isRequired,
+                        age       : PropTypes.number.isRequired,
+                        linked    : PropTypes.shape({
                             fighter: PropTypes.shape({
-                                id       : PropTypes.string.isRequired,
-                                name     : PropTypes.string.isRequired,
-                                lastName : PropTypes.string.isRequired,
-                                sex      : PropTypes.string.isRequired
+                                id              : PropTypes.string.isRequired,
+                                name            : PropTypes.string.isRequired,
+                                lastName        : PropTypes.string.isRequired,
+                                sex             : PropTypes.string.isRequired,
+                                clubId          : PropTypes.number.isRequired,
+                                secondaryClubId : PropTypes.string,
+                                coachId         : PropTypes.string.isRequired
                             }).isRequired,
                             club: PropTypes.shape({
                                 id   : PropTypes.string.isRequired,

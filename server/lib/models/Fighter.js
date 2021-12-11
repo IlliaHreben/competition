@@ -14,7 +14,13 @@ export default class Fighter extends Base {
         allowNull : false
       }
     });
-
+    this.belongsTo(Club, {
+      as         : 'SecondaryClub',
+      foreignKey : {
+        name      : 'secondaryClubId',
+        allowNull : true
+      }
+    });
     this.belongsTo(Coach, {
       as         : 'Coach',
       foreignKey : {
@@ -77,14 +83,15 @@ export default class Fighter extends Base {
 Fighter.init({
   id: { type: DT.UUID, defaultValue: DT.UUIDV4, primaryKey: true },
 
-  name      : { type: DT.STRING, allowNull: false },
-  lastName  : { type: DT.STRING, allowNull: false },
-  sex       : { type: DT.ENUM([ 'man', 'woman' ]), allowNull: false },
-  clubId    : { type: DT.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Clubs', key: 'id' }, allowNull: true },
-  coachId   : { type: DT.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Coaches', key: 'id' }, allowNull: true },
-  birthDate : { type: DT.DATE, allowNull: true },
-  group     : { type: DT.ENUM([ 'A', 'B' ]), allowNull: true },
-  age       : {
+  name            : { type: DT.STRING, allowNull: false },
+  lastName        : { type: DT.STRING, allowNull: false },
+  sex             : { type: DT.ENUM([ 'man', 'woman' ]), allowNull: false },
+  clubId          : { type: DT.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Clubs', key: 'id' }, allowNull: true },
+  coachId         : { type: DT.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Coaches', key: 'id' }, allowNull: true },
+  secondaryClubId : { type: DT.UUID, onDelete: 'RESTRICT', onUpdate: 'CASCADE', references: { model: 'Clubs', key: 'id' }, allowNull: true },
+  birthDate       : { type: DT.DATE, allowNull: true },
+  group           : { type: DT.ENUM([ 'A', 'B' ]), allowNull: true },
+  age             : {
     type: DT.VIRTUAL,
     get () {
       const today = new Date();

@@ -171,6 +171,7 @@ export default class Category extends Base {
   static initScopes () {
     const Card = sequelize.model('Card');
     const Fight = sequelize.model('Fight');
+    const Fighter = sequelize.model('Fighter');
     const Club = sequelize.model('Club');
 
     const scopes = {
@@ -184,7 +185,7 @@ export default class Category extends Base {
             model    : Card,
             as       : 'Cards',
             required : true,
-            include  : [ 'Fighter', 'Club', 'Coach' ],
+            include  : [ { model: Fighter, as: 'Fighter', include: [ 'Club', 'Coach' ] } ],
             order    : [ [ 'id', 'ASC' ] ]
           },
           {
@@ -194,12 +195,26 @@ export default class Category extends Base {
               {
                 model   : Card,
                 as      : 'FirstCard',
-                include : [ 'Fighter', { model: Club, as: 'Club', include: 'Settlement' }, 'Coach' ]
+                include : [ {
+                  model   : Fighter,
+                  as      : 'Fighter',
+                  include : [
+                    { model: Club, as: 'Club', include: 'Settlement' },
+                    'Coach'
+                  ]
+                } ]
               },
               {
                 model   : Card,
                 as      : 'SecondCard',
-                include : [ 'Fighter', { model: Club, as: 'Club', include: 'Settlement' }, 'Coach' ]
+                include : [ {
+                  model   : Fighter,
+                  as      : 'Fighter',
+                  include : [
+                    { model: Club, as: 'Club', include: 'Settlement' },
+                    'Coach'
+                  ]
+                } ]
               }
             ]
           }

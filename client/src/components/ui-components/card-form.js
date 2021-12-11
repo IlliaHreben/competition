@@ -111,8 +111,8 @@ export default function CardForm ({ card, isEdit, onChange }) {
         sectionId   : card?.linked?.category?.linked?.section?.id || '',
         group       : card?.group || null,
         birthDate   : card?.birthDate || '',
-        coachId     : card?.coachId || '',
-        clubId      : card?.clubId || '',
+        coachId     : card?.linked?.fighter?.coachId || '',
+        clubId      : card?.linked?.fighter?.clubId || '',
         recalculate : true
     };
     const dispatch = useDispatch();
@@ -131,7 +131,13 @@ export default function CardForm ({ card, isEdit, onChange }) {
             : createFighter;
 
         dispatch(actionFunction(
-            { name: cardData.name, lastName: cardData.lastName, sex: cardData.sex },
+            {
+                name     : cardData.name,
+                lastName : cardData.lastName,
+                sex      : cardData.sex,
+                coachId  : cardData.coachId,
+                clubId   : cardData.clubId
+            },
             () => {
                 dispatch(showSuccess(`Fighter has been successfully ${isEdit ? 'edited' : 'created'}.`));
                 changeFighterModalStatus();
@@ -215,6 +221,47 @@ export default function CardForm ({ card, isEdit, onChange }) {
                     />
                 }
                 {/* <FormControlLabel control={<Checkbox defaultChecked />} label="Label" /> */}
+                <Typography sx={{ mt: 1 }} variant="body1" gutterBottom>Club and coach information</Typography>
+                <Stack direction="row" sx={{ mt: 1 }}>
+
+                    <Stack sx={{ mr: 1.5, width: '100%' }}>
+                        <Autocomplete
+                            includeInputInList
+                            blurOnSelect autoSelect
+                            autoHighlight
+                            fullWidth
+                            options={clubs}
+                            sx={{ mb: 1 }}
+                            getOptionLabel={club => club.name || ''}
+                            value={clubs.find(c => c.id === cardData.clubId) || ''}
+                            isOptionEqualToValue={(option, value) => option.id === value.id}
+                            renderInput={(params) => <TextField {...params} label="Club" />}
+                            onChange={(e, club) => dispatchCard({ type: 'clubId', payload: club?.id })}
+                        />
+                        <Button size="small" variant="text" onClick={changeClubModalStatus}>
+                            {cardData.clubId ? 'Edit' : 'Create'} club
+                        </Button>
+                    </Stack>
+                    <Stack sx={{ width: '100%' }}>
+                        <Autocomplete
+                            includeInputInList
+                            blurOnSelect autoSelect
+                            autoHighlight
+                            fullWidth
+                            options={coaches}
+                            sx={{ mb: 1 }}
+                            value={coaches.find(c => c.id === cardData.coachId) || ''}
+                            isOptionEqualToValue={(option, value) => option.id === value.id}
+                            getOptionLabel={({ name, lastName }) => name ? `${name} ${lastName}` : ''}
+                            renderInput={(params) => <TextField {...params} label="Coach" />}
+                            onChange={(e, coach) => dispatchCard({ type: 'coachId', payload: coach?.id })}
+                        />
+
+                        <Button size="small" variant="text" onClick={changeCoachModalStatus}>
+                            {cardData.coachId ? 'Edit' : 'Create'} coach
+                        </Button>
+                    </Stack>
+                </Stack>
             </Modal>
             <CoachModal
                 open={coachModalStatus}
@@ -282,7 +329,7 @@ export default function CardForm ({ card, isEdit, onChange }) {
                     />
                 </LocalizationProvider>
             </Stack>
-            <Stack direction="row" sx={{ mb: 1.5 }}>
+            <Stack direction="row">
                 <FormControl fullWidth sx={{ mr: 1.5 }} error={!!errors.section}>
                     <InputLabel id="card-name-input">Section</InputLabel>
                     <Select required
@@ -316,47 +363,6 @@ export default function CardForm ({ card, isEdit, onChange }) {
                     </Select>
                     {errors.group && <FormHelperText>{errors.group}</FormHelperText>}
                 </FormControl>
-            </Stack>
-            <Typography sx={{ mt: 1 }} variant="body1" gutterBottom>Club and coach information</Typography>
-            <Stack direction="row" sx={{ mt: 1 }}>
-
-                <Stack sx={{ mr: 1.5, width: '100%' }}>
-                    <Autocomplete
-                        includeInputInList
-                        blurOnSelect autoSelect
-                        autoHighlight
-                        fullWidth
-                        options={clubs}
-                        sx={{ mb: 1 }}
-                        getOptionLabel={club => club.name || ''}
-                        value={clubs.find(c => c.id === cardData.clubId) || ''}
-                        isOptionEqualToValue={(option, value) => option.id === value.id}
-                        renderInput={(params) => <TextField {...params} label="Club" />}
-                        onChange={(e, club) => dispatchCard({ type: 'clubId', payload: club?.id })}
-                    />
-                    <Button size="small" variant="text" onClick={changeClubModalStatus}>
-                        {cardData.clubId ? 'Edit' : 'Create'} club
-                    </Button>
-                </Stack>
-                <Stack sx={{ width: '100%' }}>
-                    <Autocomplete
-                        includeInputInList
-                        blurOnSelect autoSelect
-                        autoHighlight
-                        fullWidth
-                        options={coaches}
-                        sx={{ mb: 1 }}
-                        value={coaches.find(c => c.id === cardData.coachId) || ''}
-                        isOptionEqualToValue={(option, value) => option.id === value.id}
-                        getOptionLabel={({ name, lastName }) => name ? `${name} ${lastName}` : ''}
-                        renderInput={(params) => <TextField {...params} label="Coach" />}
-                        onChange={(e, coach) => dispatchCard({ type: 'coachId', payload: coach?.id })}
-                    />
-
-                    <Button size="small" variant="text" onClick={changeCoachModalStatus}>
-                        {cardData.coachId ? 'Edit' : 'Create'} coach
-                    </Button>
-                </Stack>
             </Stack>
         </FormGroup>
     );

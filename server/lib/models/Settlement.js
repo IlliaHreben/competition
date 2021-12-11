@@ -27,6 +27,7 @@ export default class Settlement extends Base {
   static initScopes () {
     const Club = sequelize.model('Club');
     const Card = sequelize.model('Card');
+    const Fighter = sequelize.model('Fighter');
 
     const scopes = {
       competitionId: competitionId => ({
@@ -34,10 +35,15 @@ export default class Settlement extends Base {
           model   : Club,
           as      : 'Clubs',
           include : {
-            model    : Card,
-            as       : 'Cards',
-            where    : { competitionId },
-            required : true
+            model   : Fighter,
+            as      : 'Fighters',
+            include : {
+              model    : Card,
+              as       : 'Cards',
+              where    : { competitionId },
+              required : true
+            },
+            required: true
           },
           required: true
         }

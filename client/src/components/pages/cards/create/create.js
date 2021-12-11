@@ -1,10 +1,12 @@
 import { Paper } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import CardForm from '../../../ui-components/card-form';
 
 export default function CreateCard () {
     const [ cardData, setCardData ] = useState({});
+
+    useEffect(() => document.title = 'Create card', []);
 
     return (
         <div>

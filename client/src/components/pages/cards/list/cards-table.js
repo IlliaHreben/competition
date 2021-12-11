@@ -52,12 +52,13 @@ function mapState (state) {
     };
 }
 const dumpCard = (card, handleClickSettings) => {
+    const { club, coach } = card.linked.fighter.linked;
     return {
         fullName      : `${card.linked.fighter.name} ${card.linked.fighter.lastName}`,
         sex           : card.linked.fighter.sex,
-        settlement    : card.linked.club.linked.settlement.name,
-        clubName      : card.linked.club.name,
-        coachFullName : `${card.linked.coach.name} ${card.linked.coach.lastName}`,
+        settlement    : club.linked.settlement.name,
+        clubName      : club.name,
+        coachFullName : `${coach.name} ${coach.lastName}`,
         age           : card.age,
         birthDate     : formatISODate(card.birthDate),
         weight        : card.weight,
@@ -233,14 +234,7 @@ export default withStyles(styles)(function CardsTable (props) {
     const handleChangeStatusEditModal = () => {
         setEditModalStatus(prevState => !prevState);
     };
-    // const handleEditCard = () => {
-    //     dispatch(deleteCard(
-    //         anchor.id,
-    //         () => dispatch(showSuccess('Card was successfully deleted.'))
-    //     ));
-    //     handleChangeStatusDeleteModal();
-    //     handleCloseSettings();
-    // };
+
     return (
         <Stack>
             <Modal

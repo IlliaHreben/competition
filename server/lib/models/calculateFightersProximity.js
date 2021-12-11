@@ -170,11 +170,11 @@ function calculateProximityCoefficient (units, coefficientMap) {
       const deepTo = deepFlat(to);
       let coefficient = 0;
 
-      deepFrom.forEach(fightFrom => {
-        deepTo.forEach(fightTo => {
-          if (fightFrom.coachId === fightTo.coachId) coefficient += coefficientMap.coach;
-          if (fightFrom.clubId === fightTo.clubId) coefficient += coefficientMap.club;
-          // if (fightFrom.city === fightTo.city) coefficient += coefficientMap.city;
+      deepFrom.forEach(unitFrom => {
+        deepTo.forEach(unitTo => {
+          if (unitFrom.Fighter.coachId === unitTo.Fighter.coachId) coefficient += coefficientMap.coach;
+          if (unitFrom.Fighter.clubId === unitTo.Fighter.clubId) coefficient += coefficientMap.club;
+          // if (unitFrom.city === unitTo.city) coefficient += coefficientMap.city;
         });
       });
 
@@ -278,10 +278,14 @@ function calculatePairsToPairsCombinations (units, coefficientMap) {
         pair        : [ from, to ],
         coefficient : 0
       };
-      flattenFrom.forEach(fightFrom => {
-        flattenTo.forEach(fightTo => {
-          if (fightFrom.coachId === fightTo.coachId) coefficient.coefficient += coefficientMap.coach;
-          if (fightFrom.clubId === fightTo.clubId) coefficient.coefficient += coefficientMap.club;
+      flattenFrom.forEach(unitFrom => {
+        flattenTo.forEach(unitTo => {
+          if (unitFrom.Fighter.coachId === unitTo.Fighter.coachId) {
+            coefficient.coefficient += coefficientMap.coach;
+          }
+          if (unitFrom.Fighter.clubId === unitTo.Fighter.clubId) {
+            coefficient.coefficient += coefficientMap.club;
+          }
           // if (fightFrom.city === fightTo.city) coefficient.coefficient += coefficientMap.city;
         });
       });
@@ -360,31 +364,9 @@ function calculate (cards, fights, isFirstLap = true) {
   const pairs = aggregateByMinimalCoefficient(cardsToCardsCombinations, fightersProximityCoefficient, isFirstLap)
     .sort((a, b) => b.length - a.length);
 
-  // if (a === 2) {
-  //   // console.log('+'.repeat(50)); // !nocommit
-  //   // // console.log(cardsToCardsCombinations);
-  //   // console.log(pairs.map(p => p.pair)[0].map(p => p.pair.map(pp => ({ fighterId: pp.fighterId, clubId: pp.clubId }))));
-  //   // console.log('+'.repeat(50));
-  //   // // console.log(cardsToCardsCombinations);
-  //   // console.log(pairs.map(p => p.pair)[1].map(p => p.pair.map(pp => ({ fighterId: pp.fighterId, clubId: pp.clubId }))));
-  //   // console.log('+'.repeat(50));
-  //   // // console.log(cardsToCardsCombinations);
-  //   // console.log(pairs.map(p => p.pair)[2].map(p => p.pair.map(pp => ({ fighterId: pp.fighterId, clubId: pp.clubId }))));
-  //   // console.log('+'.repeat(50));
-  //   // console.log(pairs.map(p => p.pair)[3].map(p => p.pair.map(pp => ({ fighterId: pp.fighterId, clubId: pp.clubId }))));
-  //   // console.log('+'.repeat(50));
-  //   // console.log(pairs.map(p => p.pair)[4]?.map(p => p.pair.map(pp => ({ fighterId: pp.fighterId, clubId: pp.clubId }))));
-  //   // console.log('+'.repeat(50));
-  // }
   return pairs.length <= 2
     ? mapPairsToFights(pairs, fights)
     : calculate(pairs, fights, false);
 }
 
-// const fights = generateFights(data.length);
-// const result = calculate(data, fights);
-// .sort((a, b) => a.length - b.length);
 export default calculate;
-// console.log('='.repeat(50)); // !nocommit
-// console.log(result);
-// console.log('='.repeat(50));

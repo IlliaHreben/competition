@@ -5,7 +5,7 @@ import Base      from './Base.js';
 export default class Coach extends Base {
   static initRelation () {
     const Club = sequelize.model('Club');
-    const Card = sequelize.model('Card');
+    const Fighter = sequelize.model('Fighter');
 
     this.belongsToMany(Club, {
       as         : 'Clubs',
@@ -18,8 +18,8 @@ export default class Coach extends Base {
       onUpdate : 'cascade'
     });
 
-    this.hasMany(Card, {
-      as         : 'Cards',
+    this.hasMany(Fighter, {
+      as         : 'Fighters',
       foreignKey : {
         name      : 'coachId',
         allowNull : false
@@ -55,6 +55,7 @@ export default class Coach extends Base {
 
   static initScopes () {
     const Card = sequelize.model('Card');
+    const Fighter = sequelize.model('Fighter');
 
     const scopes = {
       clubId: id => ({
@@ -63,9 +64,16 @@ export default class Coach extends Base {
       }),
       competitionId: id => ({
         include: [ {
-          as       : 'Cards',
-          model    : Card,
-          where    : { competitionId: id },
+          model   : Fighter,
+          as      : 'Fighters',
+          include : [ {
+            as       : 'Cards',
+            model    : Card,
+            where    : { competitionId: id },
+            required : true,
+            distinct : true,
+            limit    : 1
+          } ],
           required : true,
           distinct : true,
           limit    : 1
