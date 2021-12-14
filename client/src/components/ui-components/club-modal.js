@@ -3,13 +3,14 @@ import { useEffect, useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import curry from 'lodash/curry';
 import debounce from 'lodash/debounce';
+import {
+    TextField, Autocomplete, Button
+} from '@mui/material';
 import Modal from './modal';
+import SettlementModal from './settlement-modal';
 import { createClub, listClubs, updateClub } from '../../actions/clubs';
 import { listCoaches } from '../../actions/coaches';
 import { showSuccess } from '../../actions/errors';
-import {
-    TextField, Autocomplete
-} from '@mui/material';
 import api from '../../api-singleton';
 
 ClubModal.propTypes = {
@@ -113,28 +114,14 @@ export default function ClubModal ({ club, isEdit, open, handleClose, handleComp
         }
 
         listSettlements(run, settlementInputValue, selectedSettlement);
-        // (async () => {
-        //     const { data } = await api.settlements.list({ search: settlementInputValue, limit: 10 });
-
-        //     if (run) {
-        //         let newOptions = [];
-
-        //         if (settlementInputValue && selectedSettlement) {
-        //             newOptions = [ selectedSettlement ];
-        //         }
-
-        //         if (data) {
-        //             newOptions = [ ...newOptions, ...data ];
-        //         }
-
-        //         setSettlements(newOptions);
-        //     }
-        // })();
 
         return () => {
             run = false;
         };
     }, [ settlementInputValue, selectedSettlement, listSettlements ]);
+
+    const [ settlementModalStatus, setSettlementModalStatus ] = useState(false);
+    const changeSettlementModalStatus = () => setSettlementModalStatus(prev => !prev);
 
     return (
         <Modal
@@ -145,6 +132,7 @@ export default function ClubModal ({ club, isEdit, open, handleClose, handleComp
             title={`${isEdit ? 'Edit' : 'Create'} club`}
             fullWidth
         >
+            <SettlementModal open={settlementModalStatus} handleClose={changeSettlementModalStatus}/>
             <TextField
                 fullWidth
                 autoComplete="new-password"
@@ -185,6 +173,12 @@ export default function ClubModal ({ club, isEdit, open, handleClose, handleComp
                     setSettlementInputValue(newInputValue);
                 }}
             />
+            <Button
+                fullWidth
+                onClick={changeSettlementModalStatus}
+            >
+                Create new settlement
+            </Button>
         </Modal>
     );
 }

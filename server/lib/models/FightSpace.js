@@ -1,8 +1,8 @@
-import sequelize, { DT }           from '../sequelize-singleton.js';
-import Base                        from './Base.js';
+import sequelize, { DT } from '../sequelize-singleton.js';
+import Base              from './Base.js';
 
-import Fight                       from './Fight.js';
-import Competition                 from './Competition.js';
+import Fight             from './Fight.js';
+import Competition       from './Competition.js';
 
 export default class FightSpace extends Base {
   static initRelation () {

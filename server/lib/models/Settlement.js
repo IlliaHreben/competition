@@ -48,7 +48,8 @@ export default class Settlement extends Base {
           required: true
         }
       }),
-      search: search => ({
+      state  : { include: [ 'State' ] },
+      search : search => ({
         where: { name: { [Op.iLike]: `%${search}%` } }
       })
     };

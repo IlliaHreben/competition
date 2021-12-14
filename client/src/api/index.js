@@ -8,6 +8,7 @@ import Cards from './cards';
 import Clubs from './clubs';
 import Coaches from './coaches';
 import Settlements from './settlements';
+import States from './states';
 import Fighters from './fighters';
 
 export default function apiAggregator ({ apiUrl, apiPrefix } = {}) {
@@ -29,6 +30,7 @@ export default function apiAggregator ({ apiUrl, apiPrefix } = {}) {
         clubs        : new Clubs(params),
         coaches      : new Coaches(params),
         settlements  : new Settlements(params),
+        states       : new States(params),
         fighters     : new Fighters(params)
     };
 }

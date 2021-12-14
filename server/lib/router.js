@@ -48,5 +48,9 @@ router.post('/coaches', controllers.coaches.create);
 router.patch('/coaches/:id', controllers.coaches.update);
 
 router.get('/settlements', controllers.settlements.list);
+router.post('/settlements', controllers.settlements.create);
+
+router.get('/states', controllers.states.list);
+router.post('/states', controllers.states.create);
 
 export default router;

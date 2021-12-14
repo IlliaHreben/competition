@@ -1,12 +1,12 @@
 import api from '../api-singleton';
-import * as reducer from '../reducers/settlements';
+import * as reducer from '../reducers/states';
 
-export function listSettlements (params = {}) {
+export function listStates (params = {}) {
     return async dispatch => {
         try {
             dispatch(reducer.listRequest());
 
-            const data = await api.settlements.list(params);
+            const data = await api.states.list(params);
 
             dispatch(reducer.list(data));
         } catch (errData) {
@@ -15,12 +15,12 @@ export function listSettlements (params = {}) {
     };
 }
 
-export function createSettlement (settlement, onSuccess) {
+export function createState (settlement, onSuccess) {
     return async dispatch => {
         try {
             dispatch(reducer.createRequest());
 
-            const { data } = await api.settlements.create(settlement);
+            const { data } = await api.states.create(settlement);
 
             dispatch(reducer.create(data));
             onSuccess?.();
@@ -30,12 +30,12 @@ export function createSettlement (settlement, onSuccess) {
     };
 }
 
-// export function deleteSettlement (id, onSuccess) {
+// export function deleteState (id, onSuccess) {
 //     return async dispatch => {
 //         try {
-//             const { data } = await api.settlements.delete(id);
+//             const { data } = await api.states.delete(id);
 
-//             dispatch(reducer.deleteSettlement(data));
+//             dispatch(reducer.deleteState(data));
 //             onSuccess?.();
 //         } catch (errData) {
 //             dispatch(reducer.deleteRequestError(errData));

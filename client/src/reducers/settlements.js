@@ -27,7 +27,7 @@ const settlements = createSlice({
         clearList: state => { state.list = []; state.listMeta = {}; },
 
         create: (state, action) => {
-            state.list.push(...action.payload);
+            state.list.push(action.payload);
             state.isLoading = false;
         },
         createRequest      : state => { state.isLoading = true; },

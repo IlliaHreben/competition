@@ -1,9 +1,9 @@
 import chista from '../chista.js';
 
-import list   from '../services/settlements/list';
-import create from '../services/settlements/create';
-// import show    from '../services/settlements/show';
-// import deleteS from '../services/settlements/delete';
+import list   from '../services/states/list';
+import create from '../services/states/create';
+// import show    from '../services/states/show';
+// import deleteS from '../services/states/delete';
 
 export default {
   // show   : chista.makeServiceRunner(show, req => ({ id: req.params.id, ...req.query })),

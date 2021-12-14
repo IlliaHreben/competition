@@ -12,6 +12,10 @@ class Settlements extends Base {
     delete = async (id) => {
         return this.apiClient.delete('settlements/', { id });
     }
+
+    create = (payload) => {
+        return this.apiClient.post('settlements/', payload);
+    }
 }
 
 export default Settlements;

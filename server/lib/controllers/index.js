@@ -7,6 +7,7 @@ import sections     from './sections';
 import clubs        from './clubs';
 import coaches      from './coaches';
 import settlements  from './settlements';
+import states       from './states';
 
 export default {
   fightSpaces,
@@ -17,5 +18,6 @@ export default {
   sections,
   clubs,
   coaches,
-  settlements
+  settlements,
+  states
 };

@@ -1,46 +1,28 @@
-// import ServiceBase     from '../Base.js';
-// import { dumpSection } from '../../utils';
+import ServiceBase        from '../Base.js';
+import { dumpSettlement } from '../../utils';
 
-// import Settlement         from '../../models/Settlement.js';
-// import Competition     from '../../models/Competition.js';
-// import ServiceError    from '../service-error.js';
+import Settlement         from '../../models/Settlement.js';
+import State              from '../../models/State.js';
+import ServiceError       from '../service-error.js';
 
-// export default class CategoriesCreate extends ServiceBase {
-//     static validationRules = {
-//       competitionId : [ 'required', 'uuid' ],
-//       sectionId     : [ 'required', 'uuid' ],
-//       data          : [ 'required', {
-//         nested_object: {
-//           weightFrom : [ 'required', 'positive_decimal' ],
-//           weightTo   : [ 'required', 'positive_decimal' ],
-//           sex        : [ 'required', { one_of: [ 'man', 'woman' ] } ],
-//           ageFrom    : [ 'required', 'positive_decimal' ],
-//           ageTo      : [ 'required', 'positive_decimal' ]
-//         }
-//       } ]
-//     };
+export default class SettlementsCreate extends ServiceBase {
+    static validationRules = {
+      data: [ 'required', {
+        nested_object: {
+          stateId : [ 'required', 'uuid' ],
+          name    : [ 'required', 'string', { max_length: 1000 } ]
+        }
+      } ]
+    };
 
-//     async execute ({ competitionId, sectionId, data }) {
-//       const competition = await Competition.findById(competitionId);
-//       if (!competition) throw new ServiceError('NOT_FOUND', { id: competitionId });
+    async execute ({ data }) {
+      const state = await State.findById(data.stateId);
+      if (!state) throw new ServiceError('NOT_FOUND', { id: data.stateId });
 
-//       const categoriesToCheck = await Settlement.findAll({
-//         where: {
-//           competitionId,
-//           sectionId,
-//           sex     : data.sex,
-//           ageFrom : data.ageFrom,
-//           ageTo   : data.ageTo
-//         }
-//       });
+      const settlement = await Settlement.create(data);
 
-//       const errors = Settlement.validateCategories(categoriesToCheck, [ data ]);
-//       if (errors.length) throw new ServiceError('CATEGORY_VALIDATION', errors);
-
-//       const settlement = await Settlement.create(data);
-
-//       return {
-//         data: dumpSection(settlement)
-//       };
-//     }
-// }
+      return {
+        data: dumpSettlement(settlement)
+      };
+    }
+}
