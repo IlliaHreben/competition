@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import CardsTable from './cards-table';
 
 export default function ListPage () {

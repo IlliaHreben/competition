@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize';
-import config    from '../etc/db.js';
+import config    from '../etc/db.cjs';
 import cls       from 'cls-hooked';
 
 const namespace = cls.createNamespace('sequelize-transactions');

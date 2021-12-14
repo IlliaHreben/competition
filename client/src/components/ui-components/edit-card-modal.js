@@ -1,10 +1,10 @@
-import Modal from '../modal';
+import Modal from './modal';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateCard } from '../../../actions/cards';
-import { showSuccess } from '../../../actions/errors';
-import CardFrom from '../card-form';
+import { updateCard } from '../../actions/cards';
+import { showSuccess } from '../../actions/errors';
+import CardFrom from './card-form';
 
 EditCardModal.propTypes = {
     open          : PropTypes.bool.isRequired,
@@ -15,6 +15,9 @@ EditCardModal.propTypes = {
 
 export default function EditCardModal ({ open, handleClose, handleConfirm, card }) {
     const [ cardData, setCardData ] = useState(card);
+
+    useEffect(() => setCardData(card), [ card, setCardData ]);
+
     const dispatch = useDispatch();
 
     const _handleConfirm = () => {

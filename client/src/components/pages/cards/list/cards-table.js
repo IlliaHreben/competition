@@ -11,7 +11,7 @@ import { listCards, deleteCard, supplementListCards } from '../../../../actions/
 import { showSuccess } from '../../../../actions/errors';
 import SettingsPopover from '../../../ui-components/settings-popover';
 import Modal from '../../../ui-components/modal';
-import EditCardModal from '../../../ui-components/edit-card-modal';
+import EditCardModal from '../../../ui-components/edit-card-modal.js';
 import TableHeader from './table-header';
 
 const styles = (theme) => ({
@@ -231,8 +231,15 @@ export default withStyles(styles)(function CardsTable (props) {
     };
 
     const [ editModalStatus, setEditModalStatus ] = useState(false);
-    const handleChangeStatusEditModal = () => {
-        setEditModalStatus(prevState => !prevState);
+    const handleChangeStatusEditModal = () => setEditModalStatus(prevState => !prevState);
+
+    const handleCloseEditModal = () => {
+        handleChangeStatusEditModal();
+        handleCloseSettings();
+    };
+    const handleConfirmEditModal = () => {
+        handleChangeStatusEditModal();
+        handleCloseSettings();
     };
 
     return (
@@ -248,8 +255,8 @@ export default withStyles(styles)(function CardsTable (props) {
             </Modal>
             <EditCardModal
                 open={editModalStatus}
-                handleClose={handleChangeStatusEditModal}
-                handleConfirm={handleChangeStatusEditModal}
+                handleClose={handleCloseEditModal}
+                handleConfirm={handleConfirmEditModal}
                 card={anchor?.card}
             />
             <Paper style={{ height: '100%', width: '1280px', minWidth: '1280px', display: 'flex', flexDirection: 'column' }}>

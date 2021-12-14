@@ -42,12 +42,15 @@ export function deleteCard (id, onSuccess) {
     };
 }
 
-export function createCard (section, categories) {
+export function createCard (card, onSuccess) {
     return async dispatch => {
         try {
-            const { data } = await api.cards.create(section);
+            const { data: { id } } = await api.cards.create(card);
+            const { data } = await api.cards.show(id, { include: [ 'category', 'coach', 'club', 'fighter', 'section' ] });
 
             dispatch(reducer.create(data));
+
+            onSuccess?.();
         } catch (errData) {
             dispatch(reducer.createRequestError(errData));
         }
@@ -58,7 +61,7 @@ export function updateCard (id, section, onSuccess) {
     return async dispatch => {
         try {
             await api.cards.update(id, section);
-            const { data } = await api.cards.show(id, { include: [ 'category', 'coach', 'club', 'fighter' ] });
+            const { data } = await api.cards.show(id, { include: [ 'category', 'coach', 'club', 'fighter', 'section' ] });
 
             dispatch(reducer.update(data));
 

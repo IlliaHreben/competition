@@ -235,11 +235,7 @@ function mapPairsToFights (outerPairs, outerFights) {
     const pair = pairs[i];
     orderNumber++;
     if (orderNumber === fights.length) orderNumber = 0;
-    if (!pair[0]) {
-      console.log('='.repeat(50)); // !nocommit
-      console.log(i, outerPairs);
-      console.log('='.repeat(50));
-    }
+
     fight.firstCardId = pair[0].id;
     fight.secondCardId = pair[1]?.id;
   });
@@ -249,9 +245,6 @@ function mapPairsToFights (outerPairs, outerFights) {
 
 function switchUnits (pairs, rightIndex) {
   const needToSwitch = pairs.findIndex(p => p.includeOneFighter) === rightIndex;
-  // console.log('='.repeat(50)); // !nocommit
-  // console.log(needToSwitch);
-  // console.log('='.repeat(50));
   if (!needToSwitch) return;
 
   const index = +(rightIndex === 1);

@@ -50,9 +50,6 @@ export function createFighter (fighter, onSuccess) {
 
             onSuccess?.();
         } catch (errData) {
-            console.log('='.repeat(50)); // !nocommit
-            console.log(errData);
-            console.log('='.repeat(50));
             dispatch(reducer.createRequestError(errData));
         }
     };
@@ -61,7 +58,8 @@ export function createFighter (fighter, onSuccess) {
 export function updateFighter (id, recalculate, competitionId, fighter, onSuccess) {
     return async dispatch => {
         try {
-            const { data } = await api.fighters.update(id, recalculate, competitionId, fighter);
+            await api.fighters.update(id, recalculate, competitionId, fighter);
+            const { data } = await api.fighters.show(id, { include: [ 'coach', 'club' ] });
 
             dispatch(reducer.update(data));
 

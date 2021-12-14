@@ -7,7 +7,7 @@ import ServiceError from '../service-error.js';
 export default class CardShow extends ServiceBase {
     static validationRules = {
       id      : [ 'required', 'uuid' ],
-      include : [ 'to_array', { list_of: { one_of: [ 'category', 'coach', 'club', 'fighter' ] } } ]
+      include : [ 'to_array', { list_of: { one_of: [ 'category', 'coach', 'club', 'fighter', 'section' ] } } ]
     };
 
     async execute ({ id, include = [] }) {

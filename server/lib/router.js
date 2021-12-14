@@ -14,6 +14,7 @@ router.get('/sections', controllers.sections.list);
 router.get('/sections/:id', controllers.sections.show);
 router.delete('/sections', controllers.sections.delete);
 
+router.post('/cards', controllers.cards.create);
 router.post('/cards/bulk', controllers.cards.bulkCreate);
 router.get('/cards', controllers.cards.list);
 router.get('/cards/:id', controllers.cards.show);
@@ -21,6 +22,7 @@ router.delete('/cards', controllers.cards.delete);
 router.patch('/cards/:id', controllers.cards.update);
 
 router.get('/fighters', controllers.fighters.list);
+router.get('/fighters/:id', controllers.fighters.show);
 router.patch('/fighters/:id', controllers.fighters.update);
 router.post('/fighters', controllers.fighters.create);
 

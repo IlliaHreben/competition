@@ -13,6 +13,10 @@ class Cards extends Base {
         return this.apiClient.delete('cards/', { id });
     }
 
+    create = (payload) => {
+        return this.apiClient.post('cards', payload);
+    }
+
     update = (id, payload) => {
         return this.apiClient.patch(`cards/${id}`, { data: payload });
     }

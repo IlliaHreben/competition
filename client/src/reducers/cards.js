@@ -35,7 +35,7 @@ const cards = createSlice({
         clearList: state => { state.list = []; state.listMeta = {}; },
 
         create: (state, action) => {
-            state.list.push(...action.payload);
+            state.list.push(action.payload);
             state.isLoading = false;
         },
         createRequestError: (state, action) => {
@@ -53,7 +53,7 @@ const cards = createSlice({
         update: (state, action) => {
             const cardIndex = state.list.findIndex(c => c.id === action.payload.id);
 
-            if (!cardIndex === -1) return;
+            if (cardIndex === -1) return;
             state.list[cardIndex] = action.payload;
         },
         updateRequestError: (state, action) => {
@@ -63,17 +63,9 @@ const cards = createSlice({
     },
     extraReducers: {
         [fightersReducer.update]: (state, action) => {
-            const updatedInfo = {
-                name     : action.payload.name,
-                lastName : action.payload.lastName,
-                sex      : action.payload.sex
-            };
             state.list.forEach((card, i) => {
                 if (card.linked?.fighter?.id !== action.payload.id) return;
-                state.list[i].linked.fighter = {
-                    ...state.list[i].linked.fighter,
-                    ...updatedInfo
-                };
+                state.list[i].linked.fighter = action.payload;
             });
         },
         [coachesReducer.updateCoach]: (state, action) => {

@@ -6,7 +6,7 @@ import Fighter         from '../../models/Fighter.js';
 export default class FighterShow extends ServiceBase {
     static validationRules = {
       id      : [ 'required', 'uuid' ],
-      include : [ 'to_array', { list_of: { one_of: [ 'category', 'coach', 'club', 'fighter' ] } } ]
+      include : [ 'to_array', { list_of: { one_of: [ 'coach', 'club', 'cards' ] } } ]
     };
 
     async execute ({ id, include = [] }) {

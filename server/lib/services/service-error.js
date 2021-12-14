@@ -9,6 +9,12 @@ const errors = {
       _reason : `Entity with id ${data.id} not found.`
     }
   }),
+  COMPETITION_NOT_FOUND: data => ({
+    code   : 'NOT_FOUND',
+    fields : {
+      main: 'COMPETITION_NOT_FOUND'
+    }
+  }),
   CLUB_NOT_FOUND: data => ({
     code   : 'NOT_FOUND',
     fields : {
@@ -49,6 +55,12 @@ const errors = {
     code   : 'VALIDATION_ERROR',
     fields : {
       main: 'GROUP_CANNON_EXIST'
+    }
+  }),
+  DOESNT_FIT_INTO_ANY_CATEGORY: data => ({
+    code   : 'IMPOSSIBLE_OPERATION',
+    fields : {
+      main: 'DOESNT_FIT_INTO_ANY_CATEGORY'
     }
   }),
   AggregateError: data => ({

@@ -54,10 +54,9 @@ export default class Card extends Base {
     const Settlement = sequelize.model('Settlement');
 
     const scopes = {
-      fighter: {
-        include: [ 'Fighter' ]
-      },
-      coach: {
+      fighter : { include: [ 'Fighter' ] },
+      section : { include: [ 'Section' ] },
+      coach   : {
         include: [ {
           model   : Fighter,
           as      : 'Fighter',
@@ -122,6 +121,16 @@ export default class Card extends Base {
     Object.entries(scopes).forEach(scope => this.addScope(...scope));
   }
 
+  static async createCard (data) {
+    const card = this.build(data);
+    if (!card.realWeight) card.set({ realWeight: card.weight });
+
+    await card.assignCategory();
+    if (!card.categoryId) throw new ServiceError('DOESNT_FIT_INTO_ANY_CATEGORY');
+    await card.save();
+    return card;
+  }
+
   async updateCard (data) {
     const Section = sequelize.model('Section');
     const Category = sequelize.model('Category');
@@ -178,7 +187,9 @@ export default class Card extends Base {
         competitionId : this.competitionId
       }
     });
-    await this.update({ categoryId: category?.id });
+
+    const updateFunction = this.isNewRecord ? 'set' : 'update';
+    await this[updateFunction]({ categoryId: category?.id });
   }
 
   async calculateFights () {

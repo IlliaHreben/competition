@@ -85,7 +85,11 @@ export default class ApiClient {
             throw this.errorsHandler({ error: { message: err.message } }, 500, url);
         }
 
-        const json = await response.json();
+        let json = {};
+
+        try {
+            json = await response.json();
+        } catch (err) {}
         // const serverTime = response.headers.get('X-Server-Timestamp');
 
         // if (serverTime) this.onServerTimeReceive(serverTime);

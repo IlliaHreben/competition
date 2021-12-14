@@ -30,12 +30,11 @@ export default function TableHeader ({ onChange }) {
     const { clubs, coaches, cards, sections, settlements, active } = useSelector(mapState);
 
     useEffect(() => {
-        if (active) {
-            dispatch(listClubs({ competitionId: active.id, include: [ 'coaches', 'settlement' ] }));
-            dispatch(listCoaches({ competitionId: active.id, include: [ 'clubs' ] }));
-            dispatch(listSections({ competitionId: active.id }));
-            dispatch(listSettlements({ competitionId: active.id }));
-        }
+        if (!active) return;
+        dispatch(listClubs({ competitionId: active.id, include: [ 'coaches', 'settlement' ] }));
+        dispatch(listCoaches({ competitionId: active.id, include: [ 'clubs' ] }));
+        dispatch(listSections({ competitionId: active.id }));
+        dispatch(listSettlements({ competitionId: active.id }));
     }, [ active, dispatch ]);
 
     const handleSearchChange = useMemo(

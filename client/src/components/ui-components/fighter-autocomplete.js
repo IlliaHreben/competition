@@ -28,9 +28,6 @@ export default function FighterAutocomplete ({ fighter, onChange }) {
                         if (search && selected) {
                             newOptions = [ selected ];
                         }
-                        console.log('='.repeat(50)); // !nocommit
-                        console.log(newOptions);
-                        console.log('='.repeat(50));
 
                         if (data) {
                             newOptions = [ ...newOptions, ...data ];
@@ -73,7 +70,7 @@ export default function FighterAutocomplete ({ fighter, onChange }) {
             filterOptions={(x) => x}
             value={fighter}
             isOptionEqualToValue={(option, value) => option.id === value.id}
-            getOptionLabel={c => c ? `${c.name}, ${c.lastName}` : ''}
+            getOptionLabel={c => c ? `${c.lastName} ${c.name}` : ''}
             renderInput={(params) => <TextField {...params} label="Fighter" />}
             onChange={(e, newSelected) => {
                 // setFighters(prev => ([ newSelected, ...prev ]));

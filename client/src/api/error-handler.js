@@ -37,6 +37,11 @@ function statusHandler (error = {}, statusCode, url) {
         }));
         break;
     case 404:
+        store.dispatch(showError({
+            message : `404: Route not found - ${url}`,
+            request : url
+        }));
+        break;
     case 500:
     case 502:
         store.dispatch(showError({
@@ -92,12 +97,13 @@ function getErrorMessage (error) {
 
 function getMessageByType (type) {
     const messageByType = {
-        DATE_TOO_HIGH        : 'Date is too high.',
-        DATE_TOO_LOW         : 'Date is too low.',
-        FORMAT_ERROR         : 'Format error.',
-        VALIDATION_ERROR     : 'Validation error.',
-        REQUIRED             : 'This field is required.',
-        GROUP_DOES_NOT_EXIST : 'For full sections group must be specified.'
+        DATE_TOO_HIGH                : 'Date is too high.',
+        DATE_TOO_LOW                 : 'Date is too low.',
+        FORMAT_ERROR                 : 'Format error.',
+        VALIDATION_ERROR             : 'Validation error.',
+        REQUIRED                     : 'This field is required.',
+        GROUP_DOES_NOT_EXIST         : 'For full sections group must be specified.',
+        DOESNT_FIT_INTO_ANY_CATEGORY : 'A suitable category was not found for this card parameters.'
     };
 
     return messageByType[type];

@@ -47,7 +47,13 @@ export default function FightTrees () {
     }, [ competition, offset ]);
 
     return (
-        <div id="scroll-root" style={{ height: '100%', overflow: 'auto' }}>
+        <div id="scroll-root" style={{
+            display        : 'flex',
+            flexGrow       : 1,
+            justifyContent : 'center',
+            overflow       : 'auto'
+        }}
+        >
             <InfiniteScroll
                 dataLength={graphics.length}
                 next={() => setOffset(offset + limit)}
