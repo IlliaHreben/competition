@@ -59,7 +59,7 @@ function getCellValues (root, colors) {
     const firstFighterData = root.linked?.firstCard?.linked;
     const secondFighterData = root.linked?.secondCard?.linked;
 
-    const getFullName = ({ name, lastName }) => `${name} ${lastName}`;
+    const getFullName = ({ name, lastName }) => `${lastName} ${name}`;
     const formatData = (data) => ({
         fullName   : getFullName(data.fighter),
         coach      : getFullName(data.fighter.linked.coach),

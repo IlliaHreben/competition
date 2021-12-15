@@ -24,16 +24,17 @@ WeightMaskInput.propTypes = {
 };
 
 MaskWeight.propTypes = {
-    value    : PropTypes.string.isRequired,
-    onChange : PropTypes.func.isRequired
+    value      : PropTypes.string.isRequired,
+    onChange   : PropTypes.func.isRequired,
+    inputProps : PropTypes.object
 };
 
-export default function MaskWeight ({ value, onChange, ...props }) {
+export default function MaskWeight ({ value, onChange, inputProps = {}, ...props }) {
     return (
         <FormControl {...props} variant="outlined">
             <InputLabel htmlFor="weight-mask-input">Weight</InputLabel>
             <Input
-                value={value}
+                value={`${value}`}
                 onChange={onChange}
                 id="weight-mask-input"
                 endAdornment={<InputAdornment position="end">kg</InputAdornment>}
@@ -42,6 +43,7 @@ export default function MaskWeight ({ value, onChange, ...props }) {
                 }}
                 label="Weight"
                 inputComponent={WeightMaskInput}
+                {...inputProps}
             />
         </FormControl>
     );

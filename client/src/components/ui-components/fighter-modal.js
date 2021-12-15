@@ -232,7 +232,7 @@ export default function FighterModal ({ open, fighter, errors = {}, handleClose,
                         sx={{ mb: 1 }}
                         value={coaches.find(c => c.id === cardData.coachId) || ''}
                         isOptionEqualToValue={(option, value) => option.id === value.id}
-                        getOptionLabel={({ name, lastName }) => name ? `${name} ${lastName}` : ''}
+                        getOptionLabel={({ name, lastName }) => name ? `${lastName} ${name}` : ''}
                         renderInput={(params) => <TextField {...params} label="Coach" />}
                         onChange={(e, coach) => dispatchFighter({ type: 'coachId', payload: coach?.id })}
                     />

@@ -49,19 +49,20 @@ export default function Modal ({
             <DialogTitle id="dialog-title">
                 {title ?? 'Are you sure you want to complete this operation?'}
             </DialogTitle>
-            <DialogContent>
+            <DialogContent sx={{ pr: 2, pl: 2 }}>
                 {(Array.isArray(_children) && _children.every(c => typeof c === 'string'))
                     ? _children.map((c, i) => <DialogContentText key={i}>{c}</DialogContentText>)
                     : children
                 }
             </DialogContent>
-            <DialogActions>
+            <DialogActions sx={{ mr: 1, ml: 1, mb: 1 }}>
                 <Button autoFocus onClick={handleClose}>
                     Cancel
                 </Button>
                 <Button
                     onClick={handleConfirm}
                     disabled={disabled}
+                    variant="contained"
                     autoFocus
                 >
                     {confirmButtonText || 'Confirm'}

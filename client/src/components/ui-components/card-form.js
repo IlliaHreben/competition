@@ -117,18 +117,19 @@ export default function CardForm ({ card, isEdit, onChange }) {
                     />
                 )
             }
-            <Button variant="text" onClick={changeFighterModalStatus}>{isEdit ? 'Change' : 'Create'} fighter</Button>
+            <Button variant="text" onClick={changeFighterModalStatus}>{isEdit ? 'Edit' : 'Create'} fighter</Button>
             <Stack direction="row" sx={{ mb: 1.5, mt: 2 }}>
                 <WeightInput
                     fullWidth
-                    id="card-weight-input"
                     label="Weight"
-                    value={cardData.weight}
+                    value={`${cardData.weight}`}
                     onChange={value => dispatchCard({ type: 'weight', payload: value })}
                     error={!!errors.weight}
-                    helperText={errors.weight || null}
                     sx={{ mr: 1.5 }}
-                />
+                    inputProps={{ id: 'card-weight-input' }}
+                >
+                    {errors.weight && <FormHelperText id="card-weight-input">{errors.weight}</FormHelperText>}
+                </WeightInput>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DatePicker
                         label={`Birth date${cardData.birthDate ? ` (${getAgeFromBirthDate(cardData.birthDate)})` : ''}`}

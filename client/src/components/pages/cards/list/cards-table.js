@@ -54,7 +54,7 @@ function mapState (state) {
 const dumpCard = (card, handleClickSettings) => {
     const { club, coach } = card.linked.fighter.linked;
     return {
-        fullName      : `${card.linked.fighter.name} ${card.linked.fighter.lastName}`,
+        fullName      : `${card.linked.fighter.lastName} ${card.linked.fighter.name}`,
         sex           : card.linked.fighter.sex,
         settlement    : club.linked.settlement.name,
         clubName      : club.name,

@@ -43,15 +43,19 @@ function dumpCardData (card) {
         sex        : fighter?.sex || '',
         settlement : club?.linked?.settlement?.name || '',
         club       : club?.name || '',
-        coach      : getFullName(coach),
+        coach      : getCoachFullName(coach),
         age        : card.age || '',
         birthDate  : card.birthDate ? formatISODate(card.birthDate) : '',
         weight     : card.weight || ''
     };
 }
 
-function getFullName (fighter) {
+function getCoachFullName (fighter) {
     return fighter ? `${fighter?.name} ${fighter?.lastName}` : '';
+}
+
+function getFullName (fighter) {
+    return fighter ? `${fighter?.lastName} ${fighter?.name}` : '';
 }
 
 function CategoryTable ({ category }) {

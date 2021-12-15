@@ -60,7 +60,7 @@ export default function TableHeader ({ onChange }) {
                 autoHighlight
                 options={coaches.filter(coach => cards.some(c => c.linked.fighter.coachId === coach.id))}
                 sx={{ flexGrow: 4 }}
-                getOptionLabel={({ name, lastName }) => `${name} ${lastName}`}
+                getOptionLabel={({ name, lastName }) => `${lastName} ${name}`}
                 renderInput={(params) => <TextField {...params} size="small" label="Coach" />}
                 onChange={(e, coach) => onChange({ coachId: coach?.id })}
             />
