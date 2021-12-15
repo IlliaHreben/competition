@@ -1,7 +1,8 @@
-import ServiceBase       from '../Base.js';
-// import { dumpCategory }  from '../../utils';
+import ServiceBase  from '../Base.js';
 
-import Category          from '../../models/Category.js';
+import Category     from '../../models/Category.js';
+import Card         from '../../models/Card.js';
+import ServiceError from '../service-error';
 
 export default class BulkCategoriesDelete extends ServiceBase {
     static validationRules = {
@@ -22,6 +23,9 @@ export default class BulkCategoriesDelete extends ServiceBase {
 
     async execute ({ data }) {
       const categories = await Category.findAll({ where: data, attributes: [ 'id' ] });
+
+      const cards = await Card.findAll({ where: { categoryId: data }, include: [ 'Fighter' ] });
+      if (cards.length) throw new ServiceError('RELATED_INSTANCES', { cards: cards.map(c => `${c.Fighter.lastName} ${c.Fighter.name}`) });
 
       await Category.destroy({
         where: data

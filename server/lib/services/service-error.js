@@ -103,6 +103,10 @@ const errors = {
   HAS_UNCOMPLETED_FIGHTS: () => ({
     code   : 'CANNOT_BE_COMPLETED',
     fields : { main: 'HAS_UNCOMPLETED_FIGHTS' }
+  }),
+  RELATED_INSTANCES: data => ({
+    code   : 'RELATED_INSTANCES',
+    fields : { main: 'RELATED_INSTANCES', ...data }
   })
 };
 

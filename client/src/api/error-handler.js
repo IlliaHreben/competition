@@ -10,7 +10,7 @@ export default function errorsHandler ({ error }, statusCode, url) {
             const field = key.replace('data/', '');
 
             if (field) {
-                errorsData[field] = getMessageByType(fields[key]) || fields[key];
+                errorsData[field] = getMessageByType(fields[key], fields) || fields[key];
             }
         }
     } else {
@@ -26,8 +26,8 @@ function statusHandler (error = {}, statusCode, url) {
     switch (statusCode) {
     case 200:
         console.log('Api error:', error);
-        error.message = getMessageByType(error.fields?.main) ||
-            getMessageByType(error.code) ||
+        error.message = getMessageByType(error.fields?.main, error?.fields) ||
+            getMessageByType(error.code, error?.fields) ||
             error.fields?.main ||
             error.code;
         store.dispatch(showError({
@@ -95,7 +95,7 @@ function getErrorMessage (error) {
     }
 }
 
-function getMessageByType (type) {
+function getMessageByType (type, fields) {
     const messageByType = {
         DATE_TOO_HIGH                : 'Date is too high.',
         DATE_TOO_LOW                 : 'Date is too low.',
@@ -104,7 +104,27 @@ function getMessageByType (type) {
         REQUIRED                     : 'This field is required.',
         GROUP_DOES_NOT_EXIST         : 'For full sections group must be specified.',
         DOESNT_FIT_INTO_ANY_CATEGORY : 'A suitable category was not found for this card parameters.'
+        // RELATED_INSTANCES            : 'This instance has related entities.'
     };
 
-    return messageByType[type];
+    const functionMessageByType = {
+        RELATED_INSTANCES: (fields) => {
+            const _fields = { ...fields };
+            delete fields.main;
+            const entries = Object.entries(_fields);
+            const messages = entries
+                .map(([ instanceName, instance ]) => {
+                    if (instanceName.includes('cards/')) {
+                        const cardsLength = entries.filter(([ key ]) => key.includes('cards/')).length;
+                        const andMore = cardsLength > 1 ? `and ${cardsLength - 1} more are` : 'is';
+                        return `${instance} ${andMore} related to this category. Delete them before.`;
+                    }
+                    return 'Some entities are related to this category. Delete them before.';
+                });
+
+            return messages[0];
+        }
+    };
+
+    return messageByType[type] || functionMessageByType[type]?.(fields);
 }

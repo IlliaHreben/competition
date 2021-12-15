@@ -3,9 +3,9 @@
 .content {
   padding: 5px;
   padding-top:10px;
+  padding-right:0;
   width: 100%;
   height: calc(100vh - var(--app-bar-height) - 15px);
-  overflow: auto;
   justify-content: center;
   display: flex;
 }
