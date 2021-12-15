@@ -2,10 +2,11 @@ import Modal from './modal';
 import PropTypes from 'prop-types';
 import { useEffect, useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
+import StateModal from './state-modal';
 import { createSettlement } from '../../actions/settlements';
 import { showSuccess } from '../../actions/errors';
 import {
-    TextField, Autocomplete
+    TextField, Autocomplete, Button
 } from '@mui/material';
 import debounce from 'lodash/debounce';
 import api from '../../api-singleton';
@@ -75,6 +76,9 @@ export default function SettlementModal ({ open, handleClose, handleConfirm }) {
         };
     }, [ listDebounceStates, search ]);
 
+    const [ stateModalStatus, setStateModalStatus ] = useState(false);
+    const changeStateModalStatus = () => setStateModalStatus(prev => !prev);
+
     return (
         <Modal
             handleClose={handleClose}
@@ -84,6 +88,11 @@ export default function SettlementModal ({ open, handleClose, handleConfirm }) {
             title={'Create settlement'}
             fullWidth
         >
+            <StateModal
+                open={stateModalStatus}
+                handleConfirm={state => { setStates([ state ]); setSelectedState(state); }}
+                handleClose={changeStateModalStatus}
+            />
             <TextField
                 fullWidth
                 autoComplete="new-password"
@@ -107,6 +116,12 @@ export default function SettlementModal ({ open, handleClose, handleConfirm }) {
                 onChange={(e, option) => setSelectedState(option)}
                 onInputChange={(event, newInputValue) => setSearch(newInputValue)}
             />
+            <Button
+                fullWidth
+                onClick={changeStateModalStatus}
+            >
+                Create new state
+            </Button>
         </Modal>
     );
 }
