@@ -71,17 +71,21 @@ export default class Fight extends Base {
     const nextFight = await this.getNextFight();
 
     const winnerAlreadyExist = !!this.winnerId;
-    if (winnerAlreadyExist) await nextFight.clearWinStreak(this.winnerId);
+    if (winnerAlreadyExist) await nextFight?.clearWinStreak(this.winnerId);
 
     await this.update({ winnerId });
 
-    const prevFights = await nextFight.getPreviousFights();
+    await nextFight?.setCardFromWinner(winnerId);
+  }
+
+  async setCardFromWinner (cardId) {
+    const prevFights = await this.getPreviousFights();
 
     const oppositeFightIndex = +(!prevFights.findIndex(f => f.id === this.id));
 
     const key = this.orderNumber < prevFights[oppositeFightIndex].orderNumber ? 'firstCardId' : 'secondCardId';
 
-    await nextFight.update({ [key]: winnerId });
+    await this.update({ [key]: cardId });
   }
 
   async clearWinStreak (winnerId) {

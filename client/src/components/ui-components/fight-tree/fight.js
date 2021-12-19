@@ -3,7 +3,11 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import { styled } from '@mui/material/styles';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
+import Icon from '@mui/material/Icon';
 import SportsMmaIcon from '@mui/icons-material/SportsMma';
+import { ReactComponent as GoldIcon } from '../../../assets/icons/gold.svg';
+import { ReactComponent as SilverIcon } from '../../../assets/icons/silver.svg';
+import { ReactComponent as BronzeIcon } from '../../../assets/icons/bronze.svg';
 
 import PropTypes from 'prop-types';
 import { useRef, useState, useEffect } from 'react';
@@ -24,21 +28,47 @@ const ColorButton = styled(Button)(({ theme }) => ({
 }));
 
 function Fight ({ blueCorner, redCorner, onClickFighter, fight }) {
-    const redCornerButton = redCorner &&
-        <SportsMmaIcon sx={{ color: 'red', marginRight: '100%', marginLeft: 0 }} />;
-    const blueCornerButton = blueCorner &&
-        <SportsMmaIcon sx={{ color: 'blue', marginRight: '100%', marginLeft: 0 }} />;
+    let redMedalIcon = <div />;
+    let blueMedalIcon = <div />;
+    if (redCorner && blueCorner) {
+        if (fight.degree === 1) {
+            if (redCorner.id === fight?.winnerId) {
+                redMedalIcon = <GoldIcon />;
+                blueMedalIcon = <SilverIcon />;
+            };
+            if (blueCorner.id === fight?.winnerId) {
+                blueMedalIcon = <GoldIcon />;
+                redMedalIcon = <SilverIcon />;
+            };
+        }
+        if (fight.degree === 2) {
+            if (redCorner.id === fight?.winnerId) blueMedalIcon = <BronzeIcon />;
+            if (blueCorner.id === fight?.winnerId) redMedalIcon = <BronzeIcon />;
+        }
+    }
 
     const buttons = [
         <ColorButton
-            endIcon={redCornerButton}
+            endIcon={redCorner && <SportsMmaIcon sx={{ color: 'red' }} />}
+            sx={{
+                display        : 'flex',
+                justifyContent : 'space-between',
+                padding        : 0
+            }}
+            startIcon={<Icon sx={{ m: 0 }}>{redMedalIcon}</Icon>}
             className={styles.svgButton}
             key="red"
             onClick={e => onClickFighter?.(e, redCorner.id, fight.id)}
         >{redCorner?.fullName || ''}
         </ColorButton>,
         <ColorButton
-            endIcon={blueCornerButton}
+            endIcon={blueCorner && <SportsMmaIcon sx={{ color: 'blue' }} />}
+            sx={{
+                display        : 'flex',
+                justifyContent : 'space-between',
+                padding        : 0
+            }}
+            startIcon={<Icon sx={{ m: 0 }}>{blueMedalIcon}</Icon>}
             className={styles.svgButton}
             key="blue"
             onClick={e => onClickFighter?.(e, blueCorner.id, fight.id)}

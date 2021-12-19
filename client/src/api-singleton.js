@@ -2,7 +2,7 @@
 import apiFactory from './api';
 const config = {
     apiPrefix : 'api/v1/',
-    apiUrl    : 'http://localhost:4000/'
+    apiUrl    : 'http://localhost:3000/'
 };
 
 export default apiFactory({

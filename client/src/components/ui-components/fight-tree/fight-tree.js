@@ -128,6 +128,7 @@ export default function FightTree ({
             { id: anchor.fightId, winnerId: anchor.fighterId },
             () => {
                 dispatch(showSuccess('The winner has been successfully set.'));
+                handleCloseSettings();
             }
         ));
     };
