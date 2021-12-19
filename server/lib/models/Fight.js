@@ -1,8 +1,9 @@
-import sequelize, { DT }    from '../sequelize-singleton.js';
-import Base                 from './Base.js';
+import sequelize, { DT } from '../sequelize-singleton.js';
+import ServiceError      from '../services/service-error.js';
+import Base              from './Base.js';
 
-import Card                 from './Card.js';
-import Category             from './Category.js';
+import Card              from './Card.js';
+import Category          from './Category.js';
 
 export default class Fight extends Base {
   static initRelation () {
@@ -61,6 +62,35 @@ export default class Fight extends Base {
     //     allowNull : false
     //   }
     // });
+  }
+
+  async setWinner (winnerId) {
+    const winner = await Card.findById(winnerId);
+    if (!winner) throw new ServiceError('NOT_FOUND', { id: winnerId, entities: [ 'card' ] });
+
+    const nextFight = await this.getNextFight();
+
+    const winnerAlreadyExist = !!this.winnerId;
+    if (winnerAlreadyExist) await nextFight.clearWinStreak(this.winnerId);
+
+    await this.update({ winnerId });
+
+    const prevFights = await nextFight.getPreviousFights();
+
+    const oppositeFightIndex = +(!prevFights.findIndex(f => f.id === this.id));
+
+    const key = this.orderNumber < prevFights[oppositeFightIndex].orderNumber ? 'firstCardId' : 'secondCardId';
+
+    await nextFight.update({ [key]: winnerId });
+  }
+
+  async clearWinStreak (winnerId) {
+    const cardKey = [ 'firstCardId', 'secondCardId' ].find(key => this[key] === winnerId);
+    if (!cardKey) return;
+
+    await this.update({ [cardKey]: null, winnerId: null });
+    const nextFight = await this.getNextFight();
+    if (nextFight) await nextFight.clearWinStreak(winnerId);
   }
 }
 

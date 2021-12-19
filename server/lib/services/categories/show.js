@@ -2,26 +2,16 @@ import ServiceBase      from '../Base.js';
 import { dumpCategory } from '../../utils';
 
 import Category         from '../../models/Category.js';
-import Card             from '../../models/Card.js';
-import Fight            from '../../models/Fight.js';
-
 export default class ShowCategory extends ServiceBase {
     static validationRules = {
-      id: [ 'required', 'uuid' ]
+      id      : [ 'required', 'uuid' ],
+      include : [ 'to_array', { list_of: { one_of: [ 'cards', 'sections' ] } } ]
     };
 
-    async execute ({ id }) {
-      const category = await Category.findById(id, {
-        include: [ 'Cards', {
-          model   : Fight,
-          as      : 'Fights',
-          include : [
-            { model: Card, as: 'FirstCard', include: [ 'Fighter', 'Club', 'Coach' ] },
-            { model: Card, as: 'SecondCard', include: [ 'Fighter', 'Club', 'Coach' ] }
-          ],
-          order: [ [ 'orderNumber', 'DESC' ] ]
-        } ]
-      });
+    async execute ({ id, include = [] }) {
+      const category = await Category
+        .scope(...include)
+        .findById(id);
 
       return {
         data: dumpCategory(category)

@@ -2,49 +2,61 @@ import { useState, useEffect } from 'react';
 import FightTree from '../../ui-components/fight-tree';
 import CategoryTable from '../../ui-components/category-table';
 import api from '../../../api-singleton';
+import { concatToListCategories } from '../../../actions/categories';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { CircularProgress, Box } from '@mui/material';
 import Container from '@mui/material/Container';
 
 import styles from './graphics.module.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-function mapStateToProps (state) {
+function mapState (state) {
     return {
-        competition: state.competitions.active
+        competition : state.competitions.active,
+        categories  : state.categories.list,
+        meta        : state.categories.listMeta
     };
 }
 
+const limit = 10;
+
 export default function FightTrees () {
-    const [ graphics, setGraphics ] = useState([]);
+    // const [ graphics, setGraphics ] = useState([]);
     const [ offset, setOffset ] = useState(0);
     const [ hasMore, setHasMore ] = useState(true);
-    const limit = 10;
-
-    const { competition } = useSelector(mapStateToProps);
+    const dispatch = useDispatch();
+    const { competition, categories, meta } = useSelector(mapState);
 
     useEffect(() => {
-        async function fetchGraphic () {
-        // const categoryId = 'e321c627-b053-417d-a710-accefb814e85';
-        // const { data } = await api.categories.show(categoryId);
-        // setGraphics([ data ]);
-        // setHasMore(false);
-            const { data } = await api.categories.list({
-                competitionId : competition.id,
-                offset,
-                limit,
-                include       : [ 'cards', 'sections' ]
-            });
+        if (offset >= meta?.filteredCount) setHasMore(false);
+    }, [ meta.filteredCount, offset ]);
 
-            if (data.length < limit) return setHasMore(false);
+    useEffect(() => {
+        if (!competition) return;
+        dispatch(concatToListCategories({
+            competitionId : competition.id,
+            offset,
+            limit,
+            include       : [ 'cards', 'sections' ]
+        }));
 
-            setGraphics(graphics.concat(data));
-        }
+        //     async function fetchGraphic () {
+        //         const { data } = await api.categories.list({
+        //             competitionId : competition.id,
+        //             offset,
+        //             limit,
+        //             include       : [ 'cards', 'sections' ]
+        //         });
 
-        if (competition) fetchGraphic();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ competition, offset ]);
+        //         if (data.length < limit) return setHasMore(false);
+
+        //         setGraphics(graphics.concat(data));
+        //     }
+
+    //     if (competition) fetchGraphic();
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ competition, dispatch, offset ]);
 
     return (
         <div id="scroll-root" style={{
@@ -55,13 +67,13 @@ export default function FightTrees () {
         }}
         >
             <InfiniteScroll
-                dataLength={graphics.length}
+                dataLength={categories.length}
                 next={() => setOffset(offset + limit)}
                 hasMore={hasMore}
                 scrollableTarget="scroll-root"
                 loader={<CircularProgress />}
             >
-                {graphics.map((category) => (
+                {categories.map((category) => (
                     <Container key={category.id} maxWidth="xl">
                         <CategoryTable category={category} />
                         <div className={styles.treeContainer}>

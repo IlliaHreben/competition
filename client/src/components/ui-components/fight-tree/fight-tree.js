@@ -1,12 +1,16 @@
 /* eslint-disable react/prop-types */
 // import PropTypes              from 'prop-types';
-
+import { useState } from 'react';
 import styles from './index.module.css';
 import { LinkHorizontalStep } from '@visx/shape';
 import { hierarchy, Tree } from '@visx/hierarchy';
 import { Group } from '@visx/group';
-
+import SettingsPopover from '../../ui-components/settings-popover';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import Fight from './fight';
+import { useDispatch } from 'react-redux';
+import { setWinner } from '../../../actions/fights';
+import { showSuccess } from '../../../actions/errors';
 
 function pleasantHexColorGenerator () {
     const threshold = 40;
@@ -56,21 +60,22 @@ function findChildren (root, fights, colors) {
 }
 
 function getCellValues (root, colors) {
-    const firstFighterData = root.linked?.firstCard?.linked;
-    const secondFighterData = root.linked?.secondCard?.linked;
-
+    const firstCardData = root.linked?.firstCard;
+    const secondCardData = root.linked?.secondCard;
     const getFullName = ({ name, lastName }) => `${lastName} ${name}`;
-    const formatData = (data) => ({
-        fullName   : getFullName(data.fighter),
-        coach      : getFullName(data.fighter.linked.coach),
-        coachColor : colors[data.fighter.coachId] || '#eeeeee',
-        club       : data.fighter.linked.club.name,
-        clubColor  : colors[data.fighter.clubId] || '#eeeeee'
+    const formatData = ({ linked: { fighter }, ...card }) => ({
+        id         : card.id,
+        fullName   : getFullName(fighter),
+        coach      : getFullName(fighter.linked.coach),
+        coachColor : colors[fighter.coachId] || '#eeeeee',
+        club       : fighter.linked.club.name,
+        clubColor  : colors[fighter.clubId] || '#eeeeee'
     });
 
     return {
-        redCorner  : firstFighterData ? formatData(firstFighterData) : null,
-        blueCorner : secondFighterData ? formatData(secondFighterData) : null
+        fight      : root,
+        redCorner  : firstCardData ? formatData(firstCardData) : null,
+        blueCorner : secondCardData ? formatData(secondCardData) : null
     };
 }
 
@@ -97,6 +102,7 @@ export default function FightTree ({
     margin = defaultMargin,
     category
 }) {
+    const dispatch = useDispatch();
     const fightersTree = createFightersTree(category.linked);
 
     const maxDegree = Math.log2(category.linked.fights.reduce((acc, { degree }) => degree > acc ? degree : acc, 0)) + 1;
@@ -108,10 +114,38 @@ export default function FightTree ({
     const sizeWidth = innerWidth;
     const sizeHeight = innerHeight;
 
-    if (totalWidth < 10) return null;
+    const [ anchor, setAnchor ] = useState(null);
 
+    const handleClickFighter = (e, fighterId, fightId) => {
+        setAnchor({ element: e.currentTarget, fighterId, fightId });
+    };
+    const handleCloseSettings = () => {
+        setAnchor(null);
+    };
+
+    const handleSetWinner = () => {
+        dispatch(setWinner(
+            { id: anchor.fightId, winnerId: anchor.fighterId },
+            () => {
+                dispatch(showSuccess('The winner has been successfully set.'));
+            }
+        ));
+    };
+
+    if (totalWidth < 10) return null;
     return (
         <div className={styles.svgContainer}>
+            <SettingsPopover
+                anchorEl={anchor?.element}
+                handleClose={handleCloseSettings}
+                extraSettings={[
+                    {
+                        icon    : <EmojiEventsIcon fontSize={'small'}/>,
+                        onClick : handleSetWinner,
+                        text    : { primary: 'Set winner' }
+                    }
+                ]}
+            />
             <svg
                 className={styles.svg}
                 width={(totalWidth * maxDegree) + (maxDegree > 1 ? 80 : 0)}
@@ -149,10 +183,12 @@ export default function FightTree ({
                                         return (
                                             <Group top={top} left={left} key={key}>
                                                 {node.data.visible &&
-                                                <Fight
-                                                    redCorner={node.data.redCorner}
-                                                    blueCorner={node.data.blueCorner}
-                                                />
+                                                    <Fight
+                                                        fight={node.data.fight}
+                                                        redCorner={node.data.redCorner}
+                                                        blueCorner={node.data.blueCorner}
+                                                        onClickFighter={handleClickFighter}
+                                                    />
                                                 }
                                             </Group>
                                         );

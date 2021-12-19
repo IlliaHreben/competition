@@ -2,11 +2,12 @@ import x from 'chista/Exception';
 const Exception = x.default;
 
 const errors = {
-  NOT_FOUND: data => ({
+  NOT_FOUND: ({ id, ...rest }) => ({
     code   : 'NOT_FOUND',
     fields : {
       main    : 'NOT_FOUND',
-      _reason : `Entity with id ${data.id} not found.`
+      _reason : `Entity with id ${id} not found.`,
+      ...rest
     }
   }),
   COMPETITION_NOT_FOUND: data => ({

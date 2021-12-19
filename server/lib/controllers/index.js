@@ -8,6 +8,7 @@ import clubs        from './clubs';
 import coaches      from './coaches';
 import settlements  from './settlements';
 import states       from './states';
+import fights       from './fights';
 
 export default {
   fightSpaces,
@@ -19,5 +20,6 @@ export default {
   clubs,
   coaches,
   settlements,
-  states
+  states,
+  fights
 };

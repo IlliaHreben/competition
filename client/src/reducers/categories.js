@@ -24,6 +24,16 @@ const categories = createSlice({
             state.isLoading = false;
             state.errors = action.payload;
         },
+        concatToList: (state, action) => {
+            state.list = state.list.concat(action.payload.data);
+            state.listMeta = action.payload.meta;
+            state.isLoading = false;
+        },
+        show: (state, action) => {
+            const index = state.list.findIndex(c => c.id === action.payload.id);
+            if (index === -1) return;
+            state.list[index] = action.payload;
+        },
         clearList: state => { state.list = []; state.listMeta = {}; },
 
         bulkDelete: (state, action) => {
@@ -54,7 +64,8 @@ export const {
     deleteError,
     list, listRequest, clearList, listRequestError,
     bulkDelete, bulkDeleteRequest, bulkDeleteRequestError,
-    bulkCreate, bulkCreateRequest, bulkCreateRequestError
+    bulkCreate, bulkCreateRequest, bulkCreateRequestError,
+    show, concatToList
 } = actions;
 
 export default reducer;

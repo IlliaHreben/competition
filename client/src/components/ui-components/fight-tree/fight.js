@@ -7,25 +7,9 @@ import SportsMmaIcon from '@mui/icons-material/SportsMma';
 
 import PropTypes from 'prop-types';
 import { useRef, useState, useEffect } from 'react';
-// import toPath    from 'element-to-path';
 
 import styles from './index.module.css';
 
-// const circle = {
-//     type       : 'element',
-//     name       : 'rect',
-//     attributes : {
-//         y           : -35,
-//         height      : 35,
-//         width       : 250,
-//         fill        : '#ffffff',
-//         stroke      : '#000000',
-//         strokeWidth : 2
-//         // rx          : 10
-//     }
-// };
-
-// const path = toPath(circle);
 const ColorButton = styled(Button)(({ theme }) => ({
     color           : theme.palette.getContrastText('#ffffff'),
     backgroundColor : '#ffffff',
@@ -39,7 +23,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
     }
 }));
 
-function Fight ({ blueCorner, redCorner }) {
+function Fight ({ blueCorner, redCorner, onClickFighter, fight }) {
     const redCornerButton = redCorner &&
         <SportsMmaIcon sx={{ color: 'red', marginRight: '100%', marginLeft: 0 }} />;
     const blueCornerButton = blueCorner &&
@@ -49,20 +33,22 @@ function Fight ({ blueCorner, redCorner }) {
         <ColorButton
             endIcon={redCornerButton}
             className={styles.svgButton}
-            key="one"
+            key="red"
+            onClick={e => onClickFighter?.(e, redCorner.id, fight.id)}
         >{redCorner?.fullName || ''}
         </ColorButton>,
         <ColorButton
             endIcon={blueCornerButton}
             className={styles.svgButton}
-            key="two"
+            key="blue"
+            onClick={e => onClickFighter?.(e, blueCorner.id, fight.id)}
         >{blueCorner?.fullName || ''}
         </ColorButton>
     ];
     const groupRef = useRef(null);
     const [ width, setDivWidth ] = useState(0);
     const [ height, setDivHeight ] = useState(0);
-    // const forceUpdate = useForceUpdate();
+
     useEffect(() => {
         setDivWidth(groupRef.current?.offsetWidth || 0);
         setDivHeight(groupRef.current?.offsetHeight || 0);
@@ -91,7 +77,6 @@ function Fight ({ blueCorner, redCorner }) {
                 <ButtonGroup ref={groupRef}
                     orientation="vertical"
                     className={styles.svgButtonGroup}
-                // variant="contained"
                 >
                     {buttons}
                 </ButtonGroup>
@@ -115,8 +100,10 @@ function Fight ({ blueCorner, redCorner }) {
 }
 
 Fight.propTypes = {
-    blueCorner : PropTypes.object,
-    redCorner  : PropTypes.object
+    blueCorner     : PropTypes.object,
+    redCorner      : PropTypes.object,
+    onClickFighter : PropTypes.func,
+    fight          : PropTypes.object
 };
 
 export default Fight;

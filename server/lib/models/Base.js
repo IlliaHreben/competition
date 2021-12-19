@@ -1,5 +1,5 @@
 
-import Sequelize      from 'sequelize';
+import Sequelize from 'sequelize';
 
 export default class Base extends Sequelize.Model {
   static findById (id, params, opts) {

@@ -10,6 +10,7 @@ import Coaches from './coaches';
 import Settlements from './settlements';
 import States from './states';
 import Fighters from './fighters';
+import Fights from './fights';
 
 export default function apiAggregator ({ apiUrl, apiPrefix } = {}) {
     const apiClient = new ApiClient({
@@ -31,6 +32,7 @@ export default function apiAggregator ({ apiUrl, apiPrefix } = {}) {
         coaches      : new Coaches(params),
         settlements  : new Settlements(params),
         states       : new States(params),
-        fighters     : new Fighters(params)
+        fighters     : new Fighters(params),
+        fights       : new Fights(params)
     };
 }

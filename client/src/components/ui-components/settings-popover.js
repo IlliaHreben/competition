@@ -9,13 +9,20 @@ import CheckIcon from '@mui/icons-material/Check';
 
 SettingsPopover.propTypes = {
     anchorEl       : PropTypes.object,
-    handleEdit     : PropTypes.func.isRequired,
-    handleDelete   : PropTypes.func.isRequired,
+    handleEdit     : PropTypes.func,
+    handleDelete   : PropTypes.func,
     handleClose    : PropTypes.func.isRequired,
-    handleActivate : PropTypes.func
+    handleActivate : PropTypes.func,
+    extraSettings  : PropTypes.arrayOf(PropTypes.shape({
+        icon    : PropTypes.element.isRequired,
+        onClick : PropTypes.func.isRequired,
+        text    : PropTypes.object.isRequired
+    }).isRequired)
 };
 
-export default function SettingsPopover ({ anchorEl, handleClose, handleEdit, handleDelete, handleActivate }) {
+export default function SettingsPopover ({
+    anchorEl, handleClose, handleEdit, handleDelete, handleActivate, extraSettings = []
+}) {
     const settingsList = [
         ...handleActivate
             ? [ {
@@ -24,15 +31,21 @@ export default function SettingsPopover ({ anchorEl, handleClose, handleEdit, ha
                 text    : { primary: 'Activate' }
             } ]
             : [],
-        {
-            icon    : <EditIcon fontSize={'small'}/>,
-            onClick : handleEdit,
-            text    : { primary: 'Edit' }
-        }, {
-            icon    : <DeleteIcon sx={{ color: 'rgb(254 6 5/ 0.7);' }} fontSize={'small'}/>,
-            onClick : handleDelete,
-            text    : { sx: { color: 'rgb(254 6 5/ 0.7);' }, primary: 'Delete' }
-        }
+        ...handleEdit
+            ? [ {
+                icon    : <EditIcon fontSize={'small'}/>,
+                onClick : handleEdit,
+                text    : { primary: 'Edit' }
+            } ]
+            : [],
+        ...handleDelete
+            ? [ {
+                icon    : <DeleteIcon sx={{ color: 'rgb(254 6 5/ 0.7);' }} fontSize={'small'}/>,
+                onClick : handleDelete,
+                text    : { sx: { color: 'rgb(254 6 5/ 0.7);' }, primary: 'Delete' }
+            } ]
+            : [],
+        ...extraSettings
     ];
 
     return (

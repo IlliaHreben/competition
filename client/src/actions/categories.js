@@ -1,14 +1,26 @@
 import api from '../api-singleton';
 import * as reducer from '../reducers/categories';
 
-export function list (...args) {
+export function listCategories (params) {
     return async dispatch => {
         try {
             dispatch(reducer.listRequest());
 
-            const data = await api.categories.list(...args);
+            const data = await api.categories.list(params);
 
             dispatch(reducer.list(data));
+        } catch (errData) {
+            dispatch(reducer.listRequestError(errData));
+        }
+    };
+}
+
+export function concatToListCategories (params) {
+    return async dispatch => {
+        try {
+            const data = await api.categories.list(params);
+
+            dispatch(reducer.concatToList(data));
         } catch (errData) {
             dispatch(reducer.listRequestError(errData));
         }

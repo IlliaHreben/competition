@@ -53,4 +53,6 @@ router.post('/settlements', controllers.settlements.create);
 router.get('/states', controllers.states.list);
 router.post('/states', controllers.states.create);
 
+router.put('/fights/:id/winner', controllers.fights.setWinner);
+
 export default router;
