@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import FightTree from '../../ui-components/fight-tree';
 import CategoryTable from '../../ui-components/category-table';
-import api from '../../../api-singleton';
 import { concatToListCategories } from '../../../actions/categories';
 import InfiniteScroll from 'react-infinite-scroll-component';
-
-import { CircularProgress, Box } from '@mui/material';
+import CircularProgress from './CircularProgress';
+import { Box } from '@mui/material';
 import Container from '@mui/material/Container';
 
 import styles from './graphics.module.css';
@@ -40,22 +39,6 @@ export default function FightTrees () {
             limit,
             include       : [ 'cards', 'sections' ]
         }));
-
-        //     async function fetchGraphic () {
-        //         const { data } = await api.categories.list({
-        //             competitionId : competition.id,
-        //             offset,
-        //             limit,
-        //             include       : [ 'cards', 'sections' ]
-        //         });
-
-        //         if (data.length < limit) return setHasMore(false);
-
-        //         setGraphics(graphics.concat(data));
-        //     }
-
-    //     if (competition) fetchGraphic();
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ competition, dispatch, offset ]);
 
     return (
@@ -72,6 +55,7 @@ export default function FightTrees () {
                 hasMore={hasMore}
                 scrollableTarget="scroll-root"
                 loader={<CircularProgress />}
+                style={{ overflow: 'hidden' }}
             >
                 {categories.map((category) => (
                     <Container key={category.id} maxWidth="xl">

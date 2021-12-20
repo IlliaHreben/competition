@@ -1,9 +1,7 @@
-// import { Op }            from '../../sequelize.js';
 import ServiceBase      from '../Base.js';
 import { dumpCategory } from '../../utils';
 
 import Category         from '../../models/Category.js';
-// import Fight             from '../../models/Fight.js';
 
 export default class CategoriesList extends ServiceBase {
     static validationRules = {
@@ -17,7 +15,8 @@ export default class CategoriesList extends ServiceBase {
       const { rows, count } = await Category
         .scope(...include)
         .findAndCountAll({
-          where: {
+          col   : 'Category.id',
+          where : {
             competitionId
           },
           limit,
