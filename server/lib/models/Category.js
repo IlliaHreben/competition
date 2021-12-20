@@ -221,7 +221,7 @@ export default class Category extends Base {
         ],
         // order   : [ [ { model: Fight, as: 'Fights' }, 'secondCardId', 'ASC' ] ],
         order    : [ [ sequelize.literal('"cardsCount"'), 'DESC' ], [ 'id', 'ASC' ] ],
-        logging  : true,
+        // logging  : true,
         distinct : true
       },
       sections: {
