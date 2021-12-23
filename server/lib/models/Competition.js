@@ -3,7 +3,7 @@ import Base              from './Base.js';
 
 import defaultCategories from '../constants/categories.json';
 import ServiceError      from '../services/service-error';
-
+import { createBlocks }  from '../utils/categories';
 export default class Competition extends Base {
   static initRelation () {
     const Category = sequelize.model('Category');
@@ -124,6 +124,21 @@ export default class Competition extends Base {
 
     return this.update({ completed: true, active: false });
   }
+
+  async calculateFightsTimesAndOrder () {
+    const Category = sequelize.model('Category');
+
+    const categories = await Category
+      .scope('cards')
+      .findAll({
+        col   : 'Category.id',
+        where : {
+          competitionId: this.id
+        }
+      });
+
+    createBlocks(categories);
+  }
 }
 
 Competition.init({
@@ -156,3 +171,5 @@ Competition.init({
 
   scopes: {}
 });
+
+Competition.findById('ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb').then(c => c.calculateFightsTimesAndOrder());

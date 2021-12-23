@@ -3,7 +3,7 @@ const isTest = process.env.NODE_ENV === 'test';
 
 const pool = {
   max : 10,
-  min : 0
+  min : 5
 };
 
 const credentials = {

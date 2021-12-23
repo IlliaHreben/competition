@@ -105,10 +105,12 @@ export default function FightTree ({
     const dispatch = useDispatch();
     const fightersTree = createFightersTree(category.linked);
 
-    const maxDegree = Math.log2(category.linked.fights.reduce((acc, { degree }) => degree > acc ? degree : acc, 0)) + 1;
+    const stepsCount = Math.log2(category.linked.fights
+        .reduce((acc, { degree }) => degree > acc ? degree : acc, 0)
+    ) + 1;
 
-    const innerWidth = (totalWidth - margin.left - margin.right) * maxDegree;
-    const innerHeight = (totalHeight - margin.top - margin.bottom) * maxDegree;
+    const innerWidth = (totalWidth - margin.left - margin.right) * stepsCount;
+    const innerHeight = (totalHeight - margin.top - margin.bottom) * stepsCount;
 
     const origin = { x: 0, y: 0 };
     const sizeWidth = innerWidth;
@@ -149,8 +151,8 @@ export default function FightTree ({
             />
             <svg
                 className={styles.svg}
-                width={(totalWidth * maxDegree) + (maxDegree > 1 ? 80 : 0)}
-                height={totalHeight * maxDegree}
+                width={(totalWidth * stepsCount) + (stepsCount > 1 ? 80 : 0)}
+                height={totalHeight * stepsCount}
             >
                 <Group top={margin.top} left={margin.left}>
                     <Tree

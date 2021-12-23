@@ -144,7 +144,11 @@ export default class Category extends Base {
         fight.nextFightId = greaterNextFightWithoutChildren.id;
       };
     });
-
+    if (fights.length === 19) {
+      console.log('='.repeat(50)); // !nocommit
+      console.log(fights);
+      console.log('='.repeat(50));
+    }
     return fights;
   }
 

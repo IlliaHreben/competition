@@ -20,7 +20,9 @@ export default class CategoriesList extends ServiceBase {
             competitionId
           },
           limit,
-          offset
+          offset,
+          benchmark : true,
+          logging   : console.log
         // order: [ [ sort, order ] ]
         });
 
