@@ -1,7 +1,7 @@
 import sequelize, { DT } from '../sequelize-singleton.js';
 import Base              from './Base.js';
 
-import defaultCategories from '../constants/categories.json';
+import defaultCategories from '../constants/categories.json' assert { type: "json" };
 import ServiceError      from '../services/service-error';
 import { createBlocks }  from '../utils/categories';
 export default class Competition extends Base {
@@ -171,5 +171,3 @@ Competition.init({
 
   scopes: {}
 });
-
-Competition.findById('ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb').then(c => c.calculateFightsTimesAndOrder());
