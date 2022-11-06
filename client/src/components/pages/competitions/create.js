@@ -9,7 +9,7 @@ import styles from './create.module.css';
 export default function CompetitionCreate () {
     const navigate = useNavigate();
 
-    useEffect(() => document.title = 'Create competition', []);
+    useEffect(() => {document.title = 'Create competition';}, []);
 
     const onCreate = async (payload) => {
         const { data } = await api.competitions.create({

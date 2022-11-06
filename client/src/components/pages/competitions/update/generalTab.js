@@ -20,7 +20,7 @@ export default function GeneralSettingsTab (props) {
 
     const handleCompetitionSave = (data) => {
         dispatch(updateCompetition(competition.id, {
-            name        : data.competitionName,
+            name        : data.name,
             description : data.description,
             startDate   : data.startDate,
             endDate     : data.endDate
