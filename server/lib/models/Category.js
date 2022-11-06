@@ -54,10 +54,8 @@ export default class Category extends Base {
         ];
       }
 
-      let _categories = [...(category.sex === 'man' ? men : women)];
-      if (category.group) {
-        _categories = _categories.filter((c) => c.group === category.group);
-      }
+      const bySex = [...(category.sex === 'man' ? men : women)];
+      const _categories = category.group ? bySex.filter((c) => c.group === category.group) : bySex;
 
       const currentIndex = _categories.indexOf(category);
       if (currentIndex >= 0) _categories.splice(currentIndex, 1);
@@ -260,57 +258,71 @@ export default class Category extends Base {
 }
 
 const findErrors = (categories, categoryToCheck, index, maxCharacteristic, by, gap) => {
-  const keyFrom = `${by}From`;
-  const keyTo = `${by}To`;
+  const from = `${by}From`;
+  const to = `${by}To`;
   const errors = [];
-  if (categoryToCheck[keyTo] !== maxCharacteristic) {
+  if (categoryToCheck[to] !== maxCharacteristic) {
     // check on gap with greater nearest element
-    const nearestGreaterElement = findNearestGreaterElement(
-      categoryToCheck,
-      categories,
-      keyTo,
-      keyFrom
-    );
+    const nearestGreaterElement = findNearestGreaterElement(categoryToCheck, categories, to, from);
     if (nearestGreaterElement) {
       const wrongGap =
-        +(nearestGreaterElement[keyFrom] - categoryToCheck[keyTo]).toFixed(1) !== +gap.toFixed(1);
+        +(nearestGreaterElement[from] - categoryToCheck[to]).toFixed(1) !== +gap.toFixed(1);
       if (wrongGap) {
-        errors.push({ index, key: keyTo, code: 'WRONG_GAP' });
+        errors.push({ index, key: to, code: 'WRONG_GAP' });
       }
     }
-    const nearestLowerElement = findNearestLowerElement(
-      categoryToCheck,
-      categories,
-      keyTo,
-      keyFrom
-    );
+    const nearestLowerElement = findNearestLowerElement(categoryToCheck, categories, to, from);
     if (nearestLowerElement) {
       const wrongGap =
-        +(nearestLowerElement[keyFrom] - categoryToCheck[keyTo]).toFixed(1) !== +gap.toFixed(1);
+        +(nearestLowerElement[from] - categoryToCheck[to]).toFixed(1) !== +gap.toFixed(1);
       if (wrongGap) {
-        errors.push({ index, key: keyTo, code: 'WRONG_GAP' });
+        errors.push({ index, key: to, code: 'WRONG_GAP' });
       }
     }
   }
   categories.forEach((c, i) => {
     // Age should not overlap
-    if (categoryToCheck[keyFrom] >= c[keyFrom] && categoryToCheck[keyFrom] <= c[keyTo]) {
-      errors.push({ index, key: keyFrom, code: 'WRONG_OVERLAP' });
-    } else if (categoryToCheck[keyTo] > c[keyFrom] && categoryToCheck[keyTo] < c[keyTo]) {
-      errors.push({ index, key: keyTo, code: 'WRONG_OVERLAP' });
-    } else if (c[keyFrom] < categoryToCheck[keyFrom] && c[keyTo] > categoryToCheck[keyTo]) {
+    const fromHigher = categoryToCheck[from] > c[from];
+    // const fromHigherOrEqual = categoryToCheck[from] >= c[from];
+    const toLower = categoryToCheck[to] < c[to];
+    // const fromLowerOrEqualTo = categoryToCheck[from] <= c[to];
+    const toHigherFrom = categoryToCheck[to] > c[from];
+    const fromLowerTo = categoryToCheck[from] < c[to];
+    const toEqual = categoryToCheck[to] === c[to];
+    const fromEqual = categoryToCheck[from] === c[from];
+
+    const avarageTagret = categoryToCheck[from] + (categoryToCheck[to] - categoryToCheck[from]) / 2;
+    const avarageCurrent = c[from] + (c[to] - c[from]) / 2;
+
+    const targetIsHigher = avarageTagret > avarageCurrent;
+    const targetIsEqual = avarageTagret === avarageCurrent;
+
+    //    [---]     [---]          [---]
+    //    [---]     [------]    [------]
+    if (fromEqual || toEqual) {
+      //      [---]          [---]
+      //      [------]    [------]
+      if (by === 'weight' || !targetIsEqual)
+        errors.push(
+          { index, key: from, code: 'WRONG_OVERLAP' },
+          { index, key: to, code: 'WRONG_OVERLAP' }
+        );
+      //         [----]
+      //      [----]
+    } else if (targetIsHigher && fromLowerTo) {
+      errors.push({ index, key: from, code: 'WRONG_OVERLAP' });
+
+      //    [----]
+      //      [----]
+    } else if (!targetIsHigher && toHigherFrom) {
+      errors.push({ index, key: to, code: 'WRONG_OVERLAP' });
+
+      //        [----]
+      //      [--------]
+    } else if (fromHigher && toLower) {
       errors.push(
-        { index, key: keyFrom, code: 'WRONG_OVERLAP' },
-        { index, key: keyTo, code: 'WRONG_OVERLAP' }
-      );
-    } else if (
-      c[keyFrom] === categoryToCheck[keyFrom] &&
-      c[keyTo] === categoryToCheck[keyTo] &&
-      by === 'weight'
-    ) {
-      errors.push(
-        { index, key: keyFrom, code: 'WRONG_OVERLAP' },
-        { index, key: keyTo, code: 'WRONG_OVERLAP' }
+        { index, key: from, code: 'WRONG_OVERLAP' },
+        { index, key: to, code: 'WRONG_OVERLAP' }
       );
     }
   });

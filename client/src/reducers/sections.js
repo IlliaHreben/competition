@@ -44,26 +44,28 @@ const sections = createSlice({
             state.errors = action.payload;
         }
     },
-    extraReducers: {
-        [categoriesReducer.bulkCreate]: (state, action) => {
-            action.payload.forEach(category => {
-                const sectionI = state.list.findIndex(s => s.id === category.sectionId);
-                if (sectionI === -1) return;
+    extraReducers: builder => {
+        builder.addCase(
+            categoriesReducer.bulkCreate, (state, action) => {
+                action.payload.forEach(category => {
+                    const sectionI = state.list.findIndex(s => s.id === category.sectionId);
+                    if (sectionI === -1) return;
 
-                state.list[sectionI].linked.categories.push(category);
-            });
-        },
-        [categoriesReducer.bulkDelete]: (state, action) => {
-            action.payload.forEach(id => {
-                for (const section of state.list) {
-                    const categoryI = section.linked.categories.findIndex(c => c.id === id);
-                    if (categoryI < 0) continue;
+                    state.list[sectionI].linked.categories.push(category);
+                });
+            })
+            .addCase(
+                categoriesReducer.bulkDelete, (state, action) => {
+                    action.payload.forEach(id => {
+                        for (const section of state.list) {
+                            const categoryI = section.linked.categories.findIndex(c => c.id === id);
+                            if (categoryI < 0) continue;
 
-                    section.linked.categories.splice(categoryI, 1);
-                    break;
-                }
-            });
-        }
+                            section.linked.categories.splice(categoryI, 1);
+                            break;
+                        }
+                    });
+                });
     }
 });
 

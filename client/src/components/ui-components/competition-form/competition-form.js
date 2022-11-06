@@ -6,8 +6,7 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { AdapterLuxon as AdapterDateFns } from '@mui/x-date-pickers/AdapterLuxon';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 
 import styles from './competition-form.module.css';
 
@@ -135,6 +134,7 @@ export default function CompetitionForm ({ competition, handleConfirm, withFight
                     <DatePicker className={styles.endDateInput}
                         label="End date"
                         value={endDate}
+                        mask="__.__.____"
                         onChange={handleChangeFields('endDate')}
                         renderInput={(params) =>
                             <TextField

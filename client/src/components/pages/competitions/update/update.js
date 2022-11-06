@@ -63,7 +63,7 @@ function CompetitionUpdate () {
         dispatch(listSections({ competitionId: competition.id, limit: 100000, include: 'categories' }));
     }, [ competition, dispatch ]);
 
-    useEffect(() => document.title = `Settings - ${competition ? competition.name : ''}`, [ competition ]);
+    useEffect(() => {document.title = `Settings - ${competition ? competition.name : ''}`;}, [ competition ]);
 
     useEffect(() => {
         const queryTab = +(new URLSearchParams(location.search).get('tab'));

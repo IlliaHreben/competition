@@ -148,7 +148,7 @@ export default function CategoriesTab () {
                     </AccordionSummary>
                     <AccordionDetails
                         elevation={0}
-                        square
+                        // square
                         sx={{ padding: 0, '.MuiAccordionDetails-root': { padding: 0 } }}
                     >
                         {section.children.map(categorySex => (

@@ -31,7 +31,7 @@ export default class BulkCategoriesDelete extends ServiceBase {
     });
 
     const cards = await Card.findAll({
-      where: { categoryId: data },
+      where: { categoryId: data.id },
       include: ['Fighter'],
     });
     if (cards.length)

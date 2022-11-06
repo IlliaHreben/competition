@@ -61,40 +61,41 @@ const cards = createSlice({
             state.errors = action.payload;
         }
     },
-    extraReducers: {
-        [fightersReducer.update]: (state, action) => {
-            state.list.forEach((card, i) => {
-                if (card.linked?.fighter?.id !== action.payload.id) return;
-                state.list[i].linked.fighter = action.payload;
-            });
-        },
-        [coachesReducer.updateCoach]: (state, action) => {
-            const updatedInfo = {
-                name     : action.payload.name,
-                lastName : action.payload.lastName
-            };
+    extraReducers: builder => {
+        builder.addCase(
+            fightersReducer.update, (state, action) => {
+                state.list.forEach((card, i) => {
+                    if (card.linked?.fighter?.id !== action.payload.id) return;
+                    state.list[i].linked.fighter = action.payload;
+                });
+            }).addCase(
+            coachesReducer.updateCoach, (state, action) => {
+                const updatedInfo = {
+                    name     : action.payload.name,
+                    lastName : action.payload.lastName
+                };
 
-            state.list.forEach((card, i) => {
-                if (card.linked?.coach?.id !== action.payload.id) return;
-                state.list[i].linked.coach = {
-                    ...state.list[i].linked.coach,
-                    ...updatedInfo
-                };
+                state.list.forEach((card, i) => {
+                    if (card.linked?.coach?.id !== action.payload.id) return;
+                    state.list[i].linked.coach = {
+                        ...state.list[i].linked.coach,
+                        ...updatedInfo
+                    };
+                });
+            }).addCase(
+            clubsReducer.updateClub, (state, action) => {
+                state.list.forEach((card, i) => {
+                    if (card.linked?.club?.id !== action.payload.id) return;
+                    state.list[i].linked.club = {
+                        ...state.list[i].linked.club,
+                        name   : action.payload.name,
+                        linked : {
+                            ...state.list[i].linked.club.linked,
+                            settlement: action.payload.linked.settlement
+                        }
+                    };
+                });
             });
-        },
-        [clubsReducer.updateClub]: (state, action) => {
-            state.list.forEach((card, i) => {
-                if (card.linked?.club?.id !== action.payload.id) return;
-                state.list[i].linked.club = {
-                    ...state.list[i].linked.club,
-                    name   : action.payload.name,
-                    linked : {
-                        ...state.list[i].linked.club.linked,
-                        settlement: action.payload.linked.settlement
-                    }
-                };
-            });
-        }
     }
 });
 
