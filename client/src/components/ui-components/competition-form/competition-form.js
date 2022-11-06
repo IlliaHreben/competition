@@ -5,9 +5,9 @@ import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import AdapterDateFns from '@mui/lab/AdapterLuxon';
+import { AdapterLuxon as AdapterDateFns } from '@mui/x-date-pickers/AdapterLuxon';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DatePicker from '@mui/lab/DatePicker';
+import { DatePicker } from '@mui/x-date-pickers';
 
 import styles from './competition-form.module.css';
 
@@ -122,6 +122,7 @@ export default function CompetitionForm ({ competition, handleConfirm, withFight
                     <DatePicker className={styles.startDateInput}
                         label="Start date (without weighing day)"
                         value={startDate}
+                        mask="__.__.____"
                         onChange={handleChangeFields('startDate')}
                         renderInput={(params) =>
                             <TextField

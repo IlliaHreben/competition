@@ -9,23 +9,23 @@ class Categories extends Base {
 
     list = async (params) => {
         return this.apiClient.get('categories', params);
-    }
+    };
 
     show = async (id, params) => {
         return this.apiClient.get(`categories/${id}`, params);
-    }
+    };
 
     calculateFights = async (params) => {
         return this.apiClient.get('categories/calculate-fights', params);
-    }
+    };
 
     bulkDelete = async (params) => {
         return this.apiClient.delete('categories/bulk', params);
-    }
+    };
 
     bulkCreate = async (params) => {
         return this.apiClient.post('categories/bulk', params);
-    }
+    };
 }
 
 export default Categories;

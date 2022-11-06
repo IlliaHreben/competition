@@ -8,9 +8,8 @@ import {
 import { useState, useEffect, useReducer } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FighterModal from './fighter-modal';
-import AdapterDateFns from '@mui/lab/AdapterLuxon';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DatePicker from '@mui/lab/DatePicker';
+import { AdapterLuxon as AdapterDateFns } from '@mui/x-date-pickers/AdapterLuxon';
+import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { getAgeFromBirthDate } from '../../utils/datetime';
 import FighterAutocomplete from './fighter-autocomplete';
 import WeightInput from './weight-mask-input';
@@ -63,7 +62,7 @@ export default function CardForm ({ card, isEdit, onChange }) {
     const { sections } = useSelector(mapState);
 
     const [ cardData, dispatchCard ] = useReducer(reducer, initialState);
-    const [ errors, setErrors ] = useState({});
+    const [ errors/*, setErrors*/ ] = useState({});
     const [ fighter, setFighter ] = useState(card?.linked?.fighter || {});
     const [ fighterModalStatus, setFighterModalStatus ] = useState(false);
     const changeFighterModalStatus = () => setFighterModalStatus(prev => !prev);
@@ -134,6 +133,7 @@ export default function CardForm ({ card, isEdit, onChange }) {
                     <DatePicker
                         label={`Birth date${cardData.birthDate ? ` (${getAgeFromBirthDate(cardData.birthDate)})` : ''}`}
                         value={cardData.birthDate}
+                        mask="__.__.____"
                         onChange={value => dispatchCard({ type: 'birthDate', payload: value })}
                         renderInput={(params) =>
                             <TextField

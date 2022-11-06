@@ -24,7 +24,7 @@ export default function CreateCard () {
     const dispatch = useDispatch();
     const { active } = useSelector(mapState);
 
-    useEffect(() => document.title = 'Create card', []);
+    useEffect(() => { document.title = 'Create card'; }, []);
 
     useEffect(() => {
         if (!active) return;

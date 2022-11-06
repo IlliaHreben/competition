@@ -169,7 +169,7 @@ function CompetitionsList () {
     const [ loading, setLoading ] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(() => document.title = 'Competitions', []);
+    useEffect(() => { document.title = 'Competitions'; }, []);
 
     const { rows, meta } = useSelector(mapStateToProps);
     const dispatch = useDispatch();

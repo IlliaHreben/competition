@@ -7,7 +7,7 @@ module.exports = {
         'react-app',
         // "plugin:prettier/recommended",
         // 'eslint:recommended',
-        'standard',
+        // 'standard',
         'plugin:react/recommended',
         'plugin:react/jsx-runtime'
     ],
