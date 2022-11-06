@@ -22,10 +22,10 @@ const { database, host, port, dialect } = sequelize.config;
 
 export * from './sequelize-singleton.js';
 
-export const dbUrl = `${dialect}://${host}:${port}/${(database)}`;
+export const dbUrl = `${dialect}://${host}:${port}/${database}`;
 
 export default sequelize;
 
-export async function onShutdown () {
+export async function onShutdown() {
   await sequelize.close();
 }

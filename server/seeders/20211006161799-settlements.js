@@ -5,7 +5,9 @@ module.exports = {
   up: async (queryInterface) => {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.bulkInsert('Settlements', settlements, { transaction });
+      await queryInterface.bulkInsert('Settlements', settlements, {
+        transaction,
+      });
 
       await transaction.commit();
     } catch (error) {
@@ -26,5 +28,5 @@ module.exports = {
       console.error(error);
       throw error;
     }
-  }
+  },
 };

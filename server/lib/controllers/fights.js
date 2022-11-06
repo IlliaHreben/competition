@@ -1,4 +1,4 @@
-import chista    from '../chista.js';
+import chista from '../chista.js';
 
 import setWinner from '../services/fights/setWinner';
 // import Create     from '../services/fights/create';
@@ -8,7 +8,10 @@ import setWinner from '../services/fights/setWinner';
 // import Update     from '../services/fights/update';
 
 export default {
-  setWinner: chista.makeServiceRunner(setWinner, req => ({ ...req.params, ...req.body }))
+  setWinner: chista.makeServiceRunner(setWinner, (req) => ({
+    ...req.params,
+    ...req.body,
+  })),
   // create     : chista.makeServiceRunner(Create, req => ({ ...req.body })),
   // list       : chista.makeServiceRunner(list, req => ({ ...req.query })),
   // delete     : chista.makeServiceRunner(deleteCard, req => ({ ...req.body })),

@@ -1,3 +1,3 @@
 export const app = {
-  port: process.env.APP_PORT
+  port: process.env.APP_PORT,
 };

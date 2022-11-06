@@ -1,19 +1,19 @@
-import ServiceBase     from '../Base.js';
+import ServiceBase from '../Base.js';
 import { dumpFighter } from '../../utils';
 
-import Fighter         from '../../models/Fighter.js';
+import Fighter from '../../models/Fighter.js';
 
 export default class FighterShow extends ServiceBase {
-    static validationRules = {
-      id      : [ 'required', 'uuid' ],
-      include : [ 'to_array', { list_of: { one_of: [ 'coach', 'club', 'cards' ] } } ]
+  static validationRules = {
+    id: ['required', 'uuid'],
+    include: ['to_array', { list_of: { one_of: ['coach', 'club', 'cards'] } }],
+  };
+
+  async execute({ id, include = [] }) {
+    const fighter = await Fighter.scope(...include).findById(id);
+
+    return {
+      data: dumpFighter(fighter),
     };
-
-    async execute ({ id, include = [] }) {
-      const fighter = await Fighter.scope(...include).findById(id);
-
-      return {
-        data: dumpFighter(fighter)
-      };
-    }
+  }
 }

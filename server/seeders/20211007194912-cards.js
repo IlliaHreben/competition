@@ -18,7 +18,6 @@ module.exports = {
     // // };
     // // const cross = oldFighters
     // //   .filter((e, i) => oldFighters.findIndex(a => a.name + a.lastName === e.name + e.lastName) === i)
-
     // //   .map(c => c.categories.map(cate => ({
     // //     id            : uuid(),
     // //     fighterId     : fighters.find(f => f.name === c.name && c.lastName === f.lastName).id,
@@ -31,16 +30,13 @@ module.exports = {
     // //     group         : [ 'ЛКЛ', 'ЛАЙТ', 'СК' ].includes(cate)
     // //       ? null
     // //       : { А: 'A', Б: 'B' }[c.group],
-
     // //     section   : mapping[cate],
     // //     createdAt : new Date(),
     // //     updatedAt : new Date()
     // //   }))).flat();
-
     // const transaction = await queryInterface.sequelize.transaction();
     // try {
     //   await queryInterface.bulkInsert('Cards', cards, { returning: true, transaction });
-
     //   await transaction.commit();
     // } catch (error) {
     //   await transaction.rollback();
@@ -50,15 +46,13 @@ module.exports = {
   },
   down: async (queryInterface) => {
     // const transaction = await queryInterface.sequelize.transaction();
-
     // try {
     //   await queryInterface.bulkDelete('Cards', {}, { transaction });
-
     //   await transaction.commit();
     // } catch (error) {
     //   await transaction.rollback();
     //   console.error(error);
     //   throw error;
     // }
-  }
+  },
 };

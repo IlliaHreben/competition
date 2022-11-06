@@ -1,28 +1,28 @@
 import sequelize, { Op, DT } from '../sequelize-singleton.js';
-import ServiceError          from '../services/service-error.js';
+import ServiceError from '../services/service-error.js';
 
-import Base                  from './Base.js';
+import Base from './Base.js';
 
 export default class Card extends Base {
-  static initRelation () {
+  static initRelation() {
     const Fighter = sequelize.model('Fighter');
     const Category = sequelize.model('Category');
     const Competition = sequelize.model('Competition');
     const Section = sequelize.model('Section');
 
     this.belongsTo(Fighter, {
-      as         : 'Fighter',
-      foreignKey : {
-        name      : 'fighterId',
-        allowNull : false
-      }
+      as: 'Fighter',
+      foreignKey: {
+        name: 'fighterId',
+        allowNull: false,
+      },
     });
     this.belongsTo(Category, {
-      as         : 'Category',
-      foreignKey : {
-        name      : 'categoryId',
-        allowNull : false
-      }
+      as: 'Category',
+      foreignKey: {
+        name: 'categoryId',
+        allowNull: false,
+      },
     });
     // this.belongsTo(Competition, {
     //   as         : 'Competition',
@@ -32,96 +32,122 @@ export default class Card extends Base {
     //   }
     // });
     this.belongsTo(Competition, {
-      as         : 'Competition',
-      foreignKey : {
-        name      : 'competitionId',
-        allowNull : false
-      }
+      as: 'Competition',
+      foreignKey: {
+        name: 'competitionId',
+        allowNull: false,
+      },
     });
     this.belongsTo(Section, {
-      as         : 'Section',
-      foreignKey : {
-        name      : 'sectionId',
-        allowNull : false
-      }
+      as: 'Section',
+      foreignKey: {
+        name: 'sectionId',
+        allowNull: false,
+      },
     });
   }
 
-  static initScopes () {
+  static initScopes() {
     const Category = sequelize.model('Category');
     const Fighter = sequelize.model('Fighter');
     const Club = sequelize.model('Club');
     const Settlement = sequelize.model('Settlement');
 
     const scopes = {
-      fighter : { include: [ 'Fighter' ] },
-      section : { include: [ 'Section' ] },
-      coach   : {
-        include: [ {
-          model   : Fighter,
-          as      : 'Fighter',
-          include : [ 'Coach' ]
-        } ]
+      fighter: { include: ['Fighter'] },
+      section: { include: ['Section'] },
+      coach: {
+        include: [
+          {
+            model: Fighter,
+            as: 'Fighter',
+            include: ['Coach'],
+          },
+        ],
       },
       category: {
-        include: [ { model: Category, as: 'Category', include: [ 'Section' ] } ]
+        include: [{ model: Category, as: 'Category', include: ['Section'] }],
       },
       club: {
-        include: [ {
-          model   : Fighter,
-          as      : 'Fighter',
-          include : [ {
-            model   : Club,
-            as      : 'Club',
-            include : { model: Settlement, as: 'Settlement', include: 'State' }
-          } ]
-        } ]
+        include: [
+          {
+            model: Fighter,
+            as: 'Fighter',
+            include: [
+              {
+                model: Club,
+                as: 'Club',
+                include: {
+                  model: Settlement,
+                  as: 'Settlement',
+                  include: 'State',
+                },
+              },
+            ],
+          },
+        ],
       },
       competitionRelated: (id) => ({
-        where   : { '$Section.competitionId$': id },
-        include : 'Section'
+        where: { '$Section.competitionId$': id },
+        include: 'Section',
       }),
-      search: search => ({
+      search: (search) => ({
         where: {
           [Op.or]: [
             { '$Fighter.name$': { [Op.iLike]: `%${search}%` } },
-            { '$Fighter.lastName$': { [Op.iLike]: `%${search}%` } }
-          ]
+            { '$Fighter.lastName$': { [Op.iLike]: `%${search}%` } },
+          ],
         },
-        include: [ 'Fighter' ]
+        include: ['Fighter'],
       }),
-      sectionId    : (sectionId) => ({ where: { sectionId } }),
-      clubId       : (clubId) => ({ where: { '$Fighter.clubId$': clubId }, include: [ 'Fighter' ] }),
-      coachId      : (coachId) => ({ where: { '$Fighter.coachId$': coachId }, include: [ 'Fighter' ] }),
-      settlementId : (settlementId) => ({
-        include: [ {
-          model    : Fighter,
-          as       : 'Fighter',
-          required : true,
-          include  : [ {
-            model    : Club,
-            as       : 'Club',
-            where    : { settlementId },
-            required : true,
-            include  : { model: Settlement, as: 'Settlement', include: 'State' }
-          } ]
-        } ]
+      sectionId: (sectionId) => ({ where: { sectionId } }),
+      clubId: (clubId) => ({
+        where: { '$Fighter.clubId$': clubId },
+        include: ['Fighter'],
       }),
-      group : (group) => ({ where: { group } }),
-      sex   : sex => ({
-        include: [ {
-          as       : 'Fighter',
-          model    : Fighter,
-          where    : { sex },
-          required : true
-        } ]
-      })
+      coachId: (coachId) => ({
+        where: { '$Fighter.coachId$': coachId },
+        include: ['Fighter'],
+      }),
+      settlementId: (settlementId) => ({
+        include: [
+          {
+            model: Fighter,
+            as: 'Fighter',
+            required: true,
+            include: [
+              {
+                model: Club,
+                as: 'Club',
+                where: { settlementId },
+                required: true,
+                include: {
+                  model: Settlement,
+                  as: 'Settlement',
+                  include: 'State',
+                },
+              },
+            ],
+          },
+        ],
+      }),
+      group: (group) => ({ where: { group } }),
+      sex: (sex) => ({
+        include: [
+          {
+            as: 'Fighter',
+            model: Fighter,
+            where: { sex },
+            required: true,
+          },
+        ],
+      }),
     };
 
-    Object.entries(scopes).forEach(scope => this.addScope(...scope));
+    Object.entries(scopes).forEach((scope) => this.addScope(...scope));
   }
 
-  static async createCard (data) {
+  static async createCard(data) {
     const card = this.build(data);
     if (!card.realWeight) card.set({ realWeight: card.weight });
 
@@ -131,7 +157,7 @@ export default class Card extends Base {
     return card;
   }
 
-  async updateCard (data) {
+  async updateCard(data) {
     const Section = sequelize.model('Section');
     const Category = sequelize.model('Category');
     const Fighter = sequelize.model('Fighter');
@@ -170,121 +196,150 @@ export default class Card extends Base {
     return this;
   }
 
-  async assignCategory () {
+  async assignCategory() {
     const Fighter = sequelize.model('Fighter');
     const Category = sequelize.model('Category');
 
     const fighter = await Fighter.findById(this.fighterId);
     const category = await Category.findOne({
       where: {
-        weightFrom    : { [Op.lte]: this.weight },
-        weightTo      : { [Op.gte]: this.weight },
-        ageFrom       : { [Op.lte]: this.age },
-        ageTo         : { [Op.gte]: this.age },
-        group         : this.group,
-        sectionId     : this.sectionId,
-        sex           : fighter.sex,
-        competitionId : this.competitionId
-      }
+        weightFrom: { [Op.lte]: this.weight },
+        weightTo: { [Op.gte]: this.weight },
+        ageFrom: { [Op.lte]: this.age },
+        ageTo: { [Op.gte]: this.age },
+        group: this.group,
+        sectionId: this.sectionId,
+        sex: fighter.sex,
+        competitionId: this.competitionId,
+      },
     });
 
     const updateFunction = this.isNewRecord ? 'set' : 'update';
     await this[updateFunction]({ categoryId: category?.id });
   }
 
-  async calculateFights () {
+  async calculateFights() {
     const Category = sequelize.model('Category');
     const category = await Category.findById(this.categoryId);
     await category.calculateFights();
   }
 }
 
-Card.init({
-  id: { type: DT.UUID, defaultValue: DT.UUIDV4, primaryKey: true },
+Card.init(
+  {
+    id: { type: DT.UUID, defaultValue: DT.UUIDV4, primaryKey: true },
 
-  fighterId     : { type: DT.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Fighters', key: 'id' }, allowNull: false },
-  categoryId    : { type: DT.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Categories', key: 'id' }, allowNull: false },
-  competitionId : { type: DT.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Competition', key: 'id' }, allowNull: false },
-  sectionId     : { type: DT.UUID, onDelete: 'CASCADE', onUpdate: 'CASCADE', references: { model: 'Sections', key: 'id' }, allowNull: false },
-
-  weight     : { type: DT.FLOAT, allowNull: false },
-  realWeight : { type: DT.FLOAT, allowNull: false },
-  group      : { type: DT.ENUM([ 'A', 'B' ]), allowNull: true },
-  birthDate  : { type: DT.DATE, allowNull: false },
-  age        : {
-    type: DT.VIRTUAL,
-    get () {
-      const today = new Date();
-      const birthDate = new Date(this.birthDate);
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const m = today.getMonth() - birthDate.getMonth();
-      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-      return age;
+    fighterId: {
+      type: DT.UUID,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+      references: { model: 'Fighters', key: 'id' },
+      allowNull: false,
     },
-    set () {
-      throw new Error('Do not try to set the `age` value!');
-    }
-  },
+    categoryId: {
+      type: DT.UUID,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+      references: { model: 'Categories', key: 'id' },
+      allowNull: false,
+    },
+    competitionId: {
+      type: DT.UUID,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+      references: { model: 'Competition', key: 'id' },
+      allowNull: false,
+    },
+    sectionId: {
+      type: DT.UUID,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+      references: { model: 'Sections', key: 'id' },
+      allowNull: false,
+    },
 
-  createdAt : { type: DT.DATE, allowNull: false },
-  deletedAt : { type: DT.DATE, allowNull: true },
-  updatedAt : { type: DT.DATE, allowNull: false }
-}, {
-  hooks: {
-    beforeCreate     : assignCategoryHook,
-    afterCreate      : calculateFightsHook,
-    beforeBulkCreate : assignBulkCategoryHook
-  },
-  sequelize,
-  paranoid: true
-});
+    weight: { type: DT.FLOAT, allowNull: false },
+    realWeight: { type: DT.FLOAT, allowNull: false },
+    group: { type: DT.ENUM(['A', 'B']), allowNull: true },
+    birthDate: { type: DT.DATE, allowNull: false },
+    age: {
+      type: DT.VIRTUAL,
+      get() {
+        const today = new Date();
+        const birthDate = new Date(this.birthDate);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+        return age;
+      },
+      set() {
+        throw new Error('Do not try to set the `age` value!');
+      },
+    },
 
-async function assignCategoryHook (card, options) {
+    createdAt: { type: DT.DATE, allowNull: false },
+    deletedAt: { type: DT.DATE, allowNull: true },
+    updatedAt: { type: DT.DATE, allowNull: false },
+  },
+  {
+    hooks: {
+      beforeCreate: assignCategoryHook,
+      afterCreate: calculateFightsHook,
+      beforeBulkCreate: assignBulkCategoryHook,
+    },
+    sequelize,
+    paranoid: true,
+  }
+);
+
+async function assignCategoryHook(card, options) {
   const Fighter = sequelize.model('Fighter');
   const Category = sequelize.model('Category');
 
   const fighter = await Fighter.findById(card.fighterId);
   const category = await Category.findOne({
     where: {
-      weightFrom    : { [Op.lte]: card.weight },
-      weightTo      : { [Op.gte]: card.weight },
-      ageFrom       : { [Op.lte]: card.age },
-      ageTo         : { [Op.gte]: card.age },
-      group         : card.group,
-      sectionId     : card.sectionId,
-      sex           : fighter.sex,
-      competitionId : card.competitionId
-    }
+      weightFrom: { [Op.lte]: card.weight },
+      weightTo: { [Op.gte]: card.weight },
+      ageFrom: { [Op.lte]: card.age },
+      ageTo: { [Op.gte]: card.age },
+      group: card.group,
+      sectionId: card.sectionId,
+      sex: fighter.sex,
+      competitionId: card.competitionId,
+    },
   });
   card.categoryId = category.id;
 }
 
-async function calculateFightsHook (card) {
+async function calculateFightsHook(card) {
   const Category = sequelize.model('Category');
   const category = await Category.findById(card.categoryId);
   await category.calculateFights();
 }
 
-async function assignBulkCategoryHook (cards, options) {
+async function assignBulkCategoryHook(cards, options) {
   const Fighter = sequelize.model('Fighter');
   const Category = sequelize.model('Category');
 
-  await Promise.all(cards.map(async (card, i) => {
-    const fighter = await Fighter.findById(card.fighterId);
-    const category = await Category.findOne({
-      where: {
-        weightFrom : { [Op.lte]: card.weight },
-        weightTo   : { [Op.gte]: card.weight },
-        ageFrom    : { [Op.lte]: card.age },
-        ageTo      : { [Op.gte]: card.age },
-        group      : card.group,
-        sectionId  : card.sectionId,
-        sex        : fighter.sex
-      }
-    });
-    if (!category) throw new Error(`Category for card ${card.id} not found.`);
-    card.categoryId = category.id;
-  }));
+  await Promise.all(
+    cards.map(async (card, i) => {
+      const fighter = await Fighter.findById(card.fighterId);
+      const category = await Category.findOne({
+        where: {
+          weightFrom: { [Op.lte]: card.weight },
+          weightTo: { [Op.gte]: card.weight },
+          ageFrom: { [Op.lte]: card.age },
+          ageTo: { [Op.gte]: card.age },
+          group: card.group,
+          sectionId: card.sectionId,
+          sex: fighter.sex,
+        },
+      });
+      if (!category) throw new Error(`Category for card ${card.id} not found.`);
+      card.categoryId = category.id;
+    })
+  );
 }

@@ -162,57 +162,64 @@ import { v4 as uuid } from 'uuid';
 //   return fights;
 // }
 
-function calculateProximityCoefficient (units, coefficientMap) {
-  const cardsCoefficients = units.map((from, i) => {
-    const deepFrom = deepFlat(from);
-    const greaterCoefficient = units.reduce((acc, to, k) => {
-      if (i === k) return acc;
-      const deepTo = deepFlat(to);
-      let coefficient = 0;
+function calculateProximityCoefficient(units, coefficientMap) {
+  const cardsCoefficients = units
+    .map((from, i) => {
+      const deepFrom = deepFlat(from);
+      const greaterCoefficient = units.reduce((acc, to, k) => {
+        if (i === k) return acc;
+        const deepTo = deepFlat(to);
+        let coefficient = 0;
 
-      deepFrom.forEach(unitFrom => {
-        deepTo.forEach(unitTo => {
-          if (unitFrom.Fighter.coachId === unitTo.Fighter.coachId) coefficient += coefficientMap.coach;
-          if (unitFrom.Fighter.clubId === unitTo.Fighter.clubId) coefficient += coefficientMap.club;
-          // if (unitFrom.city === unitTo.city) coefficient += coefficientMap.city;
+        deepFrom.forEach((unitFrom) => {
+          deepTo.forEach((unitTo) => {
+            if (unitFrom.Fighter.coachId === unitTo.Fighter.coachId)
+              coefficient += coefficientMap.coach;
+            if (unitFrom.Fighter.clubId === unitTo.Fighter.clubId)
+              coefficient += coefficientMap.club;
+            // if (unitFrom.city === unitTo.city) coefficient += coefficientMap.city;
+          });
         });
-      });
 
-      return acc += coefficient;
-    }, 0);
+        return (acc += coefficient);
+      }, 0);
 
-    return [ from.id, greaterCoefficient ];
-  })
+      return [from.id, greaterCoefficient];
+    })
     .sort((a, b) => b[1] - a[1]);
 
   return cardsCoefficients;
 }
 
-function deepFlat (array, savePairs = false) {
+function deepFlat(array, savePairs = false) {
   const target = array.pair || array;
-  if (!Array.isArray(target)) return [ target ];
+  if (!Array.isArray(target)) return [target];
   const flatten = Array.isArray(target[0]) ? target.flat() : target;
-  const flattenWithSavingPairs = savePairs ? [ flatten ] : flatten;
+  const flattenWithSavingPairs = savePairs ? [flatten] : flatten;
 
-  const res = flatten?.[0]?.pair ? flatten.flatMap(t => deepFlat(t, savePairs)) : flattenWithSavingPairs;
+  const res = flatten?.[0]?.pair
+    ? flatten.flatMap((t) => deepFlat(t, savePairs))
+    : flattenWithSavingPairs;
 
   return res;
 }
 
-const isLowerPartFull = (total, count) => (count - total / 2 / 2) > total / 2;
+const isLowerPartFull = (total, count) => count - total / 2 / 2 > total / 2;
 
-function mapPairsToFights (outerPairs, outerFights) {
-  const fights = [ ...outerFights ]
+function mapPairsToFights(outerPairs, outerFights) {
+  const fights = [...outerFights]
     // .sort((a, b) => a.orderNumber - b.orderNumber)
-    .filter(({ id }, _, arr) => arr.filter(f => f.nextFightId === id).length < 2)
+    .filter(({ id }, _, arr) => arr.filter((f) => f.nextFightId === id).length < 2)
     .reverse();
-  const fightsWithoutFighters = [ ...outerFights ].sort((a, b) => a.orderNumber - b.orderNumber)
-    .filter(({ id }, _, arr) => arr.filter(f => f.nextFightId === id).length === 2);
+  const fightsWithoutFighters = [...outerFights]
+    .sort((a, b) => a.orderNumber - b.orderNumber)
+    .filter(({ id }, _, arr) => arr.filter((f) => f.nextFightId === id).length === 2);
 
-  const maxPower = fights.reduce((acc, f) => f.degree > acc ? f.degree : acc, 0);
-  const maxPowerFights = fights.filter(fight => maxPower === fight.degree)
+  const maxPower = fights.reduce((acc, f) => (f.degree > acc ? f.degree : acc), 0);
+  const maxPowerFights = fights
+    .filter((fight) => maxPower === fight.degree)
     .sort((a, b) => a.orderNumber - b.orderNumber);
-    // const maxPowerFightsLength = maxPowerFights.length;
+  // const maxPowerFightsLength = maxPowerFights.length;
   let orderNumber = fights.length - maxPowerFights.length;
 
   const isFightWithOneFigtherMustBeInUpperBranch = isLowerPartFull(maxPower, fights.length);
@@ -240,103 +247,106 @@ function mapPairsToFights (outerPairs, outerFights) {
     fight.secondCardId = pair[1]?.id;
   });
 
-  return [ ...fights, ...fightsWithoutFighters ];
+  return [...fights, ...fightsWithoutFighters];
 }
 
-function switchUnits (pairs, rightIndex) {
-  const needToSwitch = pairs.findIndex(p => p.includeOneFighter) === rightIndex;
+function switchUnits(pairs, rightIndex) {
+  const needToSwitch = pairs.findIndex((p) => p.includeOneFighter) === rightIndex;
   if (!needToSwitch) return;
 
   const index = +(rightIndex === 1);
 
-  const nestedRightIndex = pairs[index].pair.findIndex(p => p.includeOneFighter);
+  const nestedRightIndex = pairs[index].pair.findIndex((p) => p.includeOneFighter);
   const fn = nestedRightIndex === 1 ? 'pop' : 'shift';
 
   const nestedUnit = pairs[index].pair[fn]();
-  if (pairs[+(!index)].pair.length === 2) {
-    pairs[index].pair.push(pairs[+(!index)].pair[1]);
+  if (pairs[+!index].pair.length === 2) {
+    pairs[index].pair.push(pairs[+!index].pair[1]);
   }
-  pairs[+(!index)].pair.push(nestedUnit);
+  pairs[+!index].pair.push(nestedUnit);
 }
 
-function calculatePairsToPairsCombinations (units, coefficientMap) {
-  const cardsToCardsCombinations = units.flatMap((from, i) => {
-    const catted = units.slice(i + 1);
+function calculatePairsToPairsCombinations(units, coefficientMap) {
+  const cardsToCardsCombinations = units
+    .flatMap((from, i) => {
+      const catted = units.slice(i + 1);
 
-    const flattenFrom = deepFlat(from);
-    return catted.map((to) => {
-      const flattenTo = deepFlat(to);
-      const coefficient = {
-        id          : uuid(),
-        pair        : [ from, to ],
-        coefficient : 0
-      };
-      flattenFrom.forEach(unitFrom => {
-        flattenTo.forEach(unitTo => {
-          if (unitFrom.Fighter.coachId === unitTo.Fighter.coachId) {
-            coefficient.coefficient += coefficientMap.coach;
-          }
-          if (unitFrom.Fighter.clubId === unitTo.Fighter.clubId) {
-            coefficient.coefficient += coefficientMap.club;
-          }
-          // if (fightFrom.city === fightTo.city) coefficient.coefficient += coefficientMap.city;
+      const flattenFrom = deepFlat(from);
+      return catted.map((to) => {
+        const flattenTo = deepFlat(to);
+        const coefficient = {
+          id: uuid(),
+          pair: [from, to],
+          coefficient: 0,
+        };
+        flattenFrom.forEach((unitFrom) => {
+          flattenTo.forEach((unitTo) => {
+            if (unitFrom.Fighter.coachId === unitTo.Fighter.coachId) {
+              coefficient.coefficient += coefficientMap.coach;
+            }
+            if (unitFrom.Fighter.clubId === unitTo.Fighter.clubId) {
+              coefficient.coefficient += coefficientMap.club;
+            }
+            // if (fightFrom.city === fightTo.city) coefficient.coefficient += coefficientMap.city;
+          });
         });
-      });
 
-      return coefficient;
-    }, []);
-  })
+        return coefficient;
+      }, []);
+    })
     .sort((a, b) => a.coefficient - b.coefficient);
 
   return cardsToCardsCombinations;
 }
 
-function aggregateByMinimalCoefficient (combinations, coefficients, isFirstLap) {
-  let pairs = [ ...combinations ];
-  const fightersCoefficients = [ ...coefficients ];
+function aggregateByMinimalCoefficient(combinations, coefficients, isFirstLap) {
+  let pairs = [...combinations];
+  const fightersCoefficients = [...coefficients];
   const fights = [];
 
-  fightersCoefficients.forEach(([ id ], i) => {
+  fightersCoefficients.forEach(([id], i) => {
     if (!id) return;
 
     const potentialFights = pairs
-      .filter(({ pair }) => [ pair[0].id, pair[1].id ].includes(id))
+      .filter(({ pair }) => [pair[0].id, pair[1].id].includes(id))
       .sort((a, b) => a.coefficient - b.coefficient)
       .filter(({ coefficient }, _, arr) => coefficient === arr[0].coefficient);
 
     const potentialRivalIds = potentialFights
       .flatMap(({ pair }) => pair)
-      .filter(pair => pair.id !== id)
-      .map(pair => pair.id);
+      .filter((pair) => pair.id !== id)
+      .map((pair) => pair.id);
 
-    const idToCoefficient =  Object.fromEntries(fightersCoefficients.filter(c => c.length)); // to avoid cycle in cycle
+    const idToCoefficient = Object.fromEntries(fightersCoefficients.filter((c) => c.length)); // to avoid cycle in cycle
     const moreNeededIdToMerge = potentialRivalIds.reduce(
-      (grCoefId, id) => idToCoefficient[id] < idToCoefficient[grCoefId] ? id : grCoefId,
+      (grCoefId, id) => (idToCoefficient[id] < idToCoefficient[grCoefId] ? id : grCoefId),
       potentialRivalIds[0]
     );
 
     const fight = potentialFights.find(({ pair }) => {
-      return [ pair[0].id, pair[1].id ].includes(moreNeededIdToMerge);
+      return [pair[0].id, pair[1].id].includes(moreNeededIdToMerge);
     });
 
     if (!fight) {
-      const lastFighterWithoutPair = combinations.flatMap(c => c.pair).find(fighter => fighter.id === id);
+      const lastFighterWithoutPair = combinations
+        .flatMap((c) => c.pair)
+        .find((fighter) => fighter.id === id);
 
       return fights.push({
-        pair              : [ lastFighterWithoutPair ],
-        id                : uuid(),
-        includeOneFighter : lastFighterWithoutPair.includeOneFighter || isFirstLap
+        pair: [lastFighterWithoutPair],
+        id: uuid(),
+        includeOneFighter: lastFighterWithoutPair.includeOneFighter || isFirstLap,
       });
     }
 
-    if (fight.pair.find(p => p.includeOneFighter)) fight.includeOneFighter = true;
+    if (fight.pair.find((p) => p.includeOneFighter)) fight.includeOneFighter = true;
 
     fightersCoefficients[i] = [];
-    const rivalIndex = fightersCoefficients.findIndex(c => c[0] === moreNeededIdToMerge);
+    const rivalIndex = fightersCoefficients.findIndex((c) => c[0] === moreNeededIdToMerge);
     fightersCoefficients[rivalIndex] = [];
 
     pairs = pairs.filter(({ pair }) => {
-      return !pair.some(f => fight.pair.some(fighter => fighter.id === f.id));
+      return !pair.some((f) => fight.pair.some((fighter) => fighter.id === f.id));
     });
     fights.push(fight);
   });
@@ -344,22 +354,24 @@ function aggregateByMinimalCoefficient (combinations, coefficients, isFirstLap) 
   return fights;
 }
 
-function calculate (cards, fights, isFirstLap = true) {
-  const proximityCoefficients = { // TODO rank
-    coach : 1000000,
-    club  : 10000
+function calculate(cards, fights, isFirstLap = true) {
+  const proximityCoefficients = {
+    // TODO rank
+    coach: 1000000,
+    club: 10000,
     // city  : 100
     // rank  : 1
   };
   const fightersProximityCoefficient = calculateProximityCoefficient(cards, proximityCoefficients);
 
   const cardsToCardsCombinations = calculatePairsToPairsCombinations(cards, proximityCoefficients);
-  const pairs = aggregateByMinimalCoefficient(cardsToCardsCombinations, fightersProximityCoefficient, isFirstLap)
-    .sort((a, b) => b.length - a.length);
+  const pairs = aggregateByMinimalCoefficient(
+    cardsToCardsCombinations,
+    fightersProximityCoefficient,
+    isFirstLap
+  ).sort((a, b) => b.length - a.length);
 
-  return pairs.length <= 2
-    ? mapPairsToFights(pairs, fights)
-    : calculate(pairs, fights, false);
+  return pairs.length <= 2 ? mapPairsToFights(pairs, fights) : calculate(pairs, fights, false);
 }
 
 export default calculate;

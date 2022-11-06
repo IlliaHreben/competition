@@ -2,25 +2,25 @@
 const isTest = process.env.NODE_ENV === 'test';
 
 const pool = {
-  max : 10,
-  min : 5
+  max: 10,
+  min: 5,
 };
 
 const credentials = {
-  password : process.env.DB_PASSWORD,
-  username : process.env.DB_USER,
-  database : process.env.DB_NAME,
-  host     : process.env.DB_HOST
+  password: process.env.DB_PASSWORD,
+  username: process.env.DB_USER,
+  database: process.env.DB_NAME,
+  host: process.env.DB_HOST,
 };
 
 const config = {
   ...credentials,
-  dialect        : 'postgres',
+  dialect: 'postgres',
   pool,
-  logging        : process.env.DEBUG === 'true' && console.log,
-  dialectOptions : {
-    multipleStatements: isTest
-  }
+  logging: process.env.DEBUG === 'true' && console.log,
+  dialectOptions: {
+    multipleStatements: isTest,
+  },
   // seederStorage: 'sequelize'
 };
 module.exports = config;

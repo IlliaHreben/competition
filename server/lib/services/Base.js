@@ -2,26 +2,26 @@ import ServiceBaseModule from 'chista/ServiceBase';
 
 import '../../lib/registerValidationRules';
 import ServiceError from './service-error';
-import x            from 'chista/Exception';
+import x from 'chista/Exception';
 const Exception = x.default;
 
 const ServiceBase = ServiceBaseModule.default;
 
 export default class Base extends ServiceBase {
-    static paginationRules = {
-      limit  : [ 'positive_integer' ],
-      sort   : [ { one_of: [ 'createdAt', 'updatedAt' ] } ],
-      order  : [ 'to_uc', { one_of: [ 'ASC', 'DESC' ] } ],
-      offset : [ 'integer', { min_number: 0 } ]
-    }
+  static paginationRules = {
+    limit: ['positive_integer'],
+    sort: [{ one_of: ['createdAt', 'updatedAt'] }],
+    order: ['to_uc', { one_of: ['ASC', 'DESC'] }],
+    offset: ['integer', { min_number: 0 }],
+  };
 
-    async run (params) {
-      const cleanParams = await this.validate(params);
+  async run(params) {
+    const cleanParams = await this.validate(params);
 
-      return this.execute(cleanParams).catch(this.handleError);
-    }
+    return this.execute(cleanParams).catch(this.handleError);
+  }
 
-  handleError = error => {
+  handleError = (error) => {
     if (error.name === 'SequelizeUniqueConstraintError') {
       error = new ServiceError('SequelizeUniqueConstraintError', error);
     }
@@ -36,5 +36,5 @@ export default class Base extends ServiceBase {
       this.errors?.[code]?.({ code, data });
     }
     throw error;
-  }
+  };
 }
