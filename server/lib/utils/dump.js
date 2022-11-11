@@ -1,8 +1,55 @@
 export function dumpCategory(data) {
   const linked = {};
 
+  const fights = data.Fights;
   if (data.Cards) linked.cards = data.Cards.map(dumpCard);
-  if (data.Fights) linked.fights = data.Fights.map(dumpFight);
+  if (fights) {
+    // const degrees = [...new Set(fights.map((f) => f.degree))].sort((a, b) => b - a);
+    // const [lastDegree, lastFullDegree] = degrees;
+    // const lastDegreeFightsLength = fights.filter((f) => f.degree === lastDegree).length;
+    // const isLastDegreeFull = lastDegreeFightsLength === lastDegree;
+
+    // if (!isLastDegreeFull) {
+    //   const lastFullDegreeFights = fights.filter((f) => f.degree === lastFullDegree);
+    //   const simulatedFights = [];
+    //   lastFullDegreeFights.forEach(({ id, ...fight }, _, arr) => {
+    //     const childrenCount = fights.filter((f) => f.nextFightId === id).length;
+    //     if (childrenCount === 2) return;
+
+    //     if (childrenCount === 0)
+    //       simulatedFights.push({
+    //         id: randomUUID(),
+    //         degree: lastDegree,
+    //         nextFightId: id,
+    //         orderNumber: 500,
+    //         // firstCardId: data.firstCardId,
+    //         // secondCardId: data.secondCardId,
+    //         categoryId: fight.categoryId,
+    //         fightSpaceId: fight.fightSpaceId,
+    //         createdAt: fight.createdAt,
+    //         updatedAt: fight.updatedAt,
+    //         linked: {},
+    //       });
+
+    //     simulatedFights.push({
+    //       id: randomUUID(),
+    //       degree: lastDegree,
+    //       nextFightId: id,
+    //       orderNumber: 501,
+    //       // firstCardId: data.firstCardId,
+    //       // secondCardId: data.secondCardId,
+    //       categoryId: fight.categoryId,
+    //       fightSpaceId: fight.fightSpaceId,
+    //       createdAt: fight.createdAt,
+    //       updatedAt: fight.updatedAt,
+    //       linked: {},
+    //     });
+    //   });
+    //   data.Fights = fights.concat(simulatedFights);
+    // }
+
+    linked.fights = data.Fights.map(dumpFight);
+  }
   if (data.Section) linked.section = dumpSection(data.Section);
 
   return {

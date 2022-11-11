@@ -83,7 +83,9 @@ export default class Fight extends Base {
 
     const oppositeFightIndex = +!prevFights.findIndex((f) => f.id === fromFightId);
     const key =
-      fromOrder < prevFights[oppositeFightIndex].orderNumber ? 'firstCardId' : 'secondCardId';
+      prevFights[oppositeFightIndex] && fromOrder < prevFights[oppositeFightIndex].orderNumber
+        ? 'firstCardId'
+        : 'secondCardId';
 
     await this.update({ [key]: cardId });
   }

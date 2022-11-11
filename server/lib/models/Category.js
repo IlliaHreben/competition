@@ -205,6 +205,7 @@ export default class Category extends Base {
           {
             model: Fight,
             as: 'Fights',
+            order: [[sequelize.literal('"orderNumber"'), 'DESC']],
             include: [
               {
                 model: Card,
