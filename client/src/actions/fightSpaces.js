@@ -1,16 +1,16 @@
 import api from '../api-singleton';
 import * as reducer from '../reducers/fight-spaces';
 
-export function list (competitionId) {
-    return async dispatch => {
-        try {
-            dispatch(reducer.listRequest());
+export function list(competitionId) {
+  return async (dispatch) => {
+    try {
+      dispatch(reducer.listRequest());
 
-            const { data } = await api.fightSpaces.list({ competitionId });
+      const { data } = await api.fightSpaces.list({ competitionId });
 
-            dispatch(reducer.list(data));
-        } catch (err) {}
-    };
+      dispatch(reducer.list(data));
+    } catch (err) {}
+  };
 }
 
 // export function clearList () {
@@ -29,18 +29,18 @@ export function list (competitionId) {
 //     };
 // }
 
-export function bulkUpdate (id, payload, onSuccess) {
-    return async dispatch => {
-        try {
-            dispatch(reducer.bulkUpdateRequest());
+export function bulkUpdate(id, payload, onSuccess) {
+  return async (dispatch) => {
+    try {
+      dispatch(reducer.bulkUpdateRequest());
 
-            const { data } = await api.fightSpaces.bulkUpdate(id, payload);
+      const { data } = await api.fightSpaces.bulkUpdate(id, payload);
 
-            dispatch(reducer.bulkUpdate(data));
+      dispatch(reducer.bulkUpdate(data));
 
-            onSuccess?.();
-        } catch (err) {}
-    };
+      onSuccess?.();
+    } catch (err) {}
+  };
 }
 
 // export function getActive (...args) {

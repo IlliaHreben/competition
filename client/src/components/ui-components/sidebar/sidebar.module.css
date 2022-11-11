@@ -1,18 +1,18 @@
 @import '../../../assets/styles/sizes.module.css';
 
 .sideBar {
-    position: static;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 0.5em;
-    padding-bottom: 1em;
-    /* justify-content: center; */
-    top: 0;
-    left: 0;
-    width: var(--navbar-width);
-    min-width: var(--navbar-width);
-    /* height: 100%; */
-    background-color:rgb(242, 242, 242);
-    /* margin-top: var(--app-bar-height); */
+  position: static;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 0.5em;
+  padding-bottom: 1em;
+  /* justify-content: center; */
+  top: 0;
+  left: 0;
+  width: var(--navbar-width);
+  min-width: var(--navbar-width);
+  /* height: 100%; */
+  background-color: rgb(242, 242, 242);
+  /* margin-top: var(--app-bar-height); */
 }

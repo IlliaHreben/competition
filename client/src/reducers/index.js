@@ -10,16 +10,16 @@ import fighters from './fighters';
 import settlements from './settlements';
 
 const reducers = {
-    errors,
-    competitions,
-    fightSpaces,
-    categories,
-    sections,
-    cards,
-    coaches,
-    clubs,
-    settlements,
-    fighters
+  errors,
+  competitions,
+  fightSpaces,
+  categories,
+  sections,
+  cards,
+  coaches,
+  clubs,
+  settlements,
+  fighters
 };
 
 export default reducers;

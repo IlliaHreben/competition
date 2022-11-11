@@ -1,33 +1,33 @@
 import api from '../api-singleton';
 import * as reducer from '../reducers/states';
 
-export function listStates (params = {}) {
-    return async dispatch => {
-        try {
-            dispatch(reducer.listRequest());
+export function listStates(params = {}) {
+  return async (dispatch) => {
+    try {
+      dispatch(reducer.listRequest());
 
-            const data = await api.states.list(params);
+      const data = await api.states.list(params);
 
-            dispatch(reducer.list(data));
-        } catch (errData) {
-            dispatch(reducer.listRequestError(errData));
-        }
-    };
+      dispatch(reducer.list(data));
+    } catch (errData) {
+      dispatch(reducer.listRequestError(errData));
+    }
+  };
 }
 
-export function createState (settlement, onSuccess) {
-    return async dispatch => {
-        try {
-            dispatch(reducer.createRequest());
+export function createState(settlement, onSuccess) {
+  return async (dispatch) => {
+    try {
+      dispatch(reducer.createRequest());
 
-            const { data } = await api.states.create(settlement);
+      const { data } = await api.states.create(settlement);
 
-            dispatch(reducer.create(data));
-            onSuccess?.();
-        } catch (errData) {
-            dispatch(reducer.createRequestError(errData));
-        }
-    };
+      dispatch(reducer.create(data));
+      onSuccess?.();
+    } catch (errData) {
+      dispatch(reducer.createRequestError(errData));
+    }
+  };
 }
 
 // export function deleteState (id, onSuccess) {
@@ -43,6 +43,6 @@ export function createState (settlement, onSuccess) {
 //     };
 // }
 
-export function deleteError (field) {
-    return reducer.deleteError(field);
+export function deleteError(field) {
+  return reducer.deleteError(field);
 }

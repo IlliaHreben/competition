@@ -1,64 +1,63 @@
 @import '../../../assets/styles/colors.module.css';
 
 .fight {
-    width: 150px;
-    height: 50px;
+  width: 150px;
+  height: 50px;
 }
 .svgButtonGroup {
-    /* border: 2px solid; */
-    min-width: 250px;
-    /* min-height: 60px; */
-    /* z-index: 999; */
+  /* border: 2px solid; */
+  min-width: 250px;
+  /* min-height: 60px; */
+  /* z-index: 999; */
 }
 
 .svgButton:hover {
-    /* border: 2px solid; */
-    min-width: 250px;
-    border: 2px solid !important
+  /* border: 2px solid; */
+  min-width: 250px;
+  border: 2px solid !important;
 }
 
 .svgButton {
-    min-height: 38px;
-    margin: 0;
-    white-space: nowrap;
+  min-height: 38px;
+  margin: 0;
+  white-space: nowrap;
 }
 .svgButton button {
-    min-height: 38px;
-    margin: 0;
-    white-space: nowrap;
+  min-height: 38px;
+  margin: 0;
+  white-space: nowrap;
 }
 
 .svg {
-    transform:rotateY(180deg);
-    -webkit-transform:rotateY(180deg);
-    -moz-transform:rotateY(180deg);
-    -o-transform:rotateY(180deg);
-    -ms-transform:rotateY(180deg);
-    unicode-bidi:bidi-override;
-    direction:rtl;
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  -ms-transform: rotateY(180deg);
+  unicode-bidi: bidi-override;
+  direction: rtl;
 }
 
 .svg button {
-    -moz-transform: scale(-1, 1);
-    -webkit-transform: scale(-1, 1);
-    -o-transform: scale(-1, 1);
-    -ms-transform: scale(-1, 1);
-    transform: scale(-1, 1);
+  -moz-transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1);
 }
 
 .svg div {
-    -moz-transform: scale(-1, 1);
-    -webkit-transform: scale(-1, 1);
-    -o-transform: scale(-1, 1);
-    -ms-transform: scale(-1, 1);
-    transform: scale(-1, 1);
+  -moz-transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1);
 }
 
 .fightContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: flex-end;
 }
-

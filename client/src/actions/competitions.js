@@ -1,91 +1,91 @@
 import api from '../api-singleton';
 import * as reducer from '../reducers/competitions';
 
-export function list (...args) {
-    return async dispatch => {
-        try {
-            dispatch(reducer.listRequest());
+export function list(...args) {
+  return async (dispatch) => {
+    try {
+      dispatch(reducer.listRequest());
 
-            const data = await api.competitions.list(...args);
+      const data = await api.competitions.list(...args);
 
-            dispatch(reducer.list(data));
-        } catch (errData) {
-            dispatch(reducer.listRequestError(errData));
-        }
-    };
+      dispatch(reducer.list(data));
+    } catch (errData) {
+      dispatch(reducer.listRequestError(errData));
+    }
+  };
 }
 
-export function clearList () {
-    return reducer.clearList();
+export function clearList() {
+  return reducer.clearList();
 }
 
-export function clearShow () {
-    return reducer.clearShow();
+export function clearShow() {
+  return reducer.clearShow();
 }
 
-export function show (...args) {
-    return async dispatch => {
-        try {
-            dispatch(reducer.showRequest());
+export function show(...args) {
+  return async (dispatch) => {
+    try {
+      dispatch(reducer.showRequest());
 
-            const { data } = await api.competitions.show(...args);
+      const { data } = await api.competitions.show(...args);
 
-            dispatch(reducer.show(data));
-        } catch (errData) {
-            dispatch(reducer.showRequestError(errData));
-        }
-    };
+      dispatch(reducer.show(data));
+    } catch (errData) {
+      dispatch(reducer.showRequestError(errData));
+    }
+  };
 }
 
-export function update (id, payload, onSuccess) {
-    return async dispatch => {
-        try {
-            dispatch(reducer.updateRequest());
+export function update(id, payload, onSuccess) {
+  return async (dispatch) => {
+    try {
+      dispatch(reducer.updateRequest());
 
-            const { data } = await api.competitions.update(id, payload);
+      const { data } = await api.competitions.update(id, payload);
 
-            dispatch(reducer.updateCompetition(data));
+      dispatch(reducer.updateCompetition(data));
 
-            onSuccess?.();
-        } catch (errData) {
-            dispatch(reducer.updateRequestError(errData));
-        }
-    };
+      onSuccess?.();
+    } catch (errData) {
+      dispatch(reducer.updateRequestError(errData));
+    }
+  };
 }
 
-export function getActive (...args) {
-    return async dispatch => {
-        try {
-            dispatch(reducer.showRequest());
+export function getActive(...args) {
+  return async (dispatch) => {
+    try {
+      dispatch(reducer.showRequest());
 
-            const { data } = await api.competitions.show(...args);
+      const { data } = await api.competitions.show(...args);
 
-            dispatch(reducer.setActive(data));
-        } catch (err) {}
-    };
+      dispatch(reducer.setActive(data));
+    } catch (err) {}
+  };
 }
 
-export function activateCompetition (id, onSuccess) {
-    return async (dispatch, getState) => {
-        const competition = getState().competitions.list.find(c => c.id === id);
-        dispatch(reducer.setActive(competition));
+export function activateCompetition(id, onSuccess) {
+  return async (dispatch, getState) => {
+    const competition = getState().competitions.list.find((c) => c.id === id);
+    dispatch(reducer.setActive(competition));
 
-        onSuccess?.();
-    };
+    onSuccess?.();
+  };
 }
 
-export function deleteCompetition (id, onSuccess) {
-    return async dispatch => {
-        try {
-            dispatch(reducer.deleteRequest());
+export function deleteCompetition(id, onSuccess) {
+  return async (dispatch) => {
+    try {
+      dispatch(reducer.deleteRequest());
 
-            const { data } = await api.competitions.delete(id);
+      const { data } = await api.competitions.delete(id);
 
-            dispatch(reducer.deleteCompetition(data));
+      dispatch(reducer.deleteCompetition(data));
 
-            onSuccess?.();
-        } catch (errData) {
-            dispatch(reducer.deleteRequestError(errData));
-        }
-    };
+      onSuccess?.();
+    } catch (errData) {
+      dispatch(reducer.deleteRequestError(errData));
+    }
+  };
 }

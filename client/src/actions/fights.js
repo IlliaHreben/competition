@@ -42,18 +42,20 @@ import * as categoriesReducer from '../reducers/categories';
 //     };
 // }
 
-export function setWinner (data, onSuccess) {
-    return async dispatch => {
-        try {
-            const { data: fight } = await api.fights.setWinner(data);
-            const { data: category } = await api.categories.show(fight.categoryId, { include: [ 'cards', 'sections' ] });
-            dispatch(categoriesReducer.show(category));
+export function setWinner(data, onSuccess) {
+  return async (dispatch) => {
+    try {
+      const { data: fight } = await api.fights.setWinner(data);
+      const { data: category } = await api.categories.show(fight.categoryId, {
+        include: ['cards', 'sections']
+      });
+      dispatch(categoriesReducer.show(category));
 
-            onSuccess?.();
-        } catch (errData) {
-            // dispatch(reducer.createRequestError(errData));
-        }
-    };
+      onSuccess?.();
+    } catch (errData) {
+      // dispatch(reducer.createRequestError(errData));
+    }
+  };
 }
 
 // export function updateFighter (id, recalculate, competitionId, fighter, onSuccess) {

@@ -42,34 +42,34 @@ import * as reducer from '../reducers/fighters';
 //     };
 // }
 
-export function createFighter (fighter, onSuccess) {
-    return async dispatch => {
-        try {
-            const { data } = await api.fighters.create({ data: fighter });
-            dispatch(reducer.create(data));
+export function createFighter(fighter, onSuccess) {
+  return async (dispatch) => {
+    try {
+      const { data } = await api.fighters.create({ data: fighter });
+      dispatch(reducer.create(data));
 
-            onSuccess?.();
-        } catch (errData) {
-            dispatch(reducer.createRequestError(errData));
-        }
-    };
+      onSuccess?.();
+    } catch (errData) {
+      dispatch(reducer.createRequestError(errData));
+    }
+  };
 }
 
-export function updateFighter (id, recalculate, competitionId, fighter, onSuccess) {
-    return async dispatch => {
-        try {
-            await api.fighters.update(id, recalculate, competitionId, fighter);
-            const { data } = await api.fighters.show(id, { include: [ 'coach', 'club' ] });
+export function updateFighter(id, recalculate, competitionId, fighter, onSuccess) {
+  return async (dispatch) => {
+    try {
+      await api.fighters.update(id, recalculate, competitionId, fighter);
+      const { data } = await api.fighters.show(id, { include: ['coach', 'club'] });
 
-            dispatch(reducer.update(data));
+      dispatch(reducer.update(data));
 
-            onSuccess?.();
-        } catch (errData) {
-            dispatch(reducer.updateRequestError(errData));
-        }
-    };
+      onSuccess?.();
+    } catch (errData) {
+      dispatch(reducer.updateRequestError(errData));
+    }
+  };
 }
 
-export function deleteError (field) {
-    return reducer.deleteError(field);
+export function deleteError(field) {
+  return reducer.deleteError(field);
 }

@@ -1,37 +1,37 @@
 .page {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    /* align-items: center; */
-    /* padding:70px;     */
-    overflow: auto;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  /* align-items: center; */
+  /* padding:70px;     */
+  overflow: auto;
 }
 
 .toolbar {
-    display : flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .formRow {
-    display : flex;
-    padding: 0;
-    justify-content: space-between;
+  display: flex;
+  padding: 0;
+  justify-content: space-between;
 }
 
 .countingTatamis {
-    flex-grow: 1;
-    margin-left: 0.75vh;
+  flex-grow: 1;
+  margin-left: 0.75vh;
 }
 
 .countingRings {
-    flex-grow: 1;
-    margin-right: 0.75vh;
+  flex-grow: 1;
+  margin-right: 0.75vh;
 }
 
 .endDateInput {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 
 .startDateInput {
-    flex-grow: 1;
+  flex-grow: 1;
 }

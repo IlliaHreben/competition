@@ -1,17 +1,17 @@
 import Base from './base.js';
 
 class Sections extends Base {
-    list = async (params) => {
-        return this.apiClient.get('sections', params);
-    };
+  list = async (params) => {
+    return this.apiClient.get('sections', params);
+  };
 
-    show = async (id, params) => {
-        return this.apiClient.get(`sections/${id}`, params);
-    };
+  show = async (id, params) => {
+    return this.apiClient.get(`sections/${id}`, params);
+  };
 
-    delete = async (id) => {
-        return this.apiClient.delete('sections/', { id });
-    };
+  delete = async (id) => {
+    return this.apiClient.delete('sections/', { id });
+  };
 }
 
 export default Sections;

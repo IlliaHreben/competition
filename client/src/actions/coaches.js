@@ -1,66 +1,66 @@
 import api from '../api-singleton';
 import * as reducer from '../reducers/coaches';
 
-export function listCoaches (params = {}) {
-    return async dispatch => {
-        try {
-            dispatch(reducer.listRequest());
+export function listCoaches(params = {}) {
+  return async (dispatch) => {
+    try {
+      dispatch(reducer.listRequest());
 
-            const data = await api.coaches.list(params);
+      const data = await api.coaches.list(params);
 
-            dispatch(reducer.list(data));
-        } catch (errData) {
-            dispatch(reducer.listRequestError(errData));
-        }
-    };
+      dispatch(reducer.list(data));
+    } catch (errData) {
+      dispatch(reducer.listRequestError(errData));
+    }
+  };
 }
 
-export function createCoach (payload, onSuccess) {
-    return async dispatch => {
-        try {
-            dispatch(reducer.createRequest());
+export function createCoach(payload, onSuccess) {
+  return async (dispatch) => {
+    try {
+      dispatch(reducer.createRequest());
 
-            const { data } = await api.coaches.create(payload);
+      const { data } = await api.coaches.create(payload);
 
-            dispatch(reducer.create(data));
+      dispatch(reducer.create(data));
 
-            onSuccess?.();
-        } catch (errData) {
-            dispatch(reducer.createRequestError(errData));
-        }
-    };
+      onSuccess?.();
+    } catch (errData) {
+      dispatch(reducer.createRequestError(errData));
+    }
+  };
 }
 
-export function updateCoach (id, payload, onSuccess) {
-    return async dispatch => {
-        try {
-            dispatch(reducer.updateRequest());
+export function updateCoach(id, payload, onSuccess) {
+  return async (dispatch) => {
+    try {
+      dispatch(reducer.updateRequest());
 
-            await api.coaches.update(id, payload);
-            const { data } = await api.coaches.show(id, { include: [ 'clubs' ] });
+      await api.coaches.update(id, payload);
+      const { data } = await api.coaches.show(id, { include: ['clubs'] });
 
-            dispatch(reducer.updateCoach(data));
+      dispatch(reducer.updateCoach(data));
 
-            onSuccess?.();
-        } catch (errData) {
-            dispatch(reducer.updateRequestError(errData));
-        }
-    };
+      onSuccess?.();
+    } catch (errData) {
+      dispatch(reducer.updateRequestError(errData));
+    }
+  };
 }
 
-export function deleteCoach (id, onSuccess) {
-    return async dispatch => {
-        try {
-            const { data } = await api.coaches.delete(id);
+export function deleteCoach(id, onSuccess) {
+  return async (dispatch) => {
+    try {
+      const { data } = await api.coaches.delete(id);
 
-            dispatch(reducer.deleteCoach(data));
-            onSuccess?.();
-        } catch (errData) {
-            dispatch(reducer.deleteRequestError(errData));
-        }
-    };
+      dispatch(reducer.deleteCoach(data));
+      onSuccess?.();
+    } catch (errData) {
+      dispatch(reducer.deleteRequestError(errData));
+    }
+  };
 }
 
-export function deleteError (field) {
-    return reducer.deleteError(field);
+export function deleteError(field) {
+  return reducer.deleteError(field);
 }

@@ -1,12 +1,7 @@
 // import path                from 'path';
-import {
-    Suspense, lazy
-} from 'react';
+import { Suspense, lazy } from 'react';
 
-import {
-    Route,
-    Routes
-} from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import PageLoader from './components/ui-components/PageLoader';
 import SideBar from './components/ui-components/sidebar/sidebar.js';
@@ -26,7 +21,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 const Graphics = lazy(() => import('./components/pages/graphics'));
-const Home = lazy(() => import('./components/pages/home')); ;
+const Home = lazy(() => import('./components/pages/home'));
 const CompetitionCreate = lazy(() => import('./components/pages/competitions/create.js'));
 const CompetitionList = lazy(() => import('./components/pages/competitions/list.js'));
 const CompetitionUpdate = lazy(() => import('./components/pages/competitions/update'));
@@ -34,69 +29,59 @@ const CardsList = lazy(() => import('./components/pages/cards/list'));
 const CardCreate = lazy(() => import('./components/pages/cards/create'));
 
 const routes = [
-    {
-        name      : 'Home',
-        path      : '/',
-        icon      : HomeIcon,
-        component : Home
-    },
-    {
-        name      : 'Competitions',
-        path      : '/competitions',
-        icon      : CompetitionIcon,
-        component : CompetitionList
-    },
-    {
-        name      : 'Graphics',
-        path      : '/graphics',
-        icon      : GraphicsIcon,
-        component : Graphics
-    },
-    {
-        name      : 'Cards',
-        path      : '/cards',
-        icon      : CardsIcon,
-        component : CardsList
-    },
-    {
-        name      : 'Create card',
-        path      : '/cards/create',
-        icon      : CardsIcon,
-        create    : true,
-        component : CardCreate
-    }
+  {
+    name: 'Home',
+    path: '/',
+    icon: HomeIcon,
+    component: Home
+  },
+  {
+    name: 'Competitions',
+    path: '/competitions',
+    icon: CompetitionIcon,
+    component: CompetitionList
+  },
+  {
+    name: 'Graphics',
+    path: '/graphics',
+    icon: GraphicsIcon,
+    component: Graphics
+  },
+  {
+    name: 'Cards',
+    path: '/cards',
+    icon: CardsIcon,
+    component: CardsList
+  },
+  {
+    name: 'Create card',
+    path: '/cards/create',
+    icon: CardsIcon,
+    create: true,
+    component: CardCreate
+  }
 ];
 
-function App () {
-    useErrors();
+function App() {
+  useErrors();
 
-    return (
-        <Suspense fallback={<PageLoader />}>
-            <AppBar />
-            <div style={{ display: 'flex' }}>
-                <SideBar tabs={routes} />
-                <div className={styles.content}>
-                    <Routes>
-                        {routes.map(({ component: Page, ...route }) => (
-                            <Route
-                                key={route.name}
-                                path={route.path}
-                                element={<Page/>}
-                            />
-                        ))}
-                        <Route
-                            path={'/competitions/create'}
-                            element={<CompetitionCreate/>}
-                        />
-                        <Route
-                            path={'/competitions/:id/edit'}
-                            element={<CompetitionUpdate/>}
-                        />
-                    </Routes>
-                </div>
-            </div>
-        </Suspense>
-    );
+  return (
+    <Suspense fallback={<PageLoader />}>
+      <AppBar />
+      <div style={{ display: 'flex' }}>
+        <SideBar tabs={routes} />
+        <div className={styles.content}>
+          <Routes>
+            {routes.map(({ component: Page, ...route }) => (
+              <Route key={route.name} path={route.path} element={<Page />} />
+            ))}
+            <Route path={'/competitions/create'} element={<CompetitionCreate />} />
+            <Route path={'/competitions/:id/edit'} element={<CompetitionUpdate />} />
+          </Routes>
+        </div>
+      </div>
+    </Suspense>
+  );
 }
 
 export default App;

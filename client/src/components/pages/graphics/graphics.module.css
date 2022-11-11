@@ -1,10 +1,10 @@
 @import '../../../assets/styles/colors.module.css';
 
 .treeContainer {
-    display: flex;
-    width: 100%;
-    max-width: 100%;
-    justify-content: center;
-    align-items: center;
-    overflow: auto;
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
 }
