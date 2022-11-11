@@ -2,81 +2,56 @@
 // import PropTypes              from 'prop-types';
 import { useState } from 'react';
 import styles from './index.module.css';
-import { LinkHorizontalStep } from '@visx/shape';
-import { hierarchy, Tree } from '@visx/hierarchy';
-import { Group } from '@visx/group';
-import SettingsPopover from '../../ui-components/settings-popover';
+import SettingsPopover from '../settings-popover';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-import Fight from './fight';
 import { useDispatch } from 'react-redux';
 import { setWinner } from '../../../actions/fights';
 import { showSuccess } from '../../../actions/errors';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useMemo } from 'react';
+import { createTheme } from '@g-loot/react-tournament-brackets';
+import pleasantHexColorGenerator from '../../../utils/color-generator';
+import { CustomMatchBracket } from './match';
+import { useCallback } from 'react';
 
-function pleasantHexColorGenerator () {
-    const threshold = 40;
-    const min = 80 + threshold;
-    const max = 250 - threshold;
-    const firstNumber = getRandomInt(min, max);
-    const secondNumber = firstNumber - threshold + getRandomInt(-40, 40);
-    const thirdNumber = firstNumber + threshold + getRandomInt(-40, 40);
-    return `#${shuffle([ firstNumber, secondNumber, thirdNumber ])
-        .map(n => n.toString(16))
-        .join('')}`;
-}
-
-function getRandomInt (min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
-}
-
-function shuffle (array) {
-    if (!Array.isArray(array)) throw new Error('Must be an array');
-    let currentIndex = array.length;
-    let randomIndex;
-
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
-
-        [ array[currentIndex], array[randomIndex] ] = [
-            array[randomIndex], array[currentIndex] ];
-    }
-
-    return array;
-}
-
-function findChildren (root, fights, colors) {
-    const children = fights.filter(f => f.nextFightId === root.id);
-    children.sort((a, b) => a.orderNumber - b.orderNumber);
-    const node = {
-        ...getCellValues(root, colors),
-        visible: true
-    };
-    if (children.length) node.children = children.map(ch => findChildren(ch, fights, colors));
-    if (node.children?.length === 1) node.children.unshift({ visible: false });
-
-    return node;
-}
+const WhiteTheme = createTheme({
+    textColor       : { main: '#000000', highlighted: '#07090D', dark: '#3E414D' },
+    matchBackground : { wonColor: '#daebf9', lostColor: '#96c6da' },
+    score           : {
+        background : { wonColor: '#87b2c4', lostColor: '#87b2c4' },
+        text       : { highlightedWonColor: '#7BF59D', highlightedLostColor: '#FB7E94' },
+    },
+    border: {
+        color            : '#CED1F2',
+        highlightedColor : '#da96c6',
+    },
+    roundHeader             : { backgroundColor: '#da96c6', fontColor: '#000' },
+    connectorColor          : '#CED1F2',
+    connectorColorHighlight : '#da96c6',
+    svgBackground           : '#FAFAFA',
+});
 
 function getCellValues (root, colors) {
     const firstCardData = root.linked?.firstCard;
     const secondCardData = root.linked?.secondCard;
     const getFullName = ({ name, lastName }) => `${lastName} ${name}`;
     const formatData = ({ linked: { fighter }, ...card }) => ({
-        id         : card.id,
-        fullName   : getFullName(fighter),
-        coach      : getFullName(fighter.linked.coach),
-        coachColor : colors[fighter.coachId] || '#eeeeee',
-        club       : fighter.linked.club.name,
-        clubColor  : colors[fighter.clubId] || '#eeeeee'
+        id           : card.id,
+        name         : getFullName(fighter),
+        coach        : getFullName(fighter.linked.coach),
+        coachColor   : colors[fighter.coachId] || '#eeeeee',
+        club         : fighter.linked.club.name,
+        clubColor    : colors[fighter.clubId] || '#eeeeee',
+        isWinner     : card.id === root.winnerId,
+        "status"     : null, // 'PLAYED' | 'NO_SHOW' | 'WALK_OVER' | 'NO_PARTY' | null,
+        "resultText" : "WON", // Any string works
     });
 
-    return {
-        fight      : root,
-        redCorner  : firstCardData ? formatData(firstCardData) : null,
-        blueCorner : secondCardData ? formatData(secondCardData) : null
-    };
+    return [
+        firstCardData ? formatData(firstCardData): {},
+        secondCardData ? formatData(secondCardData) : {}
+    ].filter(Boolean);
 }
 
 function createFightersTree ({ cards, fights }) {
@@ -90,9 +65,44 @@ function createFightersTree ({ cards, fights }) {
         .map(([ id ]) => [ id, pleasantHexColorGenerator() ])
     );
 
-    const root = fights.find(f => f.nextFightId === null);
-    return findChildren(root, fights, colors);
+    return fights.map(f => ({
+        "id"           : f.id,
+        "name"         : f.orderNumber,
+        "nextMatchId"  : f.nextFightId, // Id for the nextMatch in the bracket, if it's final match it must be null OR undefined
+        // "tournamentRoundText" : "4", // Text for Round Header
+        // "startTime"           : "2021-05-30",
+        "state"        : "DONE", // 'NO_SHOW' | 'WALK_OVER' | 'NO_PARTY' | 'DONE' | 'SCORE_DONE' Only needed to decide walkovers and if teamNames are TBD (to be decided)
+        "participants" : getCellValues(f, colors)
+    }));
 }
+
+// function switchPlaces(fights, fighter1, fighter2) {
+//     const fight1 = fights.find(f => f.id === fighter1.fight.id);
+//     const fight2 = fights.find(f => f.id === fighter2.fight.id);
+    
+//     const isFirst1 = fight1.firstCardId === fighter1.card.id;
+//     const isFirst2 = fight2.firstCardId === fighter2.card.id;
+
+//     const originalFighter1 = fight1.linked[isFirst1 ? 'firstCard' : 'secondCard'];
+//     const originalFighter2 = fight2.linked[isFirst2 ? 'firstCard' : 'secondCard'];
+
+//     if (isFirst1) {
+//         fight1.firstCardId = fighter2.card.id;
+//         fight1.linked.firstCard = originalFighter2;
+//     } else {
+//         fight1.secondCardId = fighter2.card.id;
+//         fight1.linked.secondCard = originalFighter2;
+//     }
+//     if (isFirst2) {
+//         fight2.firstCardId = fighter1.card.id;
+//         fight2.linked.firstCard = originalFighter1;
+//     } else {
+//         fight2.secondCardId = fighter1.card.id;
+//         fight2.linked.secondCard = originalFighter1;
+//     }
+//     return fights;
+
+// }
 
 const defaultMargin = { top: 0, left: 0, right: 0, bottom: 0 };
 
@@ -102,28 +112,42 @@ export default function FightTree ({
     margin = defaultMargin,
     category
 }) {
+    const linked=  category.linked;
     const dispatch = useDispatch();
-    const fightersTree = createFightersTree(category.linked);
+    
+    const [ fightersTree, setFightersTree ] = useState(createFightersTree(linked));
+    if (category.id === '401d7bbc-344f-4989-b29f-1e56dc689239')
+        console.log(fightersTree, category);
+    
+    useMemo(() => setFightersTree(createFightersTree(category.linked)), [ category.linked ]);
+    
+    // const resetCategory = () => setFightersTree(createFightersTree(linked));
 
-    const stepsCount = Math.log2(category.linked.fights
-        .reduce((acc, { degree }) => degree > acc ? degree : acc, 0)
-    ) + 1;
+    // const stepsCount = 1 + Math.log2(linked.fights
+    //     .reduce((acc, { degree }) => degree > acc ? degree : acc, 0)
+    // );
 
-    const innerWidth = (totalWidth - margin.left - margin.right) * stepsCount;
-    const innerHeight = (totalHeight - margin.top - margin.bottom) * stepsCount;
+    // const innerWidth = (totalWidth - margin.left - margin.right) * stepsCount;
+    // const innerHeight = (totalHeight - margin.top - margin.bottom) * stepsCount;
 
-    const origin = { x: 0, y: 0 };
-    const sizeWidth = innerWidth;
-    const sizeHeight = innerHeight;
+    // const origin = { x: 0, y: 0 };
+    // const sizeWidth = innerWidth;
+    // const sizeHeight = innerHeight;
 
     const [ anchor, setAnchor ] = useState(null);
 
-    const handleClickFighter = (e, fighterId, fightId) => {
+    const handleClickParty = (e, fighterId, fightId) => {
         setAnchor({ element: e.currentTarget, fighterId, fightId });
     };
+
     const handleCloseSettings = () => {
         setAnchor(null);
     };
+    // const onSwitchCards = (card1, card2) => {
+    //     const fightsWithSwitchedCards = switchPlaces(JSON.parse(JSON.stringify(linked.fights)), card1, card2);
+    //     const fightersTree = createFightersTree({ ...linked, fights: fightsWithSwitchedCards });
+    //     setFightersTree(fightersTree);
+    // };
 
     const handleSetWinner = () => {
         dispatch(setWinner(
@@ -135,73 +159,45 @@ export default function FightTree ({
         ));
     };
 
+    const renderCustomMatchBracket = useCallback(({ fightersTree }) => (
+        <CustomMatchBracket
+            theme={WhiteTheme}
+            matches={fightersTree.map(f => ({ ...f, state: 'NO_SHOW' }))}
+            handleClickParty={handleClickParty}
+
+            options={{
+                style: {
+                    roundHeader: {
+                        backgroundColor : WhiteTheme.roundHeader.backgroundColor,
+                        fontColor       : WhiteTheme.roundHeader.fontColor,
+                    },
+                    connectorColor          : WhiteTheme.connectorColor,
+                    connectorColorHighlight : WhiteTheme.connectorColorHighlight,
+                },
+            }}
+        />
+    ), [ ]);
+    
+    const fightersTreeComponent = useMemo(
+        () => renderCustomMatchBracket({ fightersTree }), [ renderCustomMatchBracket, fightersTree ]);
+
     if (totalWidth < 10) return null;
     return (
-        <div className={styles.svgContainer}>
-            <SettingsPopover
-                anchorEl={anchor?.element}
-                handleClose={handleCloseSettings}
-                extraSettings={[
-                    {
-                        icon    : <EmojiEventsIcon fontSize={'small'}/>,
-                        onClick : handleSetWinner,
-                        text    : { primary: 'Set winner' }
-                    }
-                ]}
-            />
-            <svg
-                className={styles.svg}
-                width={(totalWidth * stepsCount) + (stepsCount > 1 ? 80 : 0)}
-                height={totalHeight * stepsCount}
-            >
-                <Group top={margin.top} left={margin.left}>
-                    <Tree
-                        root={hierarchy(fightersTree, (d) => (d.isExpanded ? null : d.children))}
-                        size={[ sizeHeight, sizeWidth - 180 ]}
-                        separation={(a, b) => {
-                            const hasChildren = a.children && b.children;
-                            const value = hasChildren ? 1 : 0.95;
-                            return a.parent === b.parent ? value : 1;
-                        }}
-                    >
-                        {(tree) => {
-                            const descendants = tree.descendants();
-                            return (
-                                <Group top={origin.y} left={origin.x}>
-                                    {tree.links().map((link, i) => (
-                                        descendants[i + 1].data.visible &&
-                                        <LinkHorizontalStep
-                                            key={i}
-                                            data={link}
-                                            percent={0.45}
-                                            stroke="rgb(0,0,0)"
-                                            strokeWidth="2"
-                                            fill="none"
-                                        />
-                                    ))}
-                                    {descendants.map((node, key) => {
-                                        const top = node.x;
-                                        const left = node.y;
-
-                                        return (
-                                            <Group top={top} left={left} key={key}>
-                                                {node.data.visible &&
-                                                    <Fight
-                                                        fight={node.data.fight}
-                                                        redCorner={node.data.redCorner}
-                                                        blueCorner={node.data.blueCorner}
-                                                        onClickFighter={handleClickFighter}
-                                                    />
-                                                }
-                                            </Group>
-                                        );
-                                    })}
-                                </Group>
-                            );
-                        }}
-                    </Tree>
-                </Group>
-            </svg>
-        </div>
+        <DndProvider backend={HTML5Backend}>
+            <div className={styles.svgContainer}>
+                <SettingsPopover
+                    anchorEl={anchor?.element}
+                    handleClose={handleCloseSettings}
+                    extraSettings={[
+                        {
+                            icon    : <EmojiEventsIcon fontSize={'small'}/>,
+                            onClick : handleSetWinner,
+                            text    : { primary: 'Set winner' }
+                        }
+                    ]}
+                />
+                {fightersTreeComponent}   
+            </div>
+        </DndProvider>
     );
 }

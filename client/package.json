@@ -7,6 +7,7 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@fontsource/roboto": "^4.5.8",
+    "@g-loot/react-tournament-brackets": "github:IlliaHreben/react-tournament-brackets",
     "@mui/icons-material": "^5.10.9",
     "@mui/lab": "5.0.0-alpha.106",
     "@mui/material": "^5.10.12",
@@ -22,9 +23,12 @@
     "immer": "^9.0.16",
     "lodash": "^4.17.21",
     "lodash.debounce": "^4.0.8",
+    "lodash.throttle": "^4.1.1",
     "luxon": "^3.1.0",
     "notistack": "^2.0.8",
     "react": "18.2.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "18.2.0",
     "react-imask": "^6.4.3",
     "react-infinite-scroll-component": "^6.1.0",
@@ -36,6 +40,7 @@
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.2",
+    "styled-components": "^5.3.6",
     "use-constant": "^1.1.1"
   },
   "scripts": {
