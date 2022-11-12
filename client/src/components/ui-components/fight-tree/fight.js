@@ -65,8 +65,15 @@ function Fight({
   // }
 
   const renderFighter = useCallback(
-    ({ children, ...props }) => {
-      return <Fighter {...props}>{children}</Fighter>;
+    ({ children, ...fighterProps }) => {
+      return (
+        <Fighter
+          onClick={(e) => handleClickParty?.(e, fighterProps.party.id, fighterProps.match.id)}
+          {...fighterProps}
+        >
+          {children}
+        </Fighter>
+      );
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [topParty, bottomParty, match]

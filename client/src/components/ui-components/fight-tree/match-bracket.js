@@ -36,7 +36,7 @@ export const CustomMatchBracket = ({ handleClickParty, ...props }) => {
               height: '100%'
             }}
           >
-            <Fight {...matchProps} />
+            <Fight {...matchProps} handleClickParty={handleClickParty} />
           </div>
         );
       }}
