@@ -13,7 +13,36 @@ import { useCallback } from 'react';
 
 import styles from './index.module.css';
 
-function Fight({ topParty, bottomParty, handleClickParty, onSwitchCards, onReset, match }) {
+// {
+//   match,
+//   onMatchClick,
+//   onPartyClick,
+//   onMouseEnter,
+//   onMouseLeave,
+//   topParty,
+//   bottomParty,
+//   topWon,
+//   bottomWon,
+//   topHovered,
+//   bottomHovered,
+//   topText,
+//   bottomText,
+//   connectorColor,
+//   computedStyles,
+//   teamNameFallback,
+//   resultFallback
+// }
+
+function Fight({
+  topParty,
+  bottomParty,
+  handleClickParty,
+  onSwitchCards,
+  onReset,
+  onMouseEnter,
+  onMouseLeave,
+  match
+}) {
   let redMedalIcon = <div />;
   let blueMedalIcon = <div />;
 
@@ -62,7 +91,9 @@ function Fight({ topParty, bottomParty, handleClickParty, onSwitchCards, onReset
       onClick: (e) => handleClickParty?.(e, party.id, match.id),
       switchCards: onSwitchCards,
       resetCategory: onReset,
-      children: party?.name || ''
+      children: party?.name || '',
+      onMouseEnter: () => onMouseEnter(party?.id),
+      onMouseLeave
     })
   );
 
@@ -124,6 +155,8 @@ Fight.propTypes = {
   bottomParty: PropTypes.object,
   handleClickParty: PropTypes.func,
   onSwitchCards: PropTypes.func,
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func,
   onReset: PropTypes.func,
   match: PropTypes.object
 };

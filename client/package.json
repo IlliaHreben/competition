@@ -7,7 +7,7 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@fontsource/roboto": "^4.5.8",
-    "@g-loot/react-tournament-brackets": "github:IlliaHreben/react-tournament-brackets",
+    "@g-loot/react-tournament-brackets": "file:../../react-tournament-brackets-my",
     "@mui/icons-material": "^5.10.9",
     "@mui/lab": "5.0.0-alpha.106",
     "@mui/material": "^5.10.12",

@@ -9,46 +9,30 @@ import { setWinner } from '../../../actions/fights';
 import { showSuccess } from '../../../actions/errors';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { createTheme } from '@g-loot/react-tournament-brackets';
+// import { createTheme } from '@g-loot/react-tournament-brackets';
 import pleasantHexColorGenerator from '../../../utils/color-generator';
-import { CustomMatchBracket } from './match';
+import { CustomMatchBracket } from './match-bracket';
 
-const WhiteTheme = createTheme({
-  textColor: { main: '#000000', highlighted: '#07090D', dark: '#3E414D' },
-  matchBackground: { wonColor: '#daebf9', lostColor: '#96c6da' },
-  score: {
-    background: { wonColor: '#87b2c4', lostColor: '#87b2c4' },
-    text: { highlightedWonColor: '#7BF59D', highlightedLostColor: '#FB7E94' }
-  },
-  border: {
-    color: '#CED1F2',
-    highlightedColor: '#da96c6'
-  },
-  roundHeader: { backgroundColor: '#da96c6', fontColor: '#000' },
-  connectorColor: '#CED1F2',
-  connectorColorHighlight: '#da96c6',
-  svgBackground: '#FAFAFA'
+const getFullName = ({ name, lastName }) => `${lastName} ${name}`;
+const formatData = ({ linked: { fighter }, ...card }, root, colors) => ({
+  id: card.id,
+  name: getFullName(fighter),
+  coach: getFullName(fighter.linked.coach),
+  coachColor: colors[fighter.coachId] || '#eeeeee',
+  club: fighter.linked.club.name,
+  clubColor: colors[fighter.clubId] || '#eeeeee',
+  isWinner: card.id === root.winnerId,
+  status: null, // 'PLAYED' | 'NO_SHOW' | 'WALK_OVER' | 'NO_PARTY' | null,
+  resultText: 'WON' // Any string works
 });
 
 function getCellValues(root, colors) {
   const firstCardData = root.linked?.firstCard;
   const secondCardData = root.linked?.secondCard;
-  const getFullName = ({ name, lastName }) => `${lastName} ${name}`;
-  const formatData = ({ linked: { fighter }, ...card }) => ({
-    id: card.id,
-    name: getFullName(fighter),
-    coach: getFullName(fighter.linked.coach),
-    coachColor: colors[fighter.coachId] || '#eeeeee',
-    club: fighter.linked.club.name,
-    clubColor: colors[fighter.clubId] || '#eeeeee',
-    isWinner: card.id === root.winnerId,
-    status: null, // 'PLAYED' | 'NO_SHOW' | 'WALK_OVER' | 'NO_PARTY' | null,
-    resultText: 'WON' // Any string works
-  });
 
   return [
-    firstCardData ? formatData(firstCardData) : {},
-    secondCardData ? formatData(secondCardData) : {}
+    firstCardData ? formatData(firstCardData, root, colors) : {},
+    secondCardData ? formatData(secondCardData, root, colors) : {}
   ].filter(Boolean);
 }
 
@@ -68,6 +52,7 @@ function createFightersTree({ cards, fights }) {
     id: f.id,
     name: f.orderNumber,
     nextMatchId: f.nextFightId, // Id for the nextMatch in the bracket, if it's final match it must be null OR undefined
+    degree: f.degree,
     // "tournamentRoundText" : "4", // Text for Round Header
     // "startTime"           : "2021-05-30",
     state: 'DONE', // 'NO_SHOW' | 'WALK_OVER' | 'NO_PARTY' | 'DONE' | 'SCORE_DONE' Only needed to decide walkovers and if teamNames are TBD (to be decided)
@@ -103,21 +88,21 @@ function createFightersTree({ cards, fights }) {
 
 // }
 
-const defaultMargin = { top: 0, left: 0, right: 0, bottom: 0 };
+// const defaultMargin = { top: 0, left: 0, right: 0, bottom: 0 };
 
 export default function FightTree({
   width: totalWidth = 250,
   height: totalHeight = 260,
-  margin = defaultMargin,
+  // margin = defaultMargin,
   category
 }) {
   const linked = category.linked;
   const dispatch = useDispatch();
 
   const [fightersTree, setFightersTree] = useState(createFightersTree(linked));
-  if (category.id === '401d7bbc-344f-4989-b29f-1e56dc689239') console.log(fightersTree, category);
+  if (category.id === '460ca4be-3c21-43b7-813d-b1ea55a0821a') console.log(fightersTree, category);
 
-  useMemo(() => setFightersTree(createFightersTree(category.linked)), [category.linked]);
+  useMemo(() => setFightersTree(createFightersTree(linked)), [linked]);
 
   // const resetCategory = () => setFightersTree(createFightersTree(linked));
 
@@ -156,26 +141,38 @@ export default function FightTree({
     );
   };
 
-  const renderCustomMatchBracket = useCallback(
-    ({ fightersTree }) => (
+  const renderCustomMatchBracket = useCallback(({ fightersTree }) => {
+    const isBigBracket = fightersTree.length > 16;
+    const spaceBetweenColumns = isBigBracket ? -40 : 100;
+    const horizontalOffset = isBigBracket ? -175 : 0;
+    const spaceBetweenRows = isBigBracket ? 75 : 10;
+    const roundSeparatorWidth = isBigBracket ? 20 : 100;
+
+    return (
       <CustomMatchBracket
-        theme={WhiteTheme}
-        matches={fightersTree.map((f) => ({ ...f, state: 'NO_SHOW' }))}
+        // theme={WhiteTheme}
+        matches={fightersTree}
         handleClickParty={handleClickParty}
         options={{
           style: {
-            roundHeader: {
-              backgroundColor: WhiteTheme.roundHeader.backgroundColor,
-              fontColor: WhiteTheme.roundHeader.fontColor
+            connectorColor: '#000000',
+            connectorColorHighlight: '#43a047d4',
+
+            roundSeparatorWidth,
+            lineInfo: {
+              // separation: -13,
+              // homeVisitorSpread: 0.5
             },
-            connectorColor: WhiteTheme.connectorColor,
-            connectorColorHighlight: WhiteTheme.connectorColorHighlight
+            // width: 400,
+            horizontalOffset,
+            spaceBetweenRows,
+            canvasPadding: 50,
+            spaceBetweenColumns
           }
         }}
       />
-    ),
-    []
-  );
+    );
+  }, []);
 
   const fightersTreeComponent = useMemo(
     () => renderCustomMatchBracket({ fightersTree }),
