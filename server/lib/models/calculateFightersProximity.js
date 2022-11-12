@@ -264,16 +264,22 @@ function switchUnits(pairs, rightIndex) {
   const needToSwitch = pairs.findIndex((p) => p.includeOneFighter) === rightIndex;
   if (!needToSwitch) return;
 
-  const index = +(rightIndex === 1);
+  const index = rightIndex;
 
-  const nestedRightIndex = pairs[index].pair.findIndex((p) => p.includeOneFighter);
+  const observedElement = pairs[index];
+  const secondElement = pairs[+!index];
+
+  const nestedRightIndex = observedElement.pair.findIndex((p) => p.includeOneFighter || p.Fighter);
+  if (nestedRightIndex === -1) throw new Error('nestedRightIndex === -1');
+
   const fn = nestedRightIndex === 1 ? 'pop' : 'shift';
 
-  const nestedUnit = pairs[index].pair[fn]();
-  if (pairs[+!index].pair.length === 2) {
-    pairs[index].pair.push(pairs[+!index].pair[1]);
+  const nestedUnit = observedElement.pair[fn]();
+  if (secondElement.pair.length === 2) {
+    observedElement.pair.push(secondElement.pair[1]);
+    secondElement.pair.pop();
   }
-  pairs[+!index].pair.push(nestedUnit);
+  secondElement.pair.push(nestedUnit);
 }
 
 function calculatePairsToPairsCombinations(units, coefficientMap) {
@@ -380,6 +386,12 @@ function calculate(cards, fights, isFirstLap = true) {
     fightersProximityCoefficient,
     isFirstLap
   ).sort((a, b) => b.length - a.length);
+
+  // if (cards.map((c) => c.fighterId).includes('a06a11e7-1306-4223-aaf6-87d20094a065')) {
+  //   console.log('='.repeat(50)); // !nocommit
+  //   console.log(cards, fights, isFirstLap);
+  //   console.log('='.repeat(50));
+  // }
 
   return pairs.length <= 2 ? mapPairsToFights(pairs, fights) : calculate(pairs, fights, false);
 }

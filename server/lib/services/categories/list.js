@@ -19,8 +19,8 @@ export default class CategoriesList extends ServiceBase {
       },
       limit,
       offset,
-      benchmark: true,
-      logging: console.log,
+      // benchmark: true,
+      // logging: console.log,
       // order: [ [ sort, order ] ]
     });
 
