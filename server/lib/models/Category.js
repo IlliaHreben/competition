@@ -186,7 +186,7 @@ export default class Category extends Base {
     const scopes = {
       cards: {
         attributes: [
-          ...Object.keys(this.rawAttributes),
+          ...Object.keys(this.getAttributes()),
           [
             sequelize.literal(
               '(SELECT COUNT(*) FROM "Cards" WHERE "Cards"."categoryId" = "Category"."id")'
@@ -200,7 +200,6 @@ export default class Category extends Base {
             as: 'Cards',
             required: true,
             include: [{ model: Fighter, as: 'Fighter', include: ['Club', 'Coach'] }],
-            order: [['id', 'ASC']],
           },
           {
             model: Fight,
@@ -238,7 +237,7 @@ export default class Category extends Base {
           ['id', 'ASC'],
         ],
         // logging  : true,
-        distinct: true,
+        // distinct: true,
       },
       sections: {
         include: ['Section'],
@@ -252,6 +251,42 @@ export default class Category extends Base {
           order: [['id', 'ASC']],
         },
       },
+      // search: (search) => ({
+      //   where: {
+      //     [Op.or]: [
+      //       { '$Cards.Fighter.name$': { [Op.iLike]: `%${search}%` } },
+      //       { '$Cards.Fighter.lastName$': { [Op.iLike]: `%${search}%` } },
+      //     ],
+      //   },
+      //   include: [{ model: Card, as: 'Cards', include: ['Fighter'] }],
+      // }),
+      // clubId: (clubId) => ({
+      //   where: sequelize.where(sequelize.col('Cards.Fighter.clubId'), clubId),
+      //   include: [{ model: Card, as: 'Cards', include: ['Fighter'] }],
+      // }),
+      // coachId: (coachId) => ({
+      //   where: sequelize.where(sequelize.col('Cards.Fighter.coachId'), coachId),
+      //   include: [{ model: Card, as: 'Cards', include: ['Fighter'] }],
+      // }),
+      // settlementId: (settlementId) => ({
+      //   where: sequelize.where(sequelize.col('Cards.Fighter.Club.settlementId'), settlementId),
+      //   include: {
+      //     model: Card,
+      //     as: 'Cards',
+      //     include: {
+      //       model: Fighter,
+      //       as: 'Fighter',
+      //       include: {
+      //         model: Club,
+      //         as: 'Club',
+      //         // where: { settlementId },
+      //       },
+      //     },
+      //   },
+      // }),
+      sectionId: (sectionId) => ({ where: { sectionId } }),
+      group: (group) => ({ where: { group } }),
+      sex: (sex) => ({ where: { sex } }),
     };
 
     Object.entries(scopes).forEach((scope) => Category.addScope(...scope));

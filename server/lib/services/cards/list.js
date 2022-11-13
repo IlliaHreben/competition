@@ -34,6 +34,7 @@ export default class CardsList extends ServiceBase {
         [Card.associations.Fighter, 'lastName', 'ASC'],
         [Card.associations.Fighter, 'name', 'ASC'],
       ],
+      logging: true,
     });
 
     return {
