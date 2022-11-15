@@ -3,6 +3,7 @@ import { dumpCategory } from '../../utils';
 
 import Category from '../../models/Category.js';
 import Card from '../../models/Card.js';
+import { Sequelize } from 'sequelize';
 
 export default class CategoriesList extends ServiceBase {
   static validationRules = {
@@ -28,42 +29,53 @@ export default class CategoriesList extends ServiceBase {
 
     const query = {
       where: [{ competitionId }],
-      ...(filters.length ? { subQuery: false } : { limit, offset }),
+      // ...(filters.length ? {} : { limit, offset }),
+      limit,
+      offset,
       // benchmark: true,
       // logging: console.log,
       // order: [ [ sort, order ] ]
     };
-    const scope = [...include];
+
+    const cardScope = [...filters, { method: ['competitionRelated', competitionId] }];
 
     if (filters.length) {
-      const { rows: cards, count: cardsCount } = await Card.scope(...filters, {
-        method: ['competitionRelated', competitionId],
-      }).findAndCountAll({
-        col: 'Card.categoryId',
-        limit,
-        offset,
-        order: [
-          [Card.associations.Fighter, 'lastName', 'ASC'],
-          [Card.associations.Fighter, 'name', 'ASC'],
+      const cards = await Card.scope(cardScope).findAll({
+        attributes: [
+          Sequelize.literal('DISTINCT ON("categoryId") 1'),
+          // [
+          //   Sequelize.literal(
+          //     '(SELECT COUNT(*) FROM "Cards" WHERE "Cards"."categoryId" = "Card"."id")'
+          //   ),
+          //   'cardsCount',
+          // ],
+          'id',
+          'categoryId',
         ],
-        distinct: true,
-        logging: console.log,
+        // col: 'Card.categoryId',
+        // limit,
+        // offset,
+        order: [
+          ['categoryId', 'ASC'],
+          // [Sequelize.literal('"cardsCount"'), 'DESC'],
+          // [Card.associations.Fighter, 'lastName', 'ASC'],
+          // [Card.associations.Fighter, 'name', 'ASC'],
+        ],
+        // distinct: true,
+        // logging: console.log,
       });
 
-      count = cardsCount;
+      count = cards.length;
 
-      query.where.push({ '$Cards.id$': cards.map((c) => c.id) });
+      query.where.push({ id: cards.map((c) => c.categoryId) });
     } else {
-      count = await Card.scope(...filters, {
-        method: ['competitionRelated', competitionId],
-      }).count({
+      count = await Card.scope(cardScope).count({
         col: 'Card.categoryId',
         distinct: true,
-        logging: console.log,
       });
     }
 
-    const rows = await Category.scope(scope).findAll(query);
+    const rows = await Category.scope(...include).findAll(query);
 
     return {
       data: rows.map(dumpCategory),
