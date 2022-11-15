@@ -1,20 +1,34 @@
+import { getMaxDegree } from './common';
+
+function isBlockExists(blocks, category) {
+  return blocks.some(
+    (b) =>
+      b.sectionId === category.sectionId &&
+      b.ageFrom === category.ageFrom &&
+      b.ageTo === category.ageTo
+  );
+}
+
+function compareCategories(categoryA, categoryB) {
+  return (
+    categoryA.sectionId === categoryB.sectionId &&
+    categoryA.ageFrom === categoryB.ageFrom &&
+    categoryA.ageTo === categoryB.ageTo
+  );
+}
+
 export function createBlocks(_categories, days = 1) {
   const categories = [..._categories];
 
   const blocks = [];
 
-  const blockSeparators = blockSeparatorsList.find((s) => s.days === days);
+  const { separators, orders } = blockSeparatorsList.find((s) => s.days === days);
 
   categories.forEach((category) => {
-    const blockAlreadyExist = blocks.some(
-      (b) =>
-        b.sectionId === category.sectionId &&
-        b.ageFrom === category.ageFrom &&
-        b.ageTo === category.ageTo
-    );
+    const blockAlreadyExist = isBlockExists(blocks, category);
     if (blockAlreadyExist) return;
 
-    const localBlocks = blockSeparators.separators.map((b) => ({
+    const localBlocks = separators.map((b) => ({
       ...b,
       sectionId: category.sectionId,
       ageFrom: category.ageFrom,
@@ -23,47 +37,33 @@ export function createBlocks(_categories, days = 1) {
       categories: [],
     }));
 
-    const fitCategories = categories.filter(
-      (c) =>
-        c.sectionId === category.sectionId &&
-        c.ageFrom === category.ageFrom &&
-        c.ageTo === category.ageTo
-    );
+    const fitCategories = categories.filter((c) => compareCategories(c, category));
 
     fitCategories.forEach((c) => {
-      const maxCategoryDegree = Math.max(...c.Fights.map((f) => f.degree));
-      const fitSeparators = blockSeparators.separators.filter(
+      const maxCategoryDegree = getMaxDegree(c);
+
+      // separators should be lower than max degree in category
+      const fitBlocks = localBlocks.filter(
         ({ existedDegree }) => existedDegree <= maxCategoryDegree
       );
-      const maxSeparator = Math.max(...fitSeparators.map((s) => s.existedDegree));
-      const maxSeparators = fitSeparators
+      const maxSeparator = Math.max(...fitBlocks.map((s) => s.existedDegree));
+
+      fitBlocks
         .filter((s) => maxSeparator === s.existedDegree)
-        .sort((a, b) => b.separatedDegree - a.separatedDegree);
+        .sort((a, b) => b.separatedDegree - a.separatedDegree)
+        .forEach(({ existedDegree, separatedDegree, categories: blockCategories }) => {
+          const fights = c.Fights.filter((f) => f.degree > separatedDegree);
 
-      if (maxSeparators.length) {
-        maxSeparators.forEach(({ existedDegree, separatedDegree }) => {
-          const fights = c.Fights.reduce((acc, fight, i) => {
-            if (fight.degree <= separatedDegree) return acc;
-            // const [removed] = c.Fights.splice(i, 1);
-            const newAcc = [c.Fights[i], ...acc];
-            delete c.Fights[i];
-            return newAcc;
-          }, []);
-          c.Fights = c.Fights.filter(Boolean);
+          c.Fights = c.Fights.filter((f) => f.degree <= separatedDegree);
 
-          const matchedBlock = localBlocks.find(
-            (b) => b.existedDegree === existedDegree && b.separatedDegree === separatedDegree
-          );
-
-          const matchedCategory = matchedBlock.categories.find((category) => category.id === c.id);
+          const matchedCategory = blockCategories.find((category) => category.id === c.id);
           if (matchedCategory) matchedCategory.Fights.push(...fights);
-          else matchedBlock.categories.push({ ...c, Fights: fights });
+          else blockCategories.push({ ...c, Fights: fights });
 
-          // matchedBlock.fights.push(...fights);
+          // fights.push(...fights);
 
           // const fights = c.Fights.filter(f => f.degree > separatedDegree);
         });
-      }
     });
 
     blocks.push(...localBlocks.filter((b) => b.categories.length));
@@ -80,11 +80,9 @@ export function createBlocks(_categories, days = 1) {
   const sortedBlocks = blocks.map((block) => {
     block.categories = block.categories.sort((a, b) => b.Fights.length - a.Fights.length);
     const fights = [];
-    blockSeparators.orders.forEach(({ existedDegree, activeDegree }) => {
-      const matchedCategories = block.categories.filter((c) => {
-        const maxExistedDegree = Math.max(...c.Fights.map((f) => f.degree));
-        return existedDegree === maxExistedDegree;
-      });
+    orders.forEach(({ existedDegree, activeDegree }) => {
+      const matchedCategories = block.categories.filter((c) => existedDegree === getMaxDegree(c));
+
       const matchedFights = matchedCategories.flatMap((c) => {
         c.Fights.sort((a, b) => a.orderNumber - b.orderNumber).sort((a, b) => b.degree - a.degree);
         return c.Fights.filter((f) => f.degree === activeDegree);

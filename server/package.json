@@ -8,7 +8,7 @@
     "start": "nodemon --experimental-specifier-resolution=node -r dotenv/config app.js | pino-pretty -c -t",
     "test": "echo \"Error: no test specified\" && exit 1",
     "migration-create": "sequelize-cli migration:generate --name",
-    "migration-dev": "NODE_OPTIONS='-r dotenv/config' sequelize db:migrate --config etc/db.cjs",
+    "migration-run": "NODE_OPTIONS='-r dotenv/config' sequelize db:migrate --config etc/db.cjs",
     "migration-undo": "NODE_OPTIONS='-r dotenv/config' sequelize db:migrate:undo --config etc/db.cjs",
     "migration-undo-all": "NODE_OPTIONS='-r dotenv/config' sequelize db:migrate:undo:all --config etc/db.cjs",
     "seeds-create": "sequelize-cli seed:generate --name",

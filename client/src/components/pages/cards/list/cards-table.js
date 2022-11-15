@@ -12,7 +12,7 @@ import { showSuccess } from '../../../../actions/errors';
 import SettingsPopover from '../../../ui-components/settings-popover';
 import Modal from '../../../ui-components/modal';
 import EditCardModal from '../../../ui-components/edit-card-modal.js';
-import TableHeader from './table-header';
+import TableHeader from '../../../ui-components/table-header';
 
 const styles = (theme) => ({
   flexContainer: {
@@ -267,7 +267,10 @@ export default withStyles(styles)(function CardsTable(props) {
           flexDirection: 'column'
         }}
       >
-        <TableHeader onChange={(current) => setFilters((prev) => ({ ...prev, ...current }))} />
+        <TableHeader
+          onChange={(current) => setFilters((prev) => ({ ...prev, ...current }))}
+          initiator="cards"
+        />
         <SettingsPopover
           anchorEl={anchor?.element}
           handleEdit={handleChangeStatusEditModal}

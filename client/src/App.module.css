@@ -1,7 +1,6 @@
 @import './assets/styles/sizes.module.css';
 
 .content {
-  padding: 5px;
   padding-top: 10px;
   padding-right: 0;
   width: 100%;
