@@ -1,4 +1,4 @@
-import sequelize, { DT } from '../sequelize-singleton.js';
+import sequelize, { Op, DT } from '../sequelize-singleton.js';
 import Base from './Base.js';
 import { v4 as uuid } from 'uuid';
 
@@ -109,7 +109,7 @@ export default class Category extends Base {
   generateFights(cardsCount) {
     const fights = [];
 
-    const totalFightsCount = cardsCount - 1;
+    const totalFightsCount = cardsCount - 1 || 1;
     let stageFightsCount = 1;
     let fightsCountOnPreviousStages = stageFightsCount;
     let fightsLeft = totalFightsCount;
@@ -146,11 +146,6 @@ export default class Category extends Base {
         fight.nextFightId = greaterNextFightWithoutChildren.id;
       }
     });
-    if (fights.length === 19) {
-      console.log('='.repeat(50)); // !nocommit
-      console.log(fights);
-      console.log('='.repeat(50));
-    }
     return fights;
   }
 
@@ -287,6 +282,11 @@ export default class Category extends Base {
       sectionId: (sectionId) => ({ where: { sectionId } }),
       group: (group) => ({ where: { group } }),
       sex: (sex) => ({ where: { sex } }),
+      weightFrom: (weightFrom) => ({ where: { [Op.gte]: { weightFrom } } }),
+      weightTo: (weightTo) => ({ where: { [Op.lte]: { weightTo } } }),
+      ageFrom: (ageFrom) => ({ where: { [Op.gte]: { ageFrom } } }),
+      ageTo: (ageTo) => ({ where: { [Op.lte]: { ageTo } } }),
+      type: (type) => ({ where: { '$Section.type$': type }, include: ['Section'] }),
     };
 
     Object.entries(scopes).forEach((scope) => Category.addScope(...scope));

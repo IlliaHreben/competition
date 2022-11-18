@@ -4,6 +4,7 @@ import Base from './Base.js';
 
 import Card from './Card.js';
 import Category from './Category.js';
+import FightFormula from './FightFormula.js';
 
 export default class Fight extends Base {
   static initRelation() {
@@ -46,11 +47,17 @@ export default class Fight extends Base {
         allowNull: true,
       },
     });
-
     this.belongsTo(Category, {
       as: 'Category',
       foreignKey: {
         name: 'categoryId',
+        allowNull: false,
+      },
+    });
+    this.belongsTo(FightFormula, {
+      as: 'FightFormula',
+      foreignKey: {
+        name: 'formulaId',
         allowNull: false,
       },
     });
@@ -98,6 +105,12 @@ export default class Fight extends Base {
     const nextFight = await this.getNextFight();
     if (nextFight) await nextFight.clearWinStreak(winnerId);
   }
+
+  // static initScopes() {
+  //   const scopes = {
+  //   };
+  //   Object.entries(scopes).forEach((scope) => this.addScope(...scope));
+  // }
 }
 
 Fight.init(

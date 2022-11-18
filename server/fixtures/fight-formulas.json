@@ -1,0 +1,47 @@
+[
+  {
+    "id": "d1ca57e8-e53a-46ad-b27a-2675b205cdcc",
+    "roundCount": "2",
+    "roundTime": "120",
+    "breakTime": "60",
+    "createdAt": "2022-11-17T17:20:01.085Z",
+    "updatedAt": "2022-11-17T17:20:01.085Z",
+    "deletedAt": null
+  },
+  {
+    "id": "d8b5cbb7-f9bd-4180-a799-d06332f5f298",
+    "roundCount": "2",
+    "roundTime": "90",
+    "breakTime": "45",
+    "createdAt": "2022-11-17T17:20:01.085Z",
+    "updatedAt": "2022-11-17T17:20:01.085Z",
+    "deletedAt": null
+  },
+  {
+    "id": "36ccebfa-4e24-4391-99eb-738e0be6dcd0",
+    "roundCount": "2",
+    "roundTime": "60",
+    "breakTime": "30",
+    "createdAt": "2022-11-17T17:20:01.085Z",
+    "updatedAt": "2022-11-17T17:20:01.085Z",
+    "deletedAt": null
+  },
+  {
+    "id": "b8fd8932-57e1-4b6c-8a34-31150adb889e",
+    "roundCount": "3",
+    "roundTime": "120",
+    "breakTime": "60",
+    "createdAt": "2022-11-17T17:20:01.085Z",
+    "updatedAt": "2022-11-17T17:20:01.085Z",
+    "deletedAt": null
+  },
+  {
+    "id": "6fdd7d3a-7dbf-457b-8a3c-73978658994b",
+    "roundCount": "3",
+    "roundTime": "90",
+    "breakTime": "45",
+    "createdAt": "2022-11-17T17:20:01.085Z",
+    "updatedAt": "2022-11-17T17:20:01.085Z",
+    "deletedAt": null
+  }
+]

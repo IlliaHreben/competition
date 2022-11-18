@@ -10,6 +10,7 @@ export default class Competition extends Base {
     const Card = sequelize.model('Card');
     const FightSpace = sequelize.model('FightSpace');
     const Section = sequelize.model('Section');
+    const FightFormula = sequelize.model('FightFormula');
 
     this.hasMany(Category, {
       as: 'Categories',
@@ -32,9 +33,15 @@ export default class Competition extends Base {
         allowNull: false,
       },
     });
-
     this.hasMany(Section, {
       as: 'Sections',
+      foreignKey: {
+        name: 'competitionId',
+        allowNull: false,
+      },
+    });
+    this.hasMany(FightFormula, {
+      as: 'FightFormulas',
       foreignKey: {
         name: 'competitionId',
         allowNull: false,
@@ -181,3 +188,5 @@ Competition.init(
     scopes: {},
   }
 );
+
+Competition.findOne().then(c => c.calculateFightsTimesAndOrder()).then(console.log)
