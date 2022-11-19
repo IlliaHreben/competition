@@ -15,13 +15,24 @@ export default class FightFormulasList extends ServiceBase {
     // sex: ['string', { min_length: 1 }, { max_length: 100 }],
     // group: [{ one_of: ['A', 'B', null] }],
 
-    limit: ['positive_integer', { default: 10 }],
-    offset: ['integer', { min_number: 0 }, { default: 0 }],
-    // include: ['to_array', { list_of: { one_of: ['cards', 'sections'] } }],
+    sort: [
+      { one_of: ['section', 'degree', 'ageFrom', 'ageTo', 'weightFrom', 'weightTo', 'sex'] },
+      { default: 'ageFrom' },
+    ],
+    order: [{ one_of: ['asc', 'desc'] }, { default: 'asc' }],
+    limit: ['positive_integer'],
+    offset: ['integer', { min_number: 0 }],
+    include: ['to_array', { list_of: { one_of: ['cards', 'section'] } }],
   };
 
-  async execute(query) {
-    const { rows, count } = await FightFormula.findAndCountAll(query);
+  async execute({ sort, order, include, ...query }) {
+    sort = sort === 'section' ? ['Section', 'name', order] : [sort, order];
+
+    const { rows, count } = await FightFormula.findAndCountAll({
+      where: query,
+      order: [sort, ['id', 'desc']],
+      include: include.map(fromCapital),
+    });
 
     return {
       data: rows.map(dumpFightFormula),
@@ -33,3 +44,5 @@ export default class FightFormulasList extends ServiceBase {
     };
   }
 }
+
+const fromCapital = (str) => str[0].toUpperCase() + str.slice(1);

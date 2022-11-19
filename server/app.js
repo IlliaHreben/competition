@@ -5,6 +5,7 @@ import { app as appConfig } from './config.js';
 import middlewares from './lib/middlewares.js';
 import router from './lib/router.js';
 import './lib/sequelize';
+import pino from 'pino-http';
 
 import './lib/registerValidationRules';
 
@@ -16,6 +17,7 @@ app.use(middlewares.urlencoded);
 app.use(middlewares.cors);
 app.use(middlewares.arrays);
 app.use('/api/v1', router);
+app.use(pino);
 
 const isTest = process.env.MODE === 'test';
 

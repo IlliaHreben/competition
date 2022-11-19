@@ -9,6 +9,7 @@ import coaches from './coaches';
 import settlements from './settlements';
 import states from './states';
 import fights from './fights';
+import fightFormulas from './fight-formulas';
 
 export default {
   fightSpaces,
@@ -22,4 +23,5 @@ export default {
   settlements,
   states,
   fights,
+  fightFormulas,
 };

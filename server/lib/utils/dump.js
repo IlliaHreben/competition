@@ -245,3 +245,30 @@ export function dumpCompetition(data, meta = {}) {
     linked,
   };
 }
+
+export function dumpFightFormula(data) {
+  const linked = {};
+
+  if (data.Cards) linked.cards = data.Cards.map(dumpCard);
+  if (data.Fights) linked.cards = data.Fights.map(dumpCard);
+  if (data.Section) linked.section = dumpSection(data.Section);
+
+  return {
+    id: data.id,
+
+    sectionId: data.sectionId,
+    sex: data.sex,
+    ageFrom: data.ageFrom,
+    ageTo: data.ageTo,
+    weightFrom: data.weightFrom,
+    weightTo: data.weightTo,
+    weightName: data.weightName,
+    group: data.group,
+    degree: data.degree,
+
+    competitionId: data.competitionId,
+    createdAt: data.createdAt,
+    updatedAt: data.updatedAt,
+    linked,
+  };
+}
