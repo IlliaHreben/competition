@@ -11,6 +11,7 @@ import Settlements from './settlements';
 import States from './states';
 import Fighters from './fighters';
 import Fights from './fights';
+import FightFormulas from './fight-formulas';
 
 export default function apiAggregator({ apiUrl, apiPrefix } = {}) {
   const apiClient = new ApiClient({
@@ -33,6 +34,7 @@ export default function apiAggregator({ apiUrl, apiPrefix } = {}) {
     settlements: new Settlements(params),
     states: new States(params),
     fighters: new Fighters(params),
-    fights: new Fights(params)
+    fights: new Fights(params),
+    fightFormulas: new FightFormulas(params)
   };
 }

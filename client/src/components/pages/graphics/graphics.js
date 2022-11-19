@@ -60,7 +60,7 @@ export default function FightTrees() {
           if (!node) return;
           setNode(node);
         }}
-        id="scroll-root"
+        id='scroll-root'
         style={{
           display: 'flex',
           // flexGrow: 1,
@@ -78,19 +78,19 @@ export default function FightTrees() {
               setOffset(0);
               setHasMore(true);
             }}
-            initiator="graphics"
+            initiator='graphics'
           />
         </HideAppBar>
         <InfiniteScroll
           dataLength={categories.length}
           next={() => setOffset(offset + limit)}
           hasMore={hasMore}
-          scrollableTarget="scroll-root"
+          scrollableTarget='scroll-root'
           loader={<CircularProgress />}
           style={{ overflow: 'hidden' }}
         >
           {categories.map((category) => (
-            <Container key={category.id} maxWidth="xl">
+            <Container key={category.id} maxWidth='xl'>
               <CategoryTable category={category} />
               <div className={styles.treeContainer}>
                 {category.linked.fights.length > 0 ? (

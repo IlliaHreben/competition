@@ -8,6 +8,7 @@ import coaches from './coaches';
 import clubs from './clubs';
 import fighters from './fighters';
 import settlements from './settlements';
+import fightFormulas from './fight-formulas';
 
 const reducers = {
   errors,
@@ -19,7 +20,8 @@ const reducers = {
   coaches,
   clubs,
   settlements,
-  fighters
+  fighters,
+  fightFormulas
 };
 
 export default reducers;

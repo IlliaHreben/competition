@@ -16,17 +16,17 @@ export default function DenseAppBar() {
   const { active } = useSelector(mapStateToProps);
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ height: 'var(--app-bar-height)' }}>
-        <Toolbar variant="dense">
-          <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+      <AppBar position='static' elevation={0} sx={{ height: 'var(--app-bar-height)' }}>
+        <Toolbar variant='dense'>
+          <IconButton edge='start' color='inherit' aria-label='menu' sx={{ mr: 2 }}>
             <MenuIcon />
           </IconButton>
           {active && (
             <Typography
-              align="center"
-              variant="h6"
-              color="inherit"
-              component="div"
+              align='center'
+              variant='h6'
+              color='inherit'
+              component='div'
               sx={{ flexGrow: 1 }}
             >
               {active.name}

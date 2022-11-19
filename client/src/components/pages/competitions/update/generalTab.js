@@ -34,7 +34,7 @@ export default function GeneralSettingsTab(props) {
   return (
     <Paper
       className={styles.form}
-      component="form"
+      component='form'
       sx={{
         display: 'flex',
         flexDirection: 'column',

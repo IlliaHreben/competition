@@ -21,7 +21,7 @@ function HideOnScroll(props: Props) {
   });
 
   return (
-    <Slide appear={false} direction="down" in={!trigger}>
+    <Slide appear={false} direction='down' in={!trigger}>
       {children}
     </Slide>
   );
@@ -32,8 +32,8 @@ export default function HideAppBar({ children, node, ...props }: Props) {
   return (
     <HideOnScroll node={node}>
       <AppBar
-        position="sticky"
-        component="div"
+        position='sticky'
+        component='div'
         sx={{
           backgroundColor: 'white',
           marginBottom: 2

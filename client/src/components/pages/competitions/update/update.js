@@ -20,6 +20,7 @@ import styles from './update.module.css';
 import GeneralSettingsTab from './generalTab';
 import FightSpacesTab from './fightSpacesTab';
 import CategoriesTab from './categoriesTab';
+import FightFormulasTab from './fight-formula-tab';
 import { useNavigate } from 'react-router-dom';
 
 function TabPanel(props) {
@@ -28,7 +29,7 @@ function TabPanel(props) {
   return (
     <Box
       sx={{ display: 'flex', justifyContent: 'center', p: 3 }}
-      role="tabpanel"
+      role='tabpanel'
       hidden={value !== index}
     >
       {value === index && children}
@@ -77,9 +78,10 @@ function CompetitionUpdate() {
     <div className={styles.page}>
       <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
         <Tabs value={tab} onChange={changeTab} centered>
-          <Tab label="General" />
-          <Tab label="Fight spaces" />
-          <Tab label="Categories" />
+          <Tab label='General' />
+          <Tab label='Fight spaces' />
+          <Tab label='Categories' />
+          <Tab label='Fight formulas' />
         </Tabs>
 
         {competition && (
@@ -96,6 +98,9 @@ function CompetitionUpdate() {
             </TabPanel>
             <TabPanel value={tab} index={2}>
               <CategoriesTab />
+            </TabPanel>
+            <TabPanel value={tab} index={3}>
+              <FightFormulasTab />
             </TabPanel>
           </SwipeableViews>
         )}

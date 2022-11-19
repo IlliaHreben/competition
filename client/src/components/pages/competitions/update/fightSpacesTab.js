@@ -137,8 +137,8 @@ export default function FightSpacesTab() {
                         ? fs[k - 1]?.type === f.type && fs[k - 1]?.disabled
                         : fs[k + 1]?.type === f.type && !fs[k + 1]?.disabled
                     }
-                    edge="end"
-                    aria-label="delete"
+                    edge='end'
+                    aria-label='delete'
                     onClick={() => onDeleteSpace({ id: f.id, customId: f.customId })}
                   >
                     {f.disabled ? <AddIcon /> : <DeleteIcon />}
@@ -146,7 +146,7 @@ export default function FightSpacesTab() {
                 }
               >
                 <ListItemIcon>
-                  <Avatar src={f.type === 'ring' ? RingIcon : TatamiIcon} variant="rounded" />
+                  <Avatar src={f.type === 'ring' ? RingIcon : TatamiIcon} variant='rounded' />
                 </ListItemIcon>
                 <ListItemText
                   primary={`${types[f.type]} ${
@@ -156,9 +156,9 @@ export default function FightSpacesTab() {
                     !f.id && (
                       <Typography
                         sx={{ display: 'inline' }}
-                        component="span"
-                        variant="body2"
-                        color="#29af34"
+                        component='span'
+                        variant='body2'
+                        color='#29af34'
                       >
                         new
                       </Typography>
@@ -174,8 +174,8 @@ export default function FightSpacesTab() {
         // disabled={disableUpdateButton}
         sx={{ margin: '7px', width: '97%' }}
         fullWidth
-        variant="contained"
-        size="large"
+        variant='contained'
+        size='large'
         loading={isLoading}
         // loadingPosition="start"
         // loadingIndicator="Loading..."
