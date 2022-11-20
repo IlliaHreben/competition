@@ -256,6 +256,10 @@ export function dumpFightFormula(data) {
   return {
     id: data.id,
 
+    roundCount: data.roundCount,
+    roundTime: data.roundTime,
+    breakTime: data.breakTime,
+
     sectionId: data.sectionId,
     sex: data.sex,
     ageFrom: data.ageFrom,

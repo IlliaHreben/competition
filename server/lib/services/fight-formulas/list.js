@@ -16,7 +16,21 @@ export default class FightFormulasList extends ServiceBase {
     // group: [{ one_of: ['A', 'B', null] }],
 
     sort: [
-      { one_of: ['section', 'degree', 'ageFrom', 'ageTo', 'weightFrom', 'weightTo', 'sex'] },
+      {
+        one_of: [
+          'roundCount',
+          'roundTime',
+          'breakTime',
+          'section',
+          'degree',
+          'ageFrom',
+          'ageTo',
+          'weightFrom',
+          'weightTo',
+          'group',
+          'sex',
+        ],
+      },
       { default: 'ageFrom' },
     ],
     order: [{ one_of: ['asc', 'desc'] }, { default: 'asc' }],
