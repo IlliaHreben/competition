@@ -72,25 +72,25 @@ export default function CoachModal({ coach, isEdit, open, handleClose, handleCom
     <Modal
       handleClose={handleClose}
       handleConfirm={_handleConfirm}
-      confirmButtonText="Create"
+      confirmButtonText='Create'
       open={open}
       title={`${isEdit ? 'Edit' : 'Create'} coach`}
       fullWidth
     >
-      <Stack direction="row" sx={{ mt: 1, mb: 1.5 }}>
+      <Stack direction='row' sx={{ mt: 1, mb: 1.5 }}>
         <TextField
           fullWidth
-          autoComplete="new-password"
-          id="coach-name-input"
-          label="Name"
+          autoComplete='new-password'
+          id='coach-name-input'
+          label='Name'
           value={_coach.name}
           onChange={(e) => setCoach((prev) => ({ ...prev, name: e.target.value }))}
           sx={{ mr: 1.5 }}
         />
         <TextField
           fullWidth
-          id="coach-last-name-input"
-          label="Last name"
+          id='coach-last-name-input'
+          label='Last name'
           value={_coach.lastName}
           onChange={(e) => setCoach((prev) => ({ ...prev, lastName: e.target.value }))}
         />
@@ -106,7 +106,7 @@ export default function CoachModal({ coach, isEdit, open, handleClose, handleCom
         sx={{ mb: 1 }}
         value={clubs.filter((club) => _linked.clubs.some((c) => c.id === club.id))}
         getOptionLabel={(club) => club.name || ''}
-        renderInput={(params) => <TextField {...params} label="Clubs" />}
+        renderInput={(params) => <TextField {...params} label='Clubs' />}
         onChange={(e, options) => setLinked((prev) => ({ ...prev, clubs: options }))}
       />
     </Modal>

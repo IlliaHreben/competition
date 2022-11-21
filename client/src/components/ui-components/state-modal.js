@@ -30,16 +30,16 @@ export default function StateModal({ open, handleClose, handleConfirm }) {
     <Modal
       handleClose={handleClose}
       handleConfirm={_handleConfirm}
-      confirmButtonText="Create"
+      confirmButtonText='Create'
       open={open}
       title={'Create state'}
       fullWidth
     >
       <TextField
         fullWidth
-        autoComplete="new-password"
-        id="coach-name-input"
-        label="Name"
+        autoComplete='new-password'
+        id='coach-name-input'
+        label='Name'
         value={stateName}
         onChange={(e) => setStateName(e.target.value)}
         sx={{ mb: 1.5, mt: 1 }}

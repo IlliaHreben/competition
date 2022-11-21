@@ -25,7 +25,7 @@ Modal.defaultProps = {
 };
 
 const Transition = forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return <Slide direction='up' ref={ref} {...props} />;
 });
 
 export default function Modal({
@@ -50,9 +50,9 @@ export default function Modal({
       open={open}
       onClose={handleClose}
       TransitionComponent={Transition}
-      aria-labelledby="dialog-title"
+      aria-labelledby='dialog-title'
     >
-      <DialogTitle id="dialog-title">
+      <DialogTitle id='dialog-title'>
         {title ?? 'Are you sure you want to complete this operation?'}
       </DialogTitle>
       <DialogContent sx={{ pr: 2, pl: 2 }}>
@@ -64,7 +64,7 @@ export default function Modal({
         <Button autoFocus onClick={handleClose}>
           Cancel
         </Button>
-        <Button onClick={handleConfirm} disabled={disabled} variant="contained" autoFocus>
+        <Button onClick={handleConfirm} disabled={disabled} variant='contained' autoFocus>
           {confirmButtonText || 'Confirm'}
         </Button>
       </DialogActions>

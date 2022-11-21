@@ -110,12 +110,12 @@ export default function ListFields(props) {
         </Popover>
       )}
       {items.map((item, i) => (
-        <Stack key={i} direction="row" sx={{ alignItems: 'flex-start' }}>
-          <Typography variant="h7" sx={{ width: '23px', mr: i < 9 ? 2.2 : 1, mt: '6px' }}>
+        <Stack key={i} direction='row' sx={{ alignItems: 'flex-start' }}>
+          <Typography variant='h7' sx={{ width: '23px', mr: i < 9 ? 2.2 : 1, mt: '6px' }}>
             {i + 1}.
           </Typography>
           <TextField
-            variant="standard"
+            variant='standard'
             value={items[i].from}
             onChange={(e) => onChange(e, i, 'from')}
             fullWidth
@@ -129,11 +129,11 @@ export default function ListFields(props) {
           >
             {item.from}
           </TextField>
-          <Typography variant="h6" sx={{ mr: 2, ml: 2 }}>
+          <Typography variant='h6' sx={{ mr: 2, ml: 2 }}>
             -
           </Typography>
           <TextField
-            variant="standard"
+            variant='standard'
             value={items[i].to}
             fullWidth
             onChange={(e) => onChange(e, i, 'to')}
@@ -149,32 +149,32 @@ export default function ListFields(props) {
           </TextField>
           {!nested && (
             <IconButton
-              size="medium"
+              size='medium'
               aria-describedby={'popover'}
               onClick={(e) => handleOpenPopover(e, i)}
               sx={{ ml: 0 }}
             >
-              <SvgIcon fontSize="small">
+              <SvgIcon fontSize='small'>
                 <IconWeight style={{ fontSize: '5' }} />
               </SvgIcon>
             </IconButton>
           )}
-          <IconButton size="small" aria-label="delete" onClick={() => handleDelete(i)}>
+          <IconButton size='small' aria-label='delete' onClick={() => handleDelete(i)}>
             <DeleteIcon />
           </IconButton>
         </Stack>
       ))}
       <>
         <Stack
-          direction="row"
+          direction='row'
           onClick={() => handleChangeItems([...items, { from: '', to: '', nested: [] }])}
         >
-          <Typography variant="h7" sx={{ w: 2, mr: '29px', mb: '6px' }}></Typography>
-          <TextField variant="standard" fullWidth onClick={() => setFocusStatus(1)} />
-          <Typography variant="h6" sx={{ mr: 2, ml: 2 }}>
+          <Typography variant='h7' sx={{ w: 2, mr: '29px', mb: '6px' }}></Typography>
+          <TextField variant='standard' fullWidth onClick={() => setFocusStatus(1)} />
+          <Typography variant='h6' sx={{ mr: 2, ml: 2 }}>
             -
           </Typography>
-          <TextField variant="standard" fullWidth onClick={() => setFocusStatus(2)}></TextField>
+          <TextField variant='standard' fullWidth onClick={() => setFocusStatus(2)}></TextField>
           <Box sx={{ width: '0px', mr: nested ? 4.5 : 8.75 }} />
         </Stack>
         {/* <IconButton

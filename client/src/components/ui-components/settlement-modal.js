@@ -83,7 +83,7 @@ export default function SettlementModal({ open, handleClose, handleConfirm }) {
     <Modal
       handleClose={handleClose}
       handleConfirm={_handleConfirm}
-      confirmButtonText="Create"
+      confirmButtonText='Create'
       open={open}
       title={'Create settlement'}
       fullWidth
@@ -98,9 +98,9 @@ export default function SettlementModal({ open, handleClose, handleConfirm }) {
       />
       <TextField
         fullWidth
-        autoComplete="new-password"
-        id="coach-name-input"
-        label="Name"
+        autoComplete='new-password'
+        id='coach-name-input'
+        label='Name'
         value={settlementName}
         onChange={(e) => setSettlementName(e.target.value)}
         sx={{ mb: 1.5, mt: 1 }}
@@ -115,7 +115,7 @@ export default function SettlementModal({ open, handleClose, handleConfirm }) {
         value={selectedState}
         isOptionEqualToValue={(option, value) => option.id === value.id}
         getOptionLabel={(state) => state.name || ''}
-        renderInput={(params) => <TextField {...params} label="States" />}
+        renderInput={(params) => <TextField {...params} label='States' />}
         onChange={(e, option) => setSelectedState(option)}
         onInputChange={(event, newInputValue) => setSearch(newInputValue)}
       />

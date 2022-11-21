@@ -61,17 +61,17 @@ export default function CreateCard() {
       {active ? (
         <Paper sx={{ display: 'flex', flexDirection: 'column', maxWidth: '1000px', p: 1.5 }}>
           <CardForm onChange={setCardData} />
-          <Button variant="contained" sx={{ mt: 2 }} onClick={handleOnClickCreateButton}>
+          <Button variant='contained' sx={{ mt: 2 }} onClick={handleOnClickCreateButton}>
             Create
           </Button>
         </Paper>
       ) : (
         <Stack sx={{ alignItems: 'center' }}>
           <Container sx={{ mt: 4, justifyContent: 'center', display: 'flex' }}>
-            <img src={sorryImg} width="400" />
+            <img src={sorryImg} width='400' />
           </Container>
-          <Typography variant="h5">At first, you need to choose competition.</Typography>
-          <Typography variant="h5">
+          <Typography variant='h5'>At first, you need to choose competition.</Typography>
+          <Typography variant='h5'>
             Please, visit &#34;Competitions&#34; page to select your competition.
           </Typography>
         </Stack>

@@ -103,14 +103,14 @@ export default function CreateCategory({ open, handleClose, competitionId }) {
       handleClose={handleClose}
       handleConfirm={handleConfirm}
       open={open}
-      title="Create category"
+      title='Create category'
       fullWidth
     >
       <TextField
         required
         fullWidth
-        id="category-name-input"
-        label="Category name"
+        id='category-name-input'
+        label='Category name'
         value={name}
         onChange={(e) => handleChange(e, 'section')}
         error={!!(errors.section || state.errors.section)}
@@ -118,12 +118,12 @@ export default function CreateCategory({ open, handleClose, competitionId }) {
         sx={{ marginTop: '10px', marginBottom: '10px' }}
       ></TextField>
       <FormControl fullWidth>
-        <InputLabel id="select-helper-label">Type</InputLabel>
+        <InputLabel id='select-helper-label'>Type</InputLabel>
         <Select
-          labelId="select-helper-label"
-          id="select-helper"
+          labelId='select-helper-label'
+          id='select-helper'
           value={type}
-          label="Type"
+          label='Type'
           onChange={(e) => setType(e.target.value)}
         >
           <MenuItem value={'full'}>Full</MenuItem>
@@ -152,6 +152,6 @@ const getChip = (text) => (
       '::after': { borderColor: 'rgb(189 189 189)' }
     }}
   >
-    <Chip variant="outlined" size="small" label={text} />
+    <Chip variant='outlined' size='small' label={text} />
   </Divider>
 );

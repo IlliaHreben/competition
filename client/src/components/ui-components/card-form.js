@@ -87,7 +87,7 @@ export default function CardForm({ card, isEdit, onChange }) {
 
   return (
     <FormGroup>
-      <Typography variant="body1" gutterBottom>
+      <Typography variant='body1' gutterBottom>
         Main information
       </Typography>
       <FighterModal
@@ -98,19 +98,19 @@ export default function CardForm({ card, isEdit, onChange }) {
         isEdit={isEdit}
       />
       {isEdit ? (
-        <Stack direction="row" sx={{ mt: 1.5, mb: 1 }}>
+        <Stack direction='row' sx={{ mt: 1.5, mb: 1 }}>
           <TextField
             fullWidth
-            id="card-name-input"
-            label="Name"
+            id='card-name-input'
+            label='Name'
             value={card?.linked?.fighter?.name || ''}
             sx={{ mr: 1.5 }}
             disabled={!!isEdit}
           />
           <TextField
             fullWidth
-            id="card-last-name-input"
-            label="Last name"
+            id='card-last-name-input'
+            label='Last name'
             value={card?.linked?.fighter?.lastName || ''}
             disabled={!!isEdit}
           />
@@ -118,20 +118,20 @@ export default function CardForm({ card, isEdit, onChange }) {
       ) : (
         <FighterAutocomplete fighter={cardData.fighter} onChange={setFighter} />
       )}
-      <Button variant="text" onClick={changeFighterModalStatus}>
+      <Button variant='text' onClick={changeFighterModalStatus}>
         {isEdit ? 'Edit' : 'Create'} fighter
       </Button>
-      <Stack direction="row" sx={{ mb: 1.5, mt: 2 }}>
+      <Stack direction='row' sx={{ mb: 1.5, mt: 2 }}>
         <WeightInput
           fullWidth
-          label="Weight"
+          label='Weight'
           value={`${cardData.weight}`}
           onChange={(value) => dispatchCard({ type: 'weight', payload: value })}
           error={!!errors.weight}
           sx={{ mr: 1.5 }}
           inputProps={{ id: 'card-weight-input' }}
         >
-          {errors.weight && <FormHelperText id="card-weight-input">{errors.weight}</FormHelperText>}
+          {errors.weight && <FormHelperText id='card-weight-input'>{errors.weight}</FormHelperText>}
         </WeightInput>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
@@ -139,7 +139,7 @@ export default function CardForm({ card, isEdit, onChange }) {
               cardData.birthDate ? ` (${getAgeFromBirthDate(cardData.birthDate)})` : ''
             }`}
             value={cardData.birthDate}
-            mask="__.__.____"
+            mask='__.__.____'
             onChange={(value) => dispatchCard({ type: 'birthDate', payload: value })}
             renderInput={(params) => (
               <TextField
@@ -152,13 +152,13 @@ export default function CardForm({ card, isEdit, onChange }) {
           />
         </LocalizationProvider>
       </Stack>
-      <Stack direction="row">
+      <Stack direction='row'>
         <FormControl fullWidth sx={{ mr: 1.5 }} error={!!errors.section}>
-          <InputLabel id="card-name-input">Section</InputLabel>
+          <InputLabel id='card-name-input'>Section</InputLabel>
           <Select
             required
-            id="card-name-input"
-            label="Section"
+            id='card-name-input'
+            label='Section'
             value={cardData.sectionId || ''}
             onChange={(e) => {
               dispatchCard({ type: 'sectionId', payload: e.target.value });
@@ -180,11 +180,11 @@ export default function CardForm({ card, isEdit, onChange }) {
           error={!!errors.group}
           disabled={sections.find((s) => s.id === cardData.sectionId)?.type !== 'full'}
         >
-          <InputLabel id="card-name-input">Group</InputLabel>
+          <InputLabel id='card-name-input'>Group</InputLabel>
           <Select
             required
-            id="card-last-name-input"
-            label="Group"
+            id='card-last-name-input'
+            label='Group'
             value={cardData.group || ''}
             onChange={(e) => dispatchCard({ type: 'group', payload: e.target.value })}
           >

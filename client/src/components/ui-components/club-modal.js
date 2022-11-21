@@ -135,9 +135,9 @@ export default function ClubModal({ club, isEdit, open, handleClose, handleCompl
       <SettlementModal open={settlementModalStatus} handleClose={changeSettlementModalStatus} />
       <TextField
         fullWidth
-        autoComplete="new-password"
-        id="coach-name-input"
-        label="Name"
+        autoComplete='new-password'
+        id='coach-name-input'
+        label='Name'
         value={_club.name}
         onChange={(e) => setClub((prev) => ({ ...prev, name: e.target.value }))}
         sx={{ mt: 1, mb: 1.5 }}
@@ -153,7 +153,7 @@ export default function ClubModal({ club, isEdit, open, handleClose, handleCompl
         sx={{ mb: 1.5 }}
         value={coaches.filter((coach) => _linked.coaches.some((c) => c.id === coach.id))}
         getOptionLabel={(coach) => (coach ? `${coach.name} ${coach.lastName}` : '')}
-        renderInput={(params) => <TextField {...params} label="Coaches" />}
+        renderInput={(params) => <TextField {...params} label='Coaches' />}
         onChange={(e, options) => setLinked((prev) => ({ ...prev, coaches: options }))}
       />
       <Autocomplete
@@ -169,7 +169,7 @@ export default function ClubModal({ club, isEdit, open, handleClose, handleCompl
         filterOptions={(x) => x}
         value={selectedSettlement}
         getOptionLabel={(s) => (s ? `${s.name}, ${s.linked.state?.name}` : '')}
-        renderInput={(params) => <TextField {...params} label="Settlement" />}
+        renderInput={(params) => <TextField {...params} label='Settlement' />}
         onChange={(e, newSelected) => {
           setSettlements((prev) => [newSelected, ...prev]);
           setSelectedSettlement(newSelected);

@@ -9,7 +9,7 @@ import AddIcon from '../../../assets/icons/plus.png';
 
 // eslint-disable-next-line react/prop-types
 const AvatarIcon = ({ src }) => {
-  return <Avatar src={src} variant="square" sx={{ width: 36, height: 36, pb: 0.5 }} />;
+  return <Avatar src={src} variant='square' sx={{ width: 36, height: 36, pb: 0.5 }} />;
 };
 
 function SideBar({ tabs }) {
@@ -31,13 +31,13 @@ function SideBar({ tabs }) {
             }}
             key={tab.name}
             aria-label={tab.name}
-            size="small"
+            size='small'
             onClick={() => navigate(tab.path)}
           >
             <Stack sx={{ alignItems: 'center' }}>
               {tab.create ? (
                 <Badge
-                  overlap="circular"
+                  overlap='circular'
                   anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                   badgeContent={
                     <Avatar

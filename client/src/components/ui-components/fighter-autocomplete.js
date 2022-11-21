@@ -71,7 +71,7 @@ export default function FighterAutocomplete({ fighter, onChange }) {
       value={fighter}
       isOptionEqualToValue={(option, value) => option.id === value.id}
       getOptionLabel={(c) => (c ? `${c.lastName} ${c.name}` : '')}
-      renderInput={(params) => <TextField {...params} label="Fighter" />}
+      renderInput={(params) => <TextField {...params} label='Fighter' />}
       onChange={(e, newSelected) => {
         // setFighters(prev => ([ newSelected, ...prev ]));
         // setSelectedFighter(newSelected);

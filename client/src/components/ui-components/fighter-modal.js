@@ -159,16 +159,16 @@ export default function FighterModal({ open, fighter, errors = {}, handleClose, 
         isEdit={!!cardData.clubId}
       />
       {isEdit && (
-        <Typography variant="body2" gutterBottom>
+        <Typography variant='body2' gutterBottom>
           Please pay an attention that fighter&#39;s data will be changed for all cards associated
           with this fighter.
         </Typography>
       )}
-      <Stack direction="row" sx={{ mt: 1.5, mb: 1.5 }}>
+      <Stack direction='row' sx={{ mt: 1.5, mb: 1.5 }}>
         <TextField
           fullWidth
-          id="card-n-input"
-          label="Name"
+          id='card-n-input'
+          label='Name'
           value={cardData.name}
           onChange={(e) => dispatchFighter({ type: 'name', payload: e.target.value })}
           error={!!errors.name}
@@ -177,8 +177,8 @@ export default function FighterModal({ open, fighter, errors = {}, handleClose, 
         />
         <TextField
           fullWidth
-          id="card-ln-input"
-          label="Last name"
+          id='card-ln-input'
+          label='Last name'
           value={cardData.lastName}
           onChange={(e) => dispatchFighter({ type: 'lastName', payload: e.target.value })}
           error={!!errors.lastName}
@@ -186,16 +186,16 @@ export default function FighterModal({ open, fighter, errors = {}, handleClose, 
         />
       </Stack>
       <FormControl fullWidth>
-        <InputLabel id="sex-label-input">Sex</InputLabel>
+        <InputLabel id='sex-label-input'>Sex</InputLabel>
         <Select
-          labelId="sex-label-input"
-          id="sex-input"
-          label="Sex"
+          labelId='sex-label-input'
+          id='sex-input'
+          label='Sex'
           value={cardData.sex}
           onChange={(e) => dispatchFighter({ type: 'sex', payload: e.target.value })}
         >
-          <MenuItem value="man">Man</MenuItem>
-          <MenuItem value="woman">Woman</MenuItem>
+          <MenuItem value='man'>Man</MenuItem>
+          <MenuItem value='woman'>Woman</MenuItem>
         </Select>
       </FormControl>
       {isEdit && (
@@ -204,13 +204,13 @@ export default function FighterModal({ open, fighter, errors = {}, handleClose, 
           control={
             <Switch checked={recalculate} onChange={(e) => setRecalculate(e.target.checked)} />
           }
-          label="Recalculate categories"
+          label='Recalculate categories'
         />
       )}
-      <Typography sx={{ mt: 1 }} variant="body1" gutterBottom>
+      <Typography sx={{ mt: 1 }} variant='body1' gutterBottom>
         Club and coach information
       </Typography>
-      <Stack direction="row" sx={{ mt: 1 }}>
+      <Stack direction='row' sx={{ mt: 1 }}>
         <Stack sx={{ mr: 1.5, width: '100%' }}>
           <Autocomplete
             includeInputInList
@@ -223,10 +223,10 @@ export default function FighterModal({ open, fighter, errors = {}, handleClose, 
             getOptionLabel={(club) => club.name || ''}
             value={clubs.find((c) => c.id === cardData.clubId) || ''}
             isOptionEqualToValue={(option, value) => option.id === value.id}
-            renderInput={(params) => <TextField {...params} label="Club" />}
+            renderInput={(params) => <TextField {...params} label='Club' />}
             onChange={(e, club) => dispatchFighter({ type: 'clubId', payload: club?.id })}
           />
-          <Button size="small" variant="text" onClick={changeClubModalStatus}>
+          <Button size='small' variant='text' onClick={changeClubModalStatus}>
             {cardData.clubId ? 'Edit' : 'Create'} club
           </Button>
         </Stack>
@@ -242,11 +242,11 @@ export default function FighterModal({ open, fighter, errors = {}, handleClose, 
             value={coaches.find((c) => c.id === cardData.coachId) || ''}
             isOptionEqualToValue={(option, value) => option.id === value.id}
             getOptionLabel={({ name, lastName }) => (name ? `${lastName} ${name}` : '')}
-            renderInput={(params) => <TextField {...params} label="Coach" />}
+            renderInput={(params) => <TextField {...params} label='Coach' />}
             onChange={(e, coach) => dispatchFighter({ type: 'coachId', payload: coach?.id })}
           />
 
-          <Button size="small" variant="text" onClick={changeCoachModalStatus}>
+          <Button size='small' variant='text' onClick={changeCoachModalStatus}>
             {cardData.coachId ? 'Edit' : 'Create'} coach
           </Button>
         </Stack>

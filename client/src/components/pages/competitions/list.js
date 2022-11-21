@@ -81,7 +81,7 @@ function EnhancedTableHead(props) {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align="left"
+            align='left'
             sortDirection={orderBy === headCell.id ? order : false}
             padding={headCell.disablePadding ? 'none' : 'normal'}
           >
@@ -95,7 +95,7 @@ function EnhancedTableHead(props) {
                 >
                   {headCell.label}
                   {orderBy === headCell.id && (
-                    <Box component="span" sx={visuallyHidden}>
+                    <Box component='span' sx={visuallyHidden}>
                       {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
                     </Box>
                   )}
@@ -131,14 +131,14 @@ const EnhancedTableToolbar = (props) => {
       <TextField
         sx={{ marginLeft: '20px' }}
         hiddenLabel
-        variant="standard"
-        id="search"
-        placeholder="Search..."
+        variant='standard'
+        id='search'
+        placeholder='Search...'
         value={search}
         onChange={handleChange}
         InputProps={{
           startAdornment: (
-            <InputAdornment position="start">
+            <InputAdornment position='start'>
               {loading ? ( // eslint-disable-line operator-linebreak
                 <CircularProgress
                   disableShrink
@@ -157,8 +157,8 @@ const EnhancedTableToolbar = (props) => {
       <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
         <Button
           sx={{ marginRight: '20px' }}
-          variant="contained"
-          size="large"
+          variant='contained'
+          size='large'
           onClick={handleClickCreate}
         >
           create
@@ -294,7 +294,7 @@ function CompetitionsList() {
             handleClickCreate={() => navigate('./create')}
           />
           <TableContainer>
-            <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={'medium'}>
+            <Table sx={{ minWidth: 750 }} aria-labelledby='tableTitle' size={'medium'}>
               <EnhancedTableHead
                 onRequestSort={handleRequestSort}
                 order={order}
@@ -306,28 +306,28 @@ function CompetitionsList() {
 
                   return (
                     <TableRow key={row.id}>
-                      <TableCell width="25%" align="left">
+                      <TableCell width='25%' align='left'>
                         {row.name}
                       </TableCell>
-                      <TableCell component="th" id={labelId} scope="row">
+                      <TableCell component='th' id={labelId} scope='row'>
                         {row.description}
                       </TableCell>
-                      <TableCell width="11%" align="left">
+                      <TableCell width='11%' align='left'>
                         {row.startDate}
                       </TableCell>
-                      <TableCell width="11%" align="left">
+                      <TableCell width='11%' align='left'>
                         {row.endDate}
                       </TableCell>
-                      <TableCell width="7%" align="left">
+                      <TableCell width='7%' align='left'>
                         {row.days}
                       </TableCell>
-                      <TableCell width="7%" align="left">
+                      <TableCell width='7%' align='left'>
                         {row.fightersCount}
                       </TableCell>
-                      <TableCell width="7%" align="left" sx={{ pr: 0 }}>
+                      <TableCell width='7%' align='left' sx={{ pr: 0 }}>
                         {row.cardsCount}
                       </TableCell>
-                      <TableCell width="2%" align="right" sx={{ p: 0.5, pl: 0 }}>
+                      <TableCell width='2%' align='right' sx={{ p: 0.5, pl: 0 }}>
                         <IconButton onClick={(e) => handleClickSettings(e, row.id)}>
                           <MoreVertIcon />
                         </IconButton>
@@ -345,7 +345,7 @@ function CompetitionsList() {
           </TableContainer>
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
-            component="div"
+            component='div'
             count={meta.filteredCount || 0}
             rowsPerPage={rowsPerPage}
             page={page}

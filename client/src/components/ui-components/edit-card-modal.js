@@ -34,7 +34,7 @@ export default function EditCardModal({ open, handleClose, handleConfirm, card }
       handleClose={handleClose}
       handleConfirm={_handleConfirm}
       open={open}
-      title="Edit card"
+      title='Edit card'
       fullWidth
     >
       <CardFrom card={card} isEdit onChange={setCardData} />

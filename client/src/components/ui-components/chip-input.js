@@ -55,7 +55,7 @@ export default function TagsInput({ ...props }) {
   return (
     <React.Fragment>
       <Downshift
-        id="downshift-multiple"
+        id='downshift-multiple'
         inputValue={inputValue}
         onChange={handleChange}
         selectedItem={selectedItem}

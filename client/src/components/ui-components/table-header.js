@@ -59,8 +59,8 @@ export default function TableHeader({ onChange, initiator }) {
   }[initiator];
 
   return (
-    <Stack direction="row" spacing={2} sx={{ display: 'flex', m: 2 }}>
-      <TextField size="small" sx={{ flexGrow: 2 }} label="Search" onChange={handleSearchChange} />
+    <Stack direction='row' spacing={2} sx={{ display: 'flex', m: 2 }}>
+      <TextField size='small' sx={{ flexGrow: 2 }} label='Search' onChange={handleSearchChange} />
       <Autocomplete
         includeInputInList
         blurOnSelect
@@ -72,7 +72,7 @@ export default function TableHeader({ onChange, initiator }) {
         }
         sx={{ flexGrow: 4 }}
         getOptionLabel={({ name, lastName }) => `${lastName} ${name}`}
-        renderInput={(params) => <TextField {...params} size="small" label="Coach" />}
+        renderInput={(params) => <TextField {...params} size='small' label='Coach' />}
         onChange={(e, coach) => {
           setFilterActivation(!!coach);
           onChange({ coachId: coach?.id });
@@ -89,7 +89,7 @@ export default function TableHeader({ onChange, initiator }) {
         }
         sx={{ flexGrow: 4 }}
         getOptionLabel={(club) => club.name}
-        renderInput={(params) => <TextField {...params} size="small" label="Club" />}
+        renderInput={(params) => <TextField {...params} size='small' label='Club' />}
         onChange={(e, club) => {
           setFilterActivation(!!club);
           onChange({ clubId: club?.id });
@@ -102,7 +102,7 @@ export default function TableHeader({ onChange, initiator }) {
         options={settlements}
         getOptionLabel={(s) => s.name}
         sx={{ flexGrow: 4 }}
-        renderInput={(params) => <TextField {...params} size="small" label="City" />}
+        renderInput={(params) => <TextField {...params} size='small' label='City' />}
         onChange={(e, s) => {
           setFilterActivation(!!s);
           onChange({ settlementId: s?.id || undefined });
@@ -115,7 +115,7 @@ export default function TableHeader({ onChange, initiator }) {
         options={sections}
         sx={{ flexGrow: 3 }}
         getOptionLabel={(s) => s.name}
-        renderInput={(params) => <TextField {...params} size="small" label="Section" />}
+        renderInput={(params) => <TextField {...params} size='small' label='Section' />}
         onChange={(e, section) => {
           setFilterActivation(!!section);
           onChange({ sectionId: section?.id });
@@ -132,7 +132,7 @@ export default function TableHeader({ onChange, initiator }) {
         ]}
         sx={{ flexGrow: 3 }}
         getOptionLabel={(s) => s.label}
-        renderInput={(params) => <TextField {...params} size="small" label="Group" />}
+        renderInput={(params) => <TextField {...params} size='small' label='Group' />}
         onChange={(e, group) => {
           setFilterActivation(!!group);
           onChange({ group: group?.value });
@@ -144,7 +144,7 @@ export default function TableHeader({ onChange, initiator }) {
         autoHighlight
         options={['man', 'woman']}
         sx={{ flexGrow: 3 }}
-        renderInput={(params) => <TextField {...params} size="small" label="Sex" />}
+        renderInput={(params) => <TextField {...params} size='small' label='Sex' />}
         onChange={(e, sex) => {
           setFilterActivation(!!sex);
           onChange({ sex: sex || undefined });

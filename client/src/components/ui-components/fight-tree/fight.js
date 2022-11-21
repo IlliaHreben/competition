@@ -134,7 +134,7 @@ function Fight({
     //     } */}
     <ButtonGroup
       // ref={groupRef}
-      orientation="vertical"
+      orientation='vertical'
       className={styles.svgButtonGroup}
     >
       {buttons}

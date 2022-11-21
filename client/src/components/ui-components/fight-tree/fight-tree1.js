@@ -227,9 +227,9 @@ export default function FightTree({
                               key={i}
                               data={link}
                               percent={0.45}
-                              stroke="rgb(0,0,0)"
-                              strokeWidth="2"
-                              fill="none"
+                              stroke='rgb(0,0,0)'
+                              strokeWidth='2'
+                              fill='none'
                             />
                           )
                       )}

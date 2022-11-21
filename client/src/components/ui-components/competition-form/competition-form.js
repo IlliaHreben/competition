@@ -75,8 +75,8 @@ export default function CompetitionForm({ competition, handleConfirm, withFightS
       <TextField
         required
         fullWidth
-        id="competition-name-input"
-        label="Competition name"
+        id='competition-name-input'
+        label='Competition name'
         value={competitionName}
         onChange={handleChangeFields('name')}
         error={!!errors.name}
@@ -86,8 +86,8 @@ export default function CompetitionForm({ competition, handleConfirm, withFightS
       <TextField
         required
         fullWidth
-        id="competition-desc-input"
-        label="Competition description"
+        id='competition-desc-input'
+        label='Competition description'
         value={description}
         onChange={handleChangeFields('description')}
         minRows={4}
@@ -97,13 +97,13 @@ export default function CompetitionForm({ competition, handleConfirm, withFightS
       />
 
       {withFightSpaces && (
-        <Container maxWidth="sm" className={styles.formRow}>
+        <Container maxWidth='sm' className={styles.formRow}>
           <TextField
             className={styles.countingRings}
             required
-            type="number"
-            id="competition-rings-input"
-            label="Rings count"
+            type='number'
+            id='competition-rings-input'
+            label='Rings count'
             value={ringsCount}
             onChange={handleChange('ringsCount')}
           />
@@ -111,9 +111,9 @@ export default function CompetitionForm({ competition, handleConfirm, withFightS
             className={styles.countingTatamis}
             spacing={1}
             required
-            type="number"
-            id="competition-rings-input"
-            label="Tatamis count"
+            type='number'
+            id='competition-rings-input'
+            label='Tatamis count'
             value={tatamisCount}
             onChange={handleChange('tatamisCount')}
           />
@@ -121,12 +121,12 @@ export default function CompetitionForm({ competition, handleConfirm, withFightS
       )}
 
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <Container maxWidth="sm" className={styles.formRow} sx={{ marginTop: '10px' }}>
+        <Container maxWidth='sm' className={styles.formRow} sx={{ marginTop: '10px' }}>
           <DatePicker
             className={styles.startDateInput}
-            label="Start date (without weighing day)"
+            label='Start date (without weighing day)'
             value={startDate}
-            mask="__.__.____"
+            mask='__.__.____'
             onChange={handleChangeFields('startDate')}
             renderInput={(params) => (
               <TextField
@@ -139,9 +139,9 @@ export default function CompetitionForm({ competition, handleConfirm, withFightS
           <Box sx={{ padding: '0.75vh' }} />
           <DatePicker
             className={styles.endDateInput}
-            label="End date"
+            label='End date'
             value={endDate}
-            mask="__.__.____"
+            mask='__.__.____'
             onChange={handleChangeFields('endDate')}
             renderInput={(params) => (
               <TextField {...params} error={!!errors.endDate} helperText={errors.endDate || ' '} />
@@ -152,8 +152,8 @@ export default function CompetitionForm({ competition, handleConfirm, withFightS
       <Button
         disabled={!!Object.keys(errors).length}
         fullWidth
-        variant="contained"
-        size="large"
+        variant='contained'
+        size='large'
         onClick={() =>
           handleConfirm({
             name: competitionName,

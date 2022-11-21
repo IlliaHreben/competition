@@ -10,9 +10,9 @@ const WeightMaskInput = forwardRef(function WeightMaskInput(props, ref) {
   return (
     <IMaskInput
       {...other}
-      mask="00[0]{.}{0}"
+      mask='00[0]{.}{0}'
       lazy={false}
-      placeholderChar="0"
+      placeholderChar='0'
       inputRef={ref}
       onAccept={(value) => onChange(value)}
       overwrite
@@ -31,17 +31,17 @@ MaskWeight.propTypes = {
 
 export default function MaskWeight({ value, onChange, inputProps = {}, ...props }) {
   return (
-    <FormControl {...props} variant="outlined">
-      <InputLabel htmlFor="weight-mask-input">Weight</InputLabel>
+    <FormControl {...props} variant='outlined'>
+      <InputLabel htmlFor='weight-mask-input'>Weight</InputLabel>
       <Input
         value={`${value}`}
         onChange={onChange}
-        id="weight-mask-input"
-        endAdornment={<InputAdornment position="end">kg</InputAdornment>}
+        id='weight-mask-input'
+        endAdornment={<InputAdornment position='end'>kg</InputAdornment>}
         inputProps={{
           'aria-label': 'weight'
         }}
-        label="Weight"
+        label='Weight'
         inputComponent={WeightMaskInput}
         {...inputProps}
       />

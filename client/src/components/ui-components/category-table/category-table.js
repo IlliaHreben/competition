@@ -64,26 +64,26 @@ function CategoryTable({ category }) {
   const rows = dumpCategoryData(category);
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 200 }} size="small">
+      <Table sx={{ minWidth: 200 }} size='small'>
         <TableHead>
           <TableRow>
-            <TableCell className={styles.tableCategoryDesc} colSpan={12} align="center">
+            <TableCell className={styles.tableCategoryDesc} colSpan={12} align='center'>
               {`${category.linked.section.name} in: ${category.sex}'s ${category.ageFrom} - ${category.ageTo} years, weight category ${category.weightName}`}
             </TableCell>
           </TableRow>
           <TableRow className={styles.tableHeadDesc}>
             <TableCell>Date</TableCell>
-            <TableCell align="left">Degree</TableCell>
-            <TableCell align="center">Corner</TableCell>
-            <TableCell align="left">№</TableCell>
-            <TableCell align="left">Full name</TableCell>
-            <TableCell align="left">City</TableCell>
-            <TableCell align="center">Sex</TableCell>
-            <TableCell align="left">Club</TableCell>
-            <TableCell align="left">Coach</TableCell>
-            <TableCell align="center">Age</TableCell>
-            <TableCell align="left">Birthday</TableCell>
-            <TableCell align="left">Weight</TableCell>
+            <TableCell align='left'>Degree</TableCell>
+            <TableCell align='center'>Corner</TableCell>
+            <TableCell align='left'>№</TableCell>
+            <TableCell align='left'>Full name</TableCell>
+            <TableCell align='left'>City</TableCell>
+            <TableCell align='center'>Sex</TableCell>
+            <TableCell align='left'>Club</TableCell>
+            <TableCell align='left'>Coach</TableCell>
+            <TableCell align='center'>Age</TableCell>
+            <TableCell align='left'>Birthday</TableCell>
+            <TableCell align='left'>Weight</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -94,25 +94,25 @@ function CategoryTable({ category }) {
               // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               {row.number % 2 ? (
-                <TableCell rowSpan={2} component="th" scope="row">
+                <TableCell rowSpan={2} component='th' scope='row'>
                   {row.date}
                 </TableCell>
               ) : null}
               {row.number % 2 ? (
-                <TableCell rowSpan={2} align="left">
+                <TableCell rowSpan={2} align='left'>
                   {row.degree}
                 </TableCell>
               ) : null}
-              <TableCell align="center">{row.color}</TableCell>
-              <TableCell align="left">{row.number}</TableCell>
-              <TableCell align="left">{row.fullName}</TableCell>
-              <TableCell align="left">{row.settlement}</TableCell>
-              <TableCell align="center">{row.sex}</TableCell>
-              <TableCell align="left">{row.club}</TableCell>
-              <TableCell align="left">{row.coach}</TableCell>
-              <TableCell align="center">{row.age}</TableCell>
-              <TableCell align="left">{row.birthDate}</TableCell>
-              <TableCell align="left">{row.weight}</TableCell>
+              <TableCell align='center'>{row.color}</TableCell>
+              <TableCell align='left'>{row.number}</TableCell>
+              <TableCell align='left'>{row.fullName}</TableCell>
+              <TableCell align='left'>{row.settlement}</TableCell>
+              <TableCell align='center'>{row.sex}</TableCell>
+              <TableCell align='left'>{row.club}</TableCell>
+              <TableCell align='left'>{row.coach}</TableCell>
+              <TableCell align='center'>{row.age}</TableCell>
+              <TableCell align='left'>{row.birthDate}</TableCell>
+              <TableCell align='left'>{row.weight}</TableCell>
             </TableRow>
           ))}
         </TableBody>

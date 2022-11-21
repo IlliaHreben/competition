@@ -126,7 +126,7 @@ export default function CategoriesTab() {
         You cannot revert this.
       </Modal>
       <Toolbar sx={{ pl: { sm: 2 }, pr: { sm: 1 } }}>
-        <Typography sx={{ flex: '1 1 100%', pl: 2 }} variant="h6" id="tableTitle">
+        <Typography sx={{ flex: '1 1 100%', pl: 2 }} variant='h6' id='tableTitle'>
           Sections
         </Typography>
 
@@ -136,17 +136,17 @@ export default function CategoriesTab() {
         <Accordion disableGutters key={section.id} TransitionProps={{ unmountOnExit: true }}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
+            aria-controls='panel1a-content'
+            id='panel1a-header'
             sx={{
               '.MuiAccordionSummary-content': { margin: 0, justifyContent: 'space-between' },
               flexDirection: 'row-reverse'
             }}
           >
-            <Typography sx={{ ml: 3 }} alignSelf="center">
+            <Typography sx={{ ml: 3 }} alignSelf='center'>
               {section.section}
             </Typography>
-            <Tooltip title="Delete">
+            <Tooltip title='Delete'>
               <IconButton
                 onClick={(e) => {
                   e.stopPropagation();
@@ -170,8 +170,8 @@ export default function CategoriesTab() {
               >
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
+                  aria-controls='panel1a-content'
+                  id='panel1a-header'
                 >
                   <Typography>{categorySex.header}</Typography>
                 </AccordionSummary>
@@ -274,14 +274,14 @@ function CategoriesTable({ categories, sectionId, sex, group }) {
         }}
       >
         {selected.length ? (
-          <Typography sx={{ flex: '1 1 100%' }} color="inherit" variant="subtitle1" component="div">
+          <Typography sx={{ flex: '1 1 100%' }} color='inherit' variant='subtitle1' component='div'>
             {selected.length} selected
           </Typography>
         ) : (
           <Typography
             sx={{ flex: '1 1 100%' }}
-            variant="h6"
-            id="tableTitle"
+            variant='h6'
+            id='tableTitle'
             // component="div"
           >
             Categories
@@ -289,20 +289,20 @@ function CategoriesTable({ categories, sectionId, sex, group }) {
         )}
 
         {categoriesFields.length > 0 && (
-          <Tooltip title="Save">
+          <Tooltip title='Save'>
             <IconButton onClick={handleSaveCategories}>
               <SaveIcon />
             </IconButton>
           </Tooltip>
         )}
         {selected.length > 0 ? (
-          <Tooltip title="Delete">
+          <Tooltip title='Delete'>
             <IconButton onClick={handleDeleteItems}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>
         ) : (
-          <Tooltip title="Add">
+          <Tooltip title='Add'>
             <IconButton onClick={handleAddCategory}>
               <AddIcon />
             </IconButton>
@@ -310,23 +310,23 @@ function CategoriesTable({ categories, sectionId, sex, group }) {
         )}
       </Toolbar>
       <TableContainer sx={{ maxHeight: 440 }}>
-        <Table sx={{ minWidth: 300 }} aria-labelledby="tableTitle">
+        <Table sx={{ minWidth: 300 }} aria-labelledby='tableTitle'>
           <TableHead>
             <TableRow sx={{ fontWeight: '700' }}>
               <TableCell></TableCell>
-              <TableCell padding="none" colSpan={2} align="center">
+              <TableCell padding='none' colSpan={2} align='center'>
                 Age
               </TableCell>
               <TableCell></TableCell>
-              <TableCell padding="none" colSpan={2} align="center">
+              <TableCell padding='none' colSpan={2} align='center'>
                 Weight
               </TableCell>
               <TableCell></TableCell>
             </TableRow>
             <TableRow sx={{ fontWeight: '700' }}>
-              <TableCell padding="checkbox">
+              <TableCell padding='checkbox'>
                 <Checkbox
-                  color="primary"
+                  color='primary'
                   indeterminate={selected.length > 0 && selected.length < categories.length}
                   checked={categories.length > 0 && selected.length === categories.length}
                   onChange={onSelectAllClick}
@@ -355,15 +355,15 @@ function CategoriesTable({ categories, sectionId, sex, group }) {
                 <TableRow
                   hover
                   onClick={(event) => handleClick(event, row.id)}
-                  role="checkbox"
+                  role='checkbox'
                   aria-checked={isItemSelected}
                   tabIndex={-1}
                   key={row.id}
                   selected={isItemSelected}
                 >
-                  <TableCell padding="checkbox" width={'15%'}>
+                  <TableCell padding='checkbox' width={'15%'}>
                     <Checkbox
-                      color="primary"
+                      color='primary'
                       checked={isItemSelected}
                       inputProps={{
                         'aria-labelledby': labelId

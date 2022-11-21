@@ -6,8 +6,8 @@ export default function CategoryRow({ onChange, data }) {
     onChange({ ...data, [key]: e.target.value });
   };
   return (
-    <TableRow hover role="checkbox" tabIndex={-1}>
-      <TableCell padding="checkbox" width={'5%'}></TableCell>
+    <TableRow hover role='checkbox' tabIndex={-1}>
+      <TableCell padding='checkbox' width={'5%'}></TableCell>
 
       <TableCell sx={{ pr: 0.5, pl: 1, pt: 1, pb: 1.5 }}>
         <Field onChange={(e) => onChangeFields(e, 'ageFrom')} />
@@ -32,10 +32,10 @@ const Field = (props) => {
   return (
     <TextField
       sx={{ maxWidth: '45px' }}
-      size="small"
+      size='small'
       inputProps={{ maxLength: 5 }}
       max={5}
-      variant="standard"
+      variant='standard'
       {...props}
     />
   );

@@ -146,14 +146,14 @@ export default withStyles(styles)(function CardsTable(props) {
   const cellRenderer = ({ cellData, columnIndex }) => {
     return (
       <TableCell
-        component="div"
+        component='div'
         sx={{
           display: 'flex',
           alignItems: 'center',
           boxSizing: 'border-box',
           flex: 1
         }}
-        variant="body"
+        variant='body'
         style={{ height: 48 }}
         align={columnIndex != null && columns[columnIndex].numeric ? 'right' : 'left'}
         padding={columns[columnIndex].padding}
@@ -166,14 +166,14 @@ export default withStyles(styles)(function CardsTable(props) {
   const headerRenderer = ({ label, columnIndex }) => {
     return (
       <TableCell
-        component="div"
+        component='div'
         sx={{
           display: 'flex',
           alignItems: 'center',
           boxSizing: 'border-box',
           flex: 1
         }}
-        variant="head"
+        variant='head'
         style={{ height: 48 }}
         align={columns[columnIndex].numeric ? 'right' : 'left'}
       >
@@ -269,7 +269,7 @@ export default withStyles(styles)(function CardsTable(props) {
       >
         <TableHeader
           onChange={(current) => setFilters((prev) => ({ ...prev, ...current }))}
-          initiator="cards"
+          initiator='cards'
         />
         <SettingsPopover
           anchorEl={anchor?.element}
