@@ -17,7 +17,8 @@ Modal.propTypes = {
   children: PropTypes.any.isRequired,
   title: PropTypes.string,
   confirmButtonText: PropTypes.string,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  contentProps: PropTypes.object
 };
 
 Modal.defaultProps = {
@@ -36,6 +37,7 @@ export default function Modal({
   children,
   disabled,
   confirmButtonText,
+  contentProps = {},
   ...props
 }) {
   const theme = useTheme();
@@ -55,7 +57,7 @@ export default function Modal({
       <DialogTitle id='dialog-title'>
         {title ?? 'Are you sure you want to complete this operation?'}
       </DialogTitle>
-      <DialogContent sx={{ pr: 2, pl: 2 }}>
+      <DialogContent sx={{ pr: 2, pl: 2 }} {...contentProps}>
         {Array.isArray(_children) && _children.every((c) => typeof c === 'string')
           ? _children.map((c, i) => <DialogContentText key={i}>{c}</DialogContentText>)
           : children}

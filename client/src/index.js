@@ -9,6 +9,8 @@ import storage from 'redux-persist/lib/storage';
 import { PersistGate } from 'redux-persist/integration/react';
 import App from './App';
 
+import './registerValidationRules';
+
 const persistConfig = {
   key: 'root',
   storage,

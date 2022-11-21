@@ -3,8 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   list: [],
   listMeta: {},
-  active: null,
-  current: null,
   errors: {},
   isLoading: false
 };
@@ -13,6 +11,9 @@ const fightFormulas = createSlice({
   name: 'fightFormulas',
   initialState,
   reducers: {
+    deleteError: (state, action) => {
+      delete state.errors[action.payload];
+    },
     list: (state, action) => {
       state.list = action.payload.data;
       state.listMeta = action.payload.meta;
@@ -30,42 +31,35 @@ const fightFormulas = createSlice({
       state.listMeta = {};
     },
 
-    show: (state, action) => {
-      state.current = action.payload;
+    create: (state, action) => {
+      state.list.push(action.payload);
+      state.isLoading = false;
     },
-    setActive: (state, action) => {
-      state.active = action.payload;
-    },
-    showRequest: (state) => {
+    createRequest: (state) => {
       state.isLoading = true;
     },
-    showRequestError: (state, action) => {
+    createRequestError: (state, action) => {
       state.isLoading = false;
       state.errors = action.payload;
-    },
-    clearShow: (state) => {
-      state.current = initialState.current;
     },
 
     updateRequest: (state) => {
       state.isLoading = true;
     },
-    updateFightFormula: (state, action) => {
-      state.current = action.payload;
+    update: (state, action) => {
+      const index = state.list.findIndex((c) => c.id === action.payload.id);
+      if (index === -1) return;
+      state.list[index] = action.payload;
     },
     updateRequestError: (state, action) => {
       state.isLoading = false;
       state.errors = action.payload;
     },
 
-    deleteRequest: (state) => {
-      state.isLoading = true;
-    },
-    deleteFightFormula: (state, action) => {
-      state.list = state.list.filter((c) => c.id !== action.payload.id);
+    deleteItem: (state, action) => {
+      state.list = state.list.filter(({ id }) => action.payload.id !== id);
     },
     deleteRequestError: (state, action) => {
-      state.isLoading = false;
       state.errors = action.payload;
     }
   }
@@ -74,21 +68,20 @@ const fightFormulas = createSlice({
 const { actions, reducer } = fightFormulas;
 
 export const {
+  deleteError,
   list,
   listRequest,
   clearList,
   listRequestError,
-  show,
-  showRequest,
-  showRequestError,
-  clearShow,
-  setActive,
-  updateRequest,
-  updateFightFormula,
-  updateRequestError,
+  create,
+  createRequest,
+  createRequestError,
+  deleteItem,
   deleteRequest,
-  deleteFightFormula,
-  deleteRequestError
+  deleteRequestError,
+  updateRequest,
+  updateRequestError,
+  update
 } = actions;
 
 export default reducer;

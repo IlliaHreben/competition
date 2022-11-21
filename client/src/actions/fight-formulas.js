@@ -1,7 +1,7 @@
 import api from '../api-singleton';
 import * as reducer from '../reducers/fight-formulas';
 
-export function list(...args) {
+export function listFightFormulas(...args) {
   return async (dispatch) => {
     try {
       dispatch(reducer.listRequest());
@@ -15,36 +15,32 @@ export function list(...args) {
   };
 }
 
-export function clearList() {
+export function clearListFightFormulas() {
   return reducer.clearList();
 }
 
-export function clearShow() {
-  return reducer.clearShow();
-}
+// export function showFightFormula(...args) {
+//   return async (dispatch) => {
+//     try {
+//       dispatch(reducer.showRequest());
 
-export function show(...args) {
-  return async (dispatch) => {
-    try {
-      dispatch(reducer.showRequest());
+//       const { data } = await api.fightFormulas.show(...args);
 
-      const { data } = await api.fightFormulas.show(...args);
+//       dispatch(reducer.show(data));
+//     } catch (errData) {
+//       dispatch(reducer.showRequestError(errData));
+//     }
+//   };
+// }
 
-      dispatch(reducer.show(data));
-    } catch (errData) {
-      dispatch(reducer.showRequestError(errData));
-    }
-  };
-}
-
-export function update(id, payload, onSuccess) {
+export function updateFightFormula(id, payload, onSuccess) {
   return async (dispatch) => {
     try {
       dispatch(reducer.updateRequest());
 
       const { data } = await api.fightFormulas.update(id, payload);
 
-      dispatch(reducer.updateFightFormula(data));
+      dispatch(reducer.update(data));
 
       onSuccess?.();
     } catch (errData) {
@@ -53,24 +49,19 @@ export function update(id, payload, onSuccess) {
   };
 }
 
-export function getActive(...args) {
+export function createFightFormula(id, payload, onSuccess) {
   return async (dispatch) => {
     try {
-      dispatch(reducer.showRequest());
+      dispatch(reducer.createRequest());
 
-      const { data } = await api.fightFormulas.show(...args);
+      const { data } = await api.fightFormulas.create(id, payload);
 
-      dispatch(reducer.setActive(data));
-    } catch (err) {}
-  };
-}
+      dispatch(reducer.create(data));
 
-export function activateFightFormula(id, onSuccess) {
-  return async (dispatch, getState) => {
-    const competition = getState().fightFormulas.list.find((c) => c.id === id);
-    dispatch(reducer.setActive(competition));
-
-    onSuccess?.();
+      onSuccess?.();
+    } catch (errData) {
+      dispatch(reducer.createRequestError(errData));
+    }
   };
 }
 
@@ -81,7 +72,7 @@ export function deleteFightFormula(id, onSuccess) {
 
       const { data } = await api.fightFormulas.delete(id);
 
-      dispatch(reducer.deleteFightFormula(data));
+      dispatch(reducer.deleteItem(data));
 
       onSuccess?.();
     } catch (errData) {

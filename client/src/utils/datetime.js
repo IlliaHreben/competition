@@ -19,3 +19,22 @@ export function getAgeFromBirthDate(date) {
   }
   return age;
 }
+
+export const formatTime = (time) => {
+  if (!time) {
+    return null;
+  }
+  const [minutes, seconds] = time.split(':');
+  return +minutes * 60 + +seconds;
+};
+
+export const formatTimeToText = (time) => {
+  if (!time) {
+    return '';
+  }
+  const minutes = Math.floor(time / 60);
+  const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+  const seconds = time % 60;
+  const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+  return `${formattedMinutes}:${formattedSeconds}`;
+};

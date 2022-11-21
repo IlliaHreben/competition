@@ -18,6 +18,11 @@ export default class FightFormulaUpdate extends ServiceBase {
           ageFrom: ['not_empty', 'positive_decimal'],
           ageTo: ['not_empty', 'positive_decimal', { bigger_than: 'weightFrom' }],
           degree: ['not_empty', 'positive_decimal'],
+          group: [{ one_of: ['A', 'B'] }],
+
+          roundCount: ['not_empty', 'positive_integer', { number_between: [1, 12] }],
+          roundTime: ['not_empty', 'positive_integer', { number_between: [1, 60 * 60] }],
+          breakTime: ['not_empty', 'positive_integer', { number_between: [1, 60 * 60] }],
         },
       },
     ],

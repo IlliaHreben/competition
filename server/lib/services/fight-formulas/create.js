@@ -19,6 +19,11 @@ export default class FightFormulasCreate extends ServiceBase {
           ageFrom: ['required', 'positive_decimal'],
           ageTo: ['required', 'positive_decimal'],
           degree: ['not_empty', 'positive_decimal'],
+          group: [{ one_of: ['A', 'B'] }],
+
+          roundCount: ['required', 'positive_integer', { number_between: [1, 12] }],
+          roundTime: ['required', 'positive_integer', { number_between: [1, 60 * 60] }],
+          breakTime: ['required', 'positive_integer', { number_between: [1, 60 * 60] }],
         },
       },
     ],

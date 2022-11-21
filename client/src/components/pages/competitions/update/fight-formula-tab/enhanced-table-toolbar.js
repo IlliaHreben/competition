@@ -31,9 +31,6 @@ const EnhancedTableToolbar = (props) => {
 };
 
 EnhancedTableToolbar.propTypes = {
-  search: PropTypes.string.isRequired,
-  loading: PropTypes.bool.isRequired,
-  handleChange: PropTypes.func.isRequired,
   handleClickCreate: PropTypes.func.isRequired
 };
 
