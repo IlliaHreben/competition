@@ -58,6 +58,7 @@ router.put('/fights/:id/winner', controllers.fights.setWinner);
 router.get('/fight-formulas', controllers.fightFormulas.list);
 router.get('/fight-formulas/:id', controllers.fightFormulas.show);
 router.post('/fight-formulas', controllers.fightFormulas.create);
+router.post('/fight-formulas/bulk', controllers.fightFormulas.bulkCreate);
 router.patch('/fight-formulas/:id', controllers.fightFormulas.update);
 router.delete('/fight-formulas', controllers.fightFormulas.delete);
 

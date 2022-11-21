@@ -49,6 +49,22 @@ export function updateFightFormula(id, payload, onSuccess) {
   };
 }
 
+export function bulkCreateFightFormula(payload, onSuccess) {
+  return async (dispatch) => {
+    try {
+      dispatch(reducer.createRequest());
+
+      const { data } = await api.fightFormulas.bulkCreate(payload);
+
+      data.forEach((item) => dispatch(reducer.create(item)));
+
+      onSuccess?.();
+    } catch (errData) {
+      dispatch(reducer.createRequestError(errData));
+    }
+  };
+}
+
 export function createFightFormula(id, payload, onSuccess) {
   return async (dispatch) => {
     try {

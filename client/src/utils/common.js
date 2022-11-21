@@ -18,3 +18,21 @@ export function shuffle(array) {
 
   return array;
 }
+
+/**
+ *
+ * @param {*} list - array of arrays of key and array of values [[key, [value1, value2, ...]], ...]
+ * @returns {Record<string, any>[]}
+ * @example
+ * objectCombos([['a', [1, 2]], ['b', [3, 4]]]) // [{a: 1, b: 3}, {a: 1, b: 4}, {a: 2, b: 3}, {a: 2, b: 4}]
+ *
+ */
+export function objectCombos(list, n = 0, result = [], current = {}) {
+  if (n === list.length) result.push(current);
+  else {
+    const [key, items] = list[n];
+    items.forEach((item) => objectCombos(list, n + 1, result, { ...current, [key]: item }));
+  }
+
+  return result;
+}

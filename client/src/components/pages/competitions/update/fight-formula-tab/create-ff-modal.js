@@ -1,22 +1,22 @@
 import PropTypes from 'prop-types';
-import LIVR from 'livr';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Select, MenuItem, Chip, Checkbox, ListItemText } from '@mui/material';
+import { Select, MenuItem, Chip, Checkbox, ListItemText, Container, Divider } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
-// import Container from '@mui/material/Container';
 import FormControl from '@mui/material/FormControl';
 import { makeStyles } from '@mui/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
+import Slider from '@mui/material/Slider';
 
 import Modal from '../../../../ui-components/modal';
-import { updateFightFormula, createFightFormula } from '../../../../../actions/fight-formulas';
+import { updateFightFormula, bulkCreateFightFormula } from '../../../../../actions/fight-formulas';
 import { list as listSections } from '../../../../../actions/sections';
 import { showSuccess, showError } from '../../../../../actions/errors';
 import { formatTimeToText, formatTime } from '../../../../../utils/datetime';
+import { prepareToSend, formatFF } from './utils';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -30,9 +30,6 @@ const useStyles = makeStyles((theme) => ({
   },
   chip: {
     margin: 2
-  },
-  noLabel: {
-    // marginTop: theme.spacing(3)
   }
 }));
 
@@ -50,45 +47,15 @@ function mapStateToProps(state) {
   };
 }
 
-const validationRules = {
-  sectionId: ['required', 'uuid'],
-  weightFrom: ['required', 'positive_decimal'],
-  weightTo: ['required', 'positive_decimal', { bigger_than: 'weightFrom' }],
-  ageFrom: ['required', 'positive_decimal'],
-  ageTo: ['required', 'positive_decimal', { bigger_than: 'weightFrom' }],
-  degree: ['required', 'positive_decimal'],
-  sex: ['required', { one_of: ['man', 'woman'] }],
-  group: [{ one_of: ['A', 'B', null] }],
-
-  roundCount: ['required', 'positive_integer', { number_between: [1, 12] }],
-  roundTime: ['required', 'positive_integer', { number_between: [1, 60 * 60] }],
-  breakTime: ['required', 'positive_integer', { number_between: [1, 60 * 60] }]
-};
-
-const validator = new LIVR.Validator(validationRules);
-
-const formatFF = (ff) => ({
-  ...ff,
-  section: ff.section ? [ff.section] : [],
-  degree: ff.degree ? [ff.degree] : [],
-  group: ff.group ? [ff.group] : [],
-  sex: ff.sex ? [ff.sex] : [],
-  roundCount: ff.roundCount || ''
-});
-
 export default function CreateFightFormula({ open, handleClose, fightFormulaData = {} }) {
-  const isUpdate = !!fightFormulaData.id;
+  const isEdit = !!fightFormulaData.id;
   const classes = useStyles();
   const { errors: fetchErrors, competition, sections } = useSelector(mapStateToProps);
-  const [fightFormula, setFightFormula] = useState(formatFF(fightFormulaData));
-  console.log('+'.repeat(50)); // !nocommit
-  console.log(fightFormula);
-  console.log('+'.repeat(50));
-  const [, /* errors */ setErrors] = useState({});
+  const [fightFormula, setFightFormula] = useState(formatFF(fightFormulaData, sections));
   const dispatch = useDispatch();
 
   const handleChange = (e, field) => {
-    const value = e.target ? e.target.value : e;
+    const value = e?.target ? e.target.value : e;
     // validate(value, field);
     setFightFormula((prev) => ({ ...prev, [field]: value }));
   };
@@ -101,31 +68,22 @@ export default function CreateFightFormula({ open, handleClose, fightFormulaData
   }, [dispatch, fetchErrors]);
 
   const handleConfirm = () => {
-    const action = isUpdate ? updateFightFormula : createFightFormula;
-    const data = isUpdate ? fightFormula : { competitionId: competition.id, ...fightFormula };
+    const action = isEdit ? updateFightFormula : bulkCreateFightFormula;
+
+    const formattedData = prepareToSend(fightFormula, sections);
+
+    const data = isEdit ? formattedData : { competitionId: competition.id, data: formattedData };
 
     dispatch(
       action(data, () => {
         dispatch(listSections({ competitionId: competition.id }));
         dispatch(
-          showSuccess(`Fight formula has been successfully ${isUpdate ? 'updated' : 'created'}.`)
+          showSuccess(`Fight formula has been successfully ${isEdit ? 'updated' : 'created'}.`)
         );
         handleClose();
       })
     );
   };
-
-  const validate = () => {
-    const validData = validator.validate(fightFormula);
-    if (validData) {
-      setFightFormula(validData);
-      return;
-    }
-
-    setErrors(validator.getErrors());
-  };
-
-  useEffect(validate, [fightFormula]);
 
   return (
     <Modal
@@ -133,36 +91,39 @@ export default function CreateFightFormula({ open, handleClose, fightFormulaData
       handleConfirm={handleConfirm}
       open={open}
       title='Create fight formula'
+      disabled={!fightFormula.roundCount || !fightFormula.roundTime || !fightFormula.breakTime}
       contentProps={{ sx: { pr: 2, pl: 2, display: 'flex', flexDirection: 'column' } }}
+      confirmButtonText={isEdit ? 'Save' : 'Create'}
       fullWidth
     >
       <FormControl sx={{ mb: 1, mt: 1 }}>
-        <InputLabel id='demo-multiple-chip-label'>Sections</InputLabel>
+        <InputLabel>Sections</InputLabel>
         <Select
-          // labelId='demo-mutiple-checkbox-label'
-          // id='demo-mutiple-checkbox'
           multiple
-          value={fightFormula.section}
-          onChange={(e) => handleChange(e, 'section')}
+          value={fightFormula.sectionId}
+          onChange={(e) => handleChange(e, 'sectionId')}
           input={<OutlinedInput id='select-multiple-chip' label='Sections' />}
           renderValue={(selected) => (
             <div className={classes.chips}>
               {selected.map((value) => (
-                <Chip key={value} label={value} className={classes.chip} />
+                <Chip
+                  key={value}
+                  label={sections.find((s) => s.id === value).name}
+                  className={classes.chip}
+                />
               ))}
             </div>
           )}
-          // MenuProps={MenuProps}
         >
-          {sections.map(({ name }) => (
-            <MenuItem key={name} value={name}>
-              <Checkbox checked={fightFormula.section?.includes(name)} />
+          {sections.map(({ id, name }) => (
+            <MenuItem key={id} value={id}>
+              <Checkbox checked={fightFormula.sectionId?.includes(id)} />
               <ListItemText primary={name} />
             </MenuItem>
           ))}
         </Select>
       </FormControl>
-      <Stack direction='row' spacing={2} sx={{ pt: 1 }}>
+      <Stack direction='row' spacing={2} sx={{ pt: 1, pb: 1, mb: 2 }}>
         <FormControl sx={{ flexGrow: 1, flexBasis: 0 }}>
           <InputLabel>Sex</InputLabel>
           <Select
@@ -203,8 +164,10 @@ export default function CreateFightFormula({ open, handleClose, fightFormulaData
           </Select>
         </FormControl>
       </Stack>
-
-      <Stack direction='row' spacing={2} sx={{ pt: 1 }}>
+      <Divider>
+        <Chip label={`Fight formula`} />
+      </Divider>
+      <Stack direction='row' spacing={2} sx={{ pt: 1, mt: 1, mb: 3 }}>
         <FormControl sx={{ flexGrow: 1, flexBasis: 0 }}>
           <InputLabel>Rounds</InputLabel>
           <Select
@@ -249,6 +212,52 @@ export default function CreateFightFormula({ open, handleClose, fightFormulaData
           }}
         />
       </Stack>
+      <Divider>
+        <Chip label={`Age: ${fightFormula.ageFrom || 1} - ${fightFormula.ageTo || '60+'}`} />
+      </Divider>
+
+      <Container sx={{ mt: 3, mb: 2 }}>
+        <Slider
+          getAriaLabel={() => 'Age'}
+          value={[fightFormula.ageFrom || 1, fightFormula.ageTo || 100]}
+          onChange={(e, [ageFrom, ageTo]) => {
+            handleChange(ageFrom === 1 ? null : ageFrom, 'ageFrom');
+            handleChange(ageTo === 100 ? null : ageTo, 'ageTo');
+          }}
+          valueLabelDisplay='auto'
+          min={1}
+          disableSwap
+          marks={[1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map((value) => ({
+            value,
+            label: value === 100 ? value + '+' : value
+          }))}
+        />
+      </Container>
+      <Divider>
+        <Chip
+          label={`Weight: ${fightFormula.weightFrom || '10'} - ${fightFormula.weightTo || '100+'}`}
+        />
+      </Divider>
+      <Container>
+        <Slider
+          sx={{ mt: 3, mb: 2 }}
+          getAriaLabel={() => 'Weight'}
+          value={[fightFormula.weightFrom || 10, fightFormula.weightTo || 100]}
+          onChange={(e, [weightFrom, weightTo]) => {
+            handleChange(weightFrom === 10 ? null : weightFrom, 'weightFrom');
+            handleChange(weightTo === 100 ? null : weightTo, 'weightTo');
+          }}
+          min={10}
+          step={0.1}
+          max={100}
+          valueLabelDisplay='auto'
+          disableSwap
+          marks={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 100].map((value) => ({
+            value,
+            label: value === 100 ? value + '+' : value
+          }))}
+        />
+      </Container>
     </Modal>
   );
 }

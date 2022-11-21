@@ -12,10 +12,7 @@ const JSONPointer = (object, pointer) => {
 
   return value;
 };
-
-const isNoValue = (value) => {
-  return value === undefined || value === null || value === '';
-};
+const { isNoValue } = LIVR.util;
 
 const defaultRules = {
   list_or_one(rule) {
@@ -93,10 +90,6 @@ const defaultRules = {
       if (isNoValue(value)) return;
 
       const valueToCheck = JSONPointer(params, query);
-      if (!valueToCheck) {
-        throw new Error('LIVR: the target value of the "bigger_than" rule is missed');
-      }
-
       if (valueToCheck < value) return 'TOO_LOW';
     };
   },

@@ -102,7 +102,9 @@ function FightFormulasList() {
         open={deleteModalStatus}
         handleClose={handleChangeStatusDeleteModal}
         handleConfirm={handleDeleteFightFormula}
-      />
+      >
+        You cannot revert this operation.
+      </Modal>
       <CreateFightFormulaModal
         open={createModalStatus}
         handleClose={handleChangeStatusCreateModal}

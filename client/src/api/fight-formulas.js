@@ -1,6 +1,10 @@
 import Base from './base.js';
 
 class FightFormulas extends Base {
+  bulkCreate = (payload) => {
+    return this.apiClient.post('fight-formulas/bulk', payload);
+  };
+
   create = (payload) => {
     return this.apiClient.post('fight-formulas', payload);
   };
