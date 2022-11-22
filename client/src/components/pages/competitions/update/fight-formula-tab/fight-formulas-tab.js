@@ -69,10 +69,14 @@ function FightFormulasList() {
     setDeleteModalStatus(!deleteModalStatus);
   };
   const handleDeleteFightFormula = () => {
+    console.log('='.repeat(50)); // !nocommit
+    console.log();
+    console.log('='.repeat(50));
     dispatch(
-      deleteFightFormula(anchor.id, () =>
-        dispatch(showSuccess('Fight formula was successfully deleted.'))
-      )
+      deleteFightFormula(anchor.id, () => {
+        dispatch(listFightFormulas({ competitionId: competition.id }));
+        dispatch(showSuccess('Fight formula was successfully deleted.'));
+      })
     );
     handleChangeStatusDeleteModal();
     handleCloseSettings();
@@ -108,7 +112,6 @@ function FightFormulasList() {
       <CreateFightFormulaModal
         open={createModalStatus}
         handleClose={handleChangeStatusCreateModal}
-        handleConfirm={handleDeleteFightFormula}
       />
       <SettingsPopover
         anchorEl={anchor?.element}

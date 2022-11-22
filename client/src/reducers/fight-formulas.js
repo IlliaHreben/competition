@@ -55,6 +55,9 @@ const fightFormulas = createSlice({
       state.errors = action.payload;
     },
 
+    deleteRequest: (state) => {
+      state.isLoading = true;
+    },
     deleteItem: (state, action) => {
       state.list = state.list.filter(({ id }) => action.payload.id !== id);
     },
