@@ -6,15 +6,6 @@ import FightFormula from '../../models/FightFormula.js';
 export default class FightFormulasList extends ServiceBase {
   static validationRules = {
     competitionId: ['required', 'uuid'],
-
-    // search: ['string'],
-    // coachId: ['not_empty', 'uuid'],
-    // clubId: ['not_empty', 'uuid'],
-    // sectionId: ['not_empty', 'uuid'],
-    // settlementId: ['not_empty', 'uuid'],
-    // sex: ['string', { min_length: 1 }, { max_length: 100 }],
-    // group: [{ one_of: ['A', 'B', null] }],
-
     sort: [
       {
         one_of: [
@@ -36,7 +27,7 @@ export default class FightFormulasList extends ServiceBase {
     order: [{ one_of: ['asc', 'desc'] }, { default: 'asc' }],
     limit: ['positive_integer'],
     offset: ['integer', { min_number: 0 }],
-    include: ['to_array', { list_of: { one_of: ['cards', 'section'] } }],
+    include: ['to_array', { list_of: { one_of: ['cards', 'section'] } }, { default: 'section' }],
   };
 
   async execute({ sort, order, include, ...query }) {

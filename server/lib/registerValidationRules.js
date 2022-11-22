@@ -93,11 +93,8 @@ const defaultRules = {
       if (isNoValue(value)) return;
 
       const valueToCheck = JSONPointer(params, query);
-      if (!valueToCheck) {
-        throw new Error('LIVR: the target value of the "bigger_than" rule is missed');
-      }
 
-      if (valueToCheck < value) return 'TOO_LOW';
+      if (valueToCheck >= value) return 'TOO_LOW';
     };
   },
   required_if_not_present(query) {

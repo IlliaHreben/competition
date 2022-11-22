@@ -97,8 +97,8 @@ FightFormula.init(
     roundTime: { type: DT.INTEGER, allowNull: false },
     breakTime: { type: DT.INTEGER, allowNull: false },
 
-    createdAt: { type: DT.DATE, allowNull: false },
-    updatedAt: { type: DT.DATE, allowNull: false },
+    createdAt: { type: DT.DATE, allowNull: false, defaultValue: new Date() },
+    updatedAt: { type: DT.DATE, allowNull: false, defaultValue: new Date() },
     deletedAt: { type: DT.DATE, allowNull: true },
   },
   {
