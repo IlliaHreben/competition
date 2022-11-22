@@ -27,13 +27,17 @@ export default class FightFormulasList extends ServiceBase {
     order: [{ one_of: ['asc', 'desc'] }, { default: 'asc' }],
     limit: ['positive_integer'],
     offset: ['integer', { min_number: 0 }],
-    include: ['to_array', { list_of: { one_of: ['cards', 'section'] } }, { default: 'section' }],
+    include: [
+      'to_array',
+      { list_of: { one_of: ['cards', 'section'] } },
+      { default: [['section']] },
+    ],
   };
 
   async execute({ sort, order, include, ...query }) {
     sort = sort === 'section' ? ['Section', 'name', order] : [sort, order];
 
-    const { rows, count } = await FightFormula.findAndCountAll({
+    const rows = await FightFormula.findAll({
       where: query,
       order: [sort, ['id', 'desc']],
       include: include.map(fromCapital),
@@ -42,7 +46,7 @@ export default class FightFormulasList extends ServiceBase {
     return {
       data: rows.map(dumpFightFormula),
       meta: {
-        filteredCount: count,
+        filteredCount: rows.length,
         limit: query.limit,
         offset: query.offset,
       },

@@ -16,8 +16,8 @@ export default class BulkCreateFightFormulas extends ServiceBase {
           weightFrom: ['required', { number_between: [0, 999] }],
           weightTo: ['required', { number_between: [0, 999] }, { bigger_than: 'weightFrom' }],
           sex: ['required', { one_of: ['man', 'woman'] }],
-          ageFrom: ['required', 'integer', { number_between: [0, 100] }],
-          ageTo: ['required', 'integer', { number_between: [0, 100] }, { bigger_than: 'ageFrom' }],
+          ageFrom: ['required', 'integer', { number_between: [0, 999] }],
+          ageTo: ['required', 'integer', { number_between: [0, 999] }, { bigger_than: 'ageFrom' }],
           sectionId: ['required', 'uuid'],
           degree: ['not_empty', 'positive_decimal'],
           group: ['not_empty', { one_of: ['A', 'B'] }],
@@ -45,7 +45,7 @@ export default class BulkCreateFightFormulas extends ServiceBase {
       if (section.type === 'light') delete item.group;
       else if (section.type === 'full' && !item.group) {
         item.group = 'A';
-        arr.push({ item, group: 'B' });
+        arr.push({ ...item, group: 'B' });
       }
     });
 

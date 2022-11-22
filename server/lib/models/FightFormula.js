@@ -73,10 +73,8 @@ FightFormula.init(
     ageTo: { type: DT.INTEGER, allowNull: false },
     weightFrom: { type: DT.FLOAT, allowNull: false },
     weightTo: { type: DT.FLOAT, allowNull: false },
-    group: {
-      type: DT.ENUM(['A', 'B']),
-      allowNull: true,
-    },
+    group: { type: DT.ENUM(['A', 'B']), allowNull: true },
+    degree: { type: DT.INTEGER, allowNull: true },
 
     sectionId: {
       type: DT.UUID,
