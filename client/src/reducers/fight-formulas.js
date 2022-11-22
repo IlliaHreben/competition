@@ -32,7 +32,6 @@ const fightFormulas = createSlice({
     },
 
     create: (state, action) => {
-      state.list.push(action.payload);
       state.isLoading = false;
     },
     createRequest: (state) => {

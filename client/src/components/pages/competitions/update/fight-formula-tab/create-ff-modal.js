@@ -12,8 +12,11 @@ import TextField from '@mui/material/TextField';
 import Slider from '@mui/material/Slider';
 
 import Modal from '../../../../ui-components/modal';
-import { updateFightFormula, bulkCreateFightFormula } from '../../../../../actions/fight-formulas';
-import { list as listSections } from '../../../../../actions/sections';
+import {
+  updateFightFormula,
+  bulkCreateFightFormula,
+  listFightFormulas
+} from '../../../../../actions/fight-formulas';
 import { showSuccess, showError } from '../../../../../actions/errors';
 import { formatTimeToText, formatTime } from '../../../../../utils/datetime';
 import { prepareToSend, formatFF } from './utils';
@@ -76,7 +79,7 @@ export default function CreateFightFormula({ open, handleClose, fightFormulaData
 
     dispatch(
       action(data, () => {
-        dispatch(listSections({ competitionId: competition.id }));
+        dispatch(listFightFormulas({ competitionId: competition.id }));
         dispatch(
           showSuccess(`Fight formula has been successfully ${isEdit ? 'updated' : 'created'}.`)
         );
