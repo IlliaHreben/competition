@@ -1,4 +1,4 @@
-import sequelize, { DT } from '../sequelize-singleton.js';
+import sequelize, { DT, Op } from '../sequelize-singleton.js';
 
 import Base from './Base.js';
 
@@ -29,6 +29,27 @@ export default class FightFormula extends Base {
         allowNull: false,
       },
     });
+  }
+
+  static async validateOnCrossing(data) {
+    if (!data) throw new Error('Data is required');
+    const { weightFrom, weightTo, ageFrom, ageTo } = data;
+    const query = {
+      ...(data.id && { id: { [Op.ne]: data.id } }),
+      competitionId: data.competitionId,
+      sectionId: data.sectionId,
+      group: data.group || null,
+      sex: data.sex,
+      weightFrom: { [Op.lte]: weightTo },
+      weightTo: { [Op.gte]: weightFrom },
+      ageFrom: { [Op.lte]: ageTo },
+      ageTo: { [Op.gte]: ageFrom },
+      degree: data.degree || null,
+    };
+
+    const isCrossing = await FightFormula.findOne({ where: query });
+
+    return isCrossing;
   }
 
   async assignFightsToFormula() {

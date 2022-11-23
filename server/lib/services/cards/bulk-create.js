@@ -31,6 +31,7 @@ export default class CardsBulkCreate extends ServiceBase {
     const categoryIds = [...new Set(cards.map((c) => c.categoryId))];
     const categories = await Category.findAll({ where: { id: categoryIds } });
     await Promise.all(categories.map((category) => category.calculateFights()));
+    await Promise.all(categories.map((category) => category.assignFightFormulaToFights()));
 
     return {
       data: cards.map(dumpCard),

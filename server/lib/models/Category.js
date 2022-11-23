@@ -99,11 +99,40 @@ export default class Category extends Base {
     this.sortByCoach(fightsWithCards);
     const fights = await Fight.bulkCreate(fightsWithCards, { returning: true });
 
+    // fights.forEach((fight) => (fight.Category = this));
+
     fights.forEach((fight) => {
       fight.FirstCard = cards.find((c) => c.id === fight.firstCardId);
       fight.SecondCard = cards.find((c) => c.id === fight.secondCardId);
     });
     return fights;
+  }
+
+  async assignFightFormulaToFights() {
+    const FightFormula = sequelize.model('FightFormula');
+
+    const fights = this.Fights || (await this.getFights());
+    const where = {
+      competitionId: this.competitionId,
+      sectionId: this.sectionId,
+      group: this.group,
+      sex: this.sex,
+      weightFrom: { [Op.lte]: this.weightTo },
+      weightTo: { [Op.gte]: this.weightFrom },
+      ageFrom: { [Op.lte]: this.ageTo },
+      ageTo: { [Op.gte]: this.ageFrom },
+    };
+    const fightFormulas = await FightFormula.findAll({ where });
+    const defaultFightFormula = fightFormulas.find((ff) => !ff.degree);
+
+    fights.forEach((fight) => {
+      const fitFightFormula =
+        fightFormulas.find((ff) => ff.degree === fight.degree) || defaultFightFormula;
+      fight.formulaId = fitFightFormula?.id;
+      fight.FightFormula = fitFightFormula;
+    });
+
+    await Promise.all(fights.map((fight) => fight.save()));
   }
 
   generateFights(cardsCount) {

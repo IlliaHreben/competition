@@ -49,10 +49,18 @@ export default class BulkCreateFightFormulas extends ServiceBase {
       }
     });
 
-    const fightFormulas = await FightFormula.bulkCreate(
-      data.map((item) => ({ competitionId, ...item })),
-      { validate: true }
+    await Promise.all(
+      data.map(async (ff) => {
+        ff.competitionId = competitionId;
+        const isCrossing = await FightFormula.validateOnCrossing(ff);
+        if (isCrossing)
+          throw new ServiceError('CROSSING_FORMULA', {
+            id: isCrossing.id,
+          });
+      })
     );
+
+    const fightFormulas = await FightFormula.bulkCreate(data, { validate: true });
 
     return {
       data: fightFormulas.map(dumpFightFormula),

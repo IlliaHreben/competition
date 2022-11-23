@@ -1,4 +1,4 @@
-import sequelize, { DT } from '../sequelize-singleton.js';
+import sequelize, { DT, Op } from '../sequelize-singleton.js';
 import ServiceError from '../services/service-error.js';
 import Base from './Base.js';
 
@@ -106,6 +106,34 @@ export default class Fight extends Base {
     if (nextFight) await nextFight.clearWinStreak(winnerId);
   }
 
+  async assignFightFormula() {
+    const category = this.Category || (await this.getCategory());
+    const where = {
+      competitionId: category.competitionId,
+      sectionId: category.sectionId,
+      group: category.group,
+      sex: category.sex,
+      weightFrom: { [Op.lte]: category.weightTo },
+      weightTo: { [Op.gte]: category.weightFrom },
+      ageFrom: { [Op.lte]: category.ageTo },
+      ageTo: { [Op.gte]: category.ageFrom },
+      [Op.or]: [{ degree: category.degree }, { degree: null }],
+    };
+    const fightFormulas = await FightFormula.findOne({
+      where,
+      limit: 2,
+    });
+    const fightFormula =
+      fightFormulas.length === 1
+        ? fightFormulas[0]
+        : fightFormulas.find((ff) => ff.degree === this.degree);
+
+    this.formulaId = fightFormula.id;
+    this.FightFormula = this;
+
+    await this.save();
+  }
+
   // static initScopes() {
   //   const scopes = {
   //   };
@@ -122,29 +150,21 @@ Fight.init(
 
     firstCardId: {
       type: DT.UUID,
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
       references: { model: 'Cards', key: 'id' },
       allowNull: true,
     },
     secondCardId: {
       type: DT.UUID,
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
       references: { model: 'Cards', key: 'id' },
       allowNull: true,
     },
     winnerId: {
       type: DT.UUID,
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
       references: { model: 'Cards', key: 'id' },
       allowNull: true,
     },
     nextFightId: {
       type: DT.UUID,
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
       references: { model: 'Fights', key: 'id' },
       allowNull: true,
     },
@@ -157,9 +177,12 @@ Fight.init(
     },
     fightSpaceId: {
       type: DT.UUID,
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
       references: { model: 'FightSpaces', key: 'id' },
+      allowNull: true,
+    },
+    formulaId: {
+      type: DT.UUID,
+      references: { model: 'FightFormulas', key: 'id' },
       allowNull: true,
     },
 

@@ -33,20 +33,11 @@ export default class FightFormulasCreate extends ServiceBase {
     const competition = await Competition.findById(competitionId);
     if (!competition) throw new ServiceError('NOT_FOUND', { id: competitionId });
 
-    // const fightFormulasToCheck = await FightFormula.findAll({
-    //   where: {
-    //     competitionId,
-    //     sectionId,
-    //     sex: data.sex,
-    //     ageFrom: data.ageFrom,
-    //     ageTo: data.ageTo,
-    //   },
-    // });
+    const isCrossing = await FightFormula.validateOnCrossing();
 
-    // const errors = FightFormula.validateFightFormulas(fightFormulasToCheck, [data]);
-    // if (errors.length) throw new ServiceError('CATEGORY_VALIDATION', errors);
+    if (isCrossing) throw new ServiceError('CROSSING_FORMULA', { id: isCrossing.id });
 
-    const fightFormula = await FightFormula.create(data);
+    const fightFormula = await FightFormula.create({ competitionId, data });
 
     return {
       data: dumpFightFormula(fightFormula),

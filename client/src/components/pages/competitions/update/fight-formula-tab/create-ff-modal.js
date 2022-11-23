@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Select, MenuItem, Chip, Checkbox, ListItemText, Container, Divider } from '@mui/material';
@@ -17,7 +17,7 @@ import {
   bulkCreateFightFormula,
   listFightFormulas
 } from '../../../../../actions/fight-formulas';
-import { showSuccess, showError } from '../../../../../actions/errors';
+import { showSuccess } from '../../../../../actions/errors';
 import { formatTimeToText, formatTime } from '../../../../../utils/datetime';
 import { prepareToSend, formatFF } from './utils';
 
@@ -53,7 +53,7 @@ function mapStateToProps(state) {
 export default function CreateFightFormula({ open, handleClose, fightFormulaData = {} }) {
   const isEdit = !!fightFormulaData.id;
   const classes = useStyles();
-  const { errors: fetchErrors, competition, sections } = useSelector(mapStateToProps);
+  const { competition, sections } = useSelector(mapStateToProps);
   const [fightFormula, setFightFormula] = useState(formatFF(fightFormulaData, sections));
   const dispatch = useDispatch();
 
@@ -63,12 +63,12 @@ export default function CreateFightFormula({ open, handleClose, fightFormulaData
     setFightFormula((prev) => ({ ...prev, [field]: value }));
   };
 
-  useEffect(() => {
-    if (fetchErrors) {
-      Object.values(fetchErrors).map((error) => dispatch(showError(error)));
-      // dispatch(deleteError('data'));
-    }
-  }, [dispatch, fetchErrors]);
+  // useEffect(() => {
+  //   if (fetchErrors) {
+  //     Object.values(fetchErrors).map((error) => dispatch(showError(error)));
+  //     // dispatch(deleteError('data'));
+  //   }
+  // }, [dispatch, fetchErrors]);
 
   const handleConfirm = () => {
     const action = isEdit ? updateFightFormula : bulkCreateFightFormula;

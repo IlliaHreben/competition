@@ -112,6 +112,10 @@ const errors = {
     code: 'RELATED_INSTANCES',
     fields: { main: 'RELATED_INSTANCES', ...data },
   }),
+  CROSSING_FORMULA: (data) => ({
+    code: 'CROSSING_INSTANCES',
+    fields: { main: 'CROSSING_FORMULA', ...data },
+  }),
 };
 
 export default class ServiceError extends Exception {
