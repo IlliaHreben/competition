@@ -235,6 +235,7 @@ export default class Category extends Base {
     const Fight = sequelize.model('Fight');
     const Fighter = sequelize.model('Fighter');
     const Club = sequelize.model('Club');
+    const FightFormula = sequelize.model('FightFormula');
 
     const scopes = {
       cards: {
@@ -301,6 +302,15 @@ export default class Category extends Base {
           as: 'Cards',
           required: true,
           include: ['Fighter'],
+          order: [['id', 'ASC']],
+        },
+      },
+      fightsWithFormula: {
+        include: {
+          model: Fight,
+          as: 'Fights',
+          required: true,
+          include: [{ model: FightFormula, as: 'FightFormula', required: true }],
           order: [['id', 'ASC']],
         },
       },

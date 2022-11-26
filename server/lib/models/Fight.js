@@ -147,6 +147,7 @@ Fight.init(
 
     degree: { type: DT.INTEGER, allowNull: false },
     orderNumber: { type: DT.INTEGER, allowNull: false },
+    serialNumber: { type: DT.INTEGER, allowNull: true },
 
     firstCardId: {
       type: DT.UUID,

@@ -4,6 +4,7 @@ import Base from './Base.js';
 import defaultCategories from '../constants/categories.json' assert { type: 'json' };
 import ServiceError from '../services/service-error';
 import { createBlocks } from '../utils/categories';
+import { calculate } from '../utils/categories-time-calculation';
 export default class Competition extends Base {
   static initRelation() {
     const Category = sequelize.model('Category');
@@ -143,15 +144,28 @@ export default class Competition extends Base {
 
   async calculateFightsTimesAndOrder() {
     const Category = sequelize.model('Category');
+    const FightSpace = sequelize.model('FightSpace');
+    const Fight = sequelize.model('Fight');
 
-    const categories = await Category.scope('cards').findAll({
-      col: 'Category.id',
+    const categories = await Category.scope(
+      /* 'cards',  */ 'sections',
+      'fightsWithFormula'
+    ).findAll({
+      // col: 'Category.id',
       where: {
         competitionId: this.id,
       },
     });
-
-    createBlocks(categories);
+    const fightSpaces = await FightSpace.findAll({
+      where: {
+        competitionDay: 1,
+        competitionId: this.id,
+      },
+    });
+    const result = calculate(categories, fightSpaces);
+    await Promise.all(result.map((r) => r.save()));
+    // await Fight.bulkCreate(result, { updateOnDublicate: true });
+    // createBlocks(categories);
   }
 }
 
@@ -189,4 +203,6 @@ Competition.init(
   }
 );
 
-Competition.findOne().then(c => c.calculateFightsTimesAndOrder()).then(console.log)
+Competition.findOne()
+  .then((c) => c.calculateFightsTimesAndOrder())
+  .then(console.log);

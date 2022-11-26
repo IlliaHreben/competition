@@ -14,6 +14,7 @@ const up = async (queryInterface, Sequelize) => {
 
         degree: { type: Sequelize.INTEGER, allowNull: false },
         orderNumber: { type: Sequelize.INTEGER, allowNull: false },
+        serialNumber: { type: Sequelize.INTEGER, allowNull: true },
 
         firstCardId: {
           type: Sequelize.UUID,

@@ -76,7 +76,16 @@ export function createBlocks(_categories, days = 1) {
     //   ) return;
     // });
   });
-
+  console.log('='.repeat(50)); // !nocommit
+  console.log(
+    blocks.map(
+      (b) =>
+        `${b.categories[0].Section.name}: ${b.ageFrom} - ${b.ageTo}. [${'-'.repeat(
+          b.categories.reduce((acc, c) => acc + c.Fights.length, 0)
+        )}] ${b.categories.reduce((acc, c) => acc + c.Fights.length, 0)}`
+    )
+  );
+  console.log('='.repeat(50));
   const sortedBlocks = blocks.map((block) => {
     block.categories = block.categories.sort((a, b) => b.Fights.length - a.Fights.length);
     const fights = [];
@@ -93,16 +102,16 @@ export function createBlocks(_categories, days = 1) {
     return fights;
   });
 
-  console.log('='.repeat(50)); // !nocommit
-  console.log(
-    sortedBlocks.map((f) =>
-      f.map(
-        (f) =>
-          `${f?.orderNumber}. 1/${f?.degree}: ${f?.FirstCard?.Fighter.lastName} ${f?.FirstCard?.Fighter.name} & ${f?.SecondCard?.Fighter.lastName} ${f?.SecondCard?.Fighter.name}`
-      )
-    )
-  );
-  console.log('='.repeat(50));
+  // console.log('='.repeat(50)); // !nocommit
+  // console.log(
+  //   sortedBlocks.map((f) =>
+  //     f.map(
+  //       (f) => f.toJSON()
+  //       // `${ f?.orderNumber }.1 / ${ f?.degree }: ${ f?.FirstCard?.Fighter.lastName } ${ f?.FirstCard?.Fighter.name } & ${ f?.SecondCard?.Fighter.lastName } ${ f?.SecondCard?.Fighter.name } `
+  //     )
+  //   )
+  // );
+  // console.log('='.repeat(50));
 
   return blocks;
 }
