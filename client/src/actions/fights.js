@@ -1,19 +1,20 @@
 import api from '../api-singleton';
 import * as categoriesReducer from '../reducers/categories';
+import * as reducer from '../reducers/fights';
 
-// export function listFighters (params = {}) {
-//     return async dispatch => {
-//         try {
-//             dispatch(reducer.listRequest());
+export function listFights(params = {}) {
+  return async (dispatch) => {
+    try {
+      dispatch(reducer.listRequest());
 
-//             const data = await api.fighters.list(params);
+      const data = await api.fights.list(params);
 
-//             dispatch(reducer.list(data));
-//         } catch (errData) {
-//             dispatch(reducer.listRequestError(errData));
-//         }
-//     };
-// }
+      dispatch(reducer.list(data));
+    } catch (errData) {
+      dispatch(reducer.listRequestError(errData));
+    }
+  };
+}
 
 // export function supplementListFighters (params = {}) {
 //     return async dispatch => {

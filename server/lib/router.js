@@ -54,6 +54,7 @@ router.get('/states', controllers.states.list);
 router.post('/states', controllers.states.create);
 
 router.put('/fights/:id/winner', controllers.fights.setWinner);
+router.get('/fights', controllers.fights.list);
 
 router.get('/fight-formulas', controllers.fightFormulas.list);
 router.get('/fight-formulas/:id', controllers.fightFormulas.show);

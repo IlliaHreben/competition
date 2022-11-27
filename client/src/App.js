@@ -14,6 +14,7 @@ import HomeIcon from './assets/icons/home.png';
 import CompetitionIcon from './assets/icons/tournament.png';
 import GraphicsIcon from './assets/icons/graphics.png';
 import CardsIcon from './assets/icons/cards.png';
+import SubsequenceIcon from './assets/icons/subsequence.png';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -27,6 +28,7 @@ const CompetitionList = lazy(() => import('./components/pages/competitions/list.
 const CompetitionUpdate = lazy(() => import('./components/pages/competitions/update'));
 const CardsList = lazy(() => import('./components/pages/cards/list'));
 const CardCreate = lazy(() => import('./components/pages/cards/create'));
+const Subsequence = lazy(() => import('./components/pages/subsequence'));
 
 const routes = [
   {
@@ -59,6 +61,12 @@ const routes = [
     icon: CardsIcon,
     create: true,
     component: CardCreate
+  },
+  {
+    name: 'Subsequence',
+    path: '/subsequence',
+    icon: SubsequenceIcon,
+    component: Subsequence
   }
 ];
 

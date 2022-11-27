@@ -116,11 +116,16 @@ export function dumpFight(data) {
 
   if (data.FirstCard) linked.firstCard = dumpCard(data.FirstCard);
   if (data.SecondCard) linked.secondCard = dumpCard(data.SecondCard);
+  if (data.Category) linked.category = dumpCategory(data.Category);
+  if (data.Section) linked.section = dumpSection(data.Section);
+  if (data.FightSpace) linked.fightSpace = dumpFightSpace(data.FightSpace);
+  if (data.FightFormula) linked.fightFormula = dumpFightFormula(data.FightFormula);
 
   return {
     id: data.id,
     degree: data.degree,
     orderNumber: data.orderNumber,
+    serialNumber: data.serialNumber,
     firstCardId: data.firstCardId,
     secondCardId: data.secondCardId,
     winnerId: data.winnerId,

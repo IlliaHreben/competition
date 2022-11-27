@@ -38,3 +38,28 @@ export const formatTimeToText = (time) => {
   const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
   return `${formattedMinutes}:${formattedSeconds}`;
 };
+
+function isNumber(value) {
+  return !isNaN(value);
+}
+
+function isInteger(value) {
+  return isNumber(value) && value % 1 === 0;
+}
+
+export const calculateSecFromFight = ({ roundCount, roundTime, breakTime }) => {
+  if (!isInteger(roundCount) || !isInteger(roundTime) || !isInteger(breakTime))
+    throw new Error('Invalid fight data');
+
+  return roundCount * roundTime + (roundCount - 1) * breakTime;
+};
+
+export const parseTimeFromSec = (time) => {
+  if (typeof +time !== 'number') throw new Error('Time must be a number');
+
+  const totalMinutes = Math.floor(time / 60);
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  const seconds = time % 60;
+  return { hours, minutes, seconds };
+};

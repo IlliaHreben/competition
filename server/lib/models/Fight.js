@@ -5,6 +5,7 @@ import Base from './Base.js';
 import Card from './Card.js';
 import Category from './Category.js';
 import FightFormula from './FightFormula.js';
+import FightSpace from './FightSpace.js';
 
 export default class Fight extends Base {
   static initRelation() {
@@ -59,6 +60,13 @@ export default class Fight extends Base {
       foreignKey: {
         name: 'formulaId',
         allowNull: false,
+      },
+    });
+    this.belongsTo(FightSpace, {
+      as: 'FightSpace',
+      foreignKey: {
+        name: 'fightSpaceId',
+        allowNull: true,
       },
     });
 
@@ -134,11 +142,27 @@ export default class Fight extends Base {
     await this.save();
   }
 
-  // static initScopes() {
-  //   const scopes = {
-  //   };
-  //   Object.entries(scopes).forEach((scope) => this.addScope(...scope));
-  // }
+  static initScopes() {
+    const scopes = {
+      categoryWithSection: {
+        include: [{ model: Category, as: 'Category', include: 'Section' }],
+      },
+      fightFormula: {
+        include: [{ model: FightFormula, as: 'FightFormula' }],
+      },
+      fightSpace: {
+        include: [{ model: FightSpace, as: 'FightSpace' }],
+      },
+      cardsWithFighter: {
+        include: [
+          { model: Card, as: 'FirstCard', include: ['Fighter'] },
+          { model: Card, as: 'SecondCard', include: ['Fighter'] },
+        ],
+      },
+    };
+
+    Object.entries(scopes).forEach((scope) => this.addScope(...scope));
+  }
 }
 
 Fight.init(

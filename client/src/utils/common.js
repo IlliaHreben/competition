@@ -36,3 +36,15 @@ export function objectCombos(list, n = 0, result = [], current = {}) {
 
   return result;
 }
+
+export function JSONPointer(object, pointer) {
+  const parts = pointer.split('/');
+  let value = object;
+
+  for (const part of parts) {
+    if (!value) break;
+    value = value[part];
+  }
+
+  return value;
+}
