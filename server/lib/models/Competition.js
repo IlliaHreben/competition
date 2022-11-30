@@ -203,6 +203,6 @@ Competition.init(
   }
 );
 
-// Competition.findOne()
-//   .then((c) => c.calculateFightsTimesAndOrder())
-//   .then(console.log);
+Competition.findOne()
+  .then((c) => c.calculateFightsTimesAndOrder())
+  .then(console.log);

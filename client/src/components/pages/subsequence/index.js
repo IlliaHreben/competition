@@ -2,12 +2,10 @@ import { useEffect, useState } from 'react';
 import { listFights } from '../../../actions/fights';
 import { useSelector, useDispatch } from 'react-redux';
 import { groupByCriteria, splitBy } from '../../../utils/grouping';
-import { Container, Paper, Typography, Button } from '@mui/material';
+import { Container, Paper } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import { parseTimeFromSec, calculateSecFromFight } from '../../../utils/datetime';
+
+import Card from './card';
 
 function mapState(state) {
   return {
@@ -69,9 +67,9 @@ function mapState(state) {
 //   }
 // };
 
-export default function Subsequence() {
+export default function Schedule() {
   useEffect(() => {
-    document.title = 'Subsequence';
+    document.title = 'Schedule';
   }, []);
 
   const dispatch = useDispatch();
@@ -85,8 +83,6 @@ export default function Subsequence() {
         include: ['categoryWithSection', 'cardsWithFighter', 'fightFormula', 'fightSpace']
       })
     );
-    // dispatch(listCoaches({ competitionId: active.id, include: ['clubs'] }));
-    // dispatch(listSections({ competitionId: active.id }));
   }, [active, dispatch]);
 
   const [fightGroups, setFightGroups] = useState([]);
@@ -108,47 +104,21 @@ export default function Subsequence() {
   return (
     <Container sx={{ overflow: 'auto' }} maxWidth='auto'>
       {fightGroups.map((groupedByFS, i) => (
-        <Grid
-          key={i}
-          sx={{ mt: 2 }}
-          container
-          rowSpacing={1}
-          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-        >
+        <Grid key={i} sx={{ mt: 2, justifyContent: 'center' }} container spacing={3}>
           {groupedByFS.map((groupedBySection, j) => (
             <Grid key={groupedBySection[0][0].fightSpaceId} item>
-              <Paper sx={{ backgroundColor: '#e7ebf0', maxWidth: 572 }} elevation={0}>
-                <Grid key={i} container spacing={1}>
+              <Paper sx={{ backgroundColor: '#e7ebf0', maxWidth: 350 }} elevation={0}>
+                <Grid key={i} sx={{ justifyContent: 'center' }} container spacing={1}>
                   {groupedBySection.map((fightGroup) => {
                     const category = fightGroup[0].linked.category;
-                    const totalTimeSec = fightGroup.reduce(
-                      (timeSec, f) => timeSec + calculateSecFromFight(f.linked.fightFormula),
-                      0
-                    );
-                    const { hours, minutes, seconds } = parseTimeFromSec(totalTimeSec);
-                    const duration = `${hours}h ${minutes} min ${seconds} sec`;
+
                     return (
                       <Grid
                         item
-                        // p={1}
                         key={`${category.sectionId}-${category.ageFrom}-${category.ageTo}`}
                         spacing={0.5}
                       >
-                        <Card sx={{ width: 270 }}>
-                          <CardContent sx={{ p: 1 }}>
-                            <Typography variant='h6' component='div'>
-                              {category.linked.section.name.toUpperCase()}
-                              {`: ${category.ageFrom} - ${category.ageTo}`}
-                            </Typography>
-                            <Typography variant='caption' sx={{ mb: 1.5 }} color='text.secondary'>
-                              {category.sectionId}
-                            </Typography>
-                            <Typography variant='body2'>Duration: {duration}</Typography>
-                          </CardContent>
-                          <CardActions sx={{ pt: 0, pb: 0 }}>
-                            <Button size='small'>Expand</Button>
-                          </CardActions>
-                        </Card>
+                        <Card fightGroup={fightGroup}></Card>
                       </Grid>
                     );
                   })}
