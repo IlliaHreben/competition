@@ -6,6 +6,7 @@ import { Container, Paper } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 
 import Card from './card';
+import FightSpaceHeader from './fight-space-header';
 
 function mapState(state) {
   return {
@@ -107,6 +108,7 @@ export default function Schedule() {
         <Grid key={i} sx={{ mt: 2, justifyContent: 'center' }} container spacing={3}>
           {groupedByFS.map((groupedBySection, j) => (
             <Grid key={groupedBySection[0][0].fightSpaceId} item>
+              <FightSpaceHeader fightSpace={groupedBySection[0][0].linked.fightSpace} />
               <Paper sx={{ backgroundColor: '#e7ebf0', maxWidth: 350 }} elevation={0}>
                 <Grid key={i} sx={{ justifyContent: 'center' }} container spacing={1}>
                   {groupedBySection.map((fightGroup) => {
