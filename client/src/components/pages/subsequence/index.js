@@ -7,6 +7,8 @@ import Grid from '@mui/material/Unstable_Grid2';
 
 import Card from './card';
 import FightSpaceHeader from './fight-space-header';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 function mapState(state) {
   return {
@@ -104,32 +106,34 @@ export default function Schedule() {
 
   return (
     <Container sx={{ overflow: 'auto' }} maxWidth='auto'>
-      {fightGroups.map((groupedByFS, i) => (
-        <Grid key={i} sx={{ mt: 2, justifyContent: 'center' }} container spacing={3}>
-          {groupedByFS.map((groupedBySection, j) => (
-            <Grid key={groupedBySection[0][0].fightSpaceId} item>
-              <FightSpaceHeader fightSpace={groupedBySection[0][0].linked.fightSpace} />
-              <Paper sx={{ backgroundColor: '#e7ebf0', maxWidth: 350 }} elevation={0}>
-                <Grid key={i} sx={{ justifyContent: 'center' }} container spacing={1}>
-                  {groupedBySection.map((fightGroup) => {
-                    const category = fightGroup[0].linked.category;
+      <DndProvider backend={HTML5Backend}>
+        {fightGroups.map((groupedByFS, i) => (
+          <Grid key={i} sx={{ mt: 2, justifyContent: 'center' }} container spacing={3}>
+            {groupedByFS.map((groupedBySection, j) => (
+              <Grid key={groupedBySection[0][0].fightSpaceId} item>
+                <FightSpaceHeader fightSpace={groupedBySection[0][0].linked.fightSpace} />
+                <Paper sx={{ backgroundColor: '#e7ebf0', maxWidth: 350 }} elevation={0}>
+                  <Grid key={i} sx={{ justifyContent: 'center' }} container spacing={1}>
+                    {groupedBySection.map((fightGroup) => {
+                      const category = fightGroup[0].linked.category;
 
-                    return (
-                      <Grid
-                        item
-                        key={`${category.sectionId}-${category.ageFrom}-${category.ageTo}`}
-                        spacing={0.5}
-                      >
-                        <Card fightGroup={fightGroup}></Card>
-                      </Grid>
-                    );
-                  })}
-                </Grid>
-              </Paper>
-            </Grid>
-          ))}
-        </Grid>
-      ))}
+                      return (
+                        <Grid
+                          item
+                          key={`${category.sectionId}-${category.ageFrom}-${category.ageTo}`}
+                          spacing={0.5}
+                        >
+                          <Card fightGroup={fightGroup}></Card>
+                        </Grid>
+                      );
+                    })}
+                  </Grid>
+                </Paper>
+              </Grid>
+            ))}
+          </Grid>
+        ))}
+      </DndProvider>
     </Container>
   );
 }
