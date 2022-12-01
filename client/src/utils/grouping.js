@@ -19,10 +19,27 @@ import { JSONPointer } from './common';
  * //  [ { name: 'B', age: 2, lastName: 'Y' }, { name: 'B', age: 2, lastName: 'Z'  } ],
  * // ]
  */
-export function groupByCriteria(items, groupBy = []) {
+export function groupByCriteria(items, groupBy = [], { splitByOrder } = {}) {
   const groups = items.reduce((acc, item) => {
-    const group = groupBy.map((key) => JSONPointer(item, key)).join('-');
-    acc[group] = acc[group] || [];
+    let group = groupBy.map((key) => JSONPointer(item, key)).join('-');
+    if (splitByOrder) {
+      const [exitedGroup] =
+        Object.entries(acc).find(([key, value]) => {
+          if (!key.startsWith(group)) return false;
+          const lastValueNumber = value.at(-1)[splitByOrder];
+          if (item[splitByOrder] - lastValueNumber !== 1) return false;
+          return true;
+        }) || [];
+
+      if (!exitedGroup) {
+        group += item[splitByOrder];
+      } else {
+        group = exitedGroup;
+      }
+    }
+
+    if (!acc[group]) acc[group] = [];
+
     acc[group].push(item);
     return acc;
   }, {});

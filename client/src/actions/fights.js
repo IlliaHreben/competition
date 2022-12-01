@@ -16,6 +16,18 @@ export function listFights(params = {}) {
   };
 }
 
+export function shiftFights(params = {}, callback) {
+  return async (dispatch) => {
+    try {
+      await api.fights.shift(params);
+
+      callback?.();
+    } catch (errData) {
+      dispatch(reducer.shiftRequestError(errData));
+    }
+  };
+}
+
 // export function supplementListFighters (params = {}) {
 //     return async dispatch => {
 //         try {
@@ -50,7 +62,7 @@ export function setWinner(data, onSuccess) {
       const { data: category } = await api.categories.show(fight.categoryId, {
         include: ['cards', 'sections']
       });
-      dispatch(categoriesReducer.show(category));
+      dispatch(categoriesReducer.update(category));
 
       onSuccess?.();
     } catch (errData) {

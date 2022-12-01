@@ -116,6 +116,16 @@ const errors = {
     code: 'CROSSING_INSTANCES',
     fields: { main: 'CROSSING_FORMULA', ...data },
   }),
+  WRONG_FIGHTS_ORDER: (data) => ({
+    code: 'WRONG_ORDER',
+    fields: { serialNumber: 'NOT_IN_ORDER', ...data },
+  }),
+  FIGHT_IS_NOT_FIRST: () => ({
+    code: 'FIGHT_IS_NOT_FIRST',
+  }),
+  CANNOT_MOVE_EMPTY_CARD: () => ({
+    code: 'CANNOT_MOVE_EMPTY_CARD',
+  }),
 };
 
 export default class ServiceError extends Exception {

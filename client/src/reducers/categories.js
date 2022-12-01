@@ -31,7 +31,10 @@ const categories = createSlice({
       state.listMeta = action.payload.meta;
       state.isLoading = false;
     },
-    show: (state, action) => {
+    update: (state, action) => {
+      console.log('='.repeat(50)); // !nocommit
+      console.log(action.payload);
+      console.log('='.repeat(50));
       const index = state.list.findIndex((c) => c.id === action.payload.id);
       if (index === -1) return;
       state.list[index] = action.payload;
@@ -81,7 +84,7 @@ export const {
   bulkCreate,
   bulkCreateRequest,
   bulkCreateRequestError,
-  show,
+  update,
   concatToList
 } = actions;
 

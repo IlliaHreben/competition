@@ -56,7 +56,8 @@ function createFightersTree({ cards, fights }) {
     // "tournamentRoundText" : "4", // Text for Round Header
     // "startTime"           : "2021-05-30",
     state: 'DONE', // 'NO_SHOW' | 'WALK_OVER' | 'NO_PARTY' | 'DONE' | 'SCORE_DONE' Only needed to decide walkovers and if teamNames are TBD (to be decided)
-    participants: getCellValues(f, colors)
+    participants: getCellValues(f, colors),
+    categoryId: f.categoryId
   }));
 }
 
@@ -104,19 +105,6 @@ export default function FightTree({
 
   useMemo(() => setFightersTree(createFightersTree(linked)), [linked]);
 
-  // const resetCategory = () => setFightersTree(createFightersTree(linked));
-
-  // const stepsCount = 1 + Math.log2(linked.fights
-  //     .reduce((acc, { degree }) => degree > acc ? degree : acc, 0)
-  // );
-
-  // const innerWidth = (totalWidth - margin.left - margin.right) * stepsCount;
-  // const innerHeight = (totalHeight - margin.top - margin.bottom) * stepsCount;
-
-  // const origin = { x: 0, y: 0 };
-  // const sizeWidth = innerWidth;
-  // const sizeHeight = innerHeight;
-
   const [anchor, setAnchor] = useState(null);
 
   const handleClickParty = (e, fighterId, fightId) => {
@@ -141,38 +129,41 @@ export default function FightTree({
     );
   };
 
-  const renderCustomMatchBracket = useCallback(({ fightersTree }) => {
-    const isBigBracket = fightersTree.length > 16;
-    const spaceBetweenColumns = isBigBracket ? -40 : 100;
-    const horizontalOffset = isBigBracket ? -175 : 0;
-    const spaceBetweenRows = isBigBracket ? 75 : 10;
-    const roundSeparatorWidth = isBigBracket ? 20 : 100;
+  const renderCustomMatchBracket = useCallback(
+    ({ fightersTree }) => {
+      const isBigBracket = fightersTree.length > 16;
+      const spaceBetweenColumns = isBigBracket ? -40 : 100;
+      const horizontalOffset = isBigBracket ? -175 : 0;
+      const spaceBetweenRows = isBigBracket ? 75 : 10;
+      const roundSeparatorWidth = isBigBracket ? 20 : 100;
 
-    return (
-      <CustomMatchBracket
-        // theme={WhiteTheme}
-        matches={fightersTree}
-        handleClickParty={handleClickParty}
-        options={{
-          style: {
-            connectorColor: '#000000',
-            connectorColorHighlight: '#43a047d4',
+      return (
+        <CustomMatchBracket
+          category={category}
+          matches={fightersTree}
+          handleClickParty={handleClickParty}
+          options={{
+            style: {
+              connectorColor: '#000000',
+              connectorColorHighlight: '#43a047d4',
 
-            roundSeparatorWidth,
-            lineInfo: {
-              // separation: -13,
-              // homeVisitorSpread: 0.5
-            },
-            // width: 400,
-            horizontalOffset,
-            spaceBetweenRows,
-            canvasPadding: 50,
-            spaceBetweenColumns
-          }
-        }}
-      />
-    );
-  }, []);
+              roundSeparatorWidth,
+              lineInfo: {
+                // separation: -13,
+                // homeVisitorSpread: 0.5
+              },
+              // width: 400,
+              horizontalOffset,
+              spaceBetweenRows,
+              canvasPadding: 50,
+              spaceBetweenColumns
+            }
+          }}
+        />
+      );
+    },
+    [category]
+  );
 
   const fightersTreeComponent = useMemo(
     () => renderCustomMatchBracket({ fightersTree }),

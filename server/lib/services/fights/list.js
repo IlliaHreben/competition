@@ -31,6 +31,7 @@ export default class FightsList extends ServiceBase {
     const fights = await Fight.scope(...include).findAll({
       order: [
         ['serialNumber', 'ASC'],
+        ['fightSpaceId', 'ASC'],
         ['id', 'ASC'],
       ],
     });

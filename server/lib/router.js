@@ -19,6 +19,7 @@ router.post('/cards/bulk', controllers.cards.bulkCreate);
 router.get('/cards', controllers.cards.list);
 router.get('/cards/:id', controllers.cards.show);
 router.delete('/cards', controllers.cards.delete);
+router.patch('/cards/switch', controllers.cards.switch);
 router.patch('/cards/:id', controllers.cards.update);
 
 router.get('/fighters', controllers.fighters.list);
@@ -55,6 +56,7 @@ router.post('/states', controllers.states.create);
 
 router.put('/fights/:id/winner', controllers.fights.setWinner);
 router.get('/fights', controllers.fights.list);
+router.patch('/fights/shift', controllers.fights.shift);
 
 router.get('/fight-formulas', controllers.fightFormulas.list);
 router.get('/fight-formulas/:id', controllers.fightFormulas.show);

@@ -3,7 +3,7 @@ import { SingleEliminationBracket } from '@g-loot/react-tournament-brackets';
 import Fight from './fight';
 import { PropTypes } from 'prop-types';
 
-export const CustomMatchBracket = ({ handleClickParty, ...props }) => {
+export const CustomMatchBracket = ({ handleClickParty, category, ...props }) => {
   // const { width, height } = useWindowSize();
   // // const finalWidth = Math.max(width - 100, 1900);
   // // const finalHeight = Math.max(props.matches.length * 250, 800);
@@ -36,7 +36,7 @@ export const CustomMatchBracket = ({ handleClickParty, ...props }) => {
               height: '100%'
             }}
           >
-            <Fight {...matchProps} handleClickParty={handleClickParty} />
+            <Fight {...matchProps} handleClickParty={handleClickParty} category={category} />
           </div>
         );
       }}
@@ -46,5 +46,6 @@ export const CustomMatchBracket = ({ handleClickParty, ...props }) => {
 
 CustomMatchBracket.propTypes = {
   handleClickParty: PropTypes.func,
-  matches: PropTypes.array
+  matches: PropTypes.array,
+  category: PropTypes.object
 };

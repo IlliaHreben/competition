@@ -3,7 +3,7 @@ import Base from './Base.js';
 
 import defaultCategories from '../constants/categories.json' assert { type: 'json' };
 import ServiceError from '../services/service-error';
-import { createBlocks } from '../utils/categories';
+// import { createBlocks } from '../utils/categories';
 import { calculate } from '../utils/categories-time-calculation';
 export default class Competition extends Base {
   static initRelation() {
@@ -145,7 +145,7 @@ export default class Competition extends Base {
   async calculateFightsTimesAndOrder() {
     const Category = sequelize.model('Category');
     const FightSpace = sequelize.model('FightSpace');
-    const Fight = sequelize.model('Fight');
+    // const Fight = sequelize.model('Fight');
 
     const categories = await Category.scope(
       /* 'cards',  */ 'sections',

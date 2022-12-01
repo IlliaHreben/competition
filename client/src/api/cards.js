@@ -20,6 +20,10 @@ class Cards extends Base {
   update = (id, payload) => {
     return this.apiClient.patch(`cards/${id}`, { data: payload });
   };
+
+  switch = async (params) => {
+    return this.apiClient.patch('cards/switch', params);
+  };
 }
 
 export default Cards;

@@ -38,7 +38,7 @@ function Fight({
   bottomParty,
   handleClickParty,
   onSwitchCards,
-  onReset,
+  category,
   onMouseEnter,
   onMouseLeave,
   match
@@ -65,13 +65,27 @@ function Fight({
   // }
 
   const renderFighter = useCallback(
-    ({ children, ...fighterProps }) => {
+    ({ color, party, icon }) => {
       return (
         <Fighter
-          onClick={(e) => handleClickParty?.(e, fighterProps.party.id, fighterProps.match.id)}
-          {...fighterProps}
+          party={party}
+          position={color === 'red' ? 'firstCardId' : 'secondCardId'}
+          match={match}
+          endIcon={party && <SportsMmaIcon sx={{ color }} />}
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            padding: 0
+          }}
+          startIcon={<Icon sx={{ m: 0 }}>{icon}</Icon>}
+          className={styles.svgButton}
+          key={color}
+          onClick={(e) => handleClickParty?.(e, party.id, match.id)}
+          onMouseEnter={() => onMouseEnter(party?.id)}
+          onMouseLeave={onMouseLeave}
+          category={category}
         >
-          {children}
+          {party?.name || ''}
         </Fighter>
       );
     },
@@ -82,27 +96,7 @@ function Fight({
   const buttons = [
     { color: 'red', party: topParty, icon: redMedalIcon },
     { color: 'blue', party: bottomParty, icon: blueMedalIcon }
-  ].map(({ color, party, icon }) =>
-    renderFighter({
-      fighter: party,
-      match,
-      endIcon: party && <SportsMmaIcon sx={{ color }} />,
-      sx: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        padding: 0
-      },
-      startIcon: <Icon sx={{ m: 0 }}>{icon}</Icon>,
-      className: styles.svgButton,
-      key: color,
-      onClick: (e) => handleClickParty?.(e, party.id, match.id),
-      switchCards: onSwitchCards,
-      resetCategory: onReset,
-      children: party?.name || '',
-      onMouseEnter: () => onMouseEnter(party?.id),
-      onMouseLeave
-    })
-  );
+  ].map(renderFighter);
 
   // const groupRef = useRef(null);
   // const [ width, setDivWidth ] = useState(0);
@@ -165,7 +159,8 @@ Fight.propTypes = {
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
   onReset: PropTypes.func,
-  match: PropTypes.object
+  match: PropTypes.object,
+  category: PropTypes.object
 };
 
 export default Fight;

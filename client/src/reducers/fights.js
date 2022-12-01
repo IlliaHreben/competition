@@ -23,6 +23,10 @@ const fights = createSlice({
       state.isLoading = false;
       state.errors = action.payload;
     },
+    shiftRequestError: (state, action) => {
+      state.isLoading = false;
+      state.errors = action.payload;
+    },
     addList: (state, action) => {
       state.list = state.list.concat(action.payload.data);
       state.listMeta = action.payload.meta;
@@ -54,7 +58,8 @@ export const {
   listRequestError,
   addList,
   update,
-  updateRequestError
+  updateRequestError,
+  shiftRequestError
 } = actions;
 
 export default reducer;

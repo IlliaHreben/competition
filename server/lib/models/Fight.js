@@ -79,6 +79,24 @@ export default class Fight extends Base {
     // });
   }
 
+  static async shiftSerialNumber({ fightSpaceId, from, offset, side }) {
+    if (!['+', '-'].includes(side)) {
+      throw new Error('Offset must be + or -');
+    }
+
+    return Fight.update(
+      { serialNumber: sequelize.literal(`"serialNumber"  ${side} ${offset}`) },
+      {
+        where: {
+          fightSpaceId,
+          serialNumber: {
+            [Op.gte]: from,
+          },
+        },
+      }
+    );
+  }
+
   async setWinner(winnerId) {
     const winner = await Card.findById(winnerId);
     if (!winner) throw new ServiceError('NOT_FOUND', { id: winnerId, entities: ['card'] });

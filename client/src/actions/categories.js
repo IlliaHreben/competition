@@ -15,6 +15,22 @@ export function listCategories(params) {
   };
 }
 
+export function refreshCategories(ids) {
+  return async (dispatch) => {
+    try {
+      dispatch(reducer.listRequest());
+
+      const response = await Promise.all(
+        ids.map((id) => api.categories.show(id, { include: ['cards', 'sections'] }))
+      );
+
+      response.forEach(({ data }) => dispatch(reducer.update(data)));
+    } catch (errData) {
+      dispatch(reducer.listRequestError(errData));
+    }
+  };
+}
+
 export function concatToListCategories(params) {
   return async (dispatch) => {
     try {

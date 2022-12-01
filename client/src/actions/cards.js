@@ -15,6 +15,24 @@ export function listCards(params = {}) {
   };
 }
 
+export function switchCards(params, onSuccess) {
+  return async (dispatch) => {
+    try {
+      dispatch(reducer.listRequest());
+
+      await api.cards.switch(params);
+      // data.forEach((card) => dispatch(reducer.update(card)));
+
+      onSuccess?.();
+    } catch (errData) {
+      console.log('='.repeat(50)); // !nocommit
+      console.log(errData); // !nocommit
+      console.log('='.repeat(50));
+      dispatch(reducer.listRequestError(errData));
+    }
+  };
+}
+
 export function supplementListCards(params = {}) {
   return async (dispatch) => {
     try {

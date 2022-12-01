@@ -2,15 +2,16 @@ import { useDrop } from 'react-dnd';
 import { useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 
-export default function Droppable({ children, onDrop, onOver, onOverLeft }) {
+export default function Droppable({ children, onDrop, onOver, onOverLeft, item }) {
   const [{ isOver }, drop] = useDrop(
     () => ({
       accept: 'drag',
       drop(_item, monitor) {
         const didDrop = monitor.didDrop();
-        if (didDrop) {
+        if (didDrop && _item !== item) {
           return;
         }
+        console.log(`Item ${_item} was dropped on ${item}`);
         onDrop(_item);
       },
       collect: (monitor) => ({
@@ -36,5 +37,6 @@ Droppable.propTypes = {
   children: PropTypes.node.isRequired,
   onDrop: PropTypes.func.isRequired,
   onOver: PropTypes.func,
-  onOverLeft: PropTypes.func
+  onOverLeft: PropTypes.func,
+  item: PropTypes.any
 };

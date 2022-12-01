@@ -1,8 +1,9 @@
 import ServiceBaseModule from 'chista/ServiceBase';
+import x from 'chista/Exception';
 
 import '../../lib/registerValidationRules';
 import ServiceError from './service-error';
-import x from 'chista/Exception';
+import sequelize from '../sequelize-singleton';
 const Exception = x.default;
 
 const ServiceBase = ServiceBaseModule.default;
@@ -18,7 +19,9 @@ export default class Base extends ServiceBase {
   async run(params) {
     const cleanParams = await this.validate(params);
 
-    return this.execute(cleanParams).catch(this.handleError);
+    return sequelize.transaction(() => {
+      return this.execute(cleanParams).catch(this.handleError);
+    });
   }
 
   handleError = (error) => {

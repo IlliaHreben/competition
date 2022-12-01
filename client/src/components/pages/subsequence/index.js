@@ -94,11 +94,11 @@ export default function Schedule() {
     const groups = splitBy(fights, (fight) => fight.linked.fightSpace.competitionDay - 1).map(
       (splittedByDay) =>
         groupByCriteria(splittedByDay, ['fightSpaceId']).map((groupedByFS) =>
-          groupByCriteria(groupedByFS, [
-            'linked/category/sectionId',
-            'linked/category/ageFrom',
-            'linked/category/ageTo'
-          ])
+          groupByCriteria(
+            groupedByFS,
+            ['linked/category/sectionId', 'linked/category/ageFrom', 'linked/category/ageTo'],
+            { splitByOrder: 'serialNumber' }
+          )
         )
     );
     setFightGroups(groups);
@@ -120,7 +120,7 @@ export default function Schedule() {
                       return (
                         <Grid
                           item
-                          key={`${category.sectionId}-${category.ageFrom}-${category.ageTo}`}
+                          key={`${category.sectionId}-${category.ageFrom}-${category.ageTo}-${fightGroup[0].id}`}
                           spacing={0.5}
                         >
                           <Card fightGroup={fightGroup}></Card>

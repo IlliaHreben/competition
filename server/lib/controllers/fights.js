@@ -6,6 +6,7 @@ import list from '../services/fights/list';
 // import deleteCard from '../services/fights/delete';
 // import Show       from '../services/fights/show';
 // import Update     from '../services/fights/update';
+import shift from '../services/fights/shift';
 
 export default {
   setWinner: chista.makeServiceRunner(setWinner, (req) => ({
@@ -17,4 +18,5 @@ export default {
   // delete     : chista.makeServiceRunner(deleteCard, req => ({ ...req.body })),
   // show       : chista.makeServiceRunner(Show, req => ({ ...req.params, ...req.query })),
   // update     : chista.makeServiceRunner(Update, req => ({ ...req.params, ...req.body }))
+  shift: chista.makeServiceRunner(shift, (req) => ({ ...req.body })),
 };

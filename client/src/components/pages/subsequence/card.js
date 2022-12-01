@@ -12,13 +12,15 @@ import {
 } from '@mui/material';
 import { PropTypes } from 'prop-types';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
 import { parseTimeFromSec, calculateSecFromFight } from '../../../utils/datetime';
 import { groupByCriteria } from '../../../utils/grouping';
-import Draggable from './draggable';
-import Droppable from './droppable';
+import DraggableDroppable from '../../ui-components/draggable-droppable';
+import { shiftFights, listFights } from '../../../actions/fights';
+import { showSuccess } from '../../../actions/errors';
 
 function getTotalTimeFormatted(fightsList) {
   const totalTime = fightsList.reduce(
@@ -31,50 +33,68 @@ function getTotalTimeFormatted(fightsList) {
 
 export default function SectionCard({ fightGroup }) {
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
 
-  const category = fightGroup[0].linked.category;
+  const { category, fightSpace } = fightGroup[0].linked;
 
   const duration = getTotalTimeFormatted(fightGroup);
   const categories = groupByCriteria(fightGroup, ['linked/category/id', 'degree']);
   const start = fightGroup[0].serialNumber;
   const end = fightGroup.at(-1).serialNumber;
 
+  const handleDrop = (fights) => {
+    dispatch(
+      shiftFights(
+        {
+          fightSpaceId: fightSpace.id,
+          id: fights.map((f) => f.id),
+          place: fightGroup[0].serialNumber
+        },
+        () => {
+          dispatch(showSuccess('Fights has been successfully shifted.'));
+          dispatch(
+            listFights({
+              competitionId: fightSpace.competitionId,
+              include: ['categoryWithSection', 'cardsWithFighter', 'fightFormula', 'fightSpace']
+            })
+          );
+        }
+      )
+    );
+  };
+
   const [border, setBorder] = useState(false);
   return (
     <>
       {border && <div style={{ border: '1px dashed grey', marginBottom: '5px' }}></div>}
-      <Droppable
-        onDrop={(item) => console.log(item)}
+      <DraggableDroppable
+        onDrop={handleDrop}
         onOver={() => setBorder(true)}
         onOverLeft={() => setBorder(false)}
+        item={fightGroup}
       >
-        <Draggable item={fightGroup}>
-          <Card sx={{ width: 320, pb: 0 }}>
-            <CardContent sx={{ cursor: 'move', p: 1, pb: '10px !important' }}>
-              <Typography variant='h6' component='div'>
-                {start} - {end}. {category.linked.section.name.toUpperCase()}
-                {`: ${category.ageFrom} - ${category.ageTo}`}
-              </Typography>
+        <Card sx={{ width: 320, pb: 0 }}>
+          <CardContent sx={{ cursor: 'move', p: 1, pb: '10px !important' }}>
+            <Typography variant='h6' component='div'>
+              {start} - {end}. {category.linked.section.name.toUpperCase()}
+              {`: ${category.ageFrom} - ${category.ageTo}`}
+            </Typography>
 
-              <Stack
-                direction='row'
-                sx={{ justifyContent: 'space-between', alignItems: 'flex-end' }}
-              >
-                <Stack>
-                  <Typography variant='caption' sx={{ mb: 1 }} color='text.secondary'>
-                    {category.sectionId}
-                  </Typography>
-                  <Typography variant='body2'>Duration: {duration}</Typography>
-                </Stack>
-                {getIconButton(open, () => setOpen((prev) => !prev))}
+            <Stack direction='row' sx={{ justifyContent: 'space-between', alignItems: 'flex-end' }}>
+              <Stack>
+                <Typography variant='caption' sx={{ mb: 1 }} color='text.secondary'>
+                  {category.sectionId}
+                </Typography>
+                <Typography variant='body2'>Duration: {duration}</Typography>
               </Stack>
-            </CardContent>
-            <Collapse in={open} timeout='auto' unmountOnExit>
-              {getList(categories)}
-            </Collapse>
-          </Card>
-        </Draggable>
-      </Droppable>
+              {getIconButton(open, () => setOpen((prev) => !prev))}
+            </Stack>
+          </CardContent>
+          <Collapse in={open} timeout='auto' unmountOnExit>
+            {getList(categories)}
+          </Collapse>
+        </Card>
+      </DraggableDroppable>
     </>
   );
 }
@@ -103,51 +123,73 @@ function ListCategory({ fightsList }) {
   const { weightFrom, weightTo, sex } = fightsList[0].linked.category;
   // const [open, setOpen] = useState(false);
   const [border, setBorder] = useState(false);
+  const dispatch = useDispatch();
+
+  const handleDrop = (fights) => {
+    dispatch(
+      shiftFights(
+        {
+          fightSpaceId: fightsList[0].fightSpaceId,
+          id: fights.map((f) => f.id),
+          place: fightsList[0].serialNumber
+        },
+        () => {
+          dispatch(showSuccess('Fights has been successfully shifted.'));
+          dispatch(
+            listFights({
+              competitionId: fightsList[0].linked.fightSpace.competitionId,
+              include: ['categoryWithSection', 'cardsWithFighter', 'fightFormula', 'fightSpace']
+            })
+          );
+        }
+      )
+    );
+  };
   return (
     <>
       {border && <div style={{ border: '1px dashed grey' }}></div>}
-      <Droppable
-        onDrop={(item) => console.log(item)}
+      <DraggableDroppable
+        onDrop={handleDrop}
         onOver={() => setBorder(true)}
         onOverLeft={() => setBorder(false)}
+        item={fightsList}
       >
-        <Draggable item={fightsList}>
-          <ListItem disablePadding sx={{ flexDirection: 'column' }}>
-            <ListItemButton
-              dense
-              disableRipple
-              sx={{ width: '100%' }} /* onClick={() => setOpen((prev) => !prev)} */
-            >
-              <ListItemText
-                disableTypography
-                primary={
-                  <Stack sx={{ alignItems: 'flex-end' }} direction='row'>
-                    <Typography variant='button'>{`${
-                      weightFrom ? `${weightFrom} -` : 'Up to '
-                    } ${weightTo}: ${sex}  `}</Typography>
-                    <div style={{ width: '10px' }}></div>
-                    <Typography variant='caption'>{getTotalTimeFormatted(fightsList)}</Typography>
-                  </Stack>
-                }
-                secondary={
-                  <Stack>
-                    {fightsList.map((fight) => {
-                      const fighter1 = fight?.linked?.firstCard?.linked?.fighter || {};
-                      const fighter2 = fight?.linked?.secondCard?.linked?.fighter || {};
-                      return (
-                        <Typography variant='caption' key={fight.id}>
-                          {`${fight.serialNumber}. 1/${fight.degree} ${
-                            fighter1.lastName || 'N/A'
-                          } vs ${fighter2.lastName || 'N/A'}\n`}
-                        </Typography>
-                      );
-                    })}
-                  </Stack>
-                }
-              />
-              {/* {open ? <ExpandLess /> : <ExpandMore />} */}
-            </ListItemButton>
-            {/* <Collapse in={open} sx={{ width: '100%' }} timeout='auto' unmountOnExit>
+        <ListItem disablePadding sx={{ flexDirection: 'column' }}>
+          <ListItemButton
+            dense
+            disableRipple
+            sx={{ width: '100%' }} /* onClick={() => setOpen((prev) => !prev)} */
+          >
+            <ListItemText
+              disableTypography
+              primary={
+                <Stack sx={{ alignItems: 'flex-end' }} direction='row'>
+                  <Typography variant='button'>{`${
+                    weightFrom ? `${weightFrom} -` : 'Up to '
+                  } ${weightTo}: ${sex}  `}</Typography>
+                  <div style={{ width: '10px' }}></div>
+                  <Typography variant='caption'>{getTotalTimeFormatted(fightsList)}</Typography>
+                </Stack>
+              }
+              secondary={
+                <Stack>
+                  {fightsList.map((fight) => {
+                    const fighter1 = fight?.linked?.firstCard?.linked?.fighter || {};
+                    const fighter2 = fight?.linked?.secondCard?.linked?.fighter || {};
+                    return (
+                      <Typography variant='caption' key={fight.id}>
+                        {`${fight.serialNumber}. 1/${fight.degree} ${
+                          fighter1.lastName || 'N/A'
+                        } vs ${fighter2.lastName || 'N/A'}\n`}
+                      </Typography>
+                    );
+                  })}
+                </Stack>
+              }
+            />
+            {/* {open ? <ExpandLess /> : <ExpandMore />} */}
+          </ListItemButton>
+          {/* <Collapse in={open} sx={{ width: '100%' }} timeout='auto' unmountOnExit>
         <List component='div' disablePadding>
           {fightsList.map((fight) => {
             const fighter1 = fight?.linked?.firstCard?.linked?.fighter || {};
@@ -165,9 +207,8 @@ function ListCategory({ fightsList }) {
           })}
         </List>
       </Collapse> */}
-          </ListItem>
-        </Draggable>
-      </Droppable>
+        </ListItem>
+      </DraggableDroppable>
     </>
   );
 }

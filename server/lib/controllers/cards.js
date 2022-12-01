@@ -6,6 +6,7 @@ import list from '../services/cards/list';
 import deleteCard from '../services/cards/delete';
 import Show from '../services/cards/show';
 import Update from '../services/cards/update';
+import switchCards from '../services/cards/switch';
 
 export default {
   bulkCreate: chista.makeServiceRunner(bulkCreate, (req) => ({
@@ -23,4 +24,5 @@ export default {
     ...req.params,
     ...req.body,
   })),
+  switch: chista.makeServiceRunner(switchCards, (req) => ({ ...req.body })),
 };

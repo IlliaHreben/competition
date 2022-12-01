@@ -5,6 +5,10 @@ class Fights extends Base {
     return this.apiClient.get('fights', params);
   };
 
+  shift = async (params) => {
+    return this.apiClient.patch('fights/shift', params);
+  };
+
   show = async (id, params) => {
     return this.apiClient.get(`fights/${id}`, params);
   };
