@@ -18,7 +18,7 @@ class Cards extends Base {
   };
 
   update = (id, payload) => {
-    return this.apiClient.patch(`cards/${id}`, { data: payload });
+    return this.apiClient.patch(`cards/${id}`, payload);
   };
 
   switch = async (params) => {

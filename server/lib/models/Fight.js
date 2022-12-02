@@ -85,7 +85,7 @@ export default class Fight extends Base {
     }
 
     return Fight.update(
-      { serialNumber: sequelize.literal(`"serialNumber"  ${side} ${offset}`) },
+      { serialNumber: sequelize.literal(`"serialNumber" ${side} ${offset}`) },
       {
         where: {
           fightSpaceId,

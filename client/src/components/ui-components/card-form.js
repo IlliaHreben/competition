@@ -9,6 +9,8 @@ import {
   Stack,
   Typography,
   FormGroup,
+  FormControlLabel,
+  Switch,
   Button
 } from '@mui/material';
 import { useState, useEffect, useReducer } from 'react';
@@ -71,6 +73,8 @@ export default function CardForm({ card, isEdit, onChange }) {
   const [errors /*, setErrors */] = useState({});
   const [fighter, setFighter] = useState(card?.linked?.fighter || {});
   const [fighterModalStatus, setFighterModalStatus] = useState(false);
+  const [recalculate, setRecalculate] = useState(true);
+
   const changeFighterModalStatus = () => setFighterModalStatus((prev) => !prev);
 
   useEffect(() => {
@@ -80,10 +84,13 @@ export default function CardForm({ card, isEdit, onChange }) {
 
   useEffect(() => {
     onChange({
-      fighterId: fighter?.id,
-      ...cardData
+      recalculate,
+      data: {
+        fighterId: fighter?.id,
+        ...cardData
+      }
     });
-  }, [fighter?.id, cardData, onChange]);
+  }, [fighter?.id, cardData, onChange, recalculate]);
 
   return (
     <FormGroup>
@@ -194,6 +201,15 @@ export default function CardForm({ card, isEdit, onChange }) {
           {errors.group && <FormHelperText>{errors.group}</FormHelperText>}
         </FormControl>
       </Stack>
+      {isEdit && (
+        <FormControlLabel
+          sx={{ justifyContent: 'center', mb: 2, mt: 0.5 }}
+          control={
+            <Switch checked={recalculate} onChange={(e) => setRecalculate(e.target.checked)} />
+          }
+          label='Recalculate categories'
+        />
+      )}
     </FormGroup>
   );
 }

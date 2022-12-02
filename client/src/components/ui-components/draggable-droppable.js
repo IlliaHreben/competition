@@ -19,6 +19,7 @@ export default function DraggableDroppable({
         if (didDrop || _item === item) {
           return;
         }
+        console.log(_item, '->', item);
         onDrop(_item);
       },
       collect: (monitor) => ({
@@ -26,7 +27,7 @@ export default function DraggableDroppable({
         isOver: monitor.isOver({ shallow: true })
       })
     }),
-    []
+    [item]
   );
 
   const [{ isDragging }, drag] = useDrag(
@@ -40,6 +41,7 @@ export default function DraggableDroppable({
     }),
     [
       /* forbidDrag, color */
+      item
     ]
   );
 

@@ -11,7 +11,6 @@ export default function Droppable({ children, onDrop, onOver, onOverLeft, item }
         if (didDrop && _item !== item) {
           return;
         }
-        console.log(`Item ${_item} was dropped on ${item}`);
         onDrop(_item);
       },
       collect: (monitor) => ({

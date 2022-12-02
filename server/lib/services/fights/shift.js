@@ -48,6 +48,7 @@ export default class FightSetWinner extends ServiceBase {
       side: '+',
     });
 
+    await Promise.all(fights.map((f) => f.reload()));
     const lastFightSerialNumber = fights.at(-1).serialNumber + 1;
 
     fights.forEach((fight, index) => {
