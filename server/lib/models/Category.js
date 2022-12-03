@@ -88,6 +88,13 @@ export default class Category extends Base {
     if (previousFights.some((f) => f.winnerId)) {
       throw new Error('Cannot change already fought net');
     }
+    const fightSpacesToDegrees = previousFights.reduce((acc, fight) => {
+      acc[fight.degree] = fight.fightSpaceId;
+      return acc;
+    }, {});
+
+    const maxDegree = Math.max(...previousFights.map((f) => f.degree));
+
     await Fight.destroy({
       where: { id: previousFights.map((f) => f.id) },
     });
@@ -104,7 +111,11 @@ export default class Category extends Base {
     fights.forEach((fight) => {
       fight.FirstCard = cards.find((c) => c.id === fight.firstCardId);
       fight.SecondCard = cards.find((c) => c.id === fight.secondCardId);
+      fight.fightSpaceId = fightSpacesToDegrees[fight.degree] || fightSpacesToDegrees[maxDegree];
     });
+
+    await this.assignFightFormulaToFights();
+
     return fights;
   }
 

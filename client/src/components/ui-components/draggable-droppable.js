@@ -8,31 +8,39 @@ export default function DraggableDroppable({
   onDrop,
   onOver,
   onOverLeft,
-  item
+  item,
+  type = 'drag',
+  validateDrop = () => true
 }) {
   const ref = useRef(null);
-  const [{ isOver }, drop] = useDrop(
+  const [{ isOver, canDrop }, drop] = useDrop(
     () => ({
-      accept: 'drag',
+      accept: type,
+      canDrop: (_item) => validateDrop(_item),
       drop(_item, monitor) {
+        console.log(_item, '->', item);
         const didDrop = monitor.didDrop();
         if (didDrop || _item === item) {
           return;
         }
         console.log(_item, '->', item);
-        onDrop(_item);
+        monitor.canDrop() && onDrop(_item);
       },
-      collect: (monitor) => ({
-        // isOver: monitor.isOver(),
-        isOver: monitor.isOver({ shallow: true })
-      })
+      collect: (monitor) => {
+        const isOver = monitor.isOver({ shallow: true });
+        return {
+          // isOver: monitor.isOver(),
+          canDrop: isOver && monitor.canDrop(),
+          isOver
+        };
+      }
     }),
-    [item]
+    [item, onDrop, validateDrop]
   );
 
   const [{ isDragging }, drag] = useDrag(
     () => ({
-      type: 'drag',
+      type,
       item,
       //   canDrag: !forbidDrag,
       collect: (monitor) => ({
@@ -44,6 +52,7 @@ export default function DraggableDroppable({
       item
     ]
   );
+  // console.log(canDrop);
 
   const opacity = useMemo(() => (isDragging ? 0.4 : 1), [isDragging]);
 
@@ -62,7 +71,15 @@ export default function DraggableDroppable({
     const childrenWithProps = Children.map(children, (child) => {
       // Checking isValidElement is the safe way and avoids a typescript error too.
       if (isValidElement(child)) {
-        return cloneElement(child, { ref, style: { ...children.props.style, opacity } });
+        return cloneElement(child, {
+          ref,
+          style: {
+            ...children.props.style,
+            opacity,
+            ...(canDrop && { backgroundColor: '#c5fecf' }),
+            ...(isOver && !canDrop && { backgroundColor: '#fec5c5' })
+          }
+        });
       }
       return child;
     });
@@ -81,5 +98,7 @@ DraggableDroppable.propTypes = {
   onOver: PropTypes.func,
   onOverLeft: PropTypes.func,
   item: PropTypes.any,
-  disableWrapper: PropTypes.bool
+  disableWrapper: PropTypes.bool,
+  type: PropTypes.string,
+  validateDrop: PropTypes.func
 };

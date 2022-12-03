@@ -122,15 +122,18 @@ const errors = {
   }),
   FIGHT_IS_NOT_FIRST: () => ({
     code: 'FIGHT_IS_NOT_FIRST',
+    fields: {},
   }),
   CANNOT_MOVE_EMPTY_CARD: () => ({
     code: 'CANNOT_MOVE_EMPTY_CARD',
+    fields: {},
   }),
 };
 
 export default class ServiceError extends Exception {
   constructor(type, data) {
     const defaultError = { code: 'SERVER_ERROR', fields: { type } };
+
     const errorData = errors[type]?.(data) || defaultError;
 
     super(errorData);

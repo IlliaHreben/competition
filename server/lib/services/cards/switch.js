@@ -31,10 +31,7 @@ export default class SwitchCards extends ServiceBase {
     const firstFight = await Fight.findOne({ where: { id: first.fightId } });
     const secondFight = await Fight.findOne({ where: { id: second.fightId } });
 
-    const previousFights = await Promise.all(
-      [firstFight, secondFight].map((fight) => fight.getPreviousFights({ limit: 1 }))
-    );
-    if (previousFights.flat().length) throw new ServiceError('FIGHT_IS_NOT_FIRST');
+    await checkOnPrimacy({ firstFight, secondFight }, { first, second });
 
     const firstCard = await Card.findOne({ where: { id: firstFight[first.position] } });
     const secondCard = await Card.findOne({ where: { id: secondFight[second.position] } });
@@ -70,5 +67,26 @@ export default class SwitchCards extends ServiceBase {
     return {
       data: [firstCard, secondCard].map(dumpCard),
     };
+  }
+}
+
+async function checkOnPrimacy({ firstFight, secondFight }, { first, second }) {
+  const [firstPreviousFights, secondPreviousFights] = await Promise.all(
+    [firstFight, secondFight].map((fight) => fight.getPreviousFights({ limit: 2 }))
+  );
+  console.log('='.repeat(50)); // !nocommit
+  console.log(firstPreviousFights, secondPreviousFights);
+  console.log('='.repeat(50));
+
+  if (
+    [
+      { fightLength: firstPreviousFights.length, position: first.position },
+      { fightLength: secondPreviousFights.length, position: second.position },
+    ].some(
+      ({ fightLength, position }) =>
+        fightLength > 1 || (fightLength === 1 && position === 'secondCardId')
+    )
+  ) {
+    throw new ServiceError('FIGHT_IS_NOT_FIRST');
   }
 }

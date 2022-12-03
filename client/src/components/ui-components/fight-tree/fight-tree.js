@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-// import PropTypes              from 'prop-types';
 import { useState, useMemo, useCallback } from 'react';
 import styles from './index.module.css';
 import SettingsPopover from '../settings-popover';
@@ -7,11 +5,9 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import { useDispatch } from 'react-redux';
 import { setWinner } from '../../../actions/fights';
 import { showSuccess } from '../../../actions/errors';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-// import { createTheme } from '@g-loot/react-tournament-brackets';
 import pleasantHexColorGenerator from '../../../utils/color-generator';
 import { CustomMatchBracket } from './match-bracket';
+import { PropTypes } from 'prop-types';
 
 const getFullName = ({ name, lastName }) => `${lastName} ${name}`;
 const formatData = ({ linked: { fighter }, ...card }, root, colors) => ({
@@ -61,42 +57,7 @@ function createFightersTree({ cards, fights }) {
   }));
 }
 
-// function switchPlaces(fights, fighter1, fighter2) {
-//     const fight1 = fights.find(f => f.id === fighter1.fight.id);
-//     const fight2 = fights.find(f => f.id === fighter2.fight.id);
-
-//     const isFirst1 = fight1.firstCardId === fighter1.card.id;
-//     const isFirst2 = fight2.firstCardId === fighter2.card.id;
-
-//     const originalFighter1 = fight1.linked[isFirst1 ? 'firstCard' : 'secondCard'];
-//     const originalFighter2 = fight2.linked[isFirst2 ? 'firstCard' : 'secondCard'];
-
-//     if (isFirst1) {
-//         fight1.firstCardId = fighter2.card.id;
-//         fight1.linked.firstCard = originalFighter2;
-//     } else {
-//         fight1.secondCardId = fighter2.card.id;
-//         fight1.linked.secondCard = originalFighter2;
-//     }
-//     if (isFirst2) {
-//         fight2.firstCardId = fighter1.card.id;
-//         fight2.linked.firstCard = originalFighter1;
-//     } else {
-//         fight2.secondCardId = fighter1.card.id;
-//         fight2.linked.secondCard = originalFighter1;
-//     }
-//     return fights;
-
-// }
-
-// const defaultMargin = { top: 0, left: 0, right: 0, bottom: 0 };
-
-export default function FightTree({
-  width: totalWidth = 250,
-  height: totalHeight = 260,
-  // margin = defaultMargin,
-  category
-}) {
+export default function FightTree({ width: totalWidth = 250, category }) {
   const linked = category.linked;
   const dispatch = useDispatch();
 
@@ -114,11 +75,6 @@ export default function FightTree({
   const handleCloseSettings = () => {
     setAnchor(null);
   };
-  // const onSwitchCards = (card1, card2) => {
-  //     const fightsWithSwitchedCards = switchPlaces(JSON.parse(JSON.stringify(linked.fights)), card1, card2);
-  //     const fightersTree = createFightersTree({ ...linked, fights: fightsWithSwitchedCards });
-  //     setFightersTree(fightersTree);
-  // };
 
   const handleSetWinner = () => {
     dispatch(
@@ -172,21 +128,24 @@ export default function FightTree({
 
   if (totalWidth < 10) return null;
   return (
-    <DndProvider backend={HTML5Backend}>
-      <div className={styles.svgContainer}>
-        <SettingsPopover
-          anchorEl={anchor?.element}
-          handleClose={handleCloseSettings}
-          extraSettings={[
-            {
-              icon: <EmojiEventsIcon fontSize={'small'} />,
-              onClick: handleSetWinner,
-              text: { primary: 'Set winner' }
-            }
-          ]}
-        />
-        {fightersTreeComponent}
-      </div>
-    </DndProvider>
+    <div className={styles.svgContainer}>
+      <SettingsPopover
+        anchorEl={anchor?.element}
+        handleClose={handleCloseSettings}
+        extraSettings={[
+          {
+            icon: <EmojiEventsIcon fontSize={'small'} />,
+            onClick: handleSetWinner,
+            text: { primary: 'Set winner' }
+          }
+        ]}
+      />
+      {fightersTreeComponent}
+    </div>
   );
 }
+
+FightTree.propTypes = {
+  width: PropTypes.number,
+  category: PropTypes.object
+};

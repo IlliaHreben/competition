@@ -6,6 +6,8 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import CircularProgress from './CircularProgress';
 import { Box } from '@mui/material';
 import Container from '@mui/material/Container';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import styles from './graphics.module.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -89,18 +91,20 @@ export default function FightTrees() {
           loader={<CircularProgress />}
           style={{ overflow: 'hidden' }}
         >
-          {categories.map((category) => (
-            <Container key={category.id} maxWidth='xl'>
-              <CategoryTable category={category} />
-              <div className={styles.treeContainer}>
-                {category.linked.fights.length > 0 ? (
-                  <FightTree key={category.id} category={category} />
-                ) : (
-                  <Box sx={{ mt: 1, mb: 1 }} />
-                )}
-              </div>
-            </Container>
-          ))}
+          <DndProvider backend={HTML5Backend}>
+            {categories.map((category) => (
+              <Container key={category.id} maxWidth='xl'>
+                <CategoryTable category={category} />
+                <div className={styles.treeContainer}>
+                  {category.linked.fights.length > 0 ? (
+                    <FightTree key={category.id} category={category} />
+                  ) : (
+                    <Box sx={{ mt: 1, mb: 1 }} />
+                  )}
+                </div>
+              </Container>
+            ))}
+          </DndProvider>
         </InfiniteScroll>
       </div>
     </div>
