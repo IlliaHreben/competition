@@ -20,6 +20,7 @@ router.get('/cards', controllers.cards.list);
 router.get('/cards/:id', controllers.cards.show);
 router.delete('/cards', controllers.cards.delete);
 router.patch('/cards/switch', controllers.cards.switch);
+router.patch('/cards/:id/move', controllers.cards.move);
 router.patch('/cards/:id', controllers.cards.update);
 
 router.get('/fighters', controllers.fighters.list);

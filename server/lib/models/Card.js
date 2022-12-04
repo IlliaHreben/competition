@@ -223,6 +223,54 @@ export default class Card extends Base {
     const category = await Category.findById(this.categoryId);
     await category.calculateFights();
   }
+
+  async moveCardToCategory(categoryTo) {
+    const categoryFrom = this.Category || (await this.getCategory());
+    // const fightFrom = this.Fight || (await this.getFight());
+
+    await this.update({ categoryId: categoryTo.id });
+
+    await categoryTo.addFight();
+    // const nextFight = await fight.getNextFight();
+    // const nextFightCardPlace = ['secondCardId', 'firstCardId'].find(
+    //   (cardPlace) => nextFight[cardPlace]
+    // );
+
+    // await fight.update({ firstCardId: this.id, secondCardId: nextFight[nextFightCardPlace] });
+    // await nextFight.update({ [nextFightCardPlace]: null });
+    const fights = await categoryTo.getFights();
+    fights.forEach((fight) => {
+      fight.firstCardId = null;
+      fight.secondCardId = null;
+    });
+
+    await categoryFrom.calculateFights(fights);
+
+    // const secondPrevFightCard =
+    //   fightFrom.firstCardId === this.id ? fightFrom.secondCardId : fightFrom.firstCardId;
+    // // the fight which goes next of fight which is going to be deleted
+    // const nextPrevFight = await fightFrom.getNextFight();
+    // const nextPrevFightCardPlace = ['secondCardId', 'firstCardId'].find(
+    //   (cardPlace) => nextFight[cardPlace] === null
+    // );
+    // await nextPrevFight.update({ [nextPrevFightCardPlace]: secondPrevFightCard.id });
+
+    await categoryFrom.removeFight();
+
+    const prevCategoryFights = await categoryFrom.getFights();
+
+    prevCategoryFights.forEach((fight) => {
+      fight.firstCardId = null;
+      fight.secondCardId = null;
+    });
+
+    await categoryFrom.calculateFights(prevCategoryFights);
+
+    return {
+      from: categoryFrom,
+      to: categoryTo,
+    };
+  }
 }
 
 Card.init(

@@ -75,10 +75,12 @@ export default class Category extends Base {
     return errors;
   }
 
-  async calculateFights() {
-    const cards = await this.getCards({
-      include: ['Fighter'],
-    });
+  async calculateFights(existedFights) {
+    const cards =
+      this.Cards ||
+      (await this.getCards({
+        include: ['Fighter'],
+      }));
 
     if (cards.length < 2) return [];
 
@@ -99,22 +101,25 @@ export default class Category extends Base {
       where: { id: previousFights.map((f) => f.id) },
     });
 
-    const fightsObjects = this.generateFights(cards.length);
+    const fightsObjects = existedFights || this.generateFights(cards.length);
 
     const fightsWithCards = calculateFights(cards, fightsObjects);
 
     this.sortByCoach(fightsWithCards);
-    const fights = await Fight.bulkCreate(fightsWithCards, { returning: true });
+    const fights = existedFights
+      ? await Promise.all(existedFights.map((f) => f.save()))
+      : await Fight.bulkCreate(fightsWithCards, { returning: true });
 
     // fights.forEach((fight) => (fight.Category = this));
 
     fights.forEach((fight) => {
       fight.FirstCard = cards.find((c) => c.id === fight.firstCardId);
       fight.SecondCard = cards.find((c) => c.id === fight.secondCardId);
-      fight.fightSpaceId = fightSpacesToDegrees[fight.degree] || fightSpacesToDegrees[maxDegree];
+      if (!existedFights)
+        fight.fightSpaceId = fightSpacesToDegrees[fight.degree] || fightSpacesToDegrees[maxDegree];
     });
 
-    await this.assignFightFormulaToFights();
+    if (!existedFights) await this.assignFightFormulaToFights();
 
     return fights;
   }
@@ -369,6 +374,71 @@ export default class Category extends Base {
     };
 
     Object.entries(scopes).forEach((scope) => Category.addScope(...scope));
+  }
+
+  async addFight() {
+    const Fight = sequelize.model('Fight');
+
+    const fights = this.Fights || (await this.getFights());
+    const firstFight = fights.find((f) => f.orderNumber === 1);
+    const maxDegree = fights.reduce((max, fight) => Math.max(max, fight.degree), 0);
+    const lastDegreeFights = fights.filter((f) => f.degree === maxDegree);
+    const isLastDegreeFull = maxDegree === lastDegreeFights.length;
+    const serialNumber = firstFight.serialNumber;
+
+    const fightsWithoutChildren = fights.filter(
+      (f) => fights.filter((fight) => fight.nextFightId === f.id).length < 2
+    );
+    const maxOrderFight = fightsWithoutChildren.reduce(
+      (maxFight, fight) => (fight.orderNumber > maxFight.orderNumber ? fight : maxFight),
+      { orderNumber: 0 }
+    );
+
+    // increase orderNumber by 1
+    await Fight.update(
+      { orderNumber: sequelize.literal('"orderNumber" + 1') },
+      { where: { categoryId: this.id } }
+    );
+
+    await Fight.shiftSerialNumber({
+      fightSpaceId: firstFight.fightSpaceId,
+      from: firstFight.serialNumber,
+      offset: 1,
+      side: '+',
+    });
+
+    const fight = await Fight.create({
+      nextFightId: maxOrderFight.id,
+      formulaId: firstFight.formulaId,
+      fightSpaceId: firstFight.fightSpaceId,
+      categoryId: this.id,
+      orderNumber: 1,
+      serialNumber,
+      degree: isLastDegreeFull ? maxDegree * 2 : maxDegree,
+    });
+
+    return fight;
+  }
+
+  async removeFight() {
+    const Fight = sequelize.model('Fight');
+
+    const fights = this.Fights || (await this.getFights());
+    const firstFight = fights.find((f) => f.orderNumber === 1);
+
+    await Fight.update(
+      { orderNumber: sequelize.literal('"orderNumber" - 1') },
+      { where: { categoryId: this.id } }
+    );
+
+    await Fight.shiftSerialNumber({
+      fightSpaceId: firstFight.fightSpaceId,
+      from: firstFight.serialNumber + 1,
+      offset: 1,
+      side: '-',
+    });
+
+    return firstFight.destroy();
   }
 }
 

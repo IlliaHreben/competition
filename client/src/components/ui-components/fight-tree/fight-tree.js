@@ -49,7 +49,7 @@ function createFightersTree({ cards, fights }) {
     name: f.orderNumber,
     nextMatchId: f.nextFightId, // Id for the nextMatch in the bracket, if it's final match it must be null OR undefined
     degree: f.degree,
-    // "tournamentRoundText" : "4", // Text for Round Header
+    tournamentRoundText: `1/${f.degree}`, // Text for Round Header
     // "startTime"           : "2021-05-30",
     state: 'DONE', // 'NO_SHOW' | 'WALK_OVER' | 'NO_PARTY' | 'DONE' | 'SCORE_DONE' Only needed to decide walkovers and if teamNames are TBD (to be decided)
     participants: getCellValues(f, colors),

@@ -74,9 +74,6 @@ async function checkOnPrimacy({ firstFight, secondFight }, { first, second }) {
   const [firstPreviousFights, secondPreviousFights] = await Promise.all(
     [firstFight, secondFight].map((fight) => fight.getPreviousFights({ limit: 2 }))
   );
-  console.log('='.repeat(50)); // !nocommit
-  console.log(firstPreviousFights, secondPreviousFights);
-  console.log('='.repeat(50));
 
   if (
     [
