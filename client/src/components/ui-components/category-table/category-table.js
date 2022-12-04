@@ -96,15 +96,6 @@ function CategoryTable({ category, openCardSettings, openCategorySettings, openT
                   sx={{ color: '#f0efef' }}
                   iconProps={{ size: 'small' }}
                 />
-                {/* {(getExpandIconButton(open), { buttonProps: { size: 'small' } })} */}
-                {/* <IconButton
-                  size='small'
-                  aria-label='delete'
-                  onClick={(e) => openCategorySettings(e, category)}
-                  
-                >
-                  <MoreVertIcon  />
-                </IconButton> */}
                 <Typography>
                   {`${category.linked.section.name} in: ${category.sex}'s ${category.ageFrom} - ${category.ageTo} years, weight category ${category.weightName}`}
                 </Typography>

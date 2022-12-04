@@ -1,16 +1,17 @@
 import ButtonGroup from '@mui/material/ButtonGroup';
-// import Chip from '@mui/material/Chip';
-// import Stack from '@mui/material/Stack';
 import Icon from '@mui/material/Icon';
 import SportsMmaIcon from '@mui/icons-material/SportsMma';
-import { ReactComponent as GoldIcon } from '../../../assets/icons/gold.svg';
-import { ReactComponent as SilverIcon } from '../../../assets/icons/silver.svg';
-// import { ReactComponent as BronzeIcon } from '../../../assets/icons/bronze.svg';
-import Fighter from './fighter';
+import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 
+import { ReactComponent as GoldIcon } from '../../../assets/icons/gold.svg';
+import { ReactComponent as SilverIcon } from '../../../assets/icons/silver.svg';
+import { ReactComponent as BronzeIcon } from '../../../assets/icons/bronze.svg';
+import Fighter from './fighter';
 import styles from './index.module.css';
 
 // {
@@ -46,9 +47,7 @@ function Fight({
   let redMedalIcon = <div />;
   let blueMedalIcon = <div />;
 
-  const isFinal = !match.nextFightId;
-  // if (topParty && bottomParty) {
-  if (isFinal) {
+  if (match.degree === 1) {
     if (topParty.isWinner) {
       redMedalIcon = <GoldIcon />;
       blueMedalIcon = <SilverIcon />;
@@ -57,25 +56,49 @@ function Fight({
       blueMedalIcon = <GoldIcon />;
       redMedalIcon = <SilverIcon />;
     }
+  } else if (match.degree === 2) {
+    if (topParty.isWinner) {
+      blueMedalIcon = <BronzeIcon />;
+    }
+    if (bottomParty.isWinner) {
+      redMedalIcon = <BronzeIcon />;
+    }
   }
-  // if (fight.degree === 2) {
-  //     if (topParty.id === fight?.winnerId) blueMedalIcon = <BronzeIcon />;
-  //     if (bottomParty.id === fight?.winnerId) redMedalIcon = <BronzeIcon />;
-  // }
+  // else {
+  //   if (topParty.isWinner) {
+  //     blueMedalIcon = (
+  //       <Typography variant='caption' sx={{ pt: 1 }}>
+  //         L
+  //       </Typography>
+  //     );
+  //     redMedalIcon = 'W';
+  //   }
+  //   if (bottomParty.isWinner) {
+  //     redMedalIcon = (
+  //       <Typography variant='caption' sx={{ pt: 1 }}>
+  //         L
+  //       </Typography>
+  //     );
+  //     blueMedalIcon = 'W';
+  //   }
   // }
 
   const renderFighter = useCallback(
-    ({ color, party, icon }) => {
+    ({ position, party, icon }) => {
+      const color = position === 'firstCardId' ? 'red' : 'blue';
       return (
         <Fighter
           party={party}
-          position={color === 'red' ? 'firstCardId' : 'secondCardId'}
+          position={position}
           match={match}
           endIcon={party && <SportsMmaIcon sx={{ color }} />}
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
-            padding: 0
+            pr: 1,
+            pl: 1,
+            borderTopLeftRadius: 0,
+            borderBottomLeftRadius: 0
           }}
           startIcon={<Icon sx={{ m: 0 }}>{icon}</Icon>}
           className={styles.svgButton}
@@ -93,61 +116,30 @@ function Fight({
     [topParty, bottomParty, match]
   );
 
-  const buttons = [
-    { color: 'red', party: topParty, icon: redMedalIcon },
-    { color: 'blue', party: bottomParty, icon: blueMedalIcon }
-  ].map(renderFighter);
-
-  // const groupRef = useRef(null);
-  // const [ width, setDivWidth ] = useState(0);
-  // const [ height, setDivHeight ] = useState(0);
-
-  // useEffect(() => {
-  //     setDivWidth(groupRef.current?.offsetWidth || 0);
-  //     setDivHeight(groupRef.current?.offsetHeight || 0);
-  // }, []);
-
   return (
-    // <div
-    //     style={{ width: `${width}px`, height: `${height + 48}px`, justifyContent: !bottomParty && topParty ? 'flex-start' : 'center' }}
-    //     className={styles.fightContainer}
-    // >
-    //     {/* {topParty &&
-    //     <Stack direction="row" spacing={3}>
-    //         <Chip
-    //             label={topParty.coach || ''}
-    //             style={{ backgroundColor: topParty.coachColor }}
-    //             size="small"
-    //         />
-    //         <Chip
-    //             label={topParty.club || ''}
-    //             style={{ backgroundColor: topParty.clubColor }}
-    //             size="small"
-    //         />
-    //     </Stack>
-    //     } */}
-    <ButtonGroup
-      // ref={groupRef}
-      orientation='vertical'
-      className={styles.svgButtonGroup}
-    >
-      {buttons}
-    </ButtonGroup>
-    //     {/* {bottomParty &&
-    //     <Stack direction="row" spacing={3}>
-    //         <Chip
-    //             label={bottomParty.coach || ''}
-    //             style={{ backgroundColor: bottomParty.coachColor }}
-    //             size="small"
-    //         />
-    //         <Chip
-    //             label={bottomParty.club || ''}
-    //             style={{ backgroundColor: bottomParty.clubColor }}
-    //             size="small"
-    //         />
-    //     </Stack>
-    //     } */}
-    // </div>
+    <Stack direction='row'>
+      <Box
+        sx={{
+          border: '2px solid',
+          borderRight: 0,
+          width: 50,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'white',
+          borderTopLeftRadius: '4px',
+          borderBottomLeftRadius: '4px'
+        }}
+      >
+        <Typography variant='h5'>{match.serialNumber}</Typography>
+      </Box>
+      <ButtonGroup orientation='vertical' className={styles.svgButtonGroup}>
+        {[
+          { position: 'firstCardId', party: topParty, icon: redMedalIcon },
+          { position: 'secondCardId', party: bottomParty, icon: blueMedalIcon }
+        ].map(renderFighter)}
+      </ButtonGroup>
+    </Stack>
   );
 }
 

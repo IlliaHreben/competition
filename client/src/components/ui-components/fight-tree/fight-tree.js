@@ -54,7 +54,8 @@ function createFightersTree({ cards, fights }) {
     // "startTime"           : "2021-05-30",
     state: 'DONE', // 'NO_SHOW' | 'WALK_OVER' | 'NO_PARTY' | 'DONE' | 'SCORE_DONE' Only needed to decide walkovers and if teamNames are TBD (to be decided)
     participants: getCellValues(f, colors),
-    categoryId: f.categoryId
+    categoryId: f.categoryId,
+    serialNumber: f.serialNumber
   }));
 }
 
