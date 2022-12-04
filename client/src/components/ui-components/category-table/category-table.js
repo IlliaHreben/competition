@@ -9,10 +9,13 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Stack from '@mui/material/Stack';
-import PropTypes from 'prop-types';
+import Collapse from '@mui/material/Collapse';
+import { useEffect, useState } from 'react';
 
 import { formatISODate, getFormattedDate } from '../../../utils/datetime';
+import ExpandIconButton from '../../../utils/component-utils';
 import styles from './category-table.module.css';
+import { categoryPropTypes } from './prop-types';
 
 function dumpCategoryData(category) {
   const { fights, cards } = category.linked;
@@ -65,8 +68,14 @@ function getFullName(fighter) {
   return fighter ? `${fighter?.lastName} ${fighter?.name}` : '';
 }
 
-function CategoryTable({ category, openCardSettings, openCategorySettings }) {
+function CategoryTable({ category, openCardSettings, openCategorySettings, openTable = true }) {
   const rows = dumpCategoryData(category);
+
+  const [open, setOpen] = useState(openTable);
+
+  useEffect(() => {
+    setOpen(openTable);
+  }, [openTable]);
 
   return (
     <TableContainer component={Paper}>
@@ -80,14 +89,22 @@ function CategoryTable({ category, openCardSettings, openCategorySettings }) {
               align='center'
             >
               <Stack direction='row' sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
-                <IconButton
+                <ExpandIconButton
+                  open={open}
+                  onClick={() => setOpen((prev) => !prev)}
+                  size='small'
+                  sx={{ color: '#f0efef' }}
+                  iconProps={{ size: 'small' }}
+                />
+                {/* {(getExpandIconButton(open), { buttonProps: { size: 'small' } })} */}
+                {/* <IconButton
                   size='small'
                   aria-label='delete'
                   onClick={(e) => openCategorySettings(e, category)}
-                  sx={{ color: '#f0efef' }}
+                  
                 >
-                  <MoreVertIcon size='small' />
-                </IconButton>
+                  <MoreVertIcon  />
+                </IconButton> */}
                 <Typography>
                   {`${category.linked.section.name} in: ${category.sex}'s ${category.ageFrom} - ${category.ageTo} years, weight category ${category.weightName}`}
                 </Typography>
@@ -102,129 +119,70 @@ function CategoryTable({ category, openCardSettings, openCategorySettings }) {
               </Stack>
             </TableCell>
           </TableRow>
-          <TableRow className={styles.tableHeadDesc}>
-            <TableCell>Date</TableCell>
-            <TableCell align='left'>Degree</TableCell>
-            <TableCell align='center'>Corner</TableCell>
-            <TableCell align='left'>№</TableCell>
-            <TableCell align='left'>Full name</TableCell>
-            <TableCell align='left'>City</TableCell>
-            <TableCell align='center'>Sex</TableCell>
-            <TableCell align='left'>Club</TableCell>
-            <TableCell align='left'>Coach</TableCell>
-            <TableCell align='center'>Age</TableCell>
-            <TableCell align='left'>Birthday</TableCell>
-            <TableCell align='left'>Weight</TableCell>
-            {/* <TableCell align='left'></TableCell> */}
-          </TableRow>
         </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              className={styles.tableRow}
-              key={row.number}
-              // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              {row.number % 2 ? (
-                <TableCell rowSpan={2} component='th' scope='row'>
-                  {row.date}
-                </TableCell>
-              ) : null}
-              {row.number % 2 ? (
-                <TableCell rowSpan={2} align='left'>
-                  {row.degree}
-                </TableCell>
-              ) : null}
-              <TableCell align='center'>{row.color}</TableCell>
-              <TableCell align='left'>{row.number}</TableCell>
-              <TableCell align='left'>{row.fullName}</TableCell>
-              <TableCell align='left'>{row.settlement}</TableCell>
-              <TableCell align='center'>{row.sex}</TableCell>
-              <TableCell align='left'>{row.club}</TableCell>
-              <TableCell align='left'>{row.coach}</TableCell>
-              <TableCell align='center'>{row.age}</TableCell>
-              <TableCell align='left'>{row.birthDate}</TableCell>
-              <TableCell align='left' sx={{ paddingRight: 0 }}>
-                {row.weight}
-              </TableCell>
-              <TableCell padding='none' sx={{ paddingRight: 0.5 }} align='right'>
-                <IconButton size='small' onClick={(e) => openCardSettings(e, row, category)}>
-                  <MoreVertIcon fontSize='inherit' />
-                </IconButton>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
       </Table>
+      <Collapse in={open} timeout='auto' unmountOnExit>
+        <Table sx={{ minWidth: 200 }} size='small'>
+          <TableHead>
+            <TableRow className={styles.tableHeadDesc}>
+              <TableCell>Date</TableCell>
+              <TableCell align='left'>Degree</TableCell>
+              <TableCell align='center'>Corner</TableCell>
+              <TableCell align='left'>№</TableCell>
+              <TableCell align='left'>Full name</TableCell>
+              <TableCell align='left'>City</TableCell>
+              <TableCell align='center'>Sex</TableCell>
+              <TableCell align='left'>Club</TableCell>
+              <TableCell align='left'>Coach</TableCell>
+              <TableCell align='center'>Age</TableCell>
+              <TableCell align='left'>Birthday</TableCell>
+              <TableCell align='left'>Weight</TableCell>
+              {/* <TableCell align='left'></TableCell> */}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow
+                className={styles.tableRow}
+                key={row.number}
+                // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                {row.number % 2 ? (
+                  <TableCell rowSpan={2} component='th' scope='row'>
+                    {row.date}
+                  </TableCell>
+                ) : null}
+                {row.number % 2 ? (
+                  <TableCell rowSpan={2} align='left'>
+                    {row.degree}
+                  </TableCell>
+                ) : null}
+                <TableCell align='center'>{row.color}</TableCell>
+                <TableCell align='left'>{row.number}</TableCell>
+                <TableCell align='left'>{row.fullName}</TableCell>
+                <TableCell align='left'>{row.settlement}</TableCell>
+                <TableCell align='center'>{row.sex}</TableCell>
+                <TableCell align='left'>{row.club}</TableCell>
+                <TableCell align='left'>{row.coach}</TableCell>
+                <TableCell align='center'>{row.age}</TableCell>
+                <TableCell align='left'>{row.birthDate}</TableCell>
+                <TableCell align='left' sx={{ paddingRight: 0 }}>
+                  {row.weight}
+                </TableCell>
+                <TableCell padding='none' sx={{ paddingRight: 0.5 }} align='right'>
+                  <IconButton size='small' onClick={(e) => openCardSettings(e, row, category)}>
+                    <MoreVertIcon fontSize='inherit' />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Collapse>
     </TableContainer>
   );
 }
 
-CategoryTable.propTypes = {
-  category: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    sex: PropTypes.string.isRequired,
-    ageFrom: PropTypes.number.isRequired,
-    ageTo: PropTypes.number.isRequired,
-    weightFrom: PropTypes.number.isRequired,
-    weightTo: PropTypes.number.isRequired,
-    weightName: PropTypes.string.isRequired,
-    group: PropTypes.oneOf(['A', 'B', null]),
-    linked: PropTypes.shape({
-      fights: PropTypes.arrayOf(
-        PropTypes.shape({
-          id: PropTypes.string.isRequired,
-          degree: PropTypes.number.isRequired,
-          orderNumber: PropTypes.number.isRequired,
-          firstCardId: PropTypes.string,
-          secondCardId: PropTypes.string,
-          winnerId: PropTypes.string,
-          nextFightId: PropTypes.string,
-          categoryId: PropTypes.string.isRequired,
-          fightSpaceId: PropTypes.string,
-          executedAt: PropTypes.string,
-          linked: PropTypes.shape({
-            cards: PropTypes.arrayOf(
-              PropTypes.shape({
-                id: PropTypes.string.isRequired,
-                fighterId: PropTypes.number.isRequired,
-                section: PropTypes.string.isRequired,
-                weight: PropTypes.number.isRequired,
-                birthDate: PropTypes.string.isRequired,
-                age: PropTypes.number.isRequired,
-                linked: PropTypes.shape({
-                  fighter: PropTypes.shape({
-                    id: PropTypes.string.isRequired,
-                    name: PropTypes.string.isRequired,
-                    lastName: PropTypes.string.isRequired,
-                    sex: PropTypes.string.isRequired,
-                    clubId: PropTypes.number.isRequired,
-                    secondaryClubId: PropTypes.string,
-                    coachId: PropTypes.string.isRequired
-                  }).isRequired,
-                  club: PropTypes.shape({
-                    id: PropTypes.string.isRequired,
-                    name: PropTypes.string.isRequired
-                  }).isRequired,
-                  coach: PropTypes.shape({
-                    id: PropTypes.string.isRequired,
-                    name: PropTypes.string.isRequired,
-                    lastName: PropTypes.string.isRequired
-                  }).isRequired
-                }).isRequired
-              })
-            )
-          }).isRequired
-        })
-      ).isRequired,
-      section: PropTypes.object.isRequired
-    }).isRequired
-  }).isRequired,
-  openCardSettings: PropTypes.func.isRequired,
-  // selectedCardToMove: PropTypes.shape({
-  //   id: PropTypes.string.isRequired
-  // }),
-  openCategorySettings: PropTypes.func.isRequired
-};
+CategoryTable.propTypes = categoryPropTypes;
 
 export default CategoryTable;

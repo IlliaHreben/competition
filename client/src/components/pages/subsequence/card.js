@@ -7,20 +7,18 @@ import {
   ListItemButton,
   ListItemText,
   Collapse,
-  Stack,
-  IconButton
+  Stack
 } from '@mui/material';
 import { PropTypes } from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
 
 import { parseTimeFromSec, calculateSecFromFight } from '../../../utils/datetime';
 import { groupByCriteria } from '../../../utils/grouping';
 import DraggableDroppable from '../../ui-components/draggable-droppable';
 import { shiftFights, listFights } from '../../../actions/fights';
 import { showSuccess } from '../../../actions/errors';
+import ExpandIconButton from '../../../utils/component-utils';
 
 function getTotalTimeFormatted(fightsList) {
   const totalTime = fightsList.reduce(
@@ -87,7 +85,7 @@ export default function SectionCard({ fightGroup }) {
                 </Typography>
                 <Typography variant='body2'>Duration: {duration}</Typography>
               </Stack>
-              {getIconButton(open, () => setOpen((prev) => !prev))}
+              <ExpandIconButton open={open} onClick={() => setOpen((prev) => !prev)} />
             </Stack>
           </CardContent>
           <Collapse in={open} timeout='auto' unmountOnExit>
@@ -101,10 +99,6 @@ export default function SectionCard({ fightGroup }) {
 SectionCard.propTypes = {
   fightGroup: PropTypes.array.isRequired
 };
-
-function getIconButton(open, onClick) {
-  return <IconButton onClick={onClick}>{open ? <ExpandLess /> : <ExpandMore />}</IconButton>;
-}
 
 function getList(categories) {
   return (
