@@ -17,6 +17,7 @@ export default class MoveCard extends ServiceBase {
 
     const card = await Card.findById(id, { include: ['Category'] });
     if (!card) throw new ServiceError('NOT_FOUND', { id });
+    if (card.Category.id === categoryId) throw new ServiceError('SAME_CATEGORIES');
 
     const { from, to } = await card.moveCardToCategory(category);
 

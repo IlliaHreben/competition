@@ -128,6 +128,10 @@ const errors = {
     code: 'CANNOT_MOVE_EMPTY_CARD',
     fields: {},
   }),
+  SAME_CATEGORIES: () => ({
+    code: 'SAME_INSTANCES',
+    fields: { instance: 'Category' },
+  }),
 };
 
 export default class ServiceError extends Exception {

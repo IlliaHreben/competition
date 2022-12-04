@@ -27,36 +27,26 @@ export default function SettingsPopover({
   handleActivate,
   extraSettings = []
 }) {
-  const settingsList = [
-    ...(handleActivate
-      ? [
-          {
-            icon: <CheckIcon fontSize={'small'} />,
-            onClick: handleActivate,
-            text: { primary: 'Activate' }
-          }
-        ]
-      : []),
-    ...(handleEdit
-      ? [
-          {
-            icon: <EditIcon fontSize={'small'} />,
-            onClick: handleEdit,
-            text: { primary: 'Edit' }
-          }
-        ]
-      : []),
-    ...(handleDelete
-      ? [
-          {
-            icon: <DeleteIcon sx={{ color: 'rgb(254 6 5/ 0.7);' }} fontSize={'small'} />,
-            onClick: handleDelete,
-            text: { sx: { color: 'rgb(254 6 5/ 0.7);' }, primary: 'Delete' }
-          }
-        ]
-      : []),
-    ...extraSettings
-  ];
+  const settingsList = [];
+  if (handleActivate)
+    settingsList.push({
+      icon: <CheckIcon fontSize={'small'} />,
+      onClick: handleActivate,
+      text: { primary: 'Activate' }
+    });
+  if (handleEdit)
+    settingsList.push({
+      icon: <EditIcon fontSize={'small'} />,
+      onClick: handleEdit,
+      text: { primary: 'Edit' }
+    });
+  if (handleDelete)
+    settingsList.push({
+      icon: <DeleteIcon sx={{ color: 'rgb(254 6 5/ 0.7);' }} fontSize={'small'} />,
+      onClick: handleDelete,
+      text: { sx: { color: 'rgb(254 6 5/ 0.7);' }, primary: 'Delete' }
+    });
+  settingsList.push(...extraSettings);
 
   return (
     <Popover
@@ -73,9 +63,9 @@ export default function SettingsPopover({
       }}
     >
       <List sx={{ p: 0 }}>
-        {settingsList.map(({ text, icon, onClick }) => (
+        {settingsList.map(({ text, icon, onClick, ...props }) => (
           <ListItem disablePadding key={text.primary}>
-            <ListItemButton sx={{ pt: 0.5, pb: 0.5 }} onClick={onClick}>
+            <ListItemButton sx={{ pt: 0.5, pb: 0.5 }} onClick={onClick} {...props}>
               <ListItemIcon sx={{ minWidth: 30 }}>{icon}</ListItemIcon>
               <ListItemText {...text} />
             </ListItemButton>

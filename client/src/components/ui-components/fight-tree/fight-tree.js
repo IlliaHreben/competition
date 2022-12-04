@@ -2,6 +2,7 @@ import { useState, useMemo, useCallback } from 'react';
 import styles from './index.module.css';
 import SettingsPopover from '../settings-popover';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import MoveUpIcon from '@mui/icons-material/MoveUp';
 import { useDispatch } from 'react-redux';
 import { setWinner } from '../../../actions/fights';
 import { showSuccess } from '../../../actions/errors';
@@ -57,12 +58,11 @@ function createFightersTree({ cards, fights }) {
   }));
 }
 
-export default function FightTree({ width: totalWidth = 250, category }) {
+export default function FightTree({ width: totalWidth = 250, category, setSelectedCardToMove }) {
   const linked = category.linked;
   const dispatch = useDispatch();
 
   const [fightersTree, setFightersTree] = useState(createFightersTree(linked));
-  if (category.id === '460ca4be-3c21-43b7-813d-b1ea55a0821a') console.log(fightersTree, category);
 
   useMemo(() => setFightersTree(createFightersTree(linked)), [linked]);
 
@@ -83,6 +83,12 @@ export default function FightTree({ width: totalWidth = 250, category }) {
         handleCloseSettings();
       })
     );
+  };
+
+  const handleSelectToMove = () => {
+    setSelectedCardToMove({ categoryId: category.id, id: anchor.fighterId });
+    dispatch(showSuccess('Selected. Please choose proper category'));
+    handleCloseSettings();
   };
 
   const renderCustomMatchBracket = useCallback(
@@ -137,6 +143,11 @@ export default function FightTree({ width: totalWidth = 250, category }) {
             icon: <EmojiEventsIcon fontSize={'small'} />,
             onClick: handleSetWinner,
             text: { primary: 'Set winner' }
+          },
+          {
+            icon: <MoveUpIcon fontSize={'small'} />,
+            onClick: handleSelectToMove,
+            text: { primary: 'Select to move' }
           }
         ]}
       />
@@ -147,5 +158,6 @@ export default function FightTree({ width: totalWidth = 250, category }) {
 
 FightTree.propTypes = {
   width: PropTypes.number,
-  category: PropTypes.object
+  category: PropTypes.object,
+  setSelectedCardToMove: PropTypes.func.isRequired
 };

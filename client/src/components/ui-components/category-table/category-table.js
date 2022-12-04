@@ -5,10 +5,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Stack from '@mui/material/Stack';
 import PropTypes from 'prop-types';
 
-import styles from './category-table.module.css';
 import { formatISODate, getFormattedDate } from '../../../utils/datetime';
+import styles from './category-table.module.css';
 
 function dumpCategoryData(category) {
   const { fights, cards } = category.linked;
@@ -37,6 +41,7 @@ function dumpCardData(card) {
   const club = card.linked?.fighter?.linked.club;
 
   return {
+    id: card.id,
     date: card.fight && getFormattedDate(), // TODO
     degree: card.fight ? `1/${card.fight.degree}` : '',
     color: isFirst !== undefined ? (isFirst ? 'red' : 'blue') : '',
@@ -60,15 +65,41 @@ function getFullName(fighter) {
   return fighter ? `${fighter?.lastName} ${fighter?.name}` : '';
 }
 
-function CategoryTable({ category }) {
+function CategoryTable({ category, openCardSettings, openCategorySettings }) {
   const rows = dumpCategoryData(category);
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 200 }} size='small'>
         <TableHead>
           <TableRow>
-            <TableCell className={styles.tableCategoryDesc} colSpan={12} align='center'>
-              {`${category.linked.section.name} in: ${category.sex}'s ${category.ageFrom} - ${category.ageTo} years, weight category ${category.weightName}`}
+            <TableCell
+              // padding='checkbox'
+              className={styles.tableCategoryDesc}
+              colSpan={13}
+              align='center'
+            >
+              <Stack direction='row' sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
+                <IconButton
+                  size='small'
+                  aria-label='delete'
+                  onClick={(e) => openCategorySettings(e, category)}
+                  sx={{ color: '#f0efef' }}
+                >
+                  <MoreVertIcon size='small' />
+                </IconButton>
+                <Typography>
+                  {`${category.linked.section.name} in: ${category.sex}'s ${category.ageFrom} - ${category.ageTo} years, weight category ${category.weightName}`}
+                </Typography>
+                <IconButton
+                  size='small'
+                  aria-label='delete'
+                  onClick={(e) => openCategorySettings(e, category)}
+                  sx={{ color: '#f0efef' }}
+                >
+                  <MoreVertIcon size='small' />
+                </IconButton>
+              </Stack>
             </TableCell>
           </TableRow>
           <TableRow className={styles.tableHeadDesc}>
@@ -84,6 +115,7 @@ function CategoryTable({ category }) {
             <TableCell align='center'>Age</TableCell>
             <TableCell align='left'>Birthday</TableCell>
             <TableCell align='left'>Weight</TableCell>
+            {/* <TableCell align='left'></TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -112,7 +144,14 @@ function CategoryTable({ category }) {
               <TableCell align='left'>{row.coach}</TableCell>
               <TableCell align='center'>{row.age}</TableCell>
               <TableCell align='left'>{row.birthDate}</TableCell>
-              <TableCell align='left'>{row.weight}</TableCell>
+              <TableCell align='left' sx={{ paddingRight: 0 }}>
+                {row.weight}
+              </TableCell>
+              <TableCell padding='none' sx={{ paddingRight: 0.5 }} align='right'>
+                <IconButton size='small' onClick={(e) => openCardSettings(e, row, category)}>
+                  <MoreVertIcon fontSize='inherit' />
+                </IconButton>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -180,7 +219,12 @@ CategoryTable.propTypes = {
       ).isRequired,
       section: PropTypes.object.isRequired
     }).isRequired
-  }).isRequired
+  }).isRequired,
+  openCardSettings: PropTypes.func.isRequired,
+  // selectedCardToMove: PropTypes.shape({
+  //   id: PropTypes.string.isRequired
+  // }),
+  openCategorySettings: PropTypes.func.isRequired
 };
 
 export default CategoryTable;

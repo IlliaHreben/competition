@@ -25,9 +25,21 @@ export function switchCards(params, onSuccess) {
 
       onSuccess?.();
     } catch (errData) {
-      console.log('='.repeat(50)); // !nocommit
-      console.log(errData); // !nocommit
-      console.log('='.repeat(50));
+      dispatch(reducer.listRequestError(errData));
+    }
+  };
+}
+
+export function moveCard({ id, ...params }, onSuccess) {
+  return async (dispatch) => {
+    try {
+      dispatch(reducer.listRequest());
+
+      await api.cards.move(id, params);
+      // data.forEach((card) => dispatch(reducer.update(card)));
+
+      onSuccess?.();
+    } catch (errData) {
       dispatch(reducer.listRequestError(errData));
     }
   };
