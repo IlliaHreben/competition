@@ -85,6 +85,7 @@ function CategoryTable({ category, openCardSettings, openCategorySettings, openT
             <TableCell
               // padding='checkbox'
               className={styles.tableCategoryDesc}
+              sx={{ borderBottom: 'none' }}
               colSpan={13}
               align='center'
             >

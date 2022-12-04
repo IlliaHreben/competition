@@ -28,8 +28,8 @@ function getCellValues(root, colors) {
   const secondCardData = root.linked?.secondCard;
 
   return [
-    firstCardData ? formatData(firstCardData, root, colors) : {},
-    secondCardData ? formatData(secondCardData, root, colors) : {}
+    firstCardData ? formatData(firstCardData, root, colors) : { id: '' },
+    secondCardData ? formatData(secondCardData, root, colors) : { id: '' }
   ].filter(Boolean);
 }
 
