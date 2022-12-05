@@ -13,7 +13,7 @@ import {
   clearShow
   // update as updateCompetition
 } from '../../../../actions/competitions';
-import { list as listFightSpaces } from '../../../../actions/fightSpaces';
+import { list as listFightSpaces } from '../../../../actions/fight-spaces';
 import { list as listSections } from '../../../../actions/sections';
 // import { showSuccess }               from '../../../../actions/errors';
 import styles from './update.module.css';
@@ -44,10 +44,10 @@ TabPanel.propTypes = {
 };
 
 function CompetitionUpdate() {
-  const [tab, setTab] = useState(0);
+  const location = useLocation();
+  const [tab, setTab] = useState(+new URLSearchParams(location.search).get('tab'));
   const { competition } = useSelector(mapStateToProps);
   const dispatch = useDispatch();
-  const location = useLocation();
   const navigate = useNavigate();
 
   const { id: competitionId } = useParams();

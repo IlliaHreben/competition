@@ -1,10 +1,13 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from 'react-redux';
-import { TableCell, Stack, Paper, IconButton } from '@mui/material';
 import { AutoSizer, Column, Table, InfiniteLoader } from 'react-virtualized';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router';
+
 import { withStyles } from '@mui/styles';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { TableCell, Stack, Paper, IconButton } from '@mui/material';
 
 import { formatISODate } from '../../../../utils/datetime';
 import { listCards, deleteCard, supplementListCards } from '../../../../actions/cards';
@@ -134,8 +137,10 @@ const columns = [
 ];
 
 export default withStyles(styles)(function CardsTable(props) {
-  const [filters, setFilters] = useState({});
+  const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [filters, setFilters] = useState(Object.fromEntries(new URLSearchParams(location.search)));
 
   const getRowClassName = ({ index }) => {
     const { classes } = props;
@@ -185,17 +190,21 @@ export default withStyles(styles)(function CardsTable(props) {
   const { cards, active, meta } = useSelector(mapState);
 
   useEffect(() => {
-    if (active) {
-      dispatch(
-        listCards({
-          limit: 30,
-          competitionId: active.id,
-          include: ['category', 'coach', 'club', 'fighter'],
-          ...filters
-        })
-      );
-    }
-  }, [filters, active, dispatch]);
+    if (!active) return;
+    const query = Object.entries(filters)
+      .filter(([, value]) => value)
+      .map(([key, value]) => `${key}=${value}`)
+      .join('&');
+    navigate(`?${query}`, { replace: true });
+    dispatch(
+      listCards({
+        limit: 30,
+        competitionId: active.id,
+        include: ['category', 'coach', 'club', 'fighter'],
+        ...filters
+      })
+    );
+  }, [filters, active, dispatch, navigate]);
 
   const loadMoreRows = () => {
     return dispatch(
@@ -270,6 +279,7 @@ export default withStyles(styles)(function CardsTable(props) {
         <TableHeader
           onChange={(current) => setFilters((prev) => ({ ...prev, ...current }))}
           initiator='cards'
+          filters={filters}
         />
         <SettingsPopover
           anchorEl={anchor?.element}

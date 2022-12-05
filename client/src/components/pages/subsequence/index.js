@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import { listFights } from '../../../actions/fights';
 import { useSelector, useDispatch } from 'react-redux';
 import { groupByCriteria, splitBy } from '../../../utils/grouping';
 import { Container, Paper } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
+import Typography from '@mui/material/Typography';
 
 import Card from './card';
 import FightSpaceHeader from './fight-space-header';
@@ -108,30 +109,38 @@ export default function Schedule() {
     <Container sx={{ overflow: 'auto' }} maxWidth='auto'>
       <DndProvider backend={HTML5Backend}>
         {fightGroups.map((groupedByFS, i) => (
-          <Grid key={i} sx={{ mt: 2, justifyContent: 'center' }} container spacing={3}>
-            {groupedByFS.map((groupedBySection, j) => (
-              <Grid key={groupedBySection[0][0].fightSpaceId} item>
-                <FightSpaceHeader fightSpace={groupedBySection[0][0].linked.fightSpace} />
-                <Paper sx={{ backgroundColor: '#e7ebf0', maxWidth: 350 }} elevation={0}>
-                  <Grid key={i} sx={{ justifyContent: 'center' }} container spacing={1}>
-                    {groupedBySection.map((fightGroup) => {
-                      const category = fightGroup[0].linked.category;
+          <Fragment key={i}>
+            <Typography
+              sx={{ display: 'flex', justifyContent: 'center', alignSelf: 'center', mt: 3 }}
+              variant='h2'
+            >
+              DAY {i + 1}
+            </Typography>
+            <Grid sx={{ mt: 2, justifyContent: 'center' }} container spacing={3}>
+              {groupedByFS.map((groupedBySection) => (
+                <Grid key={groupedBySection[0][0].fightSpaceId} item>
+                  <FightSpaceHeader fightSpace={groupedBySection[0][0].linked.fightSpace} />
+                  <Paper sx={{ backgroundColor: '#e7ebf0', maxWidth: 350 }} elevation={0}>
+                    <Grid sx={{ justifyContent: 'center' }} container spacing={1}>
+                      {groupedBySection.map((fightGroup) => {
+                        const category = fightGroup[0].linked.category;
 
-                      return (
-                        <Grid
-                          item
-                          key={`${category.sectionId}-${category.ageFrom}-${category.ageTo}-${fightGroup[0].id}`}
-                          spacing={0.5}
-                        >
-                          <Card fightGroup={fightGroup}></Card>
-                        </Grid>
-                      );
-                    })}
-                  </Grid>
-                </Paper>
-              </Grid>
-            ))}
-          </Grid>
+                        return (
+                          <Grid
+                            item
+                            key={`${category.sectionId}-${category.ageFrom}-${category.ageTo}-${fightGroup[0].id}`}
+                            spacing={0.5}
+                          >
+                            <Card fightGroup={fightGroup}></Card>
+                          </Grid>
+                        );
+                      })}
+                    </Grid>
+                  </Paper>
+                </Grid>
+              ))}
+            </Grid>
+          </Fragment>
         ))}
       </DndProvider>
     </Container>

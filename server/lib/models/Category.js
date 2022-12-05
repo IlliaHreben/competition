@@ -123,7 +123,8 @@ export default class Category extends Base {
         fight.fightSpaceId = fightSpacesToDegrees[fight.degree] || fightSpacesToDegrees[maxDegree];
     });
 
-    if (!recalculate) await this.assignFightFormulaToFights();
+    if (!recalculate || previousFights.some((f) => !f.formulaId))
+      await this.assignFightFormulaToFights();
 
     return fights;
   }
@@ -385,7 +386,7 @@ export default class Category extends Base {
 
     const fights = this.Fights || (await this.getFights());
     const firstFight = fights.find((f) => f.orderNumber === 1) || {};
-    const maxDegree = fights.reduce((max, fight) => Math.max(max, fight.degree), 0);
+    const maxDegree = fights.reduce((max, fight) => Math.max(max, fight.degree), 0) || 1;
     const lastDegreeFights = fights.filter((f) => f.degree === maxDegree);
     const isLastDegreeFull = maxDegree === lastDegreeFights.length;
     const serialNumber = firstFight?.serialNumber || 1;
@@ -398,7 +399,6 @@ export default class Category extends Base {
       { orderNumber: 0 }
     );
 
-    // increase orderNumber by 1
     await Fight.update(
       { orderNumber: sequelize.literal('"orderNumber" + 1') },
       { where: { categoryId: this.id } }

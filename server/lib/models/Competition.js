@@ -155,13 +155,25 @@ export default class Competition extends Base {
       where: {
         competitionId: this.id,
       },
+      sort: [
+        ['Category.ageFrom', 'ASC'],
+        ['Category.sex', 'DESC'],
+        ['Category.weightFrom', 'ASC'],
+        ['Category.group', 'DESC'],
+      ],
     });
     const fightSpaces = await FightSpace.findAll({
       where: {
-        competitionDay: 1,
         competitionId: this.id,
       },
+      sort: [
+        ['competitionDay', 'ASC'],
+        ['orderNumber', 'ASC'],
+      ],
     });
+    console.log('='.repeat(50)); // !nocommit
+    console.log(categories.filter((c) => !c.Fights));
+    console.log('='.repeat(50));
     const result = calculate(categories, fightSpaces);
     await Promise.all(result.map((r) => r.save()));
     // await Fight.bulkCreate(result, { updateOnDublicate: true });

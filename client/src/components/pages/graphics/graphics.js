@@ -2,12 +2,16 @@ import { useState, useEffect, useCallback } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Box } from '@mui/material';
 import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 import styles from './graphics.module.css';
 import CircularProgress from './CircularProgress';
+import FilterDrawer from './filters-drawer';
 import { CategorySettingsPopover, RowSettingsPopover } from './settings';
 
 import FightTree from '../../ui-components/fight-tree';
@@ -35,16 +39,25 @@ function mapState(state) {
 const limit = 10;
 
 export default function FightTrees() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  const { competition, categories, meta, isLoading } = useSelector(mapState);
+
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState(Object.fromEntries(new URLSearchParams(location.search)));
+  const [hideTables, setHideTables] = useState(
+    new URLSearchParams(location.search).get('hideTables') === 'true'
+  );
   const [node, setNode] = useState(null);
-  const dispatch = useDispatch();
-  const { competition, categories, meta, isLoading } = useSelector(mapState);
   const [selectedCardToMove, setSelectedCardToMove] = useState(null);
+
   const loadMoreRows = useCallback(() => {
+    const loadCategories = offset === 0 ? listCategories : concatToListCategories;
     dispatch(
-      (offset === 0 ? listCategories : concatToListCategories)({
+      loadCategories({
         ...filters,
         competitionId: competition.id,
         offset,
@@ -54,11 +67,18 @@ export default function FightTrees() {
     );
   }, [competition.id, dispatch, filters, offset]);
 
+  useEffect(() => {
+    const query = Object.entries({ ...filters, hideTables })
+      .filter(([, value]) => value)
+      .map(([key, value]) => `${key}=${value}`)
+      .join('&');
+    navigate(`?${query}`, { replace: true });
+  }, [filters, navigate, offset, hideTables]);
+
   const handleMoveCard = (categoryId) => {
     dispatch(
       moveCard({ id: selectedCardToMove.id, categoryId }, () => {
         dispatch(showSuccess('The card has been successfully moved.'));
-        // dispatch(refreshCategories([categoryId, selectedCardToMove.categoryId]));
         setSelectedCardToMove(null);
         if (offset === 0) loadMoreRows();
         else setOffset(0);
@@ -79,12 +99,16 @@ export default function FightTrees() {
   // settings
   const [anchorCategory, setAnchorCategory] = useState(null);
   const [anchorRow, setAnchorRow] = useState(null);
+  const [moreFiltersAnchor, setMoreFiltersAnchor] = useState(false);
 
   const handleClickCategory = (e, category) => {
     setAnchorCategory({ element: e.currentTarget, category });
   };
   const handleClickCard = (e, card, category) => {
     setAnchorRow({ element: e.currentTarget, card, category });
+  };
+  const toggleDrawer = (open) => (event) => {
+    setMoreFiltersAnchor(open);
   };
 
   const handleCloseCategorySettings = () => {
@@ -98,6 +122,12 @@ export default function FightTrees() {
     setSelectedCardToMove({ categoryId: anchorRow.category.id, id: anchorRow.card.id });
     dispatch(showSuccess('Selected. Please choose proper category'));
     handleCloseCardSettings();
+  };
+
+  const handleFilterChange = (current) => {
+    setFilters((prev) => ({ ...prev, ...current }));
+    setOffset(0);
+    setHasMore(true);
   };
 
   return (
@@ -119,6 +149,15 @@ export default function FightTrees() {
         onClose={handleCloseCardSettings}
         handleSelectToMove={handleSelectToMove}
       />
+      <FilterDrawer
+        open={moreFiltersAnchor}
+        onClose={toggleDrawer(false)}
+        onOpen={toggleDrawer(true)}
+        onChange={handleFilterChange}
+        filters={filters}
+        onHideTables={(status) => setHideTables(status)}
+        hideTables={hideTables}
+      />
       <div
         ref={(node) => {
           if (!node) return;
@@ -136,14 +175,11 @@ export default function FightTrees() {
         }}
       >
         <HideAppBar node={node}>
-          <TableHeader
-            onChange={(current) => {
-              setFilters((prev) => ({ ...prev, ...current }));
-              setOffset(0);
-              setHasMore(true);
-            }}
-            initiator='graphics'
-          />
+          <TableHeader onChange={handleFilterChange} initiator='graphics' filters={filters}>
+            <Button variant='text' onClick={toggleDrawer(true)}>
+              More
+            </Button>
+          </TableHeader>
         </HideAppBar>
         <InfiniteScroll
           dataLength={categories.length}
@@ -157,6 +193,7 @@ export default function FightTrees() {
             {categories.map((category) => (
               <Container key={category.id} maxWidth='xl'>
                 <CategoryTable
+                  openTable={!hideTables}
                   category={category}
                   openCardSettings={handleClickCard}
                   openCategorySettings={handleClickCategory}

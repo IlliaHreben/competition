@@ -1,4 +1,5 @@
 import { splitBy } from './index';
+import { getMaxDegree } from './common';
 
 const MAX_DAY_TIME = 10 * 60 * 60;
 const TIMEOUT = 90;
@@ -49,10 +50,13 @@ function calculateForType(fightSpaces, categories) {
   );
 
   const usedCategoryIds = [];
+  const filterCb = (c) =>
+    !usedCategoryIds.includes(c.id) || getMaxDegree(c) >= FINAL_DAY_DEGREE_FROM;
+
   fightSpacesGrouped.forEach((fsg) => {
     const properCategories =
       fsg.competitionDay === days
-        ? categories
+        ? categories.filter(filterCb)
         : categories.filter((c) => !usedCategoryIds.includes(c.id));
 
     const { leftCategories } = calculateForTypeAndDay(
@@ -61,15 +65,18 @@ function calculateForType(fightSpaces, categories) {
       days,
       fsg.competitionDay
     );
-    usedCategoryIds.push(...leftCategories.map((c) => c.id));
+    const leftCategoriesIds = leftCategories.map((c) => c.id);
+    usedCategoryIds.push(
+      ...categories.filter((c) => !leftCategoriesIds.includes(c.id)).map((c) => c.id)
+    );
   });
 }
 
-function extractProperDayFights(category, isLastDay) {
-  const isHugeCategory = category.Fights.some((f) => f.degree >= FINAL_DAY_DEGREE_FROM);
+function extractProperDayFights(fights, isLastDay) {
+  const isHugeCategory = fights.some((f) => f.degree >= FINAL_DAY_DEGREE_FROM);
 
-  if (!isHugeCategory) return category.Fights;
-  const finalDayFights = category.Fights.filter((f) =>
+  if (!isHugeCategory) return fights;
+  const finalDayFights = fights.filter((f) =>
     isLastDay ? f.degree <= FINAL_DAY_DEGREE : f.degree > FINAL_DAY_DEGREE
   );
   return finalDayFights;
@@ -122,7 +129,7 @@ function groupByCriteria(items, by, itemName = 'items') {
 
 const calculateFightsTime = (categories, daysTotal, day) =>
   categories.reduce((acc, c) => {
-    const fights = daysTotal === 1 ? c.Fights : extractProperDayFights(c, daysTotal === day);
+    const fights = daysTotal === 1 ? c.Fights : extractProperDayFights(c.Fights, daysTotal === day);
     fights.forEach((f) => (acc += calculateFormulaTime(f.FightFormula)));
     acc += (fights.length - 1) * TIMEOUT;
     return acc;

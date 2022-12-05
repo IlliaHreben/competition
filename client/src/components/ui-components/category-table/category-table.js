@@ -68,7 +68,7 @@ function getFullName(fighter) {
   return fighter ? `${fighter?.lastName} ${fighter?.name}` : '';
 }
 
-function CategoryTable({ category, openCardSettings, openCategorySettings, openTable = true }) {
+function CategoryTable({ category, openCardSettings, openCategorySettings, openTable }) {
   const rows = dumpCategoryData(category);
 
   const [open, setOpen] = useState(openTable);
@@ -117,7 +117,7 @@ function CategoryTable({ category, openCardSettings, openCategorySettings, openT
           </TableRow>
         </TableHead>
       </Table>
-      <Collapse in={open} timeout='auto' unmountOnExit>
+      <Collapse in={open} timeout='auto'>
         <Table sx={{ minWidth: 200 }} size='small'>
           <TableHead>
             <TableRow className={styles.tableHeadDesc}>

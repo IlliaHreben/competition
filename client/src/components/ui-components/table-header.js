@@ -23,10 +23,12 @@ function mapState(state) {
 
 TableHeader.propTypes = {
   onChange: PropTypes.func.isRequired,
-  initiator: PropTypes.string
+  initiator: PropTypes.string,
+  children: PropTypes.any,
+  filters: PropTypes.object
 };
 
-export default function TableHeader({ onChange, initiator }) {
+export default function TableHeader({ onChange, initiator, children, filters }) {
   const dispatch = useDispatch();
 
   const { clubs, coaches, cards, categories, sections, settlements, active } =
@@ -71,6 +73,7 @@ export default function TableHeader({ onChange, initiator }) {
             : coaches
         }
         sx={{ flexGrow: 4 }}
+        value={coaches.find((c) => filters.coachId === c.id) || null}
         getOptionLabel={({ name, lastName }) => `${lastName} ${name}`}
         renderInput={(params) => <TextField {...params} size='small' label='Coach' />}
         onChange={(e, coach) => {
@@ -88,6 +91,7 @@ export default function TableHeader({ onChange, initiator }) {
             : clubs
         }
         sx={{ flexGrow: 4 }}
+        value={clubs.find((c) => filters.clubId === c.id) || null}
         getOptionLabel={(club) => club.name}
         renderInput={(params) => <TextField {...params} size='small' label='Club' />}
         onChange={(e, club) => {
@@ -102,6 +106,7 @@ export default function TableHeader({ onChange, initiator }) {
         options={settlements}
         getOptionLabel={(s) => s.name}
         sx={{ flexGrow: 4 }}
+        value={settlements.find((s) => filters.settlementId === s.id) || null}
         renderInput={(params) => <TextField {...params} size='small' label='City' />}
         onChange={(e, s) => {
           setFilterActivation(!!s);
@@ -115,6 +120,7 @@ export default function TableHeader({ onChange, initiator }) {
         options={sections}
         sx={{ flexGrow: 3 }}
         getOptionLabel={(s) => s.name}
+        value={sections.find((s) => filters.sectionId === s.id) || null}
         renderInput={(params) => <TextField {...params} size='small' label='Section' />}
         onChange={(e, section) => {
           setFilterActivation(!!section);
@@ -144,12 +150,14 @@ export default function TableHeader({ onChange, initiator }) {
         autoHighlight
         options={['man', 'woman']}
         sx={{ flexGrow: 3 }}
+        value={filters.sex || null}
         renderInput={(params) => <TextField {...params} size='small' label='Sex' />}
         onChange={(e, sex) => {
           setFilterActivation(!!sex);
           onChange({ sex: sex || undefined });
         }}
       />
+      {children}
     </Stack>
   );
 }

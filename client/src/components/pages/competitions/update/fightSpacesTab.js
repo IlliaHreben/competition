@@ -16,7 +16,7 @@ import AddIcon from '@mui/icons-material/Add';
 import RingIcon from '../../../../assets/icons/ring.png';
 import TatamiIcon from '../../../../assets/icons/tatami.png';
 
-import { bulkUpdate } from '../../../../actions/fightSpaces';
+import { bulkUpdate } from '../../../../actions/fight-spaces';
 import { showSuccess } from '../../../../actions/errors';
 import { useParams } from 'react-router';
 
