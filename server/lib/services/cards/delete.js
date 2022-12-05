@@ -13,7 +13,11 @@ export default class CardDelete extends ServiceBase {
     const card = await Card.findById(id);
     if (!card) throw new ServiceError('NOT_FOUND', { id });
 
+    const category = await Card.getCategory();
+
     await card.destroy();
+
+    await category.calculateFights({ recalculate: true });
 
     return {
       data: dumpSection(card),

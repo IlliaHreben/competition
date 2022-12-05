@@ -33,7 +33,7 @@ function assignFightSpacesToFights(fightSpaces) {
         f.FightSpace = fs;
       });
 
-      return fights.sort((a, b) => b.degree - a.degree);
+      return fights.sort((a, b) => a.orderNumber - b.orderNumber);
     });
 
     fightList.forEach((fight, i) => (fight.serialNumber = i + 1));

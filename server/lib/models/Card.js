@@ -159,7 +159,6 @@ export default class Card extends Base {
 
   async updateCard(data) {
     const Section = sequelize.model('Section');
-    const Category = sequelize.model('Category');
     const Fighter = sequelize.model('Fighter');
 
     if (data.fighterId) {
@@ -184,35 +183,16 @@ export default class Card extends Base {
         throw new ServiceError('GROUP_CANNOT_EXIST');
       }
     }
-
-    const oldCategoryId = this.categoryId;
-    const category = await Category.findById(oldCategoryId);
-    await category.calculateFights();
-
     await this.update(data);
-    await this.assignCategory();
-    await this.calculateFights();
+    const oldCategoryId = this.categoryId;
+    const category = await this.findCategory();
+    if (oldCategoryId !== category.id) await this.moveCardToCategory(category);
 
     return this;
   }
 
   async assignCategory() {
-    const Fighter = sequelize.model('Fighter');
-    const Category = sequelize.model('Category');
-
-    const fighter = await Fighter.findById(this.fighterId);
-    const category = await Category.findOne({
-      where: {
-        weightFrom: { [Op.lte]: this.weight },
-        weightTo: { [Op.gte]: this.weight },
-        ageFrom: { [Op.lte]: this.age },
-        ageTo: { [Op.gte]: this.age },
-        group: this.group,
-        sectionId: this.sectionId,
-        sex: fighter.sex,
-        competitionId: this.competitionId,
-      },
-    });
+    const category = await this.findCategory();
 
     const updateFunction = this.isNewRecord ? 'set' : 'update';
     await this[updateFunction]({ categoryId: category?.id });
@@ -224,13 +204,17 @@ export default class Card extends Base {
     await category.calculateFights();
   }
 
-  async moveCardToCategory(categoryTo) {
-    const categoryFrom = this.Category || (await this.getCategory());
-
+  async addCardToCategory(categoryTo) {
     await this.update({ categoryId: categoryTo.id });
 
     await categoryTo.addFight();
     await categoryTo.calculateFights({ recalculate: true });
+  }
+
+  async moveCardToCategory(categoryTo) {
+    const categoryFrom = this.Category || (await this.getCategory());
+
+    await this.addCardToCategory(categoryTo);
 
     await categoryFrom.removeFight();
     await categoryFrom.calculateFights({ recalculate: true });
@@ -239,6 +223,25 @@ export default class Card extends Base {
       from: categoryFrom,
       to: categoryTo,
     };
+  }
+
+  async findCategory() {
+    const Fighter = sequelize.model('Fighter');
+    const Category = sequelize.model('Category');
+
+    const fighter = await Fighter.findById(this.fighterId);
+    return Category.findOne({
+      where: {
+        weightFrom: { [Op.lte]: this.weight },
+        weightTo: { [Op.gte]: this.weight },
+        ageFrom: { [Op.lte]: this.age },
+        ageTo: { [Op.gte]: this.age },
+        group: this.group,
+        sectionId: this.sectionId,
+        sex: fighter.sex,
+        competitionId: this.competitionId,
+      },
+    });
   }
 }
 
@@ -312,22 +315,7 @@ Card.init(
 );
 
 async function assignCategoryHook(card, options) {
-  const Fighter = sequelize.model('Fighter');
-  const Category = sequelize.model('Category');
-
-  const fighter = await Fighter.findById(card.fighterId);
-  const category = await Category.findOne({
-    where: {
-      weightFrom: { [Op.lte]: card.weight },
-      weightTo: { [Op.gte]: card.weight },
-      ageFrom: { [Op.lte]: card.age },
-      ageTo: { [Op.gte]: card.age },
-      group: card.group,
-      sectionId: card.sectionId,
-      sex: fighter.sex,
-      competitionId: card.competitionId,
-    },
-  });
+  const category = await await card.findCategory();
   card.categoryId = category.id;
 }
 
@@ -338,23 +326,9 @@ async function calculateFightsHook(card) {
 }
 
 async function assignBulkCategoryHook(cards, options) {
-  const Fighter = sequelize.model('Fighter');
-  const Category = sequelize.model('Category');
-
   await Promise.all(
     cards.map(async (card, i) => {
-      const fighter = await Fighter.findById(card.fighterId);
-      const category = await Category.findOne({
-        where: {
-          weightFrom: { [Op.lte]: card.weight },
-          weightTo: { [Op.gte]: card.weight },
-          ageFrom: { [Op.lte]: card.age },
-          ageTo: { [Op.gte]: card.age },
-          group: card.group,
-          sectionId: card.sectionId,
-          sex: fighter.sex,
-        },
-      });
+      const category = await card.findCategory();
       if (!category) throw new Error(`Category for card ${card.id} not found.`);
       card.categoryId = category.id;
     })

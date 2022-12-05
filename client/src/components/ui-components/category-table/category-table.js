@@ -77,6 +77,10 @@ function CategoryTable({ category, openCardSettings, openCategorySettings, openT
     setOpen(openTable);
   }, [openTable]);
 
+  const groupText = category.group ? `group ${category.group},` : '';
+
+  const sex = { man: 'men', woman: 'women' }[category.sex] || category;
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 200 }} size='small'>
@@ -98,7 +102,7 @@ function CategoryTable({ category, openCardSettings, openCategorySettings, openT
                   iconProps={{ size: 'small' }}
                 />
                 <Typography>
-                  {`${category.linked.section.name} in: ${category.sex}'s ${category.ageFrom} - ${category.ageTo} years, weight category ${category.weightName}`}
+                  {`${category.linked.section.name} in: ${sex} ${category.ageFrom} - ${category.ageTo} years, ${groupText} weight category ${category.weightName}`}
                 </Typography>
                 <IconButton
                   size='small'
