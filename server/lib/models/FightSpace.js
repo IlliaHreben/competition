@@ -40,6 +40,11 @@ FightSpace.init(
       allowNull: false,
     },
 
+    startAt: { type: DT.TIME, allowNull: false },
+    finishAt: { type: DT.TIME, allowNull: false },
+    breakStartAt: { type: DT.TIME, allowNull: false },
+    breakFinishAt: { type: DT.TIME, allowNull: false },
+
     createdAt: { type: DT.DATE, allowNull: false, defaultValue: new Date() },
     deletedAt: { type: DT.DATE, allowNull: true },
     updatedAt: { type: DT.DATE, allowNull: false, defaultValue: new Date() },

@@ -196,6 +196,7 @@ export default class Card extends Base {
 
     const updateFunction = this.isNewRecord ? 'set' : 'update';
     await this[updateFunction]({ categoryId: category?.id });
+    this.Category = category;
   }
 
   async calculateFights() {

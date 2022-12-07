@@ -20,27 +20,56 @@ export function calculate(categories, fightSpaces) {
 
 function assignFightSpacesToFights(fightSpaces) {
   const days = getDays(fightSpaces);
-  return fightSpaces.flatMap((fs) => {
-    const needFilter = days > 1;
-    const isLastDay = fs.competitionDay === days;
+  return (
+    fightSpaces
+      // .sort((a, b) => a.type - b.type)
+      .sort((a, b) => a.competitionDay - b.competitionDay)
+      .map((fs) => {
+        const needFilter = days > 1;
+        const isLastDay = fs.competitionDay === days;
 
-    const fightList = fs.Categories.flatMap((category) => {
-      const fights = needFilter
-        ? extractProperDayFights(category.Fights, isLastDay)
-        : category.Fights;
+        const fightList = fs.Categories.flatMap((category) => {
+          const fights = needFilter
+            ? extractProperDayFights(category.Fights, isLastDay)
+            : category.Fights;
 
-      fights.forEach((f) => {
-        f.fightSpaceId = fs.id;
-        f.FightSpace = fs;
-      });
+          fights.forEach((f) => {
+            f.fightSpaceId = fs.id;
+            f.FightSpace = fs;
+          });
 
-      return fights.sort((a, b) => a.orderNumber - b.orderNumber);
-    });
+          return fights.sort((a, b) => a.orderNumber - b.orderNumber);
+        });
 
-    fightList.forEach((fight, i) => (fight.serialNumber = i + 1));
+        fightList.forEach((fight, i) => (fight.serialNumber = i + 1));
+        fs.Fights = fightList;
 
-    return fightList;
-  });
+        return fs;
+      })
+      .flatMap((fightSpace, _, fss) => {
+        const prevDayFs = fss.find(
+          (fs) =>
+            fs.competitionDay === fightSpace.competitionDay - 1 &&
+            fs.orderNumber === fightSpace.orderNumber
+        );
+        if (!prevDayFs) return fightSpace.Fights;
+
+        const gap = prevDayFs.Fights.length;
+        fightSpace.Fights.forEach((fight) => (fight.serialNumber += gap));
+
+        return fightSpace.Fights;
+      })
+    // when you need to sort fights when next fight space has first fight with number {last fight of prev space} + 1
+    // .flatMap((fightSpace, i, fss) => {
+    //   const prevDayFs = fss[i-1]
+    //   if (!prevDayFs) return fightSpace.Fights;
+
+    //   const gap = prevDayFs.Fights.length;
+    //   fightSpace.Fights.forEach((fight) => (fight.serialNumber += gap));
+
+    //   return fightSpace.Fights;
+    // });
+  );
 }
 
 function calculateForType(fightSpaces, categories) {

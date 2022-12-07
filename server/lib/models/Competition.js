@@ -105,6 +105,7 @@ export default class Competition extends Base {
 
   async recalculateFightSpaces(spaces) {
     const FightSpace = sequelize.model('FightSpace');
+    const Fight = sequelize.model('Fight');
     const toBeAbandonedIds = spaces.filter((s) => s.id).map((s) => s.id);
 
     const currentSpaces = await this.getFightSpaces();
@@ -113,6 +114,8 @@ export default class Competition extends Base {
     const toBeDeletedIds = currentSpaces
       .filter((s) => !toBeAbandonedIds.includes(s.id))
       .map((s) => s.id);
+    const relatedFight = await Fight.findOne({ where: { fightSpaceId: toBeDeletedIds } });
+    if (relatedFight) throw new ServiceError('RELATED_INSTANCES', { fights: relatedFight.id });
 
     const toBeAdded = spaces.filter((s) => !s.id).map((s) => ({ competitionId: this.id, ...s }));
 
@@ -171,9 +174,7 @@ export default class Competition extends Base {
         ['orderNumber', 'ASC'],
       ],
     });
-    console.log('='.repeat(50)); // !nocommit
-    console.log(categories.filter((c) => !c.Fights));
-    console.log('='.repeat(50));
+
     const result = calculate(categories, fightSpaces);
     await Promise.all(result.map((r) => r.save()));
     // await Fight.bulkCreate(result, { updateOnDublicate: true });

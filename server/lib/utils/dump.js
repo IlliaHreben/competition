@@ -275,6 +275,11 @@ export function dumpFightFormula(data) {
     group: data.group,
     degree: data.degree,
 
+    startAt: data.startAt,
+    finishAt: data.finishAt,
+    breakStartAt: data.breakStartAt,
+    breakFinishAt: data.breakFinishAt,
+
     competitionId: data.competitionId,
     createdAt: data.createdAt,
     updatedAt: data.updatedAt,

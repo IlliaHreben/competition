@@ -126,7 +126,62 @@ export default class Category extends Base {
     if (!recalculate || previousFights.some((f) => !f.formulaId))
       await this.assignFightFormulaToFights();
 
+    this.Fights = fights;
+
+    if (!previousFights.length && fights.length) this.assignFightSpaceAndPosition();
+
     return fights;
+  }
+
+  // should find the nearest fight by section, age, sex, weight and group and assign the same fightSpaceId and set serialNumber incremented by 1 and shift further fights vy 1
+  async assignFightSpaceAndPosition(fights = this.Fights) {
+    const Category = sequelize.model('Category');
+    const Fight = sequelize.model('Fight');
+
+    const nearestCategory = await Category.findOne({
+      where: {
+        competitionId: this.competitionId,
+        sectionId: this.sectionId,
+        id: { [Op.ne]: this.id },
+      },
+      include: [{ model: Fight, as: 'Fights', required: true, order: [['serialNumber', 'ASC']] }],
+      order: [
+        [sequelize.literal(`ABS(${this.ageFrom} - "ageFrom")`), 'ASC'],
+        [sequelize.literal(`("sex" = '${this.sex}')`), 'DESC'],
+        [sequelize.literal(`ABS(${this.weightFrom} - "weightFrom")`), 'ASC'],
+        [sequelize.literal(`("group" = '${this.group}')`), 'DESC'],
+      ],
+    });
+
+    const ageHigher = this.ageFrom > nearestCategory.ageFrom;
+    const ageEqual = this.ageFrom === nearestCategory.ageFrom;
+    const sexMan = this.sex < nearestCategory.sex;
+    const weightHigher = this.weightFrom > nearestCategory.weightFrom;
+    const weightEqual = this.weightFrom === nearestCategory.weightFrom;
+    const groupA = this.group < nearestCategory.group;
+    const shouldBeAfter =
+      ageHigher || (ageEqual && (sexMan || weightHigher || (weightEqual && groupA)));
+
+    const nearestIndex = shouldBeAfter ? nearestCategory.Fights.length - 1 : 0;
+    const nearestFight = nearestCategory.Fights[nearestIndex];
+    const movePoint = nearestFight.serialNumber + +shouldBeAfter;
+
+    const currentFightsLength = fights.length;
+
+    await Fight.shiftSerialNumber({
+      fightSpaceId: nearestFight.fightSpaceId,
+      from: movePoint,
+      offset: currentFightsLength,
+      side: '+',
+    });
+
+    await Promise.all(
+      fights.map((fight, index) => {
+        fight.fightSpaceId = nearestFight.fightSpaceId;
+        fight.serialNumber = movePoint + index;
+        return fight.save();
+      })
+    );
   }
 
   async assignFightFormulaToFights() {

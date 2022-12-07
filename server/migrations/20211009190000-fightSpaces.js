@@ -24,6 +24,11 @@ const up = async (queryInterface, Sequelize) => {
           allowNull: false,
         },
 
+        startAt: { type: Sequelize.TIME, allowNull: false },
+        finishAt: { type: Sequelize.TIME, allowNull: false },
+        breakStartAt: { type: Sequelize.TIME, allowNull: false },
+        breakFinishAt: { type: Sequelize.TIME, allowNull: false },
+
         createdAt: { type: Sequelize.DATE, allowNull: false },
         deletedAt: { type: Sequelize.DATE, allowNull: true },
         updatedAt: { type: Sequelize.DATE, allowNull: false },
