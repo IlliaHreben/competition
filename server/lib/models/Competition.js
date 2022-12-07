@@ -106,13 +106,21 @@ export default class Competition extends Base {
   async recalculateFightSpaces(spaces) {
     const FightSpace = sequelize.model('FightSpace');
     const Fight = sequelize.model('Fight');
-    const toBeAbandonedIds = spaces.filter((s) => s.id).map((s) => s.id);
+    const toBeUpdatedIds = spaces.filter((s) => s.id).map((s) => s.id);
 
     const currentSpaces = await this.getFightSpaces();
-    const toBeAbandoned = currentSpaces.filter((s) => toBeAbandonedIds.includes(s.id));
+    const toBeUpdated = currentSpaces.filter((s) => toBeUpdatedIds.includes(s.id));
+
+    await Promise.all(
+      toBeUpdated.map((s) => {
+        const updateValues = spaces.find(({ id }) => id === s.id);
+        s.set(updateValues);
+        return s.save();
+      })
+    );
 
     const toBeDeletedIds = currentSpaces
-      .filter((s) => !toBeAbandonedIds.includes(s.id))
+      .filter((s) => !toBeUpdatedIds.includes(s.id))
       .map((s) => s.id);
     const relatedFight = await Fight.findOne({ where: { fightSpaceId: toBeDeletedIds } });
     if (relatedFight) throw new ServiceError('RELATED_INSTANCES', { fights: relatedFight.id });
@@ -124,7 +132,7 @@ export default class Competition extends Base {
       FightSpace.destroy({ where: { id: toBeDeletedIds } }),
     ]);
 
-    return [...toBeAbandoned, ...added];
+    return [...toBeUpdated, ...added];
   }
 
   async complete() {

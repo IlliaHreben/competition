@@ -13,9 +13,13 @@ export default class BulkFightSpaceUpdate extends ServiceBase {
         list_of_objects: [
           {
             id: ['uuid'],
-            competitionDay: ['required', 'positive_integer'],
-            type: ['required', 'string', { one_of: ['ring', 'tatami'] }],
-            orderNumber: ['required', 'positive_integer'],
+            competitionDay: [{ required_if_not_present: 'id' }, 'positive_integer'],
+            type: [{ required_if_not_present: 'id' }, 'string', { one_of: ['ring', 'tatami'] }],
+            orderNumber: [{ required_if_not_present: 'id' }, 'positive_integer'],
+            startAt: [{ required_if_not_present: 'id' }, 'string'],
+            finishAt: [{ required_if_not_present: 'id' }, 'string'],
+            breakStartAt: [{ required_if_not_present: 'id' }, 'string'],
+            breakFinishAt: [{ required_if_not_present: 'id' }, 'string'],
           },
         ],
       },

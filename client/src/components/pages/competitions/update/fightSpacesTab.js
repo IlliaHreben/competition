@@ -12,6 +12,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import TextField from '@mui/material/TextField';
 
 import RingIcon from '../../../../assets/icons/ring.png';
 import TatamiIcon from '../../../../assets/icons/tatami.png';
@@ -80,7 +81,11 @@ export default function FightSpacesTab() {
         customId: uuid(),
         competitionDay: day,
         type,
-        orderNumber
+        orderNumber,
+        startAt: '09:00',
+        finishAt: '20:00',
+        breakStartAt: '13:00',
+        breakFinishAt: '14:00'
       }
     ]);
   };
@@ -96,8 +101,18 @@ export default function FightSpacesTab() {
     );
   };
 
+  const changeFightSpace = (id, field, value) => {
+    setFightSpaces((prev) => {
+      const data = [...prev];
+      const index = data.findIndex((f) => [f.id, f.customId].includes(id));
+
+      data[index] = { ...data[index], [field]: value };
+      return data;
+    });
+  };
+
   return (
-    <Paper sx={{ maxWidth: '500px', width: '100%' }}>
+    <Paper sx={{ maxWidth: '700px', width: '100%' }}>
       <List
         sx={{
           width: '100%',
@@ -122,16 +137,15 @@ export default function FightSpacesTab() {
                   ))}
                 </>
               }
+              sx={{ mb: 1.5 }}
             >
               <ListItemText primary={`Competition day ${i + 1}`} />
             </ListItem>
             {fs.map((f, k) => (
               <ListItem
                 key={f.id || f.customId}
-                disabled={f.disabled}
                 secondaryAction={
                   <IconButton
-                    // disabled={fs[k + 1]?.type === f.type && !fs[k + 1]?.disabled}
                     disabled={
                       f.disabled
                         ? fs[k - 1]?.type === f.type && fs[k - 1]?.disabled
@@ -145,10 +159,11 @@ export default function FightSpacesTab() {
                   </IconButton>
                 }
               >
-                <ListItemIcon>
+                <ListItemIcon sx={{ opacity: f.disabled ? 0.38 : 1 }}>
                   <Avatar src={f.type === 'ring' ? RingIcon : TatamiIcon} variant='rounded' />
                 </ListItemIcon>
                 <ListItemText
+                  sx={{ opacity: f.disabled ? 0.38 : 1 }}
                   primary={`${types[f.type]} ${
                     f.type === 'ring' ? String.fromCharCode(64 + f.orderNumber) : f.orderNumber
                   }`}
@@ -164,6 +179,52 @@ export default function FightSpacesTab() {
                       </Typography>
                     )
                   }
+                />
+                <TextField
+                  label='Start'
+                  type='time'
+                  size='small'
+                  value={f.startAt}
+                  InputLabelProps={{ shrink: true }}
+                  onChange={(e) => changeFightSpace(f.id || f.customId, 'startAt', e.target.value)}
+                  sx={{ mr: 1 }}
+                  inputProps={{ step: 300 }}
+                />
+                -
+                <TextField
+                  label='Finish'
+                  type='time'
+                  size='small'
+                  value={f.finishAt}
+                  InputLabelProps={{ shrink: true }}
+                  onChange={(e) => changeFightSpace(f.id || f.customId, 'finishAt', e.target.value)}
+                  sx={{ ml: 1, mr: 1.5 }}
+                  inputProps={{ step: 300 }}
+                />
+                <TextField
+                  label='Break start'
+                  type='time'
+                  size='small'
+                  value={f.breakStartAt}
+                  InputLabelProps={{ shrink: true }}
+                  onChange={(e) =>
+                    changeFightSpace(f.id || f.customId, 'breakStartAt', e.target.value)
+                  }
+                  sx={{ mr: 1, ml: 1.5 }}
+                  inputProps={{ step: 300 }}
+                />
+                -
+                <TextField
+                  label='Break finish'
+                  type='time'
+                  size='small'
+                  value={f.breakFinishAt}
+                  InputLabelProps={{ shrink: true }}
+                  onChange={(e) =>
+                    changeFightSpace(f.id || f.customId, 'breakFinishAt', e.target.value)
+                  }
+                  sx={{ ml: 1 }}
+                  inputProps={{ step: 300 }}
                 />
               </ListItem>
             ))}

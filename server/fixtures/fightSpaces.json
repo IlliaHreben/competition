@@ -30,7 +30,7 @@
   {
     "id": "98972d62-373d-4229-a1a7-df7cde04b78f",
     "type": "ring",
-    "orderNumber": 3,
+    "orderNumber": 2,
     "competitionDay": 1,
     "competitionId": "ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb",
     "startAt": "11:00",
@@ -58,7 +58,7 @@
   {
     "id": "ca6c4b63-d9a0-475b-b520-37a37fe17039",
     "type": "ring",
-    "orderNumber": 2,
+    "orderNumber": 1,
     "competitionDay": 2,
     "competitionId": "ae5c900d-5c51-4cd6-bb51-c3f5ab251ccb",
     "startAt": "11:00",
