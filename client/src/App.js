@@ -28,7 +28,7 @@ const CompetitionList = lazy(() => import('./components/pages/competitions/list.
 const CompetitionUpdate = lazy(() => import('./components/pages/competitions/update'));
 const CardsList = lazy(() => import('./components/pages/cards/list'));
 const CardCreate = lazy(() => import('./components/pages/cards/create'));
-const Schedule = lazy(() => import('./components/pages/subsequence'));
+const Schedule = lazy(() => import('./components/pages/schedule'));
 
 const routes = [
   {
@@ -64,7 +64,7 @@ const routes = [
   },
   {
     name: 'Schedule',
-    path: '/subsequence',
+    path: '/schedule',
     icon: SubsequenceIcon,
     component: Schedule
   }
