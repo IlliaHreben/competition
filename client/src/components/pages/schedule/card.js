@@ -13,21 +13,12 @@ import { PropTypes } from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { parseTimeFromSec, calculateSecFromFight } from '../../../utils/datetime';
+import { getTotalTime } from './helpers';
 import { groupByCriteria } from '../../../utils/grouping';
 import DraggableDroppable from '../../ui-components/draggable-droppable';
 import { shiftFights, listFights } from '../../../actions/fights';
 import { showSuccess } from '../../../actions/errors';
 import ExpandIconButton from '../../../utils/component-utils';
-
-function getTotalTimeFormatted(fightsList) {
-  const totalTime = fightsList.reduce(
-    (sum, f) => sum + calculateSecFromFight(f.linked.fightFormula),
-    0
-  );
-  const { hours, minutes, seconds } = parseTimeFromSec(totalTime);
-  return `${hours}h ${minutes} min ${seconds} sec`;
-}
 
 export default function SectionCard({ fightGroup }) {
   const [open, setOpen] = useState(false);
@@ -35,7 +26,7 @@ export default function SectionCard({ fightGroup }) {
 
   const { category, fightSpace } = fightGroup[0].linked;
 
-  const duration = getTotalTimeFormatted(fightGroup);
+  const duration = getTotalTime(fightGroup);
   const categories = groupByCriteria(fightGroup, ['linked/category/id', 'degree']);
   const start = fightGroup[0].serialNumber;
   const end = fightGroup.at(-1).serialNumber;
@@ -162,7 +153,7 @@ function ListCategory({ fightsList }) {
                     weightFrom ? `${weightFrom} -` : 'Up to '
                   } ${weightTo}: ${sex}  `}</Typography>
                   <div style={{ width: '10px' }}></div>
-                  <Typography variant='caption'>{getTotalTimeFormatted(fightsList)}</Typography>
+                  <Typography variant='caption'>{getTotalTime(fightsList)}</Typography>
                 </Stack>
               }
               secondary={

@@ -1,15 +1,17 @@
 import { useEffect, useState, Fragment } from 'react';
-import { listFights } from '../../../actions/fights';
 import { useSelector, useDispatch } from 'react-redux';
-import { groupByCriteria, splitBy } from '../../../utils/grouping';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
 import { Container, Paper } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 
+import { getTotalTime } from './helpers';
 import Card from './card';
 import FightSpaceHeader from './fight-space-header';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { groupByCriteria, splitBy } from '../../../utils/grouping';
+import { listFights } from '../../../actions/fights';
 
 function mapState(state) {
   return {
@@ -17,59 +19,6 @@ function mapState(state) {
     fights: state.fights.list
   };
 }
-
-// const structure = {
-//   dividers: ['fightSpaceId'],
-//   nested: {
-//     dividers: ['sectionId'],
-//     columns: [
-//       { name: 'Section', getValue: (items) => items[0].linked.section.name },
-//       {
-//         name: 'Age',
-//         getValue: (items) =>
-//           items
-//             .flatMap((i) =>
-//               Array(i.ageTo - i.ageFrom + 1)
-//                 .fill()
-//                 .map((_, i) => i.ageFrom + i)
-//             )
-//             .sort((a, b) => a - b)
-//             .reduce((ageRanges, age) => {
-//               const lastRange = ageRanges.at(-1);
-//               if (ageRanges.length === 0) {
-//                 ageRanges.push([age, age]);
-//               } else if (lastRange[1] + 1 === age) {
-//                 lastRange[1] = age;
-//               } else {
-//                 ageRanges.push([age, age]);
-//               }
-//               return ageRanges;
-//             }, [])
-//             .map((ageRange) =>
-//               ageRange[0] === ageRange[1] ? ageRange[0] : `${ageRange[0]}-${ageRange[1]}`
-//             )
-//             .join(', ')
-//       }
-//     ],
-//     nested: {
-//       dividers: ['ageFrom', 'ageTo'],
-//       columns: [
-//         { name: 'Age', getValue: (items) => items[0].linked.section.name },
-//         {
-//           name: 'Degrees',
-//           getValue: (items) =>
-//             [...new Set(items.map((i) => i.degree))]
-//               .sort((a, b) => a - b)
-//               .map((i) => (i === 1 ? 'final' : `1/${i}`))
-//               .join(', ')
-//         }
-//       ],
-//       nested: {
-//         dividers: ['ageFrom', 'ageTo']
-//       }
-//     }
-//   }
-// };
 
 export default function Schedule() {
   useEffect(() => {
@@ -119,7 +68,10 @@ export default function Schedule() {
             <Grid sx={{ mt: 2, justifyContent: 'center' }} container spacing={3}>
               {groupedByFS.map((groupedBySection) => (
                 <Grid key={groupedBySection[0][0].fightSpaceId} item>
-                  <FightSpaceHeader fightSpace={groupedBySection[0][0].linked.fightSpace} />
+                  <FightSpaceHeader
+                    duration={getTotalTime(groupedBySection.flat(3), false)}
+                    fightSpace={groupedBySection[0][0].linked.fightSpace}
+                  />
                   <Paper sx={{ backgroundColor: '#e7ebf0', maxWidth: 350 }} elevation={0}>
                     <Grid sx={{ justifyContent: 'center' }} container spacing={1}>
                       {groupedBySection.map((fightGroup) => {
