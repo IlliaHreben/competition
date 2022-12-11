@@ -138,6 +138,14 @@ export default class Category extends Base {
     const Category = sequelize.model('Category');
     const Fight = sequelize.model('Fight');
 
+    const orderQuery = [
+      [sequelize.literal(`ABS(${this.ageFrom} - "ageFrom")`), 'ASC'],
+      [sequelize.literal(`("sex" = '${this.sex}')`), 'DESC'],
+      [sequelize.literal(`ABS(${this.weightFrom} - "weightFrom")`), 'ASC'],
+    ];
+
+    if (this.group) orderQuery.push([sequelize.literal(`("group" = '${this.group}')`), 'DESC']);
+
     const nearestCategory = await Category.findOne({
       where: {
         competitionId: this.competitionId,
@@ -145,12 +153,7 @@ export default class Category extends Base {
         id: { [Op.ne]: this.id },
       },
       include: [{ model: Fight, as: 'Fights', required: true, order: [['serialNumber', 'ASC']] }],
-      order: [
-        [sequelize.literal(`ABS(${this.ageFrom} - "ageFrom")`), 'ASC'],
-        [sequelize.literal(`("sex" = '${this.sex}')`), 'DESC'],
-        [sequelize.literal(`ABS(${this.weightFrom} - "weightFrom")`), 'ASC'],
-        [sequelize.literal(`("group" = '${this.group}')`), 'DESC'],
-      ],
+      order: orderQuery,
     });
 
     const ageHigher = this.ageFrom > nearestCategory.ageFrom;
@@ -174,7 +177,9 @@ export default class Category extends Base {
       offset: currentFightsLength,
       side: '+',
     });
-
+    console.log('='.repeat(50)); // !nocommit
+    console.log(fights);
+    console.log('='.repeat(50));
     await Promise.all(
       fights.map((fight, index) => {
         fight.fightSpaceId = nearestFight.fightSpaceId;

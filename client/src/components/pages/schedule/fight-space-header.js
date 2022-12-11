@@ -10,12 +10,14 @@ export default function FightSpaceHeader({ duration, fightSpace }) {
   // const [startAtHour, startAtMinute, startAtSecond] = fightSpace.startAt.split(':');
   const startTime = DateTime.fromSQL(fightSpace.startAt);
   const finishTime = DateTime.fromSQL(fightSpace.finishAt);
-  const breakDuration = Duration.fromISOTime(fightSpace.breakFinishAt).minus(
-    Duration.fromISOTime(fightSpace.breakStartAt)
-  );
+  const breakStartAt = Duration.fromISOTime(fightSpace.breakStartAt);
+  const breakFinishAt = Duration.fromISOTime(fightSpace.breakFinishAt);
+  const breakDuration = breakFinishAt.minus(breakStartAt);
   const fightsDuration = Duration.fromObject(duration);
   const realFinishTime = startTime.plus(breakDuration).plus(fightsDuration);
 
+  const formattedDurationStartAt = breakStartAt.toFormat('hh:mm');
+  const formattedDurationFinishAt = breakFinishAt.toFormat('hh:mm');
   const formattedDuration = fightsDuration.toFormat('hh:mm');
   const formattedStartTime = startTime.toLocaleString(DateTime.TIME_24_SIMPLE);
   const formattedFinishTime = finishTime.toLocaleString(DateTime.TIME_24_SIMPLE);
@@ -31,6 +33,9 @@ export default function FightSpaceHeader({ duration, fightSpace }) {
           <Stack>
             <Typography variant='body2'>Duration: {formattedDuration}</Typography>
             <Typography variant='body2'>Finish: {formattedRealFinishAt}</Typography>
+            <Typography variant='body2'>
+              Break: {formattedDurationStartAt} - {formattedDurationFinishAt}
+            </Typography>
           </Stack>
         }
       >

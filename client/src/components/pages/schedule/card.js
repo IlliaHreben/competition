@@ -26,20 +26,23 @@ export default function SectionCard({ fightGroup, fightsTimeBefore, fightSpace }
   const dispatch = useDispatch();
 
   const startTime = DateTime.fromSQL(fightSpace.startAt);
-  const breakStartAt = Duration.fromISOTime(fightSpace.breakStartAt);
-  const breakDuration = Duration.fromISOTime(fightSpace.breakFinishAt).minus(breakStartAt);
+  const breakStartAt = DateTime.fromSQL(fightSpace.breakStartAt);
+  const breakDuration = Duration.fromISOTime(fightSpace.breakFinishAt).minus(
+    breakStartAt.toObject()
+  );
   const beforeFightsDuration = Duration.fromObject(fightsTimeBefore);
   const startAtWithoutBreak = startTime.plus(beforeFightsDuration);
   const duration = Duration.fromObject(getTotalTime(fightGroup, false));
   const finishAtWithoutBreak = startAtWithoutBreak.plus(duration);
-  const fightsFinishAt =
-    finishAtWithoutBreak > breakStartAt
-      ? finishAtWithoutBreak.plus(breakDuration)
-      : finishAtWithoutBreak;
+
   const fightsStartAt =
     startAtWithoutBreak > breakStartAt
       ? startAtWithoutBreak.plus(breakDuration)
       : startAtWithoutBreak;
+  const fightsFinishAt =
+    finishAtWithoutBreak > breakStartAt
+      ? finishAtWithoutBreak.plus(breakDuration)
+      : finishAtWithoutBreak;
 
   const formattedDuration = duration.toFormat('hh:mm:ss');
   const formattedStartTime = fightsStartAt.toLocaleString(DateTime.TIME_24_SIMPLE);

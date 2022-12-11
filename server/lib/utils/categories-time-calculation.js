@@ -10,7 +10,10 @@ const getDays = (fightSpaces) => Math.max(...fightSpaces.map((fs) => fs.competit
 
 export function calculate(categories, fightSpaces) {
   const [fullFS, lightFS] = splitBy(fightSpaces, (c) => c.type !== 'ring');
-  const [fullCategories, lightCategories] = splitBy(categories, (c) => c.Section.type !== 'full');
+  const [fullCategories = [], lightCategories = []] = splitBy(
+    categories,
+    (c) => c.Section.type !== 'full'
+  );
 
   calculateForType(fullFS, fullCategories);
   calculateForType(lightFS, lightCategories);
