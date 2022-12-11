@@ -74,7 +74,7 @@ export default function Schedule() {
                   />
                   <Paper sx={{ backgroundColor: '#e7ebf0', maxWidth: 350 }} elevation={0}>
                     <Grid sx={{ justifyContent: 'center' }} container spacing={1}>
-                      {groupedBySection.map((fightGroup) => {
+                      {groupedBySection.map((fightGroup, i) => {
                         const category = fightGroup[0].linked.category;
 
                         return (
@@ -83,7 +83,14 @@ export default function Schedule() {
                             key={`${category.sectionId}-${category.ageFrom}-${category.ageTo}-${fightGroup[0].id}`}
                             spacing={0.5}
                           >
-                            <Card fightGroup={fightGroup}></Card>
+                            <Card
+                              fightGroup={fightGroup}
+                              fightsTimeBefore={getTotalTime(
+                                groupedBySection.slice(0, i).flat(3),
+                                false
+                              )}
+                              fightSpace={groupedBySection[0][0].linked.fightSpace}
+                            ></Card>
                           </Grid>
                         );
                       })}

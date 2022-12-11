@@ -12,6 +12,7 @@ import {
 import { PropTypes } from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { DateTime, Duration } from 'luxon';
 
 import { getTotalTime } from './helpers';
 import { groupByCriteria } from '../../../utils/grouping';
@@ -20,13 +21,32 @@ import { shiftFights, listFights } from '../../../actions/fights';
 import { showSuccess } from '../../../actions/errors';
 import ExpandIconButton from '../../../utils/component-utils';
 
-export default function SectionCard({ fightGroup }) {
+export default function SectionCard({ fightGroup, fightsTimeBefore, fightSpace }) {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
 
-  const { category, fightSpace } = fightGroup[0].linked;
+  const startTime = DateTime.fromSQL(fightSpace.startAt);
+  const breakStartAt = Duration.fromISOTime(fightSpace.breakStartAt);
+  const breakDuration = Duration.fromISOTime(fightSpace.breakFinishAt).minus(breakStartAt);
+  const beforeFightsDuration = Duration.fromObject(fightsTimeBefore);
+  const startAtWithoutBreak = startTime.plus(beforeFightsDuration);
+  const duration = Duration.fromObject(getTotalTime(fightGroup, false));
+  const finishAtWithoutBreak = startAtWithoutBreak.plus(duration);
+  const fightsFinishAt =
+    finishAtWithoutBreak > breakStartAt
+      ? finishAtWithoutBreak.plus(breakDuration)
+      : finishAtWithoutBreak;
+  const fightsStartAt =
+    startAtWithoutBreak > breakStartAt
+      ? startAtWithoutBreak.plus(breakDuration)
+      : startAtWithoutBreak;
 
-  const duration = getTotalTime(fightGroup);
+  const formattedDuration = duration.toFormat('hh:mm:ss');
+  const formattedStartTime = fightsStartAt.toLocaleString(DateTime.TIME_24_SIMPLE);
+  const formattedFinishTime = fightsFinishAt.toLocaleString(DateTime.TIME_24_SIMPLE);
+
+  const { category } = fightGroup[0].linked;
+
   const categories = groupByCriteria(fightGroup, ['linked/category/id', 'degree']);
   const start = fightGroup[0].serialNumber;
   const end = fightGroup.at(-1).serialNumber;
@@ -72,9 +92,9 @@ export default function SectionCard({ fightGroup }) {
             <Stack direction='row' sx={{ justifyContent: 'space-between', alignItems: 'flex-end' }}>
               <Stack>
                 <Typography variant='caption' sx={{ mb: 1 }} color='text.secondary'>
-                  {category.sectionId}
+                  {formattedStartTime} - {formattedFinishTime}
                 </Typography>
-                <Typography variant='body2'>Duration: {duration}</Typography>
+                <Typography variant='body2'>Duration: {formattedDuration}</Typography>
               </Stack>
               <ExpandIconButton open={open} onClick={() => setOpen((prev) => !prev)} />
             </Stack>
@@ -88,16 +108,23 @@ export default function SectionCard({ fightGroup }) {
   );
 }
 SectionCard.propTypes = {
-  fightGroup: PropTypes.array.isRequired
+  fightGroup: PropTypes.array.isRequired,
+  fightsTimeBefore: PropTypes.object.isRequired,
+  fightSpace: PropTypes.object.isRequired
 };
 
 function getList(categories) {
   return (
     <List>
       {categories.map((fightsList) => {
-        const category = fightsList[0].linked.category;
+        const { category, fightSpace } = fightsList[0].linked;
+
         return (
-          <ListCategory key={`${category.id}-${fightsList[0].degree}`} fightsList={fightsList} />
+          <ListCategory
+            key={`${category.id}-${fightsList[0].degree}`}
+            fightsList={fightsList}
+            fightSpace={fightSpace}
+          />
         );
       })}
     </List>

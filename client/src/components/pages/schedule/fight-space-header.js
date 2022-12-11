@@ -1,4 +1,4 @@
-import { Avatar, Typography, Box, Stack } from '@mui/material';
+import { Avatar, Typography, Box, Stack, Tooltip } from '@mui/material';
 import { PropTypes } from 'prop-types';
 import { DateTime, Duration } from 'luxon';
 import ErrorIcon from '@mui/icons-material/Error';
@@ -26,25 +26,23 @@ export default function FightSpaceHeader({ duration, fightSpace }) {
 
   return (
     <Box sx={{ p: 1, mb: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <Avatar src={fightSpace.type === 'ring' ? RingIcon : TatamiIcon} variant='rounded' />
-      <Stack>
-        <Stack direction='row' sx={{ ml: 2, mb: -1.7 }}>
-          <Typography variant='h4'>
-            {fightSpace.type.toUpperCase()} {fightSpace.orderNumber}
-          </Typography>
-          <Stack sx={{ ml: 1, mt: -0.4, alignSelf: 'baseline' }}>
-            <Typography variant='overline' sx={{ mb: -2, color: 'rgba(0, 0, 0, 0.6)' }}>
-              Duration: {formattedDuration}
-            </Typography>
-            {/* <Divider orientation='vertical' flexItem /> */}
-            <Typography variant='overline' sx={{ color: 'rgba(0, 0, 0, 0.6)' }}>
-              Finish: {formattedRealFinishAt}
-            </Typography>
+      <Tooltip
+        title={
+          <Stack>
+            <Typography variant='body2'>Duration: {formattedDuration}</Typography>
+            <Typography variant='body2'>Finish: {formattedRealFinishAt}</Typography>
           </Stack>
-        </Stack>
+        }
+      >
+        <Avatar src={fightSpace.type === 'ring' ? RingIcon : TatamiIcon} variant='rounded' />
+      </Tooltip>
+      <Stack sx={{ ml: 1 }}>
+        <Typography variant='h4'>
+          {fightSpace.type.toUpperCase()} {fightSpace.orderNumber}
+        </Typography>
 
-        <Stack direction='row' sx={{ alignItems: 'center' }}>
-          <Typography variant='button' sx={{ ml: 2, lineHeight: 1.3, color: 'rgba(0, 0, 0, 0.6)' }}>
+        <Stack direction='row' sx={{ alignItems: 'center', mt: -1.5 }}>
+          <Typography variant='button' sx={{ color: 'rgba(0, 0, 0, 0.6)' }}>
             {formattedStartTime} - {formattedFinishTime}
           </Typography>
           <Typography
