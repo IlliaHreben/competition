@@ -313,7 +313,7 @@ export default class Category extends Base {
   }
 
   static initScopes() {
-    const scopes = getCategoryScopes();
+    const scopes = getCategoryScopes(this);
 
     Object.entries(scopes).forEach((scope) => Category.addScope(...scope));
   }

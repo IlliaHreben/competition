@@ -1,6 +1,6 @@
 import sequelize, { Op } from '../../sequelize-singleton.js';
 
-export default function getCategoryScopes() {
+export default function getCategoryScopes(category) {
   const Card = sequelize.model('Card');
   const Fight = sequelize.model('Fight');
   const Fighter = sequelize.model('Fighter');
@@ -22,7 +22,7 @@ export default function getCategoryScopes() {
     cards: (showEmpty, showOnlyEmpty) => ({
       attributes: [
         // sequelize.literal('DISTINCT ON("id") 1'),
-        ...Object.keys(this.getAttributes()),
+        ...Object.keys(category.getAttributes()),
         [
           sequelize.literal(
             '(SELECT COUNT(*) FROM "Cards" WHERE "Cards"."categoryId" = "Category"."id")'
