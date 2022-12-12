@@ -2,6 +2,7 @@ import sequelize, { Op, DT } from '../sequelize-singleton.js';
 import Base from './Base.js';
 import { v4 as uuid } from 'uuid';
 
+import getCategoryScopes from './scopes/category-scopes.js';
 import calculateFights from './calculateFightersProximity';
 import { splitBy } from '../utils/index.js';
 
@@ -312,131 +313,7 @@ export default class Category extends Base {
   }
 
   static initScopes() {
-    const Card = sequelize.model('Card');
-    const Fight = sequelize.model('Fight');
-    const Fighter = sequelize.model('Fighter');
-    const Club = sequelize.model('Club');
-    const FightFormula = sequelize.model('FightFormula');
-
-    const scopes = {
-      cards: {
-        attributes: [
-          ...Object.keys(this.getAttributes()),
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM "Cards" WHERE "Cards"."categoryId" = "Category"."id")'
-            ),
-            'cardsCount',
-          ],
-        ],
-        include: [
-          {
-            model: Card,
-            as: 'Cards',
-            required: true,
-            include: [{ model: Fighter, as: 'Fighter', include: ['Club', 'Coach'] }],
-          },
-          {
-            model: Fight,
-            as: 'Fights',
-            order: [[sequelize.literal('"orderNumber"'), 'DESC']],
-            include: [
-              {
-                model: Card,
-                as: 'FirstCard',
-                include: [
-                  {
-                    model: Fighter,
-                    as: 'Fighter',
-                    include: [{ model: Club, as: 'Club', include: 'Settlement' }, 'Coach'],
-                  },
-                ],
-              },
-              {
-                model: Card,
-                as: 'SecondCard',
-                include: [
-                  {
-                    model: Fighter,
-                    as: 'Fighter',
-                    include: [{ model: Club, as: 'Club', include: 'Settlement' }, 'Coach'],
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-        // order   : [ [ { model: Fight, as: 'Fights' }, 'secondCardId', 'ASC' ] ],
-        order: [
-          [sequelize.literal('"cardsCount"'), 'DESC'],
-          ['id', 'ASC'],
-        ],
-        // logging  : true,
-        // distinct: true,
-      },
-      sections: {
-        include: ['Section'],
-      },
-      cardsWithFighters: {
-        include: {
-          model: Card,
-          as: 'Cards',
-          required: true,
-          include: ['Fighter'],
-          order: [['id', 'ASC']],
-        },
-      },
-      fightsWithFormula: {
-        include: {
-          model: Fight,
-          as: 'Fights',
-          required: true,
-          include: [{ model: FightFormula, as: 'FightFormula', required: true }],
-          order: [['id', 'ASC']],
-        },
-      },
-      // search: (search) => ({
-      //   where: {
-      //     [Op.or]: [
-      //       { '$Cards.Fighter.name$': { [Op.iLike]: `%${search}%` } },
-      //       { '$Cards.Fighter.lastName$': { [Op.iLike]: `%${search}%` } },
-      //     ],
-      //   },
-      //   include: [{ model: Card, as: 'Cards', include: ['Fighter'] }],
-      // }),
-      // clubId: (clubId) => ({
-      //   where: sequelize.where(sequelize.col('Cards.Fighter.clubId'), clubId),
-      //   include: [{ model: Card, as: 'Cards', include: ['Fighter'] }],
-      // }),
-      // coachId: (coachId) => ({
-      //   where: sequelize.where(sequelize.col('Cards.Fighter.coachId'), coachId),
-      //   include: [{ model: Card, as: 'Cards', include: ['Fighter'] }],
-      // }),
-      // settlementId: (settlementId) => ({
-      //   where: sequelize.where(sequelize.col('Cards.Fighter.Club.settlementId'), settlementId),
-      //   include: {
-      //     model: Card,
-      //     as: 'Cards',
-      //     include: {
-      //       model: Fighter,
-      //       as: 'Fighter',
-      //       include: {
-      //         model: Club,
-      //         as: 'Club',
-      //         // where: { settlementId },
-      //       },
-      //     },
-      //   },
-      // }),
-      sectionId: (sectionId) => ({ where: { sectionId } }),
-      group: (group) => ({ where: { group } }),
-      sex: (sex) => ({ where: { sex } }),
-      weightFrom: (weightFrom) => ({ where: { [Op.gte]: { weightFrom } } }),
-      weightTo: (weightTo) => ({ where: { [Op.lte]: { weightTo } } }),
-      ageFrom: (ageFrom) => ({ where: { [Op.gte]: { ageFrom } } }),
-      ageTo: (ageTo) => ({ where: { [Op.lte]: { ageTo } } }),
-      type: (type) => ({ where: { '$Section.type$': type }, include: ['Section'] }),
-    };
+    const scopes = getCategoryScopes();
 
     Object.entries(scopes).forEach((scope) => Category.addScope(...scope));
   }

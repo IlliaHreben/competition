@@ -14,6 +14,7 @@ import CircularProgress from './CircularProgress';
 import FilterDrawer from './filters-drawer';
 import { CategorySettingsPopover, RowSettingsPopover } from './settings';
 
+import { objectFilter } from '../../../utils/common';
 import FightTree from '../../ui-components/fight-tree';
 import CategoryTable from '../../ui-components/category-table';
 import TableHeader from '../../ui-components/table-header';
@@ -68,10 +69,8 @@ export default function FightTrees() {
   }, [competition.id, dispatch, filters, offset]);
 
   useEffect(() => {
-    const query = Object.entries({ ...filters, hideTables })
-      .filter(([, value]) => value)
-      .map(([key, value]) => `${key}=${value}`)
-      .join('&');
+    const query = new URLSearchParams(objectFilter({ ...filters, hideTables })).toString();
+
     navigate(`?${query}`, { replace: true });
   }, [filters, navigate, offset, hideTables]);
 

@@ -2,8 +2,7 @@ import ServiceBase from '../Base.js';
 import { dumpCategory } from '../../utils';
 
 import Category from '../../models/Category.js';
-import Card from '../../models/Card.js';
-import { Sequelize } from 'sequelize';
+import { findAndReplace } from '../../utils/common.js';
 
 export default class CategoriesList extends ServiceBase {
   static validationRules = {
@@ -17,65 +16,48 @@ export default class CategoriesList extends ServiceBase {
     sex: ['string', { min_length: 1 }, { max_length: 100 }],
     group: [{ one_of: ['A', 'B', null] }],
 
+    showEmpty: ['boolean', { default: false }],
+    showOnlyEmpty: ['boolean', { default: false }],
+
     limit: ['positive_integer', { default: 10 }],
     offset: ['integer', { min_number: 0 }, { default: 0 }],
     include: ['to_array', { list_of: { one_of: ['cards', 'sections'] } }],
   };
 
-  async execute({ competitionId, limit, offset, include = [], ...rest }) {
+  async execute({ competitionId, limit, offset, showEmpty, showOnlyEmpty, include = [], ...rest }) {
     const filters = Object.entries(rest).map((filter) => ({ method: filter }));
 
-    let count = null;
+    findAndReplace((scope) => scope === 'cards', include, {
+      method: ['cards', showEmpty, showOnlyEmpty],
+    });
 
     const query = {
-      where: [{ competitionId }],
-      // ...(filters.length ? {} : { limit, offset }),
       limit,
       offset,
-      // benchmark: true,
-      // logging: console.log,
-      // order: [ [ sort, order ] ]
+      col: 'Category.id',
     };
+
+    // await Card.findAll({
+    //   where: {
+    //     '$"Card"."Fighter"."Club"."settlementId"$': '45d47018-351a-49d2-a450-5cd20268826a',
+    //   },
+    //   include: {
+    //     model: Fighter,
+    //     as: 'Fighter',
+    //     include: {
+    //       model: Club,
+    //       as: 'Club',
+    //       // where: { settlementId },
+    //     },
+    //   },
+    //   logging: true,
+    // });
+    // return;
 
     const cardScope = [...filters, { method: ['competitionRelated', competitionId] }];
 
-    if (filters.length) {
-      const cards = await Card.scope(cardScope).findAll({
-        attributes: [
-          Sequelize.literal('DISTINCT ON("categoryId") 1'),
-          // [
-          //   Sequelize.literal(
-          //     '(SELECT COUNT(*) FROM "Cards" WHERE "Cards"."categoryId" = "Card"."id")'
-          //   ),
-          //   'cardsCount',
-          // ],
-          'id',
-          'categoryId',
-        ],
-        // col: 'Card.categoryId',
-        // limit,
-        // offset,
-        order: [
-          ['categoryId', 'ASC'],
-          // [Sequelize.literal('"cardsCount"'), 'DESC'],
-          // [Card.associations.Fighter, 'lastName', 'ASC'],
-          // [Card.associations.Fighter, 'name', 'ASC'],
-        ],
-        // distinct: true,
-        // logging: console.log,
-      });
-
-      count = cards.length;
-
-      query.where.push({ id: cards.map((c) => c.categoryId) });
-    } else {
-      count = await Card.scope(cardScope).count({
-        col: 'Card.categoryId',
-        distinct: true,
-      });
-    }
-
-    const rows = await Category.scope(...include).findAll(query);
+    const { rows, count } = await Category.scope([...include, ...cardScope]).findAndCountAll(query);
+    // const count = await Category.scope(...include, ...cardScope).count(query);
 
     return {
       data: rows.map(dumpCategory),

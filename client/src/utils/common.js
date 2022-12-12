@@ -48,3 +48,12 @@ export function JSONPointer(object, pointer) {
 
   return value;
 }
+
+export function objectFilter(object) {
+  const result = {};
+  for (const key in object) {
+    if (object[key]) result[key] = object[key];
+  }
+
+  return result;
+}
