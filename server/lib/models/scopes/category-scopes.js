@@ -19,9 +19,16 @@ export default function getCategoryScopes(category) {
     ageFrom: (ageFrom) => ({ where: { [Op.gte]: { ageFrom } } }),
     ageTo: (ageTo) => ({ where: { [Op.lte]: { ageTo } } }),
     type: (type) => ({ where: { '$Section.type$': type }, include: ['Section'] }),
+    display: (display) => {
+      if (display !== 'empty') return {};
+      return {
+        where: sequelize.literal(
+          '(SELECT COUNT(*) FROM "Cards" WHERE "Cards"."categoryId" = "Category"."id") = 0'
+        ),
+      };
+    },
     cards: (showEmpty, showOnlyEmpty) => ({
       attributes: [
-        // sequelize.literal('DISTINCT ON("id") 1'),
         ...Object.keys(category.getAttributes()),
         [
           sequelize.literal(
@@ -30,13 +37,6 @@ export default function getCategoryScopes(category) {
           'cardsCount',
         ],
       ],
-      ...(showOnlyEmpty && {
-        where: [
-          sequelize.literal(
-            '(SELECT COUNT(*) FROM "Cards" WHERE "Cards"."categoryId" = "Category"."id") = 0'
-          ),
-        ],
-      }),
       include: [
         {
           model: Card,
@@ -56,7 +56,6 @@ export default function getCategoryScopes(category) {
           order: [[sequelize.literal('"orderNumber"'), 'DESC']],
         },
       ],
-      logging: true,
       order: [
         // [sequelize.literal('"id"'), 'DESC'],
         [sequelize.literal('"cardsCount"'), 'DESC'],

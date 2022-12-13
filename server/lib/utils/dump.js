@@ -23,8 +23,6 @@ export function dumpCategory(data) {
     weightName: data.weightName,
     group: data.group,
     competitionId: data.competitionId,
-    createdAt: data.createdAt,
-    updatedAt: data.updatedAt,
     linked,
   };
 }
@@ -41,8 +39,6 @@ export function dumpSection(data) {
     name: data.name,
     type: data.type,
     stateId: data.stateId,
-    createdAt: data.createdAt,
-    updatedAt: data.updatedAt,
     linked,
   };
 }
@@ -65,8 +61,6 @@ export function dumpCard(data) {
     group: data.group,
     birthDate: data.birthDate,
     age: data.age,
-    createdAt: data.createdAt,
-    updatedAt: data.updatedAt,
     linked,
   };
 }
@@ -111,8 +105,6 @@ export function dumpCoach(data) {
     lastName: data.lastName,
     assistantName: data.assistantName,
     assistantLastName: data.assistantLastName,
-    createdAt: data.createdAt,
-    updatedAt: data.updatedAt,
     linked,
   };
 }
@@ -142,8 +134,6 @@ export function dumpSettlement(data) {
   return {
     id: data.id,
     name: data.name,
-    createdAt: data.createdAt,
-    updatedAt: data.updatedAt,
     linked,
   };
 }
@@ -157,8 +147,6 @@ export function dumpState(data) {
   return {
     id: data.id,
     name: data.name,
-    createdAt: data.createdAt,
-    updatedAt: data.updatedAt,
     linked,
   };
 }
@@ -180,8 +168,6 @@ export function dumpFighter(data) {
     birthDate: data.birthDate,
     group: data.group,
     age: data.age,
-    createdAt: data.createdAt,
-    updatedAt: data.updatedAt,
     linked,
   };
 }
@@ -241,8 +227,6 @@ export function dumpFightFormula(data) {
     breakFinishAt: data.breakFinishAt,
 
     competitionId: data.competitionId,
-    createdAt: data.createdAt,
-    updatedAt: data.updatedAt,
     linked,
   };
 }

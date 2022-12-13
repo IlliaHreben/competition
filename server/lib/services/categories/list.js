@@ -16,19 +16,21 @@ export default class CategoriesList extends ServiceBase {
     sex: ['string', { min_length: 1 }, { max_length: 100 }],
     group: [{ one_of: ['A', 'B', null] }],
 
-    showEmpty: ['boolean', { default: false }],
-    showOnlyEmpty: ['boolean', { default: false }],
+    display: ['not_empty', { one_of: ['all', 'empty', 'filled'] }],
 
     limit: ['positive_integer', { default: 10 }],
     offset: ['integer', { min_number: 0 }, { default: 0 }],
     include: ['to_array', { list_of: { one_of: ['cards', 'sections'] } }],
   };
 
-  async execute({ competitionId, limit, offset, showEmpty, showOnlyEmpty, include = [], ...rest }) {
-    const filters = Object.entries(rest).map((filter) => ({ method: filter }));
+  async execute({ competitionId, limit, offset, display, include = [], ...rest }) {
+    const filters = Object.entries({ ...rest, display }).map((filter) => ({ method: filter }));
 
+    console.log('='.repeat(50)); // !nocommit
+    console.log(['cards', display === 'all', display === 'empty']);
+    console.log('='.repeat(50));
     findAndReplace((scope) => scope === 'cards', include, {
-      method: ['cards', showEmpty, showOnlyEmpty],
+      method: ['cards', display === 'all', display === 'empty'],
     });
 
     const query = {

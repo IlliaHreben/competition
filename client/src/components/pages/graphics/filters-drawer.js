@@ -5,12 +5,16 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
-import Checkbox from '@mui/material/Checkbox';
+import Switch from '@mui/material/Switch';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import FormLabel from '@mui/material/FormLabel';
+import RadioGroup from '@mui/material/RadioGroup';
+import Radio from '@mui/material/Radio';
+import FormControlLabel from '@mui/material/FormControlLabel';
 // import TextField from '@mui/material/TextField';
 import { PropTypes } from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
@@ -61,7 +65,7 @@ export default function FilterDrawer({
           <ListItem disablePadding>
             <ListItemButton dense onClick={(e) => onHideTables(e.target.checked)}>
               <ListItemIcon>
-                <Checkbox
+                <Switch
                   checked={
                     typeof hideTables === 'string' ? hideTables === 'true' : hideTables || false
                   }
@@ -71,7 +75,7 @@ export default function FilterDrawer({
               <ListItemText primary={'Collapse tables'} />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
+          {/* <ListItem disablePadding>
             <ListItemButton dense onClick={(e) => handleChange({ showEmpty: e.target.checked })}>
               <ListItemIcon>
                 <Checkbox
@@ -85,6 +89,19 @@ export default function FilterDrawer({
               </ListItemIcon>
               <ListItemText primary={'Show empty categories'} />
             </ListItemButton>
+          </ListItem> */}
+          <ListItem disablePadding sx={{ pl: 3.3 }}>
+            <FormControl>
+              <FormLabel id='demo-controlled-radio-buttons-group'>Display categories</FormLabel>
+              <RadioGroup
+                value={filters.display || 'filled'}
+                onChange={({ target }) => handleChange({ display: target.value })}
+              >
+                <FormControlLabel value='filled' control={<Radio />} label='Hide empty' />
+                <FormControlLabel value='all' control={<Radio />} label='Show empty' />
+                <FormControlLabel value='empty' control={<Radio />} label='Show only empty' />
+              </RadioGroup>
+            </FormControl>
           </ListItem>
           {fightSpaces.length && (
             <ListItem>
