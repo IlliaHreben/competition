@@ -2,7 +2,7 @@ import Sequelize from 'sequelize';
 import sequelize from '../sequelize-singleton.js';
 import Base from './Base.js';
 
-export class ClubsToCoaches extends Base {}
+export class ClubsToCoaches extends Base { }
 
 ClubsToCoaches.init(
   {

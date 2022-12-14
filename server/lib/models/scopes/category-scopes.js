@@ -19,15 +19,15 @@ export default function getCategoryScopes(category) {
     ageFrom: (ageFrom) => ({ where: { [Op.gte]: { ageFrom } } }),
     ageTo: (ageTo) => ({ where: { [Op.lte]: { ageTo } } }),
     type: (type) => ({ where: { '$Section.type$': type }, include: ['Section'] }),
-    display: (display) => {
-      if (display !== 'empty') return {};
-      return {
-        where: sequelize.literal(
-          '(SELECT COUNT(*) FROM "Cards" WHERE "Cards"."categoryId" = "Category"."id") = 0'
+    fightsCount: (fightsCount) => ({
+      replacements: { fightsCount },
+      where: [
+        sequelize.literal(
+          '(SELECT COUNT(*) FROM "Cards" WHERE "Cards"."categoryId" = "Category"."id") IN (:fightsCount)'
         ),
-      };
-    },
-    cards: (showEmpty, showOnlyEmpty) => ({
+      ],
+    }),
+    cards: (showEmpty) => ({
       attributes: [
         ...Object.keys(category.getAttributes()),
         [
@@ -41,7 +41,7 @@ export default function getCategoryScopes(category) {
         {
           model: Card,
           as: 'Cards',
-          required: !showEmpty && !showOnlyEmpty,
+          required: !showEmpty,
           include: [
             {
               model: Fighter,
@@ -85,27 +85,44 @@ export default function getCategoryScopes(category) {
     },
     search: (search) => ({
       replacements: { search: `%${search}%` },
-      where: sequelize.literal(
-        `EXISTS (SELECT 1 FROM "Cards" AS "Card" INNER JOIN "Fighters" AS "Fighter" ON "Fighter"."id" = "Card"."fighterId" WHERE "Card"."categoryId" = "Category"."id" AND ("Fighter"."name" ILIKE :search OR "Fighter"."lastName" ILIKE :search) AND "Card"."deletedAt" IS NULL)`
-      ),
+      where: [
+        sequelize.literal(
+          `EXISTS (SELECT 1 FROM "Cards" AS "Card" INNER JOIN "Fighters" AS "Fighter" ON "Fighter"."id" = "Card"."fighterId" WHERE "Card"."categoryId" = "Category"."id" AND ("Fighter"."name" ILIKE :search OR "Fighter"."lastName" ILIKE :search) AND "Card"."deletedAt" IS NULL)`
+        ),
+      ],
     }),
-    clubId: (clubId) => ({
-      replacements: { clubId },
-      where: sequelize.literal(
-        `EXISTS (SELECT 1 FROM "Cards" AS "Card" INNER JOIN "Fighters" AS "Fighter" ON "Fighter"."id" = "Card"."fighterId" WHERE "Card"."categoryId" = "Category"."id" AND "Fighter"."clubId" = :clubId AND "Card"."deletedAt" IS NULL)`
-      ),
+    fightSpaceId: (fightSpaceId) => ({
+      replacements: { fightSpaceId },
+      where: [
+        sequelize.literal(
+          `EXISTS (SELECT 1 FROM "Cards" AS "Card" INNER JOIN "Fights" AS "Fight" ON "Fight"."firstCardId" = "Card"."id" OR "Fight"."secondCardId" = "Card"."id" WHERE "Card"."categoryId" = "Category"."id" AND "Fight"."fightSpaceId" = :fightSpaceId AND "Card"."deletedAt" IS NULL)`
+        ),
+      ],
     }),
+    clubId: (clubId) =>
+      console.log('======================================================', clubId) || {
+        replacements: { clubId },
+        where: [
+          sequelize.literal(
+            `EXISTS (SELECT 1 FROM "Cards" AS "Card" INNER JOIN "Fighters" AS "Fighter" ON "Fighter"."id" = "Card"."fighterId" WHERE "Card"."categoryId" = "Category"."id" AND "Fighter"."clubId" = :clubId AND "Card"."deletedAt" IS NULL)`
+          ),
+        ],
+      },
     coachId: (coachId) => ({
       replacements: { coachId },
-      where: sequelize.literal(
-        `EXISTS (SELECT 1 FROM "Cards" AS "Card" INNER JOIN "Fighters" AS "Fighter" ON "Fighter"."id" = "Card"."fighterId" WHERE "Card"."categoryId" = "Category"."id" AND "Fighter"."coachId" = :coachId AND "Card"."deletedAt" IS NULL)`
-      ),
+      where: [
+        sequelize.literal(
+          `EXISTS (SELECT 1 FROM "Cards" AS "Card" INNER JOIN "Fighters" AS "Fighter" ON "Fighter"."id" = "Card"."fighterId" WHERE "Card"."categoryId" = "Category"."id" AND "Fighter"."coachId" = :coachId AND "Card"."deletedAt" IS NULL)`
+        ),
+      ],
     }),
     settlementId: (settlementId) => ({
       replacements: { settlementId },
-      where: sequelize.literal(
-        `EXISTS (SELECT 1 FROM "Cards" AS "Card" INNER JOIN "Fighters" AS "Fighter" ON "Fighter"."id" = "Card"."fighterId" INNER JOIN "Clubs" AS "Club" ON "Club"."id" = "Fighter"."clubId" WHERE "Card"."categoryId" = "Category"."id" AND "Club"."settlementId" = :settlementId AND "Card"."deletedAt" IS NULL)`
-      ),
+      where: [
+        sequelize.literal(
+          `EXISTS (SELECT 1 FROM "Cards" AS "Card" INNER JOIN "Fighters" AS "Fighter" ON "Fighter"."id" = "Card"."fighterId" INNER JOIN "Clubs" AS "Club" ON "Club"."id" = "Fighter"."clubId" WHERE "Card"."categoryId" = "Category"."id" AND "Club"."settlementId" = :settlementId AND "Card"."deletedAt" IS NULL)`
+        ),
+      ],
     }),
   };
 }

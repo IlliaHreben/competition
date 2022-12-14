@@ -19,6 +19,7 @@
   "author": "Illia Hreben",
   "license": "ISC",
   "dependencies": {
+    "@sequelize/core": "7.0.0-alpha.10",
     "chista": "^1.0.0",
     "cls-hooked": "^4.2.2",
     "cors": "^2.8.5",
@@ -33,7 +34,7 @@
     "pino": "^8.7.0",
     "pino-http": "^8.2.1",
     "rename-keys": "^2.0.1",
-    "sequelize": "^6.25.7",
+    "sequelize": "^6.27.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

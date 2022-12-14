@@ -52,7 +52,9 @@ export function JSONPointer(object, pointer) {
 export function objectFilter(object) {
   const result = {};
   for (const key in object) {
-    if (object[key]) result[key] = object[key];
+    const value = object[key];
+    if (value !== undefined && value !== '' && (!Array.isArray(value) || value.length))
+      result[key] = value;
   }
 
   return result;

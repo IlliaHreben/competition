@@ -11,11 +11,6 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import FormLabel from '@mui/material/FormLabel';
-import RadioGroup from '@mui/material/RadioGroup';
-import Radio from '@mui/material/Radio';
-import FormControlLabel from '@mui/material/FormControlLabel';
-// import TextField from '@mui/material/TextField';
 import { PropTypes } from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { list as listFightSpaces } from '../../../actions/fight-spaces';
@@ -75,33 +70,16 @@ export default function FilterDrawer({
               <ListItemText primary={'Collapse tables'} />
             </ListItemButton>
           </ListItem>
-          {/* <ListItem disablePadding>
-            <ListItemButton dense onClick={(e) => handleChange({ showEmpty: e.target.checked })}>
+          <ListItem disablePadding>
+            <ListItemButton
+              dense
+              onClick={(e) => handleChange({ display: e.target.checked ? 'all' : 'filled' })}
+            >
               <ListItemIcon>
-                <Checkbox
-                  checked={
-                    typeof filters.showEmpty === 'string'
-                      ? filters.showEmpty === 'true'
-                      : filters.showEmpty || false
-                  }
-                  disableRipple
-                />
+                <Switch checked={filters.display === 'all'} disableRipple />
               </ListItemIcon>
               <ListItemText primary={'Show empty categories'} />
             </ListItemButton>
-          </ListItem> */}
-          <ListItem disablePadding sx={{ pl: 3.3 }}>
-            <FormControl>
-              <FormLabel id='demo-controlled-radio-buttons-group'>Display categories</FormLabel>
-              <RadioGroup
-                value={filters.display || 'filled'}
-                onChange={({ target }) => handleChange({ display: target.value })}
-              >
-                <FormControlLabel value='filled' control={<Radio />} label='Hide empty' />
-                <FormControlLabel value='all' control={<Radio />} label='Show empty' />
-                <FormControlLabel value='empty' control={<Radio />} label='Show only empty' />
-              </RadioGroup>
-            </FormControl>
           </ListItem>
           {fightSpaces.length && (
             <ListItem>
@@ -115,6 +93,7 @@ export default function FilterDrawer({
                     handleChange({ fightSpaceId: e.target.value });
                   }}
                 >
+                  <MenuItem value={''}>None</MenuItem>
                   {fightSpaces.map((fightSpace) => (
                     <MenuItem key={fightSpace.id} value={fightSpace.id}>
                       <ListItemText
@@ -143,9 +122,9 @@ export default function FilterDrawer({
                 }}
                 input={<OutlinedInput label='Fights count' />}
               >
-                {Array.from({ length: 64 }).map((_, count) => (
-                  <MenuItem key={count + 1} value={count + 1}>
-                    {count + 1}
+                {Array.from({ length: 65 }).map((_, count) => (
+                  <MenuItem key={count} value={count}>
+                    {count}
                   </MenuItem>
                 ))}
               </Select>
@@ -160,6 +139,6 @@ export default function FilterDrawer({
 function formatFightSpace(fightSpace) {
   const { type, orderNumber } = fightSpace;
   const formattedOrderNumber =
-    type === 'ring' ? String.fromCharCode(63 + orderNumber) : orderNumber;
+    type === 'ring' ? String.fromCharCode(64 + orderNumber) : orderNumber;
   return `${type.toUpperCase()} ${formattedOrderNumber}`;
 }

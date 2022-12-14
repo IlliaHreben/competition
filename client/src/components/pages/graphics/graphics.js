@@ -124,7 +124,7 @@ export default function FightTrees() {
   };
 
   const handleFilterChange = (current) => {
-    setFilters((prev) => ({ ...prev, ...current }));
+    setFilters((prev) => objectFilter({ ...prev, ...current }));
     setOffset(0);
     setHasMore(true);
   };

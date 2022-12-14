@@ -531,5 +531,7 @@ Category.init(
   {
     sequelize,
     paranoid: true,
+    whereMergeStrategy: 'and',
+    replacementsMergeStrategy: 'and',
   }
 );

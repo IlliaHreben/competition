@@ -13,10 +13,16 @@ export default class CategoriesList extends ServiceBase {
     clubId: ['not_empty', 'uuid'],
     sectionId: ['not_empty', 'uuid'],
     settlementId: ['not_empty', 'uuid'],
+    fightSpaceId: ['not_empty', 'uuid'],
     sex: ['string', { min_length: 1 }, { max_length: 100 }],
     group: [{ one_of: ['A', 'B', null] }],
+    fightsCount: [
+      'not_empty',
+      'to_array',
+      { list_of: ['integer', { min_length: 0 }, { max_length: Number.MAX_SAFE_INTEGER }] },
+    ],
 
-    display: ['not_empty', { one_of: ['all', 'empty', 'filled'] }],
+    display: ['not_empty', { one_of: ['all', 'filled'] }],
 
     limit: ['positive_integer', { default: 10 }],
     offset: ['integer', { min_number: 0 }, { default: 0 }],
@@ -24,19 +30,18 @@ export default class CategoriesList extends ServiceBase {
   };
 
   async execute({ competitionId, limit, offset, display, include = [], ...rest }) {
-    const filters = Object.entries({ ...rest, display }).map((filter) => ({ method: filter }));
+    const filters = Object.entries(rest).map((filter) => ({ method: filter }));
 
-    console.log('='.repeat(50)); // !nocommit
-    console.log(['cards', display === 'all', display === 'empty']);
-    console.log('='.repeat(50));
     findAndReplace((scope) => scope === 'cards', include, {
-      method: ['cards', display === 'all', display === 'empty'],
+      method: ['cards', display === 'all'],
     });
 
     const query = {
+      replacements: rest,
       limit,
       offset,
       col: 'Category.id',
+      logging: true,
     };
 
     // await Card.findAll({
