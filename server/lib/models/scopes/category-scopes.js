@@ -32,9 +32,9 @@ export default function getCategoryScopes(category) {
         ...Object.keys(category.getAttributes()),
         [
           sequelize.literal(
-            '(SELECT COUNT(*) FROM "Cards" WHERE "Cards"."categoryId" = "Category"."id")'
+            '(SELECT "serialNumber" FROM "Fights" WHERE "Fights"."categoryId" = "Category"."id" order by "serialNumber" ASC limit 1)'
           ),
-          'cardsCount',
+          'minimalSerialNumber',
         ],
       ],
       include: [
@@ -58,7 +58,8 @@ export default function getCategoryScopes(category) {
       ],
       order: [
         // [sequelize.literal('"id"'), 'DESC'],
-        [sequelize.literal('"cardsCount"'), 'DESC'],
+        [sequelize.literal('"minimalSerialNumber"'), 'ASC'],
+        // [sequelize.literal('MIN("Fights"."serialNumber")'), 'ASC'],
         ['id', 'ASC'],
       ],
     }),

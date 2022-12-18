@@ -11,22 +11,27 @@ import { getTotalTime } from './helpers';
 import Card from './card';
 import FightSpaceHeader from './fight-space-header';
 import { groupByCriteria, splitBy } from '../../../utils/grouping';
-import { listFights } from '../../../actions/fights';
+import { listFights, clearFights } from '../../../actions/fights';
+// import CircularProgress from '../../ui-components/circular-progress';
+import { useDidUpdateEffect } from '../../../utils/hooks';
 
 function mapState(state) {
   return {
     active: state.competitions.active,
-    fights: state.fights.list
+    fights: state.fights.list,
+    isLoading: state.fights.isLoading
   };
 }
 
 export default function Schedule() {
-  useEffect(() => {
-    document.title = 'Schedule';
-  }, []);
-
   const dispatch = useDispatch();
   const { active, fights } = useSelector(mapState);
+
+  useEffect(() => {
+    document.title = 'Schedule';
+    dispatch(clearFights());
+    return () => dispatch(clearFights());
+  }, [dispatch]);
 
   useEffect(() => {
     if (!active) return;
@@ -40,7 +45,7 @@ export default function Schedule() {
 
   const [fightGroups, setFightGroups] = useState([]);
 
-  useEffect(() => {
+  useDidUpdateEffect(() => {
     const groups = splitBy(fights, (fight) => fight.linked.fightSpace.competitionDay - 1).map(
       (splittedByDay) =>
         groupByCriteria(splittedByDay, ['fightSpaceId']).map((groupedByFS) =>

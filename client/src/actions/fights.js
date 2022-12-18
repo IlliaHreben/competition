@@ -16,6 +16,10 @@ export function listFights(params = {}) {
   };
 }
 
+export function clearFights() {
+  return reducer.clearList();
+}
+
 export function concatToListFights(params) {
   return async (dispatch) => {
     try {

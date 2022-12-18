@@ -12,7 +12,7 @@ const fights = createSlice({
   initialState,
   reducers: {
     listRequest: (state) => {
-      state.isLoading = false;
+      state.isLoading = true;
     },
     list: (state, action) => {
       state.list = action.payload.data;

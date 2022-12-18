@@ -14,7 +14,7 @@ import CategoryTable from '../../ui-components/category-table';
 import TableHeader from '../../ui-components/table-header';
 import HideAppBar from '../../ui-components/hide-bar.tsx';
 
-import { concatToListFights, listFights } from '../../../actions/fights';
+import { concatToListFights, listFights, clearFights } from '../../../actions/fights';
 
 function mapState(state) {
   return {
@@ -31,6 +31,12 @@ export default function FightTrees() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
+
+  useEffect(() => {
+    dispatch(clearFights());
+    return () => dispatch(clearFights());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const { competition, fights, meta, isLoading } = useSelector(mapState);
 

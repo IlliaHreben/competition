@@ -44,9 +44,6 @@ export default class FightsList extends ServiceBase {
 
   async execute({ include, limit, offset, ...rest }) {
     const filters = Object.entries(rest).map((filter) => ({ method: filter }));
-    console.log('='.repeat(50)); // !nocommit
-    console.log(filters);
-    console.log('='.repeat(50));
 
     const { rows, count } = await Fight.scope(...include, ...filters).findAndCountAll({
       order: [
