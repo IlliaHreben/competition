@@ -2,7 +2,7 @@ import sequelize, { Op, DT } from '../sequelize-singleton.js';
 import Base from './Base.js';
 import { v4 as uuid } from 'uuid';
 
-import getCategoryScopes from './scopes/category-scopes.js';
+import getScopes from './scopes/category-scopes.js';
 import calculateFights from './calculateFightersProximity';
 import { splitBy } from '../utils/index.js';
 
@@ -313,7 +313,7 @@ export default class Category extends Base {
   }
 
   static initScopes() {
-    const scopes = getCategoryScopes(this);
+    const scopes = getScopes(this);
 
     Object.entries(scopes).forEach((scope) => Category.addScope(...scope));
   }
@@ -532,6 +532,5 @@ Category.init(
     sequelize,
     paranoid: true,
     whereMergeStrategy: 'and',
-    replacementsMergeStrategy: 'and',
   }
 );

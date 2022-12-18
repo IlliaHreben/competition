@@ -115,6 +115,15 @@ const defaultRules = {
   ...extraRules,
 };
 
-export default defaultRules;
-
 LIVR.Validator.registerDefaultRules(defaultRules);
+
+const aliases = {
+  limit: ['positive_integer', { number_between: [0, 1000] }],
+  offset: ['integer', { min_number: 0 }, { default: 0 }],
+};
+
+Object.entries(aliases).forEach(([name, rules]) => {
+  LIVR.Validator.registerAliasedDefaultRule({ name, rules });
+});
+
+export default defaultRules;

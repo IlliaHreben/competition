@@ -99,15 +99,14 @@ export default function getCategoryScopes(category) {
         ),
       ],
     }),
-    clubId: (clubId) =>
-      console.log('======================================================', clubId) || {
-        replacements: { clubId },
-        where: [
-          sequelize.literal(
-            `EXISTS (SELECT 1 FROM "Cards" AS "Card" INNER JOIN "Fighters" AS "Fighter" ON "Fighter"."id" = "Card"."fighterId" WHERE "Card"."categoryId" = "Category"."id" AND "Fighter"."clubId" = :clubId AND "Card"."deletedAt" IS NULL)`
-          ),
-        ],
-      },
+    clubId: (clubId) => ({
+      replacements: { clubId },
+      where: [
+        sequelize.literal(
+          `EXISTS (SELECT 1 FROM "Cards" AS "Card" INNER JOIN "Fighters" AS "Fighter" ON "Fighter"."id" = "Card"."fighterId" WHERE "Card"."categoryId" = "Category"."id" AND "Fighter"."clubId" = :clubId AND "Card"."deletedAt" IS NULL)`
+        ),
+      ],
+    }),
     coachId: (coachId) => ({
       replacements: { coachId },
       where: [

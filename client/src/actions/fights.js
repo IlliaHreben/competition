@@ -16,6 +16,18 @@ export function listFights(params = {}) {
   };
 }
 
+export function concatToListFights(params) {
+  return async (dispatch) => {
+    try {
+      const data = await api.fights.list(params);
+
+      dispatch(reducer.concatToList(data));
+    } catch (errData) {
+      dispatch(reducer.listRequestError(errData));
+    }
+  };
+}
+
 export function shiftFights(params = {}, callback) {
   return async (dispatch) => {
     try {

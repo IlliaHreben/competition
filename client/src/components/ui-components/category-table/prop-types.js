@@ -60,9 +60,9 @@ export const categoryPropTypes = {
       section: PropTypes.object.isRequired
     }).isRequired
   }).isRequired,
-  openCardSettings: PropTypes.func.isRequired,
+  openCardSettings: PropTypes.func,
   // selectedCardToMove: PropTypes.shape({
   //   id: PropTypes.string.isRequired
   // }),
-  openCategorySettings: PropTypes.func.isRequired
+  openCategorySettings: PropTypes.func
 };

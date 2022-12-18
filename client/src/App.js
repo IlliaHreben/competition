@@ -15,6 +15,7 @@ import CompetitionIcon from './assets/icons/tournament.png';
 import GraphicsIcon from './assets/icons/graphics.png';
 import CardsIcon from './assets/icons/cards.png';
 import SubsequenceIcon from './assets/icons/subsequence.png';
+import MatchesIcon from './assets/icons/matches.png';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -22,6 +23,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 const Graphics = lazy(() => import('./components/pages/graphics'));
+const Matches = lazy(() => import('./components/pages/matches'));
 const Home = lazy(() => import('./components/pages/home'));
 const CompetitionCreate = lazy(() => import('./components/pages/competitions/create.js'));
 const CompetitionList = lazy(() => import('./components/pages/competitions/list.js'));
@@ -48,6 +50,12 @@ const routes = [
     path: '/graphics',
     icon: GraphicsIcon,
     component: Graphics
+  },
+  {
+    name: 'Matches',
+    path: '/matches',
+    icon: MatchesIcon,
+    component: Matches
   },
   {
     name: 'Cards',

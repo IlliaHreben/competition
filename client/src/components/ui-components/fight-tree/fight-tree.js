@@ -118,7 +118,7 @@ export default function FightTree({ width: totalWidth = 250, category, setSelect
               // width: 400,
               horizontalOffset,
               spaceBetweenRows,
-              canvasPadding: 50,
+              canvasPadding: 40,
               spaceBetweenColumns
             }
           }}

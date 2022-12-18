@@ -38,17 +38,17 @@ function dumpCategoryData(category) {
 }
 
 function dumpCardData(card) {
-  const isFirst = card.isFirst;
+  const { isFirst, fight } = card;
   const fighter = card.linked?.fighter;
   const coach = card.linked?.fighter?.linked.coach;
   const club = card.linked?.fighter?.linked.club;
 
   return {
     id: card.id,
-    date: card.fight && getFormattedDate(), // TODO
-    degree: card.fight ? `1/${card.fight.degree}` : '',
+    date: fight && getFormattedDate(), // TODO
+    degree: fight ? `1/${fight.degree}` : '',
     color: isFirst !== undefined ? (isFirst ? 'red' : 'blue') : '',
-    number: card.fight ? card.fight.orderNumber * 2 - +isFirst : 1,
+    number: fight ? fight.orderNumber * 2 - +isFirst : 1,
     fullName: getFullName(fighter),
     sex: fighter?.sex || '',
     settlement: club?.linked?.settlement?.name || '',
@@ -56,7 +56,8 @@ function dumpCardData(card) {
     coach: getCoachFullName(coach),
     age: card.age || '',
     birthDate: card.birthDate ? formatISODate(card.birthDate) : '',
-    weight: card.weight || ''
+    weight: card.weight || '',
+    serialNumber: fight.serialNumber
   };
 }
 
@@ -68,7 +69,13 @@ function getFullName(fighter) {
   return fighter ? `${fighter?.lastName} ${fighter?.name}` : '';
 }
 
-function CategoryTable({ category, openCardSettings, openCategorySettings, openTable }) {
+function CategoryTable({
+  category,
+  openCardSettings,
+  openCategorySettings,
+  openTable,
+  disableHeader
+}) {
   const rows = dumpCategoryData(category);
 
   const [open, setOpen] = useState(openTable);
@@ -82,7 +89,7 @@ function CategoryTable({ category, openCardSettings, openCategorySettings, openT
   const sex = { man: 'men', woman: 'women' }[category.sex] || category;
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ mb: 3 }}>
       <Table sx={{ minWidth: 200 }} size='small'>
         <TableHead>
           <TableRow>
@@ -104,14 +111,18 @@ function CategoryTable({ category, openCardSettings, openCategorySettings, openT
                 <Typography>
                   {`${category.linked.section.name} in: ${sex} ${category.ageFrom} - ${category.ageTo} years, ${groupText} weight category ${category.weightName}`}
                 </Typography>
-                <IconButton
-                  size='small'
-                  aria-label='delete'
-                  onClick={(e) => openCategorySettings(e, category)}
-                  sx={{ color: '#f0efef' }}
-                >
-                  <MoreVertIcon size='small' />
-                </IconButton>
+                {openCategorySettings ? (
+                  <IconButton
+                    size='small'
+                    aria-label='delete'
+                    onClick={(e) => openCategorySettings(e, category)}
+                    sx={{ color: '#f0efef' }}
+                  >
+                    <MoreVertIcon size='small' />
+                  </IconButton>
+                ) : (
+                  <div />
+                )}
               </Stack>
             </TableCell>
           </TableRow>
@@ -119,23 +130,28 @@ function CategoryTable({ category, openCardSettings, openCategorySettings, openT
       </Table>
       <Collapse in={open} timeout='auto'>
         <Table sx={{ minWidth: 200 }} size='small'>
-          <TableHead>
-            <TableRow className={styles.tableHeadDesc}>
-              <TableCell>Date</TableCell>
-              <TableCell align='left'>Degree</TableCell>
-              <TableCell align='center'>Corner</TableCell>
-              <TableCell align='left'>№</TableCell>
-              <TableCell align='left'>Full name</TableCell>
-              <TableCell align='left'>City</TableCell>
-              <TableCell align='center'>Sex</TableCell>
-              <TableCell align='left'>Club</TableCell>
-              <TableCell align='left'>Coach</TableCell>
-              <TableCell align='center'>Age</TableCell>
-              <TableCell align='left'>Birthday</TableCell>
-              <TableCell align='left'>Weight</TableCell>
-              {/* <TableCell align='left'></TableCell> */}
-            </TableRow>
-          </TableHead>
+          {!disableHeader && (
+            <TableHead>
+              <TableRow className={styles.tableHeadDesc}>
+                <TableCell sx={{ paddingRight: '1 !important' }} align='center' padding='checkbox'>
+                  №
+                </TableCell>
+                <TableCell>Date</TableCell>
+                <TableCell align='center'>Degree</TableCell>
+                <TableCell align='center'>Corner</TableCell>
+                <TableCell align='left'>№</TableCell>
+                <TableCell align='left'>Full name</TableCell>
+                <TableCell align='left'>City</TableCell>
+                <TableCell align='center'>Sex</TableCell>
+                <TableCell align='left'>Club</TableCell>
+                <TableCell align='left'>Coach</TableCell>
+                <TableCell align='center'>Age</TableCell>
+                <TableCell align='left'>Birthday</TableCell>
+                <TableCell align='left'>Weight</TableCell>
+                {/* <TableCell align='left'></TableCell> */}
+              </TableRow>
+            </TableHead>
+          )}
           <TableBody>
             {rows.map((row) => (
               <TableRow
@@ -144,32 +160,65 @@ function CategoryTable({ category, openCardSettings, openCategorySettings, openT
                 // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 {row.number % 2 ? (
-                  <TableCell rowSpan={2} component='th' scope='row'>
+                  <TableCell
+                    align='center'
+                    width='3%'
+                    sx={{ pr: 0 }}
+                    rowSpan={2}
+                    component='th'
+                    scope='row'
+                    padding='checkbox'
+                  >
+                    <Typography variant='h5'>{row.serialNumber}</Typography>
+                  </TableCell>
+                ) : null}
+                {row.number % 2 ? (
+                  <TableCell width='7%' rowSpan={2} component='th' scope='row'>
                     {row.date}
                   </TableCell>
                 ) : null}
                 {row.number % 2 ? (
-                  <TableCell rowSpan={2} align='left'>
+                  <TableCell width='5%' rowSpan={2} align='center'>
                     {row.degree}
                   </TableCell>
                 ) : null}
-                <TableCell align='center'>{row.color}</TableCell>
-                <TableCell align='left'>{row.number}</TableCell>
-                <TableCell align='left'>{row.fullName}</TableCell>
-                <TableCell align='left'>{row.settlement}</TableCell>
-                <TableCell align='center'>{row.sex}</TableCell>
-                <TableCell align='left'>{row.club}</TableCell>
-                <TableCell align='left'>{row.coach}</TableCell>
-                <TableCell align='center'>{row.age}</TableCell>
-                <TableCell align='left'>{row.birthDate}</TableCell>
-                <TableCell align='left' sx={{ paddingRight: 0 }}>
+                <TableCell width='5%' align='center'>
+                  {row.color}
+                </TableCell>
+                <TableCell width='2%' align='left'>
+                  {row.number}
+                </TableCell>
+                <TableCell width='15%' align='left'>
+                  {row.fullName}
+                </TableCell>
+                <TableCell width='14%' align='left'>
+                  {row.settlement}
+                </TableCell>
+                <TableCell width='4%' align='center'>
+                  {row.sex}
+                </TableCell>
+                <TableCell width='16%' align='left'>
+                  {row.club}
+                </TableCell>
+                <TableCell width='11.5%' align='left'>
+                  {row.coach}
+                </TableCell>
+                <TableCell width='4%' align='center'>
+                  {row.age}
+                </TableCell>
+                <TableCell width='7%' align='left'>
+                  {row.birthDate}
+                </TableCell>
+                <TableCell width='5%' align='left' sx={{ paddingRight: 0 }}>
                   {row.weight}
                 </TableCell>
-                <TableCell padding='none' sx={{ paddingRight: 0.5 }} align='right'>
-                  <IconButton size='small' onClick={(e) => openCardSettings(e, row, category)}>
-                    <MoreVertIcon fontSize='inherit' />
-                  </IconButton>
-                </TableCell>
+                {openCardSettings && (
+                  <TableCell padding='none' sx={{ paddingRight: 0.5 }} align='right'>
+                    <IconButton size='small' onClick={(e) => openCardSettings(e, row, category)}>
+                      <MoreVertIcon fontSize='inherit' />
+                    </IconButton>
+                  </TableCell>
+                )}
               </TableRow>
             ))}
           </TableBody>

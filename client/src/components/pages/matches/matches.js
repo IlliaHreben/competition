@@ -1,50 +1,46 @@
 import { useState, useEffect, useCallback } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Box } from '@mui/material';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router';
 
-import styles from './graphics.module.css';
 import CircularProgress from '../../ui-components/circular-progress';
 import FilterDrawer from '../../ui-components/filters-drawer';
-import { CategorySettingsPopover, RowSettingsPopover } from './settings';
 
 import { objectFilter } from '../../../utils/common';
-import FightTree from '../../ui-components/fight-tree';
 import CategoryTable from '../../ui-components/category-table';
 import TableHeader from '../../ui-components/table-header';
 import HideAppBar from '../../ui-components/hide-bar.tsx';
 
-import {
-  concatToListCategories,
-  listCategories
-  // refreshCategories
-} from '../../../actions/categories';
-import { showSuccess } from '../../../actions/errors';
-import { moveCard } from '../../../actions/cards';
+import { concatToListFights, listFights } from '../../../actions/fights';
 
 function mapState(state) {
   return {
     competition: state.competitions.active,
-    categories: state.categories.list,
-    isLoading: state.categories.isLoading,
-    meta: state.categories.listMeta
+    fights: state.fights.list,
+    isLoading: state.fights.isLoading,
+    meta: state.fights.listMeta
   };
 }
 
-const limit = 10;
+const limit = 50;
 
 export default function FightTrees() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const { competition, categories, meta, isLoading } = useSelector(mapState);
+  const { competition, fights, meta, isLoading } = useSelector(mapState);
+
+  const categories = fights.map((fight) => {
+    const { category, firstCard, secondCard } = fight.linked;
+    return {
+      ...category,
+      linked: { fights: [fight], cards: [firstCard, secondCard], ...category.linked }
+    };
+  });
 
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
@@ -52,18 +48,18 @@ export default function FightTrees() {
   const [hideTables, setHideTables] = useState(
     new URLSearchParams(location.search).get('hideTables') === 'true'
   );
+
   const [node, setNode] = useState(null);
-  const [selectedCardToMove, setSelectedCardToMove] = useState(null);
 
   const loadMoreRows = useCallback(() => {
-    const loadCategories = offset === 0 ? listCategories : concatToListCategories;
+    const loadFights = offset === 0 ? listFights : concatToListFights;
     dispatch(
-      loadCategories({
+      loadFights({
         ...filters,
         competitionId: competition.id,
         offset,
         limit,
-        include: ['cards', 'sections']
+        include: ['categoryWithSection', 'cardsWithFighterAndLinked']
       })
     );
   }, [competition.id, dispatch, filters, offset]);
@@ -73,17 +69,6 @@ export default function FightTrees() {
 
     navigate(`?${query}`, { replace: true });
   }, [filters, navigate, offset, hideTables]);
-
-  const handleMoveCard = (categoryId) => {
-    dispatch(
-      moveCard({ id: selectedCardToMove.id, categoryId }, () => {
-        dispatch(showSuccess('The card has been successfully moved.'));
-        setSelectedCardToMove(null);
-        if (offset === 0) loadMoreRows();
-        else setOffset(0);
-      })
-    );
-  };
 
   useEffect(() => {
     if (isLoading) return;
@@ -95,32 +80,10 @@ export default function FightTrees() {
     loadMoreRows();
   }, [competition, loadMoreRows]);
 
-  // settings
-  const [anchorCategory, setAnchorCategory] = useState(null);
-  const [anchorRow, setAnchorRow] = useState(null);
   const [moreFiltersAnchor, setMoreFiltersAnchor] = useState(false);
 
-  const handleClickCategory = (e, category) => {
-    setAnchorCategory({ element: e.currentTarget, category });
-  };
-  const handleClickCard = (e, card, category) => {
-    setAnchorRow({ element: e.currentTarget, card, category });
-  };
   const toggleDrawer = (open) => (event) => {
     setMoreFiltersAnchor(open);
-  };
-
-  const handleCloseCategorySettings = () => {
-    setAnchorCategory(null);
-  };
-  const handleCloseCardSettings = () => {
-    setAnchorRow(null);
-  };
-
-  const handleSelectToMove = () => {
-    setSelectedCardToMove({ categoryId: anchorRow.category.id, id: anchorRow.card.id });
-    dispatch(showSuccess('Selected. Please choose proper category'));
-    handleCloseCardSettings();
   };
 
   const handleFilterChange = (current) => {
@@ -137,17 +100,6 @@ export default function FightTrees() {
         height: '100%'
       }}
     >
-      <CategorySettingsPopover
-        anchor={anchorCategory}
-        onClose={handleCloseCategorySettings}
-        onMoveCard={handleMoveCard}
-        selectedCardToMove={selectedCardToMove}
-      />
-      <RowSettingsPopover
-        anchor={anchorRow}
-        onClose={handleCloseCardSettings}
-        handleSelectToMove={handleSelectToMove}
-      />
       <FilterDrawer
         open={moreFiltersAnchor}
         onClose={toggleDrawer(false)}
@@ -156,6 +108,7 @@ export default function FightTrees() {
         filters={filters}
         onHideTables={(status) => setHideTables(status)}
         hideTables={hideTables}
+        disableEmptyCategories
       />
       <div
         ref={(node) => {
@@ -165,8 +118,6 @@ export default function FightTrees() {
         id='scroll-root'
         style={{
           display: 'flex',
-          // flexGrow: 1,
-          // justifyContent: 'center',
           flexDirection: 'column',
           overflow: 'auto',
           width: '100%',
@@ -188,29 +139,11 @@ export default function FightTrees() {
           loader={<CircularProgress />}
           style={{ overflow: 'hidden' }}
         >
-          <DndProvider backend={HTML5Backend}>
-            {categories.map((category) => (
-              <Container key={category.id} maxWidth='xl'>
-                <CategoryTable
-                  openTable={!hideTables}
-                  category={category}
-                  openCardSettings={handleClickCard}
-                  openCategorySettings={handleClickCategory}
-                />
-                <div className={styles.treeContainer}>
-                  {category.linked.fights.length > 0 ? (
-                    <FightTree
-                      key={category.id}
-                      category={category}
-                      setSelectedCardToMove={setSelectedCardToMove}
-                    />
-                  ) : (
-                    <Box sx={{ mt: 1, mb: 1 }} />
-                  )}
-                </div>
-              </Container>
-            ))}
-          </DndProvider>
+          {categories.map((category) => (
+            <Container key={category.linked.fights[0].id} maxWidth='xl'>
+              <CategoryTable openTable={!hideTables} category={category} disableHeader />
+            </Container>
+          ))}
         </InfiniteScroll>
       </div>
     </div>

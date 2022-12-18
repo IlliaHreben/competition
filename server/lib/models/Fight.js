@@ -1,11 +1,12 @@
 import sequelize, { DT, Op } from '../sequelize-singleton.js';
 import ServiceError from '../services/service-error.js';
-import Base from './Base.js';
 
+import Base from './Base.js';
 import Card from './Card.js';
 import Category from './Category.js';
 import FightFormula from './FightFormula.js';
 import FightSpace from './FightSpace.js';
+import getScopes from './scopes/fight-scopes.js';
 
 export default class Fight extends Base {
   static initRelation() {
@@ -161,25 +162,9 @@ export default class Fight extends Base {
   }
 
   static initScopes() {
-    const scopes = {
-      categoryWithSection: {
-        include: [{ model: Category, as: 'Category', include: 'Section' }],
-      },
-      fightFormula: {
-        include: [{ model: FightFormula, as: 'FightFormula' }],
-      },
-      fightSpace: {
-        include: [{ model: FightSpace, as: 'FightSpace' }],
-      },
-      cardsWithFighter: {
-        include: [
-          { model: Card, as: 'FirstCard', include: ['Fighter'] },
-          { model: Card, as: 'SecondCard', include: ['Fighter'] },
-        ],
-      },
-    };
+    const scopes = getScopes(this);
 
-    Object.entries(scopes).forEach((scope) => this.addScope(...scope));
+    Object.entries(scopes).forEach((scope) => Fight.addScope(...scope));
   }
 }
 
@@ -235,5 +220,6 @@ Fight.init(
   },
   {
     sequelize,
+    whereMergeStrategy: 'and',
   }
 );

@@ -6,8 +6,8 @@ import Fighter from '../../models/Fighter.js';
 export default class FightersList extends ServiceBase {
   static validationRules = {
     search: ['string'],
-    limit: ['positive_integer', { number_between: [0, 1000] }, { default: 10 }],
-    offset: ['integer', { min_number: 0 }, { default: 0 }],
+    limit: ['limit', { default: 10 }],
+    offset: 'offset',
     coachId: ['not_empty', 'uuid'],
     clubId: ['not_empty', 'uuid'],
     settlementId: ['not_empty', 'uuid'],

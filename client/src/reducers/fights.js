@@ -19,6 +19,11 @@ const fights = createSlice({
       state.listMeta = action.payload.meta;
       state.isLoading = false;
     },
+    concatToList: (state, action) => {
+      state.list = state.list.concat(action.payload.data);
+      state.listMeta = action.payload.meta;
+      state.isLoading = false;
+    },
     listRequestError: (state, action) => {
       state.isLoading = false;
       state.errors = action.payload;
@@ -53,6 +58,7 @@ const { actions, reducer } = fights;
 
 export const {
   list,
+  concatToList,
   listRequest,
   clearList,
   listRequestError,

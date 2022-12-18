@@ -13,7 +13,7 @@ import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { PropTypes } from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { list as listFightSpaces } from '../../../actions/fight-spaces';
+import { list as listFightSpaces } from '../../actions/fight-spaces';
 import { useEffect } from 'react';
 
 function mapState(state) {
@@ -30,7 +30,8 @@ FilterDrawer.propTypes = {
   onChange: PropTypes.func.isRequired,
   filters: PropTypes.object,
   onHideTables: PropTypes.func.isRequired,
-  hideTables: PropTypes.bool
+  hideTables: PropTypes.bool,
+  disableEmptyCategories: PropTypes.bool
 };
 
 export default function FilterDrawer({
@@ -40,7 +41,8 @@ export default function FilterDrawer({
   onChange,
   filters = {},
   onHideTables,
-  hideTables
+  hideTables,
+  disableEmptyCategories
 }) {
   const dispatch = useDispatch();
   const { active, fightSpaces } = useSelector(mapState);
@@ -70,17 +72,19 @@ export default function FilterDrawer({
               <ListItemText primary={'Collapse tables'} />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton
-              dense
-              onClick={(e) => handleChange({ display: e.target.checked ? 'all' : 'filled' })}
-            >
-              <ListItemIcon>
-                <Switch checked={filters.display === 'all'} disableRipple />
-              </ListItemIcon>
-              <ListItemText primary={'Show empty categories'} />
-            </ListItemButton>
-          </ListItem>
+          {!disableEmptyCategories && (
+            <ListItem disablePadding>
+              <ListItemButton
+                dense
+                onClick={(e) => handleChange({ display: e.target.checked ? 'all' : 'filled' })}
+              >
+                <ListItemIcon>
+                  <Switch checked={filters.display === 'all'} disableRipple />
+                </ListItemIcon>
+                <ListItemText primary={'Show empty categories'} />
+              </ListItemButton>
+            </ListItem>
+          )}
           {fightSpaces.length && (
             <ListItem>
               <FormControl size='small' fullWidth>

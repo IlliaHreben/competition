@@ -25,17 +25,17 @@ export default class Base extends ServiceBase {
   }
 
   handleError = (error) => {
-    if (error.name === 'SequelizeUniqueConstraintError') {
-      error = new ServiceError('SequelizeUniqueConstraintError', error);
+    if (['SequelizeUniqueConstraintError', 'AggregateError'].includes(error.name)) {
+      error = new ServiceError(error.name, error);
     }
-    if (error.name === 'AggregateError') {
-      error = new ServiceError('AggregateError', error);
+    if (error.name === 'SequelizeDatabaseError') {
+      console.error(error.message);
+      throw new Error('Internal server error');
     }
 
     if (error instanceof Exception) {
       const { code, data } = error.toHash();
 
-      // eslint-disable-next-line no-unused-expressions
       this.errors?.[code]?.({ code, data });
     }
     throw error;
