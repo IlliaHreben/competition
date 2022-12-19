@@ -17,6 +17,10 @@ export default class FightSpacesList extends ServiceBase {
 
     const fightSpaces = await FightSpace.findAll({
       where: { competitionId },
+      order: [
+        ['type', 'DESC'],
+        ['orderNumber', 'ASC'],
+      ],
     });
 
     return {

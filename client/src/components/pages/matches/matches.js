@@ -33,6 +33,7 @@ export default function FightTrees() {
   const location = useLocation();
 
   useEffect(() => {
+    document.title = 'Matches';
     dispatch(clearFights());
     return () => dispatch(clearFights());
     // eslint-disable-next-line react-hooks/exhaustive-deps

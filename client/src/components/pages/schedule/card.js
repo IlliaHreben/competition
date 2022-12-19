@@ -7,7 +7,8 @@ import {
   ListItemButton,
   ListItemText,
   Collapse,
-  Stack
+  Stack,
+  Box
 } from '@mui/material';
 import { PropTypes } from 'prop-types';
 import { useState } from 'react';
@@ -17,9 +18,63 @@ import { DateTime, Duration } from 'luxon';
 import { getTotalTime } from './helpers';
 import { groupByCriteria } from '../../../utils/grouping';
 import DraggableDroppable from '../../ui-components/draggable-droppable';
+import Droppable from '../../ui-components/droppable';
 import { shiftFights, listFights } from '../../../actions/fights';
 import { showSuccess } from '../../../actions/errors';
 import ExpandIconButton from '../../../utils/component-utils';
+
+export function SectionCardMock({ fightSpace }) {
+  const dispatch = useDispatch();
+
+  const handleDrop = (fights) => {
+    dispatch(
+      shiftFights(
+        {
+          fightSpaceId: fightSpace.id,
+          id: fights.map((f) => f.id),
+          place: 1
+        },
+        () => {
+          dispatch(showSuccess('Fights has been successfully shifted.'));
+          dispatch(
+            listFights({
+              competitionId: fightSpace.competitionId,
+              include: ['categoryWithSection', 'cardsWithFighter', 'fightFormula', 'fightSpace']
+            })
+          );
+        }
+      )
+    );
+  };
+
+  return (
+    <Droppable onDrop={handleDrop}>
+      <Box
+        sx={{
+          width: 320,
+          height: '100px',
+          alignItems: 'center',
+          justifyContent: 'center',
+          display: 'flex',
+          border: '1px dashed',
+          borderRadius: '4px',
+          color: 'rgba(0,0,0,0.5)'
+        }}
+      >
+        <Typography
+          variant='outlined'
+          component='div'
+          sx={{ display: 'flex', justifyContent: 'center' }}
+        >
+          Empty
+        </Typography>
+      </Box>
+    </Droppable>
+  );
+}
+SectionCardMock.propTypes = {
+  fightSpace: PropTypes.object.isRequired
+};
 
 export default function SectionCard({ fightGroup, fightsTimeBefore, fightSpace }) {
   const [open, setOpen] = useState(false);
@@ -170,11 +225,7 @@ function ListCategory({ fightsList }) {
         item={fightsList}
       >
         <ListItem disablePadding sx={{ flexDirection: 'column' }}>
-          <ListItemButton
-            dense
-            disableRipple
-            sx={{ width: '100%' }} /* onClick={() => setOpen((prev) => !prev)} */
-          >
+          <ListItemButton dense disableRipple sx={{ width: '100%' }}>
             <ListItemText
               disableTypography
               primary={
@@ -202,26 +253,7 @@ function ListCategory({ fightsList }) {
                 </Stack>
               }
             />
-            {/* {open ? <ExpandLess /> : <ExpandMore />} */}
           </ListItemButton>
-          {/* <Collapse in={open} sx={{ width: '100%' }} timeout='auto' unmountOnExit>
-        <List component='div' disablePadding>
-          {fightsList.map((fight) => {
-            const fighter1 = fight?.linked?.firstCard?.linked?.fighter || {};
-            const fighter2 = fight?.linked?.secondCard?.linked?.fighter || {};
-            return (
-              <ListItemButton sx={{ width: '100%' }} key={fight.id}>
-                <ListItemText
-                  secondaryTypographyProps={{ variant: 'caption' }}
-                  primary={`${fight.serialNumber}. 1/${fight.degree} ${
-                    fighter1.lastName || 'N/A'
-                  } vs ${fighter2.lastName || 'N/A'}`}
-                />
-              </ListItemButton>
-            );
-          })}
-        </List>
-      </Collapse> */}
         </ListItem>
       </DraggableDroppable>
     </>

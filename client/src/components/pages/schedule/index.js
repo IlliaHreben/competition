@@ -8,10 +8,11 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 
 import { getTotalTime } from './helpers';
-import Card from './card';
+import Card, { SectionCardMock } from './card';
 import FightSpaceHeader from './fight-space-header';
 import { groupByCriteria, splitBy } from '../../../utils/grouping';
 import { listFights, clearFights } from '../../../actions/fights';
+import { list as listFightSpaces } from '../../../actions/fight-spaces';
 // import CircularProgress from '../../ui-components/circular-progress';
 import { useDidUpdateEffect } from '../../../utils/hooks';
 
@@ -19,13 +20,16 @@ function mapState(state) {
   return {
     active: state.competitions.active,
     fights: state.fights.list,
-    isLoading: state.fights.isLoading
+    fightSpaces: state.fightSpaces.list
   };
 }
 
 export default function Schedule() {
   const dispatch = useDispatch();
-  const { active, fights } = useSelector(mapState);
+  const { active, fights, fightSpaces } = useSelector(mapState);
+  console.log('='.repeat(50)); // !nocommit
+  console.log(fightSpaces);
+  console.log('='.repeat(50));
 
   useEffect(() => {
     document.title = 'Schedule';
@@ -41,6 +45,7 @@ export default function Schedule() {
         include: ['categoryWithSection', 'cardsWithFighter', 'fightFormula', 'fightSpace']
       })
     );
+    dispatch(listFightSpaces(active.id));
   }, [active, dispatch]);
 
   const [fightGroups, setFightGroups] = useState([]);
@@ -71,38 +76,52 @@ export default function Schedule() {
               DAY {i + 1}
             </Typography>
             <Grid sx={{ mt: 2, justifyContent: 'center' }} container spacing={3}>
-              {groupedByFS.map((groupedBySection) => (
-                <Grid key={groupedBySection[0][0].fightSpaceId} item>
-                  <FightSpaceHeader
-                    duration={getTotalTime(groupedBySection.flat(3), false)}
-                    fightSpace={groupedBySection[0][0].linked.fightSpace}
-                  />
-                  <Paper sx={{ backgroundColor: '#e7ebf0', maxWidth: 350 }} elevation={0}>
-                    <Grid sx={{ justifyContent: 'center' }} container spacing={1}>
-                      {groupedBySection.map((fightGroup, i) => {
-                        const category = fightGroup[0].linked.category;
+              {fightSpaces
+                .filter((fs) => fs.competitionDay === i + 1)
+                .map((fs) => {
+                  const groupedBySection =
+                    groupedByFS.find((group) => group[0][0].fightSpaceId === fs.id) || [];
+                  return (
+                    <Grid key={fs.id} sx={{ maxWidth: 374, flexGrow: 1 }} item>
+                      <FightSpaceHeader
+                        duration={getTotalTime(groupedBySection.flat(3), false)}
+                        fightSpace={fs}
+                      />
+                      <Paper
+                        sx={{ backgroundColor: '#e7ebf0', maxWidth: 350, minHeight: 125 }}
+                        elevation={0}
+                      >
+                        <Grid sx={{ justifyContent: 'center' }} container spacing={1}>
+                          {groupedBySection.length ? (
+                            groupedBySection.map((fightGroup, i) => {
+                              const category = fightGroup[0].linked.category;
 
-                        return (
-                          <Grid
-                            item
-                            key={`${category.sectionId}-${category.ageFrom}-${category.ageTo}-${fightGroup[0].id}`}
-                            spacing={0.5}
-                          >
-                            <Card
-                              fightGroup={fightGroup}
-                              fightsTimeBefore={getTotalTime(
-                                groupedBySection.slice(0, i).flat(3),
-                                false
-                              )}
-                              fightSpace={groupedBySection[0][0].linked.fightSpace}
-                            ></Card>
-                          </Grid>
-                        );
-                      })}
+                              return (
+                                <Grid
+                                  item
+                                  key={`${category.sectionId}-${category.ageFrom}-${category.ageTo}-${fightGroup[0].id}`}
+                                  spacing={0.5}
+                                  direction='column'
+                                >
+                                  <Card
+                                    fightGroup={fightGroup}
+                                    fightsTimeBefore={getTotalTime(
+                                      groupedBySection.slice(0, i).flat(3),
+                                      false
+                                    )}
+                                    fightSpace={fs}
+                                  ></Card>
+                                </Grid>
+                              );
+                            })
+                          ) : (
+                            <SectionCardMock fightSpace={fs} />
+                          )}
+                        </Grid>
+                      </Paper>
                     </Grid>
-                  </Paper>
-                </Grid>
-              ))}
+                  );
+                })}
             </Grid>
           </Fragment>
         ))}

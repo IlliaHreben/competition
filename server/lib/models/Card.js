@@ -309,6 +309,7 @@ Card.init(
       beforeCreate: assignCategoryHook,
       afterCreate: calculateFightsHook,
       beforeBulkCreate: assignBulkCategoryHook,
+      // afterUpdate,
     },
     sequelize,
     paranoid: true,
@@ -324,7 +325,15 @@ async function calculateFightsHook(card) {
   const Category = sequelize.model('Category');
   const category = await Category.findById(card.categoryId);
   await category.calculateFights();
+
+  const competition = await card.getCompetition();
+  await competition.calculateFightsTimesAndOrder();
 }
+
+// async function afterUpdate(card) {
+//   const competition = await card.getCompetition();
+//   await competition.calculateFightsTimesAndOrder();
+// }
 
 async function assignBulkCategoryHook(cards, options) {
   await Promise.all(
@@ -334,4 +343,7 @@ async function assignBulkCategoryHook(cards, options) {
       card.categoryId = category.id;
     })
   );
+
+  const competition = await cards[0].getCompetition();
+  await competition.calculateFightsTimesAndOrder();
 }

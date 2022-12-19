@@ -156,13 +156,8 @@ export default class Competition extends Base {
   async calculateFightsTimesAndOrder() {
     const Category = sequelize.model('Category');
     const FightSpace = sequelize.model('FightSpace');
-    // const Fight = sequelize.model('Fight');
 
-    const categories = await Category.scope(
-      /* 'cards',  */ 'sections',
-      'fightsWithFormula'
-    ).findAll({
-      // col: 'Category.id',
+    const categories = await Category.scope('sections', 'fightsWithFormula').findAll({
       where: {
         competitionId: this.id,
       },
@@ -185,8 +180,6 @@ export default class Competition extends Base {
 
     const result = calculate(categories, fightSpaces);
     await Promise.all(result.map((r) => r.save()));
-    // await Fight.bulkCreate(result, { updateOnDublicate: true });
-    // createBlocks(categories);
   }
 }
 
@@ -224,6 +217,6 @@ Competition.init(
   }
 );
 
-Competition.findOne()
-  .then((c) => c.calculateFightsTimesAndOrder())
-  .then(console.log);
+// Competition.findOne()
+//   .then((c) => c.calculateFightsTimesAndOrder())
+//   .then(console.log);

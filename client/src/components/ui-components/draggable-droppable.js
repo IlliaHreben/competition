@@ -18,7 +18,6 @@ export default function DraggableDroppable({
       accept: type,
       canDrop: (_item) => validateDrop(_item),
       drop(_item, monitor) {
-        console.log(_item, '->', item);
         const didDrop = monitor.didDrop();
         if (didDrop || _item === item) {
           return;
