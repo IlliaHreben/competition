@@ -38,9 +38,6 @@ export default function MaskWeight({ value, onChange, inputProps = {}, ...props 
         onChange={onChange}
         id='weight-mask-input'
         endAdornment={<InputAdornment position='end'>kg</InputAdornment>}
-        inputProps={{
-          'aria-label': 'weight'
-        }}
         label='Weight'
         inputComponent={WeightMaskInput}
         {...inputProps}

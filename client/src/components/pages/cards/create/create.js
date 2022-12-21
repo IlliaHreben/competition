@@ -1,23 +1,18 @@
-/* eslint-disable multiline-ternary */
-/* eslint-disable jsx-a11y/alt-text */
-import { Paper, Stack, Typography, Container, Button } from '@mui/material';
+import { Paper, Button } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import sorryImg from '../../../../assets/icons/sorry.png';
 import { listClubs } from '../../../../actions/clubs';
 import { listCoaches } from '../../../../actions/coaches';
 import { createCard } from '../../../../actions/cards';
 import { showSuccess } from '../../../../actions/errors';
-// import { listSettlements } from '../../../../actions/settlements';
 import { list as listSections } from '../../../../actions/sections';
+import SelectCompetitionChecker from '../../../ui-components/select-competition-checker';
 
 import CardForm from '../../../ui-components/card-form';
 
-function mapState(state) {
-  return {
-    active: state.competitions.active
-  };
-}
+const mapState = (state) => ({
+  active: state.competitions.active
+});
 
 export default function CreateCard() {
   const [cardData, setCardData] = useState({});
@@ -50,32 +45,21 @@ export default function CreateCard() {
         },
         () => {
           dispatch(showSuccess('Card has been successfully created'));
-          // handleClose();
         }
       )
     );
   };
 
   return (
-    <div>
-      {active ? (
+    <SelectCompetitionChecker>
+      <div>
         <Paper sx={{ display: 'flex', flexDirection: 'column', maxWidth: '1000px', p: 1.5 }}>
           <CardForm onChange={setCardData} />
           <Button variant='contained' sx={{ mt: 2 }} onClick={handleOnClickCreateButton}>
             Create
           </Button>
         </Paper>
-      ) : (
-        <Stack sx={{ alignItems: 'center' }}>
-          <Container sx={{ mt: 4, justifyContent: 'center', display: 'flex' }}>
-            <img src={sorryImg} width='400' />
-          </Container>
-          <Typography variant='h5'>At first, you need to choose competition.</Typography>
-          <Typography variant='h5'>
-            Please, visit &#34;Competitions&#34; page to select your competition.
-          </Typography>
-        </Stack>
-      )}
-    </div>
+      </div>
+    </SelectCompetitionChecker>
   );
 }

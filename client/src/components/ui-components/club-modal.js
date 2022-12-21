@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import curry from 'lodash/curry';
 import debounce from 'lodash/debounce';
@@ -79,29 +79,27 @@ export default function ClubModal({ club, isEdit, open, handleClose, handleCompl
     );
   };
 
-  const listSettlements = useMemo(
-    () =>
-      debounce((run, search, selected) => {
-        (async () => {
-          const { data } = await api.settlements.list({ search, limit: 10 });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const listSettlements = useCallback(
+    debounce((run, search, selected) => {
+      (async () => {
+        const { data } = await api.settlements.list({ search, limit: 10 });
 
-          if (run) {
-            let newOptions = [];
+        if (run) {
+          let newOptions = [];
 
-            if (search && selected) {
-              newOptions = [selected];
-            }
-
-            if (data) {
-              newOptions = [...newOptions, ...data];
-            }
-
-            setSettlements(newOptions);
+          if (search && selected) {
+            newOptions = [selected];
           }
-        })();
-      }, 500),
-    // we can't recalculate cause debounce won't work
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+          if (data) {
+            newOptions = [...newOptions, ...data];
+          }
+
+          setSettlements(newOptions);
+        }
+      })();
+    }, 300),
     []
   );
 
@@ -138,7 +136,7 @@ export default function ClubModal({ club, isEdit, open, handleClose, handleCompl
         autoComplete='new-password'
         id='coach-name-input'
         label='Name'
-        value={_club.name}
+        value={_club.name || ''}
         onChange={(e) => setClub((prev) => ({ ...prev, name: e.target.value }))}
         sx={{ mt: 1, mb: 1.5 }}
       />
@@ -157,21 +155,19 @@ export default function ClubModal({ club, isEdit, open, handleClose, handleCompl
         onChange={(e, options) => setLinked((prev) => ({ ...prev, coaches: options }))}
       />
       <Autocomplete
-        includeInputInList
         autoComplete
         blurOnSelect
         disableCloseOnSelect
         autoHighlight
         filterSelectedOptions
         fullWidth
-        options={settlements}
+        options={['', ...settlements]}
         sx={{ mb: 1 }}
-        filterOptions={(x) => x}
+        filterOptions={(x) => x.length && (x.length > 1 || x[0] !== '') && x.filter(Boolean)}
         value={selectedSettlement}
         getOptionLabel={(s) => (s ? `${s.name}, ${s.linked.state?.name}` : '')}
         renderInput={(params) => <TextField {...params} label='Settlement' />}
         onChange={(e, newSelected) => {
-          setSettlements((prev) => [newSelected, ...prev]);
           setSelectedSettlement(newSelected);
         }}
         onInputChange={(event, newInputValue) => {

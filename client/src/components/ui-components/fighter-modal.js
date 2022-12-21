@@ -167,7 +167,6 @@ export default function FighterModal({ open, fighter, errors = {}, handleClose, 
       <Stack direction='row' sx={{ mt: 1.5, mb: 1.5 }}>
         <TextField
           fullWidth
-          id='card-n-input'
           label='Name'
           value={cardData.name}
           onChange={(e) => dispatchFighter({ type: 'name', payload: e.target.value })}
@@ -177,7 +176,6 @@ export default function FighterModal({ open, fighter, errors = {}, handleClose, 
         />
         <TextField
           fullWidth
-          id='card-ln-input'
           label='Last name'
           value={cardData.lastName}
           onChange={(e) => dispatchFighter({ type: 'lastName', payload: e.target.value })}
@@ -189,9 +187,8 @@ export default function FighterModal({ open, fighter, errors = {}, handleClose, 
         <InputLabel id='sex-label-input'>Sex</InputLabel>
         <Select
           labelId='sex-label-input'
-          id='sex-input'
           label='Sex'
-          value={cardData.sex}
+          value={cardData.sex || ''}
           onChange={(e) => dispatchFighter({ type: 'sex', payload: e.target.value })}
         >
           <MenuItem value='man'>Man</MenuItem>
@@ -213,15 +210,15 @@ export default function FighterModal({ open, fighter, errors = {}, handleClose, 
       <Stack direction='row' sx={{ mt: 1 }}>
         <Stack sx={{ mr: 1.5, width: '100%' }}>
           <Autocomplete
-            includeInputInList
+            // includeInputInList
             blurOnSelect
             autoSelect
             autoHighlight
             fullWidth
-            options={clubs}
+            options={[{ id: '', name: '' }, ...clubs]}
             sx={{ mb: 1 }}
             getOptionLabel={(club) => club.name || ''}
-            value={clubs.find((c) => c.id === cardData.clubId) || ''}
+            value={clubs.find((c) => c.id === cardData.clubId) || { id: '' }}
             isOptionEqualToValue={(option, value) => option.id === value.id}
             renderInput={(params) => <TextField {...params} label='Club' />}
             onChange={(e, club) => dispatchFighter({ type: 'clubId', payload: club?.id })}
@@ -232,14 +229,14 @@ export default function FighterModal({ open, fighter, errors = {}, handleClose, 
         </Stack>
         <Stack sx={{ width: '100%' }}>
           <Autocomplete
-            includeInputInList
+            // includeInputInList
             blurOnSelect
             autoSelect
             autoHighlight
             fullWidth
-            options={coaches}
+            options={[{ id: '' }, ...coaches]}
             sx={{ mb: 1 }}
-            value={coaches.find((c) => c.id === cardData.coachId) || ''}
+            value={coaches.find((c) => c.id === cardData.coachId) || { id: '' }}
             isOptionEqualToValue={(option, value) => option.id === value.id}
             getOptionLabel={({ name, lastName }) => (name ? `${lastName} ${name}` : '')}
             renderInput={(params) => <TextField {...params} label='Coach' />}
