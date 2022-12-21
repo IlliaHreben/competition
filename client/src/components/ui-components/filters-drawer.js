@@ -13,7 +13,7 @@ import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { PropTypes } from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { list as listFightSpaces } from '../../actions/fight-spaces';
+import { list as listFightSpaces } from 'actions/fight-spaces';
 import { useEffect } from 'react';
 
 function mapState(state) {

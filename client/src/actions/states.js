@@ -1,5 +1,5 @@
-import api from '../api-singleton';
-import * as reducer from '../reducers/states';
+import api from 'api-singleton';
+import * as reducer from 'reducers/states';
 
 export function listStates(params = {}) {
   return async (dispatch) => {

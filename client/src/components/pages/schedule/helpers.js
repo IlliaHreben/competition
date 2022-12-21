@@ -1,4 +1,4 @@
-import { parseTimeFromSec, calculateSecFromFight } from '../../../utils/datetime';
+import { parseTimeFromSec, calculateSecFromFight } from 'utils/datetime';
 
 export function getTotalTime(fightsList, formatted = true) {
   const totalTime = fightsList.reduce(

@@ -1,5 +1,5 @@
-import api from '../api-singleton';
-import * as reducer from '../reducers/fight-formulas';
+import api from 'api-singleton';
+import * as reducer from 'reducers/fight-formulas';
 
 export function listFightFormulas(...args) {
   return async (dispatch) => {

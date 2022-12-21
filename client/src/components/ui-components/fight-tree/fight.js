@@ -8,9 +8,9 @@ import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 
-import { ReactComponent as GoldIcon } from '../../../assets/icons/gold.svg';
-import { ReactComponent as SilverIcon } from '../../../assets/icons/silver.svg';
-import { ReactComponent as BronzeIcon } from '../../../assets/icons/bronze.svg';
+import { ReactComponent as GoldIcon } from 'assets/icons/gold.svg';
+import { ReactComponent as SilverIcon } from 'assets/icons/silver.svg';
+import { ReactComponent as BronzeIcon } from 'assets/icons/bronze.svg';
 import Fighter from './fighter';
 import styles from './index.module.css';
 

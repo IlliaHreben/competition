@@ -1,5 +1,5 @@
-import api from '../api-singleton';
-import * as reducer from '../reducers/cards';
+import api from 'api-singleton';
+import * as reducer from 'reducers/cards';
 
 export function listCards(params = {}) {
   return async (dispatch) => {

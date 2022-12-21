@@ -1,5 +1,5 @@
-import api from '../api-singleton';
-import * as reducer from '../reducers/fight-spaces';
+import api from 'api-singleton';
+import * as reducer from 'reducers/fight-spaces';
 
 export function list(competitionId) {
   return async (dispatch) => {

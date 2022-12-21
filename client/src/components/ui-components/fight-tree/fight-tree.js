@@ -4,9 +4,9 @@ import SettingsPopover from '../settings-popover';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import MoveUpIcon from '@mui/icons-material/MoveUp';
 import { useDispatch } from 'react-redux';
-import { setWinner } from '../../../actions/fights';
-import { showSuccess } from '../../../actions/errors';
-import pleasantHexColorGenerator from '../../../utils/color-generator';
+import { setWinner } from 'actions/fights';
+import { showSuccess } from 'actions/errors';
+import pleasantHexColorGenerator from 'utils/color-generator';
 import { CustomMatchBracket } from './match-bracket';
 import { PropTypes } from 'prop-types';
 

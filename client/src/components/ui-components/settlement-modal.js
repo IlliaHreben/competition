@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { useEffect, useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import StateModal from './state-modal';
-import { createSettlement } from '../../actions/settlements';
-import { showSuccess } from '../../actions/errors';
+import { createSettlement } from 'actions/settlements';
+import { showSuccess } from 'actions/errors';
 import { TextField, Autocomplete, Button } from '@mui/material';
 import debounce from 'lodash/debounce';
-import api from '../../api-singleton';
+import api from 'api-singleton';
 
 SettlementModal.propTypes = {
   open: PropTypes.bool.isRequired,

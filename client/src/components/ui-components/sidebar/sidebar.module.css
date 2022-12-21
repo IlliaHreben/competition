@@ -1,4 +1,4 @@
-@import '../../../assets/styles/sizes.module.css';
+@import 'assets/styles/sizes.module.css';
 
 .sideBar {
   position: static;

@@ -5,7 +5,7 @@ import styles from './sidebar.module.css';
 
 import { useNavigate, useLocation } from 'react-router';
 
-import AddIcon from '../../../assets/icons/plus.png';
+import AddIcon from 'assets/icons/plus.png';
 
 // eslint-disable-next-line react/prop-types
 const AvatarIcon = ({ src }) => {

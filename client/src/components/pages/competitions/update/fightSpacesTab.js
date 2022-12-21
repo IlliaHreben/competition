@@ -14,11 +14,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import TextField from '@mui/material/TextField';
 
-import RingIcon from '../../../../assets/icons/ring.png';
-import TatamiIcon from '../../../../assets/icons/tatami.png';
+import RingIcon from 'assets/icons/ring.png';
+import TatamiIcon from 'assets/icons/tatami.png';
 
-import { bulkUpdate } from '../../../../actions/fight-spaces';
-import { showSuccess } from '../../../../actions/errors';
+import { bulkUpdate } from 'actions/fight-spaces';
+import { showSuccess } from 'actions/errors';
 import { useParams } from 'react-router';
 
 const uuid = crypto.randomUUID.bind(crypto);

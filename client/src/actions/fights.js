@@ -1,6 +1,6 @@
-import api from '../api-singleton';
-import * as categoriesReducer from '../reducers/categories';
-import * as reducer from '../reducers/fights';
+import api from 'api-singleton';
+import * as categoriesReducer from 'reducers/categories';
+import * as reducer from 'reducers/fights';
 
 export function listFights(params = {}) {
   return async (dispatch) => {

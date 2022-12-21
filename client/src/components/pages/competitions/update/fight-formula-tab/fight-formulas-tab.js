@@ -9,14 +9,14 @@ import Paper from '@mui/material/Paper';
 import Row from './row';
 import EnhancedTableHead from './enhanced-table-head';
 
-import { listFightFormulas, deleteFightFormula } from '../../../../../actions/fight-formulas';
-import { showSuccess } from '../../../../../actions/errors';
-import SettingsPopover from '../../../../ui-components/settings-popover';
-import Modal from '../../../../ui-components/modal';
+import { listFightFormulas, deleteFightFormula } from 'actions/fight-formulas';
+import { showSuccess } from 'actions/errors';
+import SettingsPopover from 'components/ui-components/settings-popover';
+import Modal from 'components/ui-components/modal';
 
 import styles from './fight-formulas.module.css';
 import EnhancedTableToolbar from './enhanced-table-toolbar';
-import { groupByCriteria, extractCommonFightFormula } from '../../../../../utils/grouping';
+import { groupByCriteria, extractCommonFightFormula } from 'utils/grouping';
 import CreateFightFormulaModal from './create-ff-modal';
 
 function createData(ff) {

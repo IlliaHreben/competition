@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { Stack, Typography, Container } from '@mui/material';
 import { useSelector } from 'react-redux';
-import sorryImg from '../../assets/icons/sorry.png';
+import sorryImg from 'assets/icons/sorry.png';
 import PropTypes from 'prop-types';
 
 function mapState(state) {

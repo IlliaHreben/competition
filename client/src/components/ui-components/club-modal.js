@@ -6,10 +6,10 @@ import debounce from 'lodash/debounce';
 import { TextField, Autocomplete, Button } from '@mui/material';
 import Modal from './modal';
 import SettlementModal from './settlement-modal';
-import { createClub, listClubs, updateClub } from '../../actions/clubs';
-import { listCoaches } from '../../actions/coaches';
-import { showSuccess } from '../../actions/errors';
-import api from '../../api-singleton';
+import { createClub, listClubs, updateClub } from 'actions/clubs';
+import { listCoaches } from 'actions/coaches';
+import { showSuccess } from 'actions/errors';
+import api from 'api-singleton';
 
 ClubModal.propTypes = {
   open: PropTypes.bool.isRequired,

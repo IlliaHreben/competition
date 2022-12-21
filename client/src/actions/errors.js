@@ -1,4 +1,4 @@
-import * as reducer from '../reducers/errors';
+import * as reducer from 'reducers/errors';
 
 const uuid = crypto.randomUUID.bind(crypto);
 

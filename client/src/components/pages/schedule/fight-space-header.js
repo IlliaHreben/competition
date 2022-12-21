@@ -3,8 +3,8 @@ import { PropTypes } from 'prop-types';
 import { DateTime, Duration } from 'luxon';
 import ErrorIcon from '@mui/icons-material/Error';
 
-import RingIcon from '../../../assets/icons/ring.png';
-import TatamiIcon from '../../../assets/icons/tatami.png';
+import RingIcon from 'assets/icons/ring.png';
+import TatamiIcon from 'assets/icons/tatami.png';
 
 export default function FightSpaceHeader({ duration, fightSpace }) {
   // const [startAtHour, startAtMinute, startAtSecond] = fightSpace.startAt.split(':');

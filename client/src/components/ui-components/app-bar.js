@@ -4,7 +4,9 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import PrintIcon from '@mui/icons-material/Print';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
 function mapStateToProps(state) {
   return {
@@ -12,7 +14,7 @@ function mapStateToProps(state) {
   };
 }
 
-export default function DenseAppBar() {
+export default function DenseAppBar({ onPrintClick }) {
   const { active } = useSelector(mapStateToProps);
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -21,19 +23,24 @@ export default function DenseAppBar() {
           <IconButton edge='start' color='inherit' aria-label='menu' sx={{ mr: 2 }}>
             <MenuIcon />
           </IconButton>
-          {active && (
-            <Typography
-              align='center'
-              variant='h6'
-              color='inherit'
-              component='div'
-              sx={{ flexGrow: 1 }}
-            >
-              {active.name}
-            </Typography>
-          )}
+          <Typography
+            align='center'
+            variant='h6'
+            color='inherit'
+            component='div'
+            sx={{ flexGrow: 1 }}
+          >
+            {active ? active.name : ''}
+          </Typography>
+          <IconButton onClick={onPrintClick}>
+            <PrintIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
     </Box>
   );
 }
+
+DenseAppBar.propTypes = {
+  onPrintClick: PropTypes.func
+};

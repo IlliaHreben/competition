@@ -3,10 +3,10 @@ import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
 
-import { listClubs } from '../../actions/clubs';
-import { listCoaches } from '../../actions/coaches';
-import { listSettlements } from '../../actions/settlements';
-import { list as listSections } from '../../actions/sections';
+import { listClubs } from 'actions/clubs';
+import { listCoaches } from 'actions/coaches';
+import { listSettlements } from 'actions/settlements';
+import { list as listSections } from 'actions/sections';
 import debounce from 'lodash/debounce';
 
 function mapState(state) {

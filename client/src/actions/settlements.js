@@ -1,5 +1,5 @@
-import api from '../api-singleton';
-import * as reducer from '../reducers/settlements';
+import api from 'api-singleton';
+import * as reducer from 'reducers/settlements';
 
 export function listSettlements(params = {}) {
   return async (dispatch) => {

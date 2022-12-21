@@ -6,15 +6,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router';
 
-import CircularProgress from '../../ui-components/circular-progress';
-import FilterDrawer from '../../ui-components/filters-drawer';
+import CircularProgress from 'components/ui-components/circular-progress';
+import FilterDrawer from 'components/ui-components/filters-drawer';
 
-import { objectFilter } from '../../../utils/common';
-import CategoryTable from '../../ui-components/category-table';
-import TableHeader from '../../ui-components/table-header';
-import HideAppBar from '../../ui-components/hide-bar.tsx';
+import { objectFilter } from 'utils/common';
+import CategoryTable from 'components/ui-components/category-table';
+import TableHeader from 'components/ui-components/table-header';
+import HideAppBar from 'components/ui-components/hide-bar.tsx';
 
-import { concatToListFights, listFights, clearFights } from '../../../actions/fights';
+import { concatToListFights, listFights, clearFights } from 'actions/fights';
 
 function mapState(state) {
   return {

@@ -2,8 +2,8 @@ import Modal from './modal';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import api from '../../api-singleton';
-import { showSuccess, showError } from '../../actions/errors';
+import api from 'api-singleton';
+import { showSuccess, showError } from 'actions/errors';
 import { TextField } from '@mui/material';
 StateModal.propTypes = {
   open: PropTypes.bool.isRequired,

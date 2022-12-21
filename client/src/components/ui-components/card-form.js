@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import FighterModal from './fighter-modal';
 import { AdapterLuxon as AdapterDateFns } from '@mui/x-date-pickers/AdapterLuxon';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
-import { getAgeFromBirthDate } from '../../utils/datetime';
+import { getAgeFromBirthDate } from 'utils/datetime';
 import FighterAutocomplete from './fighter-autocomplete';
 import WeightInput from './weight-mask-input';
 

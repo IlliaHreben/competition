@@ -5,9 +5,9 @@ import ListFields from '../list-fields';
 import { useState, useEffect } from 'react';
 import { omit } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
-import { bulkCreate, deleteError } from '../../../actions/categories';
-import { list as listSections } from '../../../actions/sections';
-import { showSuccess, showError } from '../../../actions/errors';
+import { bulkCreate, deleteError } from 'actions/categories';
+import { list as listSections } from 'actions/sections';
+import { showSuccess, showError } from 'actions/errors';
 
 CreateCategory.propTypes = {
   open: PropTypes.bool.isRequired,

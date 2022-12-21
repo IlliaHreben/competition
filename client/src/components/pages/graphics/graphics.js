@@ -10,23 +10,23 @@ import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router';
 
 import styles from './graphics.module.css';
-import CircularProgress from '../../ui-components/circular-progress';
-import FilterDrawer from '../../ui-components/filters-drawer';
+import CircularProgress from 'components/ui-components/circular-progress';
+import FilterDrawer from 'components/ui-components/filters-drawer';
 import { CategorySettingsPopover, RowSettingsPopover } from './settings';
 
-import { objectFilter } from '../../../utils/common';
-import FightTree from '../../ui-components/fight-tree';
-import CategoryTable from '../../ui-components/category-table';
-import TableHeader from '../../ui-components/table-header';
-import HideAppBar from '../../ui-components/hide-bar.tsx';
+import { objectFilter } from 'utils/common';
+import FightTree from 'components/ui-components/fight-tree';
+import CategoryTable from 'components/ui-components/category-table';
+import TableHeader from 'components/ui-components/table-header';
+import HideAppBar from 'components/ui-components/hide-bar.tsx';
 
 import {
   concatToListCategories,
   listCategories
   // refreshCategories
-} from '../../../actions/categories';
-import { showSuccess } from '../../../actions/errors';
-import { moveCard } from '../../../actions/cards';
+} from 'actions/categories';
+import { showSuccess } from 'actions/errors';
+import { moveCard } from 'actions/cards';
 
 function mapState(state) {
   return {
@@ -39,7 +39,7 @@ function mapState(state) {
 
 const limit = 10;
 
-export default function FightTrees() {
+export default function FightTrees(_, ref) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -181,6 +181,7 @@ export default function FightTrees() {
           </TableHeader>
         </HideAppBar>
         <InfiniteScroll
+          ref={ref}
           dataLength={categories.length}
           next={() => setOffset(offset + limit)}
           hasMore={hasMore}

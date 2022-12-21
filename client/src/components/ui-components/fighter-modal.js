@@ -2,9 +2,9 @@ import Modal from './modal';
 import PropTypes from 'prop-types';
 import { useState, useReducer, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateFighter, createFighter } from '../../actions/fighters';
-// import { showSuccess } from '../../actions/errors';
-import { showSuccess } from '../../actions/errors';
+import { updateFighter, createFighter } from 'actions/fighters';
+// import { showSuccess } from 'actions/errors';
+import { showSuccess } from 'actions/errors';
 import CoachModal from './coach-modal';
 import ClubModal from './club-modal';
 import {

@@ -27,13 +27,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import SaveIcon from '@mui/icons-material/Save';
 
-import { deleteSection } from '../../../../actions/sections';
-import { bulkDelete, bulkCreate } from '../../../../actions/categories';
-import { showSuccess } from '../../../../actions/errors';
+import { deleteSection } from 'actions/sections';
+import { bulkDelete, bulkCreate } from 'actions/categories';
+import { showSuccess } from 'actions/errors';
 
-import Modal from '../../../ui-components/modal';
-import CreateModal from '../../../ui-components/create-category-modal';
-import CategoryRow from '../../../ui-components/category-row';
+import Modal from 'components/ui-components/modal';
+import CreateModal from 'components/ui-components/create-category-modal';
+import CategoryRow from 'components/ui-components/category-row';
 
 const aggregateBy = (array, by) => {
   return array.reduce((acc, c) => {

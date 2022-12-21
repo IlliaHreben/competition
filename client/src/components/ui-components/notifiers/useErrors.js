@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeMessage } from '../../../actions/errors';
+import { removeMessage } from 'actions/errors';
 
 let displayedErrors = [];
 

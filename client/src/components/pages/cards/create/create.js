@@ -1,14 +1,14 @@
 import { Paper, Button } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { listClubs } from '../../../../actions/clubs';
-import { listCoaches } from '../../../../actions/coaches';
-import { createCard } from '../../../../actions/cards';
-import { showSuccess } from '../../../../actions/errors';
-import { list as listSections } from '../../../../actions/sections';
-import SelectCompetitionChecker from '../../../ui-components/select-competition-checker';
+import { listClubs } from 'actions/clubs';
+import { listCoaches } from 'actions/coaches';
+import { createCard } from 'actions/cards';
+import { showSuccess } from 'actions/errors';
+import { list as listSections } from 'actions/sections';
+import SelectCompetitionChecker from 'components/ui-components/select-competition-checker';
 
-import CardForm from '../../../ui-components/card-form';
+import CardForm from 'components/ui-components/card-form';
 
 const mapState = (state) => ({
   active: state.competitions.active

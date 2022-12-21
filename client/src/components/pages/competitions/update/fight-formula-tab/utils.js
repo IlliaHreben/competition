@@ -1,4 +1,4 @@
-import { objectCombos } from '../../../../../utils/common';
+import { objectCombos } from 'utils/common';
 
 export const formatFF = (ff, sections) => ({
   ...ff,

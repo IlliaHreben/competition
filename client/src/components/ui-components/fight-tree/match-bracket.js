@@ -1,5 +1,5 @@
 import { SingleEliminationBracket } from '@g-loot/react-tournament-brackets';
-// import useWindowSize from '../../../hooks/use-window-size';
+// import useWindowSize from 'hooks/use-window-size';
 import Fight from './fight';
 import { PropTypes } from 'prop-types';
 

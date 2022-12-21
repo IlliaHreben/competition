@@ -16,12 +16,12 @@ import { useDispatch } from 'react-redux';
 import { DateTime, Duration } from 'luxon';
 
 import { getTotalTime } from './helpers';
-import { groupByCriteria } from '../../../utils/grouping';
-import DraggableDroppable from '../../ui-components/draggable-droppable';
-import Droppable from '../../ui-components/droppable';
-import { shiftFights, listFights } from '../../../actions/fights';
-import { showSuccess } from '../../../actions/errors';
-import ExpandIconButton from '../../../utils/component-utils';
+import { groupByCriteria } from 'utils/grouping';
+import DraggableDroppable from 'components/ui-components/draggable-droppable';
+import Droppable from 'components/ui-components/droppable';
+import { shiftFights, listFights } from 'actions/fights';
+import { showSuccess } from 'actions/errors';
+import ExpandIconButton from 'utils/component-utils';
 
 export function SectionCardMock({ fightSpace }) {
   const dispatch = useDispatch();

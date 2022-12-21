@@ -1,5 +1,5 @@
-import api from '../api-singleton';
-import * as reducer from '../reducers/clubs';
+import api from 'api-singleton';
+import * as reducer from 'reducers/clubs';
 
 export function listClubs(params = {}) {
   return async (dispatch) => {

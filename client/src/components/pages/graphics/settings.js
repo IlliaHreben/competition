@@ -1,7 +1,7 @@
 import MoveUpIcon from '@mui/icons-material/MoveUp';
 import { PropTypes } from 'prop-types';
 
-import SettingsPopover from '../../ui-components/settings-popover';
+import SettingsPopover from 'components/ui-components/settings-popover';
 
 export function CategorySettingsPopover({ selectedCardToMove, anchor, onClose, onMoveCard }) {
   return (

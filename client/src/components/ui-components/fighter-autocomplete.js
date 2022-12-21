@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useState, useMemo } from 'react';
 import debounce from 'lodash/debounce';
 import { TextField, Autocomplete } from '@mui/material';
-import api from '../../api-singleton';
+import api from 'api-singleton';
 
 FighterAutocomplete.propTypes = {
   fighter: PropTypes.object,

@@ -9,13 +9,13 @@ import { withStyles } from '@mui/styles';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { TableCell, Stack, Paper, IconButton } from '@mui/material';
 
-import { formatISODate } from '../../../../utils/datetime';
-import { listCards, deleteCard, supplementListCards } from '../../../../actions/cards';
-import { showSuccess } from '../../../../actions/errors';
-import SettingsPopover from '../../../ui-components/settings-popover';
-import Modal from '../../../ui-components/modal';
-import EditCardModal from '../../../ui-components/edit-card-modal.js';
-import TableHeader from '../../../ui-components/table-header';
+import { formatISODate } from 'utils/datetime';
+import { listCards, deleteCard, supplementListCards } from 'actions/cards';
+import { showSuccess } from 'actions/errors';
+import SettingsPopover from 'components/ui-components/settings-popover';
+import Modal from 'components/ui-components/modal';
+import EditCardModal from 'components/ui-components/edit-card-modal.js';
+import TableHeader from 'components/ui-components/table-header';
 
 const styles = (theme) => ({
   flexContainer: {

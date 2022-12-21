@@ -11,14 +11,14 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Slider from '@mui/material/Slider';
 
-import Modal from '../../../../ui-components/modal';
+import Modal from 'components/ui-components/modal';
 import {
   updateFightFormula,
   bulkCreateFightFormula,
   listFightFormulas
-} from '../../../../../actions/fight-formulas';
-import { showSuccess } from '../../../../../actions/errors';
-import { formatTimeToText, formatTime } from '../../../../../utils/datetime';
+} from 'actions/fight-formulas';
+import { showSuccess } from 'actions/errors';
+import { formatTimeToText, formatTime } from 'utils/datetime';
 import { prepareToSend, formatFF } from './utils';
 
 const useStyles = makeStyles((theme) => ({

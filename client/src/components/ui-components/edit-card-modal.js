@@ -2,8 +2,8 @@ import Modal from './modal';
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateCard } from '../../actions/cards';
-import { showSuccess } from '../../actions/errors';
+import { updateCard } from 'actions/cards';
+import { showSuccess } from 'actions/errors';
 import CardFrom from './card-form';
 
 EditCardModal.propTypes = {

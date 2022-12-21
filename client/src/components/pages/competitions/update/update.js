@@ -12,10 +12,10 @@ import {
   show as showCompetition,
   clearShow
   // update as updateCompetition
-} from '../../../../actions/competitions';
-import { list as listFightSpaces } from '../../../../actions/fight-spaces';
-import { list as listSections } from '../../../../actions/sections';
-// import { showSuccess }               from '../../../../actions/errors';
+} from 'actions/competitions';
+import { list as listFightSpaces } from 'actions/fight-spaces';
+import { list as listSections } from 'actions/sections';
+// import { showSuccess }               from 'actions/errors';
 import styles from './update.module.css';
 import GeneralSettingsTab from './generalTab';
 import FightSpacesTab from './fightSpacesTab';

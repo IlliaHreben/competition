@@ -10,11 +10,11 @@ import Typography from '@mui/material/Typography';
 import { getTotalTime } from './helpers';
 import Card, { SectionCardMock } from './card';
 import FightSpaceHeader from './fight-space-header';
-import { groupByCriteria, splitBy } from '../../../utils/grouping';
-import { listFights, clearFights } from '../../../actions/fights';
-import { list as listFightSpaces } from '../../../actions/fight-spaces';
-// import CircularProgress from '../../ui-components/circular-progress';
-import { useDidUpdateEffect } from '../../../utils/hooks';
+import { groupByCriteria, splitBy } from 'utils/grouping';
+import { listFights, clearFights } from 'actions/fights';
+import { list as listFightSpaces } from 'actions/fight-spaces';
+// import CircularProgress from 'components/ui-components/circular-progress';
+import { useDidUpdateEffect } from 'utils/hooks';
 
 function mapState(state) {
   return {

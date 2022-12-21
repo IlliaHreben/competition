@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import api from '../../../api-singleton';
-import CompetitionForm from '../../ui-components/competition-form';
+import api from 'api-singleton';
+import CompetitionForm from 'components/ui-components/competition-form';
 import styles from './create.module.css';
 
 export default function CompetitionCreate() {

@@ -4,9 +4,9 @@ import { useCallback } from 'react';
 import { PropTypes } from 'prop-types';
 import DraggableDroppable from '../draggable-droppable';
 import { useDispatch } from 'react-redux';
-import { showSuccess } from '../../../actions/errors';
-import { switchCards } from '../../../actions/cards';
-import { refreshCategories } from '../../../actions/categories';
+import { showSuccess } from 'actions/errors';
+import { switchCards } from 'actions/cards';
+import { refreshCategories } from 'actions/categories';
 
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText('#ffffff'),

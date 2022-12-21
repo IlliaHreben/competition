@@ -1,7 +1,7 @@
-// import path                from 'path';
-import { Suspense, lazy } from 'react';
-
+import { Suspense, lazy, useRef } from 'react';
 import { Route, Routes } from 'react-router-dom';
+// import { useReactToPrint } from 'react-to-print';
+import { useReactToPrint } from 'react-to-print';
 
 import PageLoader from './components/ui-components/PageLoader';
 import SideBar from './components/ui-components/sidebar/sidebar.js';
@@ -22,6 +22,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
+// import Graphics from './components/pages/graphics';
 const Graphics = lazy(() => import('./components/pages/graphics'));
 const Matches = lazy(() => import('./components/pages/matches'));
 const Home = lazy(() => import('./components/pages/home'));
@@ -80,13 +81,17 @@ const routes = [
 
 function App() {
   useErrors();
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current
+  });
 
   return (
     <Suspense fallback={<PageLoader />}>
-      <AppBar />
+      <AppBar onPrintClick={handlePrint} />
       <div style={{ display: 'flex' }}>
         <SideBar tabs={routes} />
-        <div className={styles.content}>
+        <div className={styles.content} ref={componentRef}>
           <Routes>
             {routes.map(({ component: Page, ...route }) => (
               <Route key={route.name} path={route.path} element={<Page />} />

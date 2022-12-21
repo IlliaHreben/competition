@@ -1,5 +1,5 @@
 import { store } from '../index';
-import { showError } from '../actions/errors';
+import { showError } from 'actions/errors';
 
 export default function errorsHandler({ error }, statusCode, url) {
   const { fields } = error || {};

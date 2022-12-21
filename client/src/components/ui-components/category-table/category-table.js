@@ -12,8 +12,8 @@ import Stack from '@mui/material/Stack';
 import Collapse from '@mui/material/Collapse';
 import { useEffect, useState } from 'react';
 
-import { formatISODate, getFormattedDate } from '../../../utils/datetime';
-import ExpandIconButton from '../../../utils/component-utils';
+import { formatISODate, getFormattedDate } from 'utils/datetime';
+import ExpandIconButton from 'utils/component-utils';
 import styles from './category-table.module.css';
 import { categoryPropTypes } from './prop-types';
 

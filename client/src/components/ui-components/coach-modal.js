@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import curry from 'lodash/curry';
-import { createCoach, listCoaches, updateCoach } from '../../actions/coaches';
-import { showSuccess } from '../../actions/errors';
+import { createCoach, listCoaches, updateCoach } from 'actions/coaches';
+import { showSuccess } from 'actions/errors';
 import { TextField, Autocomplete, Stack } from '@mui/material';
-import { listClubs } from '../../actions/clubs';
+import { listClubs } from 'actions/clubs';
 
 CoachModal.propTypes = {
   open: PropTypes.bool.isRequired,

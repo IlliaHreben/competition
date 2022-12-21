@@ -24,15 +24,15 @@ import CircularProgress from '@mui/material/CircularProgress';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { visuallyHidden } from '@mui/utils';
 
-import { formatISODate } from '../../../utils/datetime';
+import { formatISODate } from 'utils/datetime';
 import {
   list as listCompetitions,
   deleteCompetition,
   activateCompetition
-} from '../../../actions/competitions';
-import { showSuccess } from '../../../actions/errors';
-import SettingsPopover from '../../ui-components/settings-popover';
-import Modal from '../../ui-components/modal';
+} from 'actions/competitions';
+import { showSuccess } from 'actions/errors';
+import SettingsPopover from 'components/ui-components/settings-popover';
+import Modal from 'components/ui-components/modal';
 
 import styles from './list.module.css';
 
