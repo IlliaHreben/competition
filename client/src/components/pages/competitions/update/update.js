@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import SwipeableViews from 'react-swipeable-views';
 import PropTypes from 'prop-types';
 import { useParams, useLocation } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -85,11 +84,7 @@ function CompetitionUpdate() {
         </Tabs>
 
         {competition && (
-          <SwipeableViews
-            // axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-            index={tab}
-            onChangeIndex={changeTab}
-          >
+          <>
             <TabPanel value={tab} index={0}>
               <GeneralSettingsTab competition={competition} />
             </TabPanel>
@@ -102,7 +97,7 @@ function CompetitionUpdate() {
             <TabPanel value={tab} index={3}>
               <FightFormulasTab />
             </TabPanel>
-          </SwipeableViews>
+          </>
         )}
       </Box>
     </div>

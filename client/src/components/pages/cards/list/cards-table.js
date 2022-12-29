@@ -1,14 +1,18 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from 'react-redux';
-import { AutoSizer, Column, Table, InfiniteLoader } from 'react-virtualized';
+// import { AutoSizer, Column, Table, InfiniteLoader } from 'react-virtualized';
+import InfiniteLoader from 'react-window-infinite-loader';
+import AutoSizer from 'react-virtualized-auto-sizer';
+import { FixedSizeList as List } from 'react-window';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router';
 
-import { withStyles } from '@mui/styles';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { TableCell, Stack, Paper, IconButton } from '@mui/material';
+import { Stack, Paper, IconButton, TableHead, Table, TableBody } from '@mui/material';
 
+import { Row } from './row';
+import { Header } from './header';
 import { formatISODate } from 'utils/datetime';
 import { listCards, deleteCard, supplementListCards } from 'actions/cards';
 import { showSuccess } from 'actions/errors';
@@ -16,36 +20,6 @@ import SettingsPopover from 'components/ui-components/settings-popover';
 import Modal from 'components/ui-components/modal';
 import EditCardModal from 'components/ui-components/edit-card-modal.js';
 import TableHeader from 'components/ui-components/table-header';
-
-const styles = (theme) => ({
-  flexContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    boxSizing: 'border-box'
-  },
-  table: {
-    // temporary right-to-left patch, waiting for
-    // https://github.com/bvaughn/react-virtualized/issues/454
-    '& .ReactVirtualized__Table__headerRow': {
-      ...(theme.direction === 'rtl' && {
-        paddingLeft: '0 !important'
-      }),
-
-      ...(theme.direction !== 'rtl' && {
-        paddingRight: undefined
-      })
-    }
-  },
-  tableRow: {
-    cursor: 'pointer'
-  },
-  tableCell: {
-    flex: 1
-  },
-  noClick: {
-    cursor: 'initial'
-  }
-});
 
 function mapState(state) {
   return {
@@ -55,18 +29,19 @@ function mapState(state) {
   };
 }
 const dumpCard = (card, handleClickSettings) => {
-  const { club, coach } = card.linked.fighter.linked;
+  const { club, coach } = card?.linked.fighter.linked || {};
   return {
-    fullName: `${card.linked.fighter.lastName} ${card.linked.fighter.name}`,
-    sex: card.linked.fighter.sex,
-    settlement: club.linked.settlement.name,
-    clubName: club.name,
-    coachFullName: `${coach.name} ${coach.lastName}`,
-    age: card.age,
-    birthDate: formatISODate(card.birthDate),
-    weight: card.weight,
-    group: card.group || ' ',
-    section: card.linked.category?.linked?.section?.name,
+    id: card ? card.id : `${Math.random()}`,
+    fullName: card && `${card.linked.fighter.lastName} ${card.linked.fighter.name}`,
+    sex: card && card.linked.fighter.sex,
+    settlement: card && club.linked.settlement.name,
+    clubName: card && club.name,
+    coachFullName: card && `${coach.name} ${coach.lastName}`,
+    age: card && card.age,
+    birthDate: card && formatISODate(card.birthDate),
+    weight: card && card.weight,
+    group: card && (card.group || '-'),
+    section: card && card.linked.category?.linked?.section?.name,
     settings: (
       <IconButton onClick={(e) => handleClickSettings(e, card)}>
         <MoreVertIcon />
@@ -75,119 +50,15 @@ const dumpCard = (card, handleClickSettings) => {
   };
 };
 
-const columns = [
-  {
-    width: 240,
-    label: 'Full name',
-    dataKey: 'fullName'
-  },
-  {
-    width: 65,
-    label: 'Sex',
-    dataKey: 'sex'
-  },
-  {
-    width: 170,
-    label: 'City',
-    dataKey: 'settlement'
-  },
-  {
-    width: 210,
-    label: 'Club',
-    dataKey: 'clubName'
-  },
-  {
-    width: 150,
-    label: 'Coach',
-    dataKey: 'coachFullName'
-  },
-  {
-    width: 60,
-    label: 'Age',
-    dataKey: 'age',
-    numeric: true
-  },
-  {
-    width: 90,
-    label: 'Birthday',
-    dataKey: 'birthDate'
-  },
-  {
-    width: 80,
-    label: 'Weight',
-    dataKey: 'weight',
-    numeric: true
-  },
-  {
-    width: 70,
-    label: 'Group',
-    dataKey: 'group'
-  },
-  {
-    width: 120,
-    label: 'Section',
-    dataKey: 'section'
-  },
-  {
-    width: 50,
-    label: '',
-    dataKey: 'settings',
-    padding: 'checkbox'
-  }
-];
-
-export default withStyles(styles)(function CardsTable(props) {
+export default function CardsTable() {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [filters, setFilters] = useState(Object.fromEntries(new URLSearchParams(location.search)));
 
-  const getRowClassName = ({ index }) => {
-    const { classes } = props;
-
-    return `${classes.tableRow} ${classes.flexContainer}`;
-  };
-
-  const cellRenderer = ({ cellData, columnIndex }) => {
-    return (
-      <TableCell
-        component='div'
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          boxSizing: 'border-box',
-          flex: 1
-        }}
-        variant='body'
-        style={{ height: 48 }}
-        align={columnIndex != null && columns[columnIndex].numeric ? 'right' : 'left'}
-        padding={columns[columnIndex].padding}
-      >
-        {cellData}
-      </TableCell>
-    );
-  };
-
-  const headerRenderer = ({ label, columnIndex }) => {
-    return (
-      <TableCell
-        component='div'
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          boxSizing: 'border-box',
-          flex: 1
-        }}
-        variant='head'
-        style={{ height: 48 }}
-        align={columns[columnIndex].numeric ? 'right' : 'left'}
-      >
-        <span>{label}</span>
-      </TableCell>
-    );
-  };
-
   const { cards, active, meta } = useSelector(mapState);
+
+  const isItemLoaded = (index) => !!cards[index];
 
   useEffect(() => {
     if (!active) return;
@@ -206,11 +77,13 @@ export default withStyles(styles)(function CardsTable(props) {
     );
   }, [filters, active, dispatch, navigate]);
 
-  const loadMoreRows = () => {
-    return dispatch(
+  const loadMoreRows = (start, stop) => {
+    const offset = start;
+    const limit = stop + 1 - start;
+    dispatch(
       supplementListCards({
-        offset: meta.offset + meta.limit,
-        limit: meta.limit,
+        offset,
+        limit,
         competitionId: active.id,
         include: ['category', 'coach', 'club', 'fighter'],
         ...filters
@@ -222,6 +95,7 @@ export default withStyles(styles)(function CardsTable(props) {
   const handleClickSettings = (event, card) => {
     setAnchor({ element: event.currentTarget, card });
   };
+
   const handleCloseSettings = () => {
     setAnchor(null);
   };
@@ -270,8 +144,7 @@ export default withStyles(styles)(function CardsTable(props) {
       <Paper
         style={{
           height: '100%',
-          width: '1280px',
-          minWidth: '1280px',
+          width: '1400px',
           display: 'flex',
           flexDirection: 'column'
         }}
@@ -287,56 +160,39 @@ export default withStyles(styles)(function CardsTable(props) {
           handleDelete={handleChangeStatusDeleteModal}
           handleClose={handleCloseSettings}
         />
-        <div style={{ flexGrow: 1 }}>
-          <InfiniteLoader
-            isRowLoaded={({ index }) => !!cards[index]}
-            loadMoreRows={loadMoreRows}
-            rowCount={meta.filteredCount}
-          >
-            {({ onRowsRendered, registerChild }) => (
-              <AutoSizer>
-                {({ height, width }) => (
-                  <Table
-                    ref={registerChild}
-                    height={height}
-                    width={width}
-                    rowHeight={48}
-                    gridStyle={{
-                      direction: 'row'
-                    }}
-                    headerHeight={48}
-                    onRowsRendered={onRowsRendered}
-                    rowCount={cards.length}
-                    rowClassName={getRowClassName}
-                    rowGetter={({ index }) => dumpCard(cards[index], handleClickSettings)}
-                  >
-                    {columns.map((column, index) => {
-                      return (
-                        <Column
-                          key={column.dataKey}
-                          headerRenderer={(headerProps) => {
-                            return headerRenderer({
-                              ...headerProps,
-                              columnIndex: index
-                            });
-                          }}
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            boxSizing: 'border-box'
-                          }}
-                          cellRenderer={cellRenderer}
-                          {...column}
-                        />
-                      );
-                    })}
-                  </Table>
-                )}
-              </AutoSizer>
-            )}
-          </InfiniteLoader>
-        </div>
+        <Table sx={{ width: '100%', height: '100%' }}>
+          <TableHead>
+            <Header />
+          </TableHead>
+          <TableBody sx={{ width: '100%' }}>
+            <InfiniteLoader
+              isItemLoaded={isItemLoaded}
+              loadMoreItems={loadMoreRows}
+              itemCount={meta.filteredCount}
+              minimumBatchSize={30}
+            >
+              {({ onItemsRendered, ref }) => (
+                <AutoSizer ref={ref}>
+                  {({ height, width }) => (
+                    <List
+                      height={height}
+                      width={width}
+                      itemSize={53}
+                      itemCount={meta.filteredCount}
+                      onItemsRendered={onItemsRendered}
+                      // itemKey={(index) => cards[index].id}
+                    >
+                      {({ index, style }) => (
+                        <Row data={dumpCard(cards[index], handleClickSettings)} style={style} />
+                      )}
+                    </List>
+                  )}
+                </AutoSizer>
+              )}
+            </InfiniteLoader>
+          </TableBody>
+        </Table>
       </Paper>
     </Stack>
   );
-});
+}

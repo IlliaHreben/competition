@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Select, MenuItem, Chip, Checkbox, ListItemText, Container, Divider } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from 'tss-react/mui';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
