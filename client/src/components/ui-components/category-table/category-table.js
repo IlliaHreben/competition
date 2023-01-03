@@ -57,7 +57,7 @@ function dumpCardData(card) {
     age: card.age || '',
     birthDate: card.birthDate ? formatISODate(card.birthDate) : '',
     weight: card.weight || '',
-    serialNumber: fight.serialNumber
+    serialNumber: fight?.serialNumber
   };
 }
 

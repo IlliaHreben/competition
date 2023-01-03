@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router';
+import PropTypes from 'prop-types';
 
 import CircularProgress from 'components/ui-components/circular-progress';
 import FilterDrawer from 'components/ui-components/filters-drawer';
@@ -27,7 +28,7 @@ function mapState(state) {
 
 const limit = 50;
 
-export default function FightTrees() {
+export default function FightTrees({ printRef }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -139,6 +140,7 @@ export default function FightTrees() {
           </TableHeader>
         </HideAppBar>
         <InfiniteScroll
+          ref={printRef}
           dataLength={categories.length}
           next={() => setOffset(offset + limit)}
           hasMore={hasMore}
@@ -156,3 +158,7 @@ export default function FightTrees() {
     </div>
   );
 }
+
+FightTrees.propTypes = {
+  printRef: PropTypes.object
+};

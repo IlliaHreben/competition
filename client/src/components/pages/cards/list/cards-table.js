@@ -50,7 +50,7 @@ const dumpCard = (card, handleClickSettings) => {
   };
 };
 
-export default function CardsTable() {
+export default function CardsTable({ printRef }) {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -160,7 +160,7 @@ export default function CardsTable() {
           handleDelete={handleChangeStatusDeleteModal}
           handleClose={handleCloseSettings}
         />
-        <Table sx={{ width: '100%', height: '100%' }}>
+        <Table ref={printRef} sx={{ width: '100%', height: '100%' }}>
           <TableHead>
             <Header />
           </TableHead>

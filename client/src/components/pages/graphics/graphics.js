@@ -8,6 +8,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router';
+import PropTypes from 'prop-types';
 
 import styles from './graphics.module.css';
 import CircularProgress from 'components/ui-components/circular-progress';
@@ -39,7 +40,7 @@ function mapState(state) {
 
 const limit = 10;
 
-export default function FightTrees(_, ref) {
+export default function FightTrees({ printRef, setOnBeforeGetContentFn }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -67,6 +68,22 @@ export default function FightTrees(_, ref) {
       })
     );
   }, [competition.id, dispatch, filters, offset]);
+
+  useEffect(() => {
+    setOnBeforeGetContentFn(() => () => {
+      setOffset(0);
+      setHasMore(false);
+      return dispatch(
+        listCategories({
+          ...filters,
+          competitionId: competition.id,
+          offset: 0,
+          limit: meta.filteredCount,
+          include: ['cards', 'sections']
+        })
+      );
+    });
+  }, [competition.id, dispatch, filters, meta.filteredCount, setOnBeforeGetContentFn]);
 
   useEffect(() => {
     const query = new URLSearchParams(objectFilter({ ...filters, hideTables })).toString();
@@ -181,7 +198,7 @@ export default function FightTrees(_, ref) {
           </TableHeader>
         </HideAppBar>
         <InfiniteScroll
-          ref={ref}
+          ref={printRef}
           dataLength={categories.length}
           next={() => setOffset(offset + limit)}
           hasMore={hasMore}
@@ -217,3 +234,8 @@ export default function FightTrees(_, ref) {
     </div>
   );
 }
+
+FightTrees.propTypes = {
+  printRef: PropTypes.object,
+  setOnBeforeGetContentFn: PropTypes.func
+};

@@ -1,4 +1,4 @@
-import { Suspense, lazy, useRef } from 'react';
+import { Suspense, lazy, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 // import { useReactToPrint } from 'react-to-print';
 import { useReactToPrint } from 'react-to-print';
@@ -80,10 +80,12 @@ const routes = [
 ];
 
 function App() {
+  const [onBeforeGetContentFn, setOnBeforeGetContentFn] = useState(() => {});
   useErrors();
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
-    content: () => componentRef.current
+    content: () => componentRef.current,
+    onBeforeGetContent: onBeforeGetContentFn
   });
 
   return (
@@ -91,10 +93,16 @@ function App() {
       <AppBar onPrintClick={handlePrint} />
       <div style={{ display: 'flex' }}>
         <SideBar tabs={routes} />
-        <div className={styles.content} ref={componentRef}>
+        <div className={styles.content}>
           <Routes>
             {routes.map(({ component: Page, ...route }) => (
-              <Route key={route.name} path={route.path} element={<Page />} />
+              <Route
+                key={route.name}
+                path={route.path}
+                element={
+                  <Page printRef={componentRef} setOnBeforeGetContentFn={setOnBeforeGetContentFn} />
+                }
+              />
             ))}
             <Route path={'/competitions/create'} element={<CompetitionCreate />} />
             <Route path={'/competitions/:id/edit'} element={<CompetitionUpdate />} />

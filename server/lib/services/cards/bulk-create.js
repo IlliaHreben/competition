@@ -3,6 +3,7 @@ import { dumpCard } from '../../utils';
 
 import Card from '../../models/Card.js';
 import Category from '../../models/Category.js';
+import Competition from '../../models/Competition.js';
 
 export default class CardsBulkCreate extends ServiceBase {
   static validationRules = {
@@ -32,6 +33,9 @@ export default class CardsBulkCreate extends ServiceBase {
     const categories = await Category.findAll({ where: { id: categoryIds } });
     await Promise.all(categories.map((category) => category.calculateFights()));
     await Promise.all(categories.map((category) => category.assignFightFormulaToFights()));
+
+    const competition = await Competition.findById(competitionId);
+    await competition.calculateFightsTimesAndOrder();
 
     return {
       data: cards.map(dumpCard),
